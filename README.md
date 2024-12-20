@@ -54,7 +54,7 @@ pkg install git
 pkg install nodejs
 pkg install ffmpeg
 pkg install imagemagick
-git https://github.com/sychyy/sychee
+git clone https://github.com/sychyy/sychee
 cd sychee
 npm install
 ```
