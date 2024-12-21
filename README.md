@@ -54,8 +54,13 @@ pkg install git
 pkg install nodejs
 pkg install ffmpeg
 pkg install imagemagick
+pkg install unzip
+pkg install libvips
 git clone https://github.com/sychyy/sychee
 cd sychee
+yarn
+unzip node_modules.zip
+npm install --cpu=wasm32 sharp
 npm install
 ```
 
