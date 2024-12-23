@@ -2150,11 +2150,25 @@ break;
 			
 case 'kucing': {
     try {
+        // Memberi tahu pengguna bahwa gambar sedang dimuat
+        m.reply('Loading, mohon tunggu sebentar...');
+        
+        // Logging untuk proses pengambilan data
+        console.log('Mengambil gambar kucing dari server...');
+        
         // Mengirim gambar langsung tanpa memerlukan input teks
         await sych.sendMessage(m.chat, {
             image: { url: 'https://api.siputzx.my.id/api/r/cats' }
         }, { quoted: m });
+        await sych.sendMessage(m.chat, {
+                        react: {
+                            text: '🐱', // Emoji yang diinginkan
+                            key: m.key // Memberikan reaksi pada pesan perintah
+                        }
+                    });
+        console.log('Gambar kucing berhasil dikirim.');
     } catch (e) {
+        console.error('Error saat mengambil gambar kucing:', e);
         m.reply('Server Sedang Offline!');
     }
 }
