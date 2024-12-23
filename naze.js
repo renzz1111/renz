@@ -183,44 +183,75 @@ let _chats =
 // Anti-Command Spam
 const userId = m.sender; // Mendapatkan ID pengguna
 
-// Debug untuk memastikan nilai
 console.log(`isOwner: ${isOwner}, userId: ${userId}`);
 
 if (!isOwner) {
+    // Inisialisasi spammer jika belum ada data untuk user
     if (!spammer[userId]) {
         console.log(`Inisialisasi spammer untuk user: ${userId}`);
-        spammer[userId] = { count: 0, timeout: null };
+        spammer[userId] = { count: 0, timeout: null, lastCommandTime: 0, blocked: false };
     }
 
-    spammer[userId].count++;
+    // Debug: Cek status pengguna
+    console.log('Status user:', spammer[userId]);
+
+    // Jika pengguna diblokir karena spam
+    if (spammer[userId].blocked) {
+        m.reply('Anda sedang diblokir karena spam. Tidak dapat menggunakan bot selama 30 menit.');
+        console.log(`Command dari user ${userId} ditolak karena blokir aktif.`);
+        return; // Jangan proses perintah lebih lanjut
+    }
+
+    const currentTime = Date.now();
+    const timeDiff = currentTime - spammer[userId].lastCommandTime;
+
+    // Debug: Cek perbedaan waktu antar perintah
+    console.log(`Time difference: ${timeDiff}, Spam count: ${spammer[userId].count}`);
+
+    // Jika perintah datang dalam waktu kurang dari 2 detik
+    if (timeDiff < 2000) {
+        spammer[userId].count++;
+    } else {
+        spammer[userId].count = 1; // Reset jika ada jeda lebih lama dari 2 detik
+    }
+
+    spammer[userId].lastCommandTime = currentTime;
+
     console.log(`Spam count untuk ${userId}: ${spammer[userId].count}`);
 
-    // Jika spam lebih dari 5 kali dalam waktu singkat
-    if (spammer[userId].count > 5) {
-        if (!spammer[userId].timeout) {
-            spammer[userId].timeout = setTimeout(() => {
-                delete spammer[userId]; // Hapus status spammer setelah 1 jam
-                console.log(`Spam timeout selesai untuk user: ${userId}`);
-            }, 3600000); // 1 jam dalam milidetik
+    // Jika spam lebih dari 5 kali dalam waktu 10 detik
+    if (spammer[userId].count >= 5) {
+        console.log(`User ${userId} terdeteksi melakukan spam. Count: ${spammer[userId].count}`);
 
-            m.reply('Anda telah melakukan spam. Tidak dapat mengirim command selama 1 jam.');
-            console.log(`Spam terdeteksi untuk user: ${userId}`);
+        if (!spammer[userId].timeout) {
+            console.log(`Blokir user ${userId} selama 30 menit`);
+
+            spammer[userId].blocked = true; // Tandai pengguna sebagai diblokir
+            spammer[userId].timeout = setTimeout(() => {
+                if (spammer[userId]) {
+                    console.log(`Reset blokir untuk user: ${userId}`);
+                    spammer[userId].blocked = false; // Reset status blokir
+                    delete spammer[userId]; // Hapus data pengguna dari `spammer`
+                    console.log(`Spam timeout selesai untuk user: ${userId}`);
+                }
+            }, 1800000); // 30 menit dalam milidetik
+
+            m.reply('Anda telah melakukan spam. Tidak dapat mengirim command selama 30 menit.');
+            console.log(`Spam terdeteksi dan blokir diaktifkan untuk user: ${userId}`);
+        } else {
+            console.log(`Blokir sudah diaktifkan untuk user: ${userId}`);
         }
         return; // Blokir pengguna untuk mengirim command lebih lanjut
     }
 
-    // Reset count setelah 10 detik, tapi pastikan tidak ada spam terlalu cepat
-    if (spammer[userId].timeout) {
-        clearTimeout(spammer[userId].timeout);
-        spammer[userId].timeout = null; // Hapus timeout sebelumnya
-    }
-
-    spammer[userId].timeout = setTimeout(() => {
-        spammer[userId].count = 0;
-        console.log(`Spam count direset untuk user: ${userId}`);
+    // Reset count setelah 10 detik
+    setTimeout(() => {
+        if (spammer[userId]) {
+            spammer[userId].count = 0; // Reset hitungan spam
+            console.log(`Spam count direset untuk user: ${userId}`);
+        }
     }, 10000); // Reset count setelah 10 detik
 }
-
 // Eksekusi kode bot di bawah
 		const isQuotedSticker = type === "extendedTextMessage" && content.includes("stickerMessage");
 		const extendedText = MessageType;
