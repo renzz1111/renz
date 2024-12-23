@@ -73,31 +73,37 @@ let tebakgambar = db.game.tebakgambar = []
 let tebakepep = db.game.tebakepep = []
 let tebakbendera = db.game.tebakbendera = []
 let autoAi = false; // Default mati
+let spammer = {}; // Format: { userId: { count: 0, timeout: null } }
 
 let _scommand = JSON.parse(fs.readFileSync("./database/scommand.json"));
 
-// 𝗙𝘂𝗻𝗰𝗮𝘁𝗶𝗼𝗻 𝗦𝘁𝗶𝗰𝗸𝗲𝗿 𝗖𝗼𝗺𝗺𝗮𝗻𝗱 シ︎
+// Fungsi Menambahkan Command
 const addCmd = (id, command) => {
-  const obj = { id: id, chats: command };
+  // Konversi hash ke Base64
+  const base64Hash = Buffer.from(id).toString('base64');
+  const obj = { id: base64Hash, chats: command }; // Simpan dengan Base64
   _scommand.push(obj);
-  fs.writeFileSync("./database/scommand.json", JSON.stringify(_scommand));
+  fs.writeFileSync("./database/scommand.json", JSON.stringify(_scommand, null, 2)); // Simpan ke database
 };
+
+// Fungsi Mendapatkan Posisi Command
 const getCommandPosition = (id) => {
+  const base64Hash = Buffer.from(id).toString('base64'); // Konversi ke Base64
   let position = null;
   Object.keys(_scommand).forEach((i) => {
-    if (_scommand[i].id === id) {
+    if (_scommand[i].id === base64Hash) {
       position = i;
     }
   });
-  if (position !== null) {
-    return position;
-  }
+  return position;
 };
 
+// Fungsi Mendapatkan Command Berdasarkan Hash
 const getCmd = (id) => {
+  const base64Hash = Buffer.from(id).toString('base64'); // Konversi ke Base64
   let position = null;
   Object.keys(_scommand).forEach((i) => {
-    if (_scommand[i].id === id) {
+    if (_scommand[i].id === base64Hash) {
       position = i;
     }
   });
@@ -106,24 +112,28 @@ const getCmd = (id) => {
   }
 };
 
+// Fungsi Mengecek Apakah Command Ada
 const checkSCommand = (id) => {
+  const base64Hash = Buffer.from(id).toString('base64'); // Konversi ke Base64
   let status = false;
   Object.keys(_scommand).forEach((i) => {
-    if (_scommand[i].id === id) {
+    if (_scommand[i].id === base64Hash) {
       status = true;
     }
   });
   return status;
 };
+
+// Fungsi Format Monospace
 function monospace(string) {
-return '```' + string + '```'
-}   
+  return '```' + string + '```';
+}
 
 module.exports = sych = async (sych, m, chatUpdate, store) => {
 	try {
     await LoadDataBase(sych, m);
 		const content = JSON.stringify(m.message);
-const type = Object.keys(m.message)[0]
+const type = m.message ? Object.keys(m.message)[0] : null;
 let _chats =
       type === "conversation" && m.message.conversation
         ? m.message.conversation
@@ -168,19 +178,63 @@ let _chats =
 		const isVip = db.users[m.sender] ? db.users[m.sender].vip : false
 		const isPremium = isCreator || prem.checkPremiumUser(m.sender, premium) || false
 		const isNsfw = m.isGroup ? db.groups[m.chat].nsfw : false
+		// Data untuk menyimpan status pengguna
+
+// Anti-Command Spam
+const userId = m.sender; // Mendapatkan ID pengguna
+
+// Debug untuk memastikan nilai
+console.log(`isOwner: ${isOwner}, userId: ${userId}`);
+
+if (!isOwner) {
+    if (!spammer[userId]) {
+        console.log(`Inisialisasi spammer untuk user: ${userId}`);
+        spammer[userId] = { count: 0, timeout: null };
+    }
+
+    spammer[userId].count++;
+    console.log(`Spam count untuk ${userId}: ${spammer[userId].count}`);
+
+    // Jika spam lebih dari 5 kali dalam waktu singkat
+    if (spammer[userId].count > 5) {
+        if (!spammer[userId].timeout) {
+            spammer[userId].timeout = setTimeout(() => {
+                delete spammer[userId]; // Hapus status spammer setelah 1 jam
+                console.log(`Spam timeout selesai untuk user: ${userId}`);
+            }, 3600000); // 1 jam dalam milidetik
+
+            m.reply('Anda telah melakukan spam. Tidak dapat mengirim command selama 1 jam.');
+            console.log(`Spam terdeteksi untuk user: ${userId}`);
+        }
+        return; // Blokir pengguna untuk mengirim command lebih lanjut
+    }
+
+    // Reset count setelah 10 detik, tapi pastikan tidak ada spam terlalu cepat
+    if (spammer[userId].timeout) {
+        clearTimeout(spammer[userId].timeout);
+        spammer[userId].timeout = null; // Hapus timeout sebelumnya
+    }
+
+    spammer[userId].timeout = setTimeout(() => {
+        spammer[userId].count = 0;
+        console.log(`Spam count direset untuk user: ${userId}`);
+    }, 10000); // Reset count setelah 10 detik
+}
+
+// Eksekusi kode bot di bawah
 		const isQuotedSticker = type === "extendedTextMessage" && content.includes("stickerMessage");
 		const extendedText = MessageType;
+
+
 		// Fake
-		const mentions = (teks, memberr, id) => {
-      id == null || id == undefined || id == false
-        ? sych.sendMessage(from, teks.trim(), extendedText, {
-            contextInfo: { mentionedJid: memberr },
-          })
-        : sych.sendMessage(from, teks.trim(), extendedText, {
-            quoted: m,
-            contextInfo: { mentionedJid: memberr },
-          });
-    };
+		sych.deleteMessage = async (chatId, key) => {
+    try {
+        await sych.sendMessage(chatId, { delete: key });
+        console.log(`Pesan berhasil dihapus: ChatID - ${chatId}, Key -`, key);
+    } catch (error) {
+        console.error(`Gagal menghapus pesan: ChatID - ${chatId}, Key -`, key, 'Error:', error);
+    }
+};
 		const fkontak = {
 			key: {
 				remoteJid: '0@s.whatsapp.net',
@@ -285,6 +339,11 @@ let _chats =
 		if (db.set[botNumber].autotyping && sych.public && isCmd) {
 			await sych.sendPresenceUpdate('composing', m.chat)
 		}
+		
+		if (db.set[botNumber].autovn && sych.public && isCmd) {
+    // Mengirimkan status 'recording' (seperti voice note sedang direkam)
+    await sych.sendPresenceUpdate('recording', m.chat);
+}
 		
 		// Salam
 		if (/^a(s|ss)alamu('|)alaikum(| )(wr|)( |)(wb|)$/.test(budy?.toLowerCase())) {
@@ -1188,16 +1247,83 @@ let _chats =
 			break
 			
 			// Bot Menu
-			case 'owner': {
-    await sych.sendContact(m.chat, own, m);
-    await sych.sendMessage(m.chat, {
-            react: {
-                text: '👤', // Emoji yang diinginkan
-                key: m.key // Memberikan reaksi pada pesan perintah
+		case 'owner': {
+    try {
+        const carouselCards = [
+            {
+                header: {
+                    title: "Owner Bot",
+                    hasMediaAttachment: true,
+                    imageMessage: (await generateWAMessageContent({
+                        image: { url: './src/media/sych.png' }
+                    }, { upload: sych.waUploadToServer })).imageMessage
+                },
+                body: { text: "━━━━━━ ✨ *Sychee Botz* ✨ ━━━━━━\n🔰 *OWNER RULES* 🔰\n🚫 Jangan spam\n🤝 Gunakan sopan\n📵 Hindari panggilan\n━━━━━━ 🌟 *Terima Kasih* 🌟 ━━━━━━" },
+                footer: { text: "" },
+                nativeFlowMessage: {
+                    buttons: [
+                        {
+                            "name": "cta_url",
+                            "buttonParamsJson": JSON.stringify({
+                                display_text: "Owner (yDa🔱)",
+                                url: "https://wa.me/+62882001502155"
+                            })
+                        }
+                    ]
+                }
+            },
+            {
+                header: {
+                    title: "Bot WhatsApp",
+                    hasMediaAttachment: true,
+                    imageMessage: (await generateWAMessageContent({
+                        image: { url: './src/media/sych.png' }
+                    }, { upload: sych.waUploadToServer })).imageMessage
+                },
+                body: { text: "━━━━━━ ✨ *Sychee Botz* ✨ ━━━━━━\n🔰 *BOT RULES* 🔰\n🚷 Tidak boleh spam\n💬 Tidak boleh berkata kasar\n📴 Tidak boleh call\n━━━━━━ 🔥 *Terima Kasih* 🔥 ━━━━━━" },
+                footer: { text: "" },
+                nativeFlowMessage: {
+                    buttons: [
+                        {
+                            "name": "cta_url",
+                            "buttonParamsJson": JSON.stringify({
+                                display_text: "Botz (SyChee)🔑",
+                                url: "https://wa.me/+6287862997267"
+                            })
+                        }
+                    ]
+                }
             }
-        });
+        ];
+
+        // Generate carousel message
+        const carouselMessage = generateWAMessageFromContent(m.chat, {
+            viewOnceMessage: {
+                message: {
+                    messageContextInfo: { deviceListMetadata: {}, deviceListMetadataVersion: 2 },
+                    interactiveMessage: proto.Message.InteractiveMessage.fromObject({
+                        body: { text: "Berikut ada kontak owner dan bot, silakan hubungi jika diperlukan! ✨📱" },
+                        footer: { text: "Sych Bot" },
+                        header: { hasMediaAttachment: false },
+                        carouselMessage: proto.Message.InteractiveMessage.CarouselMessage.fromObject({
+                            cards: carouselCards
+                        })
+                    })
+                }
+            }
+        }, {});
+
+        // Kirim pesan carousel
+        await sych.relayMessage(m.chat, carouselMessage.message, { messageId: carouselMessage.key.id });
+    } catch (error) {
+        console.error("Kesalahan saat mengirim carousel:", error);
+        await sych.sendMessage(m.chat, {
+            text: "Terjadi kesalahan saat mengirim pesan carousel. Silakan hubungi AI untuk memeriksa log kesalahan."
+        }, { quoted: m });
+    }
 }
 break;
+
 			case 'profile': case 'cek': {
 				const user = Object.keys(db.users)
 				const infoUser = db.users[m.sender]
@@ -1279,7 +1405,7 @@ break;
             return m.reply('Gunakan perintah: mode self/public');
         }
         break;
-					case 'anticall': case 'autobio': case 'autoread': case 'autotyping': case 'readsw': case 'multiprefix':
+					case 'anticall': case 'autobio': case 'autoread': case 'autotyping': case 'autovn': case 'readsw': case 'multiprefix':
 					if (teks[1] == 'on') {
 						if (set[teks[0]]) return m.reply('*Sudah Aktif Sebelumnya*')
 						set[teks[0]] = true
@@ -1858,16 +1984,53 @@ case 'emojimix': {
 break;
 
 			case 'qc': case 'quote': case 'fakechat': {
-				if (!text && !m.quoted) return m.reply(`Kirim/reply pesan *${prefix + command}* Teksnya`)
-				try {
-					let ppnya = await sych.profilePictureUrl(m.sender, 'image').catch(() => 'https://i.pinimg.com/564x/8a/e9/e9/8ae9e92fa4e69967aa61bf2bda967b7b.jpg');
-					let res = await quotedLyo(text, m.pushName, ppnya);
-					await sych.sendAsSticker(m.chat, Buffer.from(res.result.image, 'base64'), m, { packname: packname, author: author })
-				} catch (e) {
-					m.reply('Server Create Sedang Offline!')
-				}
-			}
-			break
+    if (!text && !m.quoted) return m.reply(`Kirim/reply pesan *${prefix + command}* Teksnya`);
+    try {
+        let ppnya = await sych.profilePictureUrl(m.sender, 'image').catch(() => 'https://i.pinimg.com/564x/8a/e9/e9/8ae9e92fa4e69967aa61bf2bda967b7b.jpg');
+        let pesan = text || m.quoted.text;
+        let res = await quotedLyo(pesan, m.pushName, ppnya);
+
+        // Debugging base64
+        let base64Image = res.result.image;
+        console.log('Base64 Data (partial):', base64Image.slice(0, 100));
+
+        // Perbaiki format jika header hilang
+        if (!base64Image.startsWith('data:image/')) {
+            base64Image = `data:image/webp;base64,${base64Image}`;
+        }
+
+        // Validasi base64
+        if (!/^data:image\/(png|jpeg|jpg|webp);base64,/.test(base64Image)) {
+            throw new Error('Invalid base64 format. Expected image format.');
+        }
+
+        // Konversi base64 ke buffer
+        let buffer = Buffer.from(base64Image.split(',')[1], 'base64');
+
+        // Pastikan gambar berbentuk persegi
+        buffer = await sharp(buffer)
+            .resize({
+                width: 512,   // Ukuran persegi
+                height: 512,  // Ukuran persegi
+                fit: 'contain', // Atur agar proporsional
+                background: { r: 0, g: 0, b: 0, alpha: 0 }, // Latar belakang transparan
+            })
+            .webp()
+            .toBuffer();
+
+        // Kirim buffer sebagai stiker
+        await sych.sendAsSticker(
+            m.chat,
+            buffer,
+            m,
+            { packname: packname, author: author }
+        );
+    } catch (e) {
+        console.error(e);
+        m.reply('Terjadi kesalahan: ' + e.message);
+    }
+}
+break;
 			case 'brat': {
     if (!text && (!m.quoted || !m.quoted.text)) return m.reply(`*${prefix + command}* Teksnya`);
     try {
@@ -1939,6 +2102,36 @@ async function generateExif(packname, author) {
     ]);
     return exifBuffer;
 }
+case 'sticktele': {
+    if (!text) return m.reply(`*${prefix + command}* membutuhkan query teks`);
+    try {
+        console.log('Mengambil data dari API Telegram Sticker...');
+        const apiUrl = `https://api.siputzx.my.id/api/d/telegramsticker?query=${encodeURIComponent(text)}`;
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error('Gagal merespons dari API');
+        
+        const result = await response.json();
+        if (!result.stickers || result.stickers.length === 0) {
+            return m.reply('Tidak ada stiker yang ditemukan untuk query tersebut.');
+        }
+
+        console.log('Stiker ditemukan, mengambil stiker pertama...');
+        const sticker = result.stickers[0]; // Ambil stiker pertama
+        const stickerBuffer = await fetch(sticker.fileUrl).then(res => res.buffer());
+        
+        console.log('Mengirim stiker...');
+        await sych.sendMessage(
+            m.chat,
+            { sticker: stickerBuffer },
+            { quoted: m }
+        );
+        console.log('Stiker berhasil dikirim.');
+    } catch (e) {
+        console.error('Error:', e.message);
+        m.reply(`Terjadi kesalahan: ${e.message}`);
+    }
+}
+break;
 			case 'wasted': {
 				try {
 					if (/jpg|jpeg|png/.test(mime)) {
@@ -2347,6 +2540,38 @@ case 'ai': {
 					}
 				}
 			break
+			case 'dukun': {
+    if (!text) 
+        return m.reply(`Kirim perintah *${prefix + command}* diikuti dengan nama yang ingin dicari artinya.`);
+    
+    const nama = text.trim();
+    const loadingMessage = await m.reply('Sedang mencari arti nama... Mohon tunggu sebentar.');
+
+    console.log(`Memulai proses pencarian arti nama untuk: ${nama}`);
+    
+    try {
+        let response = await fetch(`https://api.siputzx.my.id/api/ai/dukun?content=${encodeURIComponent(nama)}`);
+        console.log(`Mengirim permintaan ke API: https://api.siputzx.my.id/api/ai/dukun?content=${nama}`);
+
+        let result = await response.json();
+        console.log('Respon API diterima:', result);
+
+        if (result.status) {
+            await sych.sendMessage(m.chat, { text: result.data });
+            console.log('Pesan arti nama berhasil dikirim ke pengguna.');
+        } else {
+            await sych.sendMessage(m.chat, { text: 'Maaf, tidak dapat menemukan arti nama. Silakan coba lagi nanti.' });
+            console.log('API gagal memberikan hasil yang valid.');
+        }
+    } catch (e) {
+        console.error('Terjadi kesalahan saat memproses permintaan:', e);
+        await sych.sendMessage(m.chat, { text: 'Server sedang mengalami gangguan. Silakan coba lagi nanti.' });
+    } finally {
+        await sych.deleteMessage(m.chat, loadingMessage.key);
+        console.log('Pesan loading telah dihapus.');
+    }
+}
+break;
 			// Search Menu
 			case 'google': {
 				if (!text) return m.reply(`Example: ${prefix + command} query`)
@@ -2375,25 +2600,72 @@ case 'ai': {
 				});
 			}
 			break
-			case 'play': case 'ytplay': case 'yts': case 'ytsearch': case 'youtubesearch': {
-				if (!text) return m.reply(`Example: ${prefix + command} dj komang`)
-				m.reply(mess.wait)
-				try {
-					const res = await yts.search(text);
-					const hasil = pickRandom(res.all)
-					const teksnya = `*📍Title:* ${hasil.title || 'Tidak tersedia'}\n*✏Description:* ${hasil.description || 'Tidak tersedia'}\n*🌟Channel:* ${hasil.author?.name || 'Tidak tersedia'}\n*⏳Duration:* ${hasil.seconds || 'Tidak tersedia'} second (${hasil.timestamp || 'Tidak tersedia'})\n*🔎Source:* ${hasil.url || 'Tidak tersedia'}\n\n_note : jika ingin mendownload silahkan_\n_pilih ${prefix}ytmp3 url_video atau ${prefix}ytmp4 url_video_`;
-					await sych.sendMessage(m.chat, { image: { url: hasil.thumbnail }, caption: teksnya }, { quoted: m });
-					await sych.sendMessage(m.chat, {
-            react: {
-                text: '💿', // Emoji yang diinginkan
-                key: m.key // Memberikan reaksi pada pesan perintah
-            }
-        });
-				} catch (e) {
-					m.reply('Post not available!')
-				}
-			}
-			break
+		case 'play': case 'ytplay': case 'yts': case 'ytsearch': case 'youtubesearch': {
+    if (!text) {
+        console.log("⛔ Input teks kosong");
+        return m.reply(`Example: ${prefix + command} dj komang`);
+    }
+    console.log("✅ Perintah diterima:", command, "dengan teks:", text);
+    m.reply(mess.wait);
+    try {
+        console.log("🔄 Mencari video di YouTube...");
+        const res = await yts.search(text);
+        console.log("✅ Pencarian selesai:", res);
+
+        const hasil = res.all.slice(0, 2); // Ambil 5 hasil pertama
+        console.log("🎯 5 Video terpilih:", hasil);
+
+        let cards = [];
+        for (let video of hasil) {
+            cards.push({
+                body: proto.Message.InteractiveMessage.Body.fromObject({
+                    text: `*📍Title:* ${video.title || 'Tidak tersedia'}\n*🌟Channel:* ${video.author?.name || 'Tidak tersedia'}\n*⏳Duration:* ${video.timestamp || 'Tidak tersedia'}\n*🔎Source:* ${video.url || 'Tidak tersedia'}`,
+                }),
+                footer: proto.Message.InteractiveMessage.Footer.fromObject({
+                    text: `Pilih untuk detail lebih lanjut\nCommand ${prefix}ytmp3 url download audio dan ${prefix}ytmp4 url mendownload video`
+                }),
+                header: proto.Message.InteractiveMessage.Header.fromObject({
+                    title: video.title,
+                    hasMediaAttachment: true,
+                    imageMessage: (await generateWAMessageContent({
+                        image: { url: video.thumbnail }
+                    }, { upload: sych.waUploadToServer })).imageMessage
+                }),
+                nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.fromObject({
+                    buttons: [
+                        {
+                            name: "cta_url",
+                            buttonParamsJson: `{"display_text":"Lihat Video","url":"${video.url}"}`
+                        }
+                    ]
+                })
+            });
+        }
+
+        console.log("📄 Membuat carousel...");
+        const carouselMessage = {
+            interactiveMessage: proto.Message.InteractiveMessage.fromObject({
+                carouselMessage: proto.Message.InteractiveMessage.CarouselMessage.fromObject({
+                    cards: cards
+                }),
+                body: proto.Message.InteractiveMessage.Body.fromObject({
+                    text: "Pilih video dari hasil pencarian:"
+                }),
+                footer: proto.Message.InteractiveMessage.Footer.fromObject({
+                    text: global.namabot
+                })
+            })
+        };
+
+        const bot = await generateWAMessageFromContent(m.chat, carouselMessage, {});
+        await sych.relayMessage(m.chat, bot.message, { messageId: bot.key.id });
+        console.log("✅ Carousel berhasil dikirim.");
+    } catch (e) {
+        console.error("❌ Terjadi kesalahan:", e);
+        m.reply('Post not available!');
+    }
+}
+break;
 			case 'pixiv': {
 				if (!text) return m.reply(`Example: ${prefix + command} hu tao`)
 				try {
@@ -2411,22 +2683,62 @@ case 'ai': {
 			}
 			break
 			case 'pinterest': case 'pint': {
-				if (!text) return m.reply(`Example: ${prefix + command} hu tao`)
-				try {
-					let anu = await pinterest(text)
-					if (anu.length < 1) return m.reply('Pencarian tidak ditemukan!');
-					await sych.sendFileUrl(m.chat, pickRandom(anu), 'Nih Ngab', m)
-				} catch (e) {
-					let anu = await pinterest2(text)
-					let result = pickRandom(anu)
-					if (anu.length < 1) {
-						m.reply('Post not available!');
-					} else {
-						await sych.sendMessage(m.chat, { image: { url: result.images_url }, caption: `*Media Url :* ${result.pin}${result.link ? '\n*Source :* ' + result.link : ''}` }, { quoted: m })
-					}
-				}
-			}
-			break
+    if (!text) return m.reply(`Example: ${prefix + command} hu tao`);
+    try {
+        let anu = await pinterest(text); // Panggil API pencarian Pinterest
+        if (anu.length < 1) return m.reply('Pencarian tidak ditemukan!');
+
+        // Batasi hasil ke 5 item teratas dan siapkan carousel card
+        const carouselCards = await Promise.all(anu.slice(0, 5).map(async (url, index) => ({
+            header: {
+                title: `Hasil ${index + 1}`,
+                hasMediaAttachment: true,
+                imageMessage: (await generateWAMessageContent({
+                    image: { url }
+                }, { upload: sych.waUploadToServer })).imageMessage
+            },
+            body: { text: "Hasil pencarian Pinterest untuk: " + text },
+            footer: { text: "Klik tombol di bawah untuk melihat sumber." },
+            nativeFlowMessage: {
+                buttons: [
+                    {
+                        "name": "cta_url",
+                        "buttonParamsJson": JSON.stringify({
+                            display_text: "Lihat di Pinterest",
+                            url
+                        })
+                    }
+                ]
+            }
+        })));
+
+        // Buat pesan carousel
+        const carouselMessage = generateWAMessageFromContent(m.chat, {
+            viewOnceMessage: {
+                message: {
+                    messageContextInfo: { deviceListMetadata: {}, deviceListMetadataVersion: 2 },
+                    interactiveMessage: proto.Message.InteractiveMessage.fromObject({
+                        body: { text: `Hasil pencarian untuk: ${text}` },
+                        footer: { text: "Pinterest Bot by Sych" },
+                        header: { hasMediaAttachment: false },
+                        carouselMessage: proto.Message.InteractiveMessage.CarouselMessage.fromObject({
+                            cards: carouselCards
+                        })
+                    })
+                }
+            }
+        }, {});
+
+        // Kirim pesan carousel
+        await sych.relayMessage(m.chat, carouselMessage.message, { messageId: carouselMessage.key.id });
+    } catch (e) {
+        console.error("Kesalahan saat mengirim carousel:", e);
+        await sych.sendMessage(m.chat, {
+            text: "Terjadi kesalahan saat memproses permintaan. Silakan coba lagi atau hubungi admin."
+        }, { quoted: m });
+    }
+}
+break;
 			case 'wallpaper': {
 				if (!text) return m.reply(`Example: ${prefix + command} hu tao`)
 				try {
@@ -2442,7 +2754,9 @@ case 'ai': {
 				}
 			}
 			break
-			case 'ringtone': {
+			// Handler perintah
+// Handler perintah
+case 'ringtone': {
 				if (!text) return m.reply(`Example: ${prefix + command} black rover`)
 				let anu = await ringtone(text)
 				let result = pickRandom(anu)
@@ -3056,15 +3370,22 @@ break;
 			}
 			break
 			case 'cekkhodam': {
-				if (!text) return m.reply(`Example : ${prefix + command} nama lu`)
-				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/random/cekkhodam.json'));
-				m.reply(`Khodam dari *${text}* adalah *${hasil.nama}*\n_${hasil.deskripsi}_`)
-			}
-			break
-			case 'rate': case 'nilai': {
-				m.reply(`Rate Bot : *${Math.floor(Math.random() * 100)}%*`)
-			}
-			break
+    if (!text) return m.reply(`Example : ${prefix + command} nama lu`);
+    try {
+        const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/random/cekkhodam.json'));
+        
+        // Validasi apakah hasil memiliki properti yang dibutuhkan
+        if (hasil && hasil.nama && hasil.deskripsi) {
+            m.reply(`Khodam dari *${text}* adalah *${hasil.nama}*\n_${hasil.deskripsi}_`);
+        } else {
+            m.reply('Maaf, data khodam tidak ditemukan atau sedang bermasalah.');
+        }
+    } catch (error) {
+        console.error(error);
+        m.reply('Terjadi kesalahan saat mengambil data khodam.');
+    }
+}
+break;
 			case 'jodohku': {
 				if (!m.isGroup) return m.reply(mess.group)
 				let member = (store.groupMetadata[m.chat] ? store.groupMetadata[m.chat].participants : m.metadata.participants).map(a => a.id)
@@ -3128,6 +3449,12 @@ break;
 				}
 			}
 			break
+			//[ *CASE AI JOKO SIJAWA* ]
+case "joko": {
+if (!text) return m.reply("mau nanya apa sama joko\nExampel: .joko nama kamu siapa?")
+await sych.sendMessage(m.chat, { mimetype: 'audio/mp4', audio: { url: "https://api.siputzx.my.id/api/tools/tts?voice=jv-ID-DimasNeural&rate=0&pitch=0&volume=0&text=" + (await axios.get("https://api.siputzx.my.id/api/ai/joko?content="+text)).data.data } }, { quoted: m });
+}
+break
 			case 'ttc': case 'ttt': case 'tictactoe': {
 				let TicTacToe = require('./lib/tictactoe');
 				if (Object.values(tictactoe).find(room => room.id.startsWith('tictactoe') && [room.game.playerX, room.game.playerO].includes(m.sender))) return m.reply(`Kamu masih didalam game!\nKetik *${prefix}del${command}* Jika Ingin Mengakhiri sesi`);
@@ -3168,6 +3495,12 @@ break;
 					akinator[m.sender] = new Akinator({ region: 'id', childMode: false });
 					await akinator[m.sender].start()
 					let { key } = await m.reply(`🎮 Akinator Game :\n\n@${m.sender.split('@')[0]}\n${akinator[m.sender].question}\n\n- 0 - Ya\n- 1 - Tidak\n- 2 - Tidak Tau\n- 3 - Mungkin\n- 4 - Mungkin Tidak\n\n${prefix + command} end (Untuk Keluar dari sesi)`)
+					sych.sendMessage(m.chat, {
+        react: {
+            text: '🛜', // Emoji yang diinginkan
+            key: m.key // Memberikan reaksi pada pesan yang baru saja dikirim
+        }
+    });
 					akinator[m.sender].key = key.id
 					akinator[m.sender].waktu = setTimeout(() => {
 						if (akinator[m.sender]) m.reply(`_Waktu ${command} habis_`)
@@ -3195,12 +3528,24 @@ break;
 					}, 120000)
 				}
 				m.reply(`*TEBAK BOM*\n\n${tebakbom[m.sender].board.join("")}\n\nPilih lah nomor tersebut! dan jangan sampai terkena Bom!\nBomb : ${tebakbom[m.sender].bomb}\nNyawa : ${tebakbom[m.sender].nyawa.join("")}`);
+				sych.sendMessage(m.chat, {
+        react: {
+            text: '💣', // Emoji yang diinginkan
+            key: m.key // Memberikan reaksi pada pesan yang baru saja dikirim
+        }
+    });
 			}
 			break
 			case 'tekateki': {
 				if (iGame(tekateki, m.chat)) return m.reply('Masih Ada Sesi Yang Belum Diselesaikan!')
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/games/tekateki.json'));
 				let { key } = await m.reply(`🎮 Teka Teki Berikut :\n\n${hasil.soal}\n\nWaktu : 60s\nHadiah *+3499*`)
+				sych.sendMessage(m.chat, {
+        react: {
+            text: '🔑', // Emoji yang diinginkan
+            key: m.key // Memberikan reaksi pada pesan yang baru saja dikirim
+        }
+    });
 				tekateki[m.chat + key.id] = {
 					jawaban: hasil.jawaban.toLowerCase(),
 					id: key.id
@@ -3216,6 +3561,12 @@ break;
 				if (iGame(tebaklirik, m.chat)) return m.reply('Masih Ada Sesi Yang Belum Diselesaikan!')
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/games/tebaklirik.json'));
 				let { key } = await m.reply(`🎮 Tebak Lirik Berikut :\n\n${hasil.soal}\n\nWaktu : 90s\nHadiah *+4299*`)
+				sych.sendMessage(m.chat, {
+        react: {
+            text: '🎼', // Emoji yang diinginkan
+            key: m.key // Memberikan reaksi pada pesan yang baru saja dikirim
+        }
+    });
 				tebaklirik[m.chat + key.id] = {
 					jawaban: hasil.jawaban.toLowerCase(),
 					id: key.id
@@ -3227,6 +3578,244 @@ break;
 				}
 			}
 			break
+			case 'listsurah': {
+    try {
+        const surahList = [
+            "1. Al-Fatihah",
+            "2. Al-Baqarah",
+            "3. Ali Imran",
+            "4. An-Nisa",
+            "5. Al-Ma'idah",
+            "6. Al-An'am",
+            "7. Al-A'raf",
+            "8. Al-Anfal",
+            "9. At-Tawbah",
+            "10. Yunus",
+            "11. Hud",
+            "12. Yusuf",
+            "13. Ar-Ra'd",
+            "14. Ibrahim",
+            "15. Al-Hijr",
+            "16. An-Nahl",
+            "17. Al-Isra",
+            "18. Al-Kahf",
+            "19. Maryam",
+            "20. Ta-Ha",
+            "21. Al-Anbiya",
+            "22. Al-Hajj",
+            "23. Al-Mu'minun",
+            "24. An-Nur",
+            "25. Al-Furqan",
+            "26. Ash-Shu'ara",
+            "27. An-Naml",
+            "28. Al-Qasas",
+            "29. Al-Ankabut",
+            "30. Ar-Rum",
+            "31. Luqman",
+            "32. As-Sajdah",
+            "33. Al-Ahzab",
+            "34. Saba'",
+            "35. Fatir",
+            "36. Ya-Sin",
+            "37. As-Saffat",
+            "38. Sad",
+            "39. Az-Zumar",
+            "40. Ghafir",
+            "41. Fussilat",
+            "42. Ash-Shura",
+            "43. Az-Zukhruf",
+            "44. Ad-Dukhan",
+            "45. Al-Jathiyah",
+            "46. Al-Ahqaf",
+            "47. Muhammad",
+            "48. Al-Fath",
+            "49. Al-Hujurat",
+            "50. Qaf",
+            "51. Az-Zariyat",
+            "52. At-Tur",
+            "53. An-Najm",
+            "54. Al-Qamar",
+            "55. Ar-Rahman",
+            "56. Al-Waqi'ah",
+            "57. Al-Hadid",
+            "58. Al-Mujadilah",
+            "59. Al-Hashr",
+            "60. Al-Mumtahanah",
+            "61. As-Saff",
+            "62. Al-Jumu'ah",
+            "63. Al-Munafiqun",
+            "64. At-Taghabun",
+            "65. At-Talaq",
+            "66. At-Tahrim",
+            "67. Al-Mulk",
+            "68. Al-Qalam",
+            "69. Al-Haqqah",
+            "70. Al-Ma'arij",
+            "71. Nuh",
+            "72. Al-Jinn",
+            "73. Al-Muzzammil",
+            "74. Al-Muddathir",
+            "75. Al-Qiyamah",
+            "76. Al-Insan",
+            "77. Al-Mursalat",
+            "78. An-Naba'",
+            "79. An-Nazi'at",
+            "80. Abasa",
+            "81. At-Takwir",
+            "82. Al-Infitar",
+            "83. Al-Mutaffifin",
+            "84. Al-Inshiqaq",
+            "85. Al-Buruj",
+            "86. At-Tariq",
+            "87. Al-A'la",
+            "88. Al-Ghashiyah",
+            "89. Al-Fajr",
+            "90. Al-Balad",
+            "91. Ash-Shams",
+            "92. Al-Lail",
+            "93. Ad-Duhaa",
+            "94. Al-Inshirah",
+            "95. At-Tin",
+            "96. Al-'Alaq",
+            "97. Al-Qadr",
+            "98. Al-Bayyinah",
+            "99. Az-Zalzalah",
+            "100. Al-Adiyat",
+            "101. Al-Qari'ah",
+            "102. At-Takathur",
+            "103. Al-Asr",
+            "104. Al-Humazah",
+            "105. Al-Fil",
+            "106. Quraysh",
+            "107. Al-Ma'un",
+            "108. Al-Kawthar",
+            "109. Al-Kafirun",
+            "110. An-Nasr",
+            "111. Al-Masad",
+            "112. Al-Ikhlas",
+            "113. Al-Falaq",
+            "114. An-Nas"
+        ];
+        
+        const surahMessage = `*Daftar Surah Al-Qur'an:*\n\n${surahList.join('\n')}`;
+        m.reply(surahMessage);
+        sych.sendMessage(m.chat, {
+        react: {
+            text: '🕋', // Emoji yang diinginkan
+            key: m.key // Memberikan reaksi pada pesan yang baru saja dikirim
+        }
+    });
+    } catch (error) {
+        console.error('Error:', error.message);
+        m.reply('Terjadi kesalahan saat menampilkan daftar surah.');
+    }
+}
+break;
+case 'listdoa': {
+    try {
+        // Ambil data dari API
+        const response = await fetch('https://doa-doa-api-ahmadramadhan.fly.dev/api');
+        const doaList = await response.json();
+
+        // Format pesan
+        const doaMessage = `*Daftar Doa Harian:*\n\n${doaList.map(doa => `${doa.id}. ${doa.doa}`).join('\n')}`;
+
+        // Kirim pesan
+        m.reply(doaMessage);
+
+        // Kirim reaksi (opsional)
+        sych.sendMessage(m.chat, {
+            react: {
+                text: '🙏', // Emoji reaksi
+                key: m.key // Memberikan reaksi pada pesan yang baru saja dikirim
+            }
+        });
+    } catch (error) {
+        console.error('Error fetching doa list:', error.message);
+        m.reply('Terjadi kesalahan saat menampilkan daftar doa.');
+    }
+    break;
+}
+case 'doa': {
+    try {
+        // Ambil ID doa dari argumen
+        const id = args[0];
+        if (!id) {
+            return m.reply('Mohon masukkan ID doa. Contoh: *doa 1*');
+        }
+
+        // Ambil data dari API berdasarkan ID
+        const response = await fetch(`https://doa-doa-api-ahmadramadhan.fly.dev/api/${id}`);
+        const doaData = await response.json();
+
+        if (doaData.length === 0) {
+            return m.reply('Doa dengan ID tersebut tidak ditemukan.');
+        }
+
+        const doa = doaData[0]; // Ambil data pertama (berdasarkan struktur API)
+
+        // Format pesan
+        const doaMessage = `*Doa: ${doa.doa}*\n\n` +
+            `*Ayat:*\n${doa.ayat}\n\n` +
+            `*Latin:*\n${doa.latin}\n\n` +
+            `*Artinya:*\n${doa.artinya}`;
+
+        // Kirim pesan
+        m.reply(doaMessage);
+
+        // Kirim reaksi (opsional)
+        sych.sendMessage(m.chat, {
+            react: {
+                text: '🙏', // Emoji reaksi
+                key: m.key // Memberikan reaksi pada pesan yang baru saja dikirim
+            }
+        });
+    } catch (error) {
+        console.error('Error fetching doa:', error.message);
+        m.reply('Terjadi kesalahan saat menampilkan doa.');
+    }
+    break;
+}
+			case 'quran': {
+    if (!text) return m.reply(`*${prefix + command}* Masukkan nomor surah!`);
+    
+    const surahNumber = parseInt(text);
+    if (isNaN(surahNumber) || surahNumber < 1 || surahNumber > 114) {
+        return m.reply('Nomor surah tidak valid! Masukkan angka antara 1 hingga 114.');
+    }
+    
+    try {
+        console.log(`Mengambil data surah nomor ${surahNumber}...`);
+        
+        const response = await fetch(`https://api.siputzx.my.id/api/s/surah?no=${surahNumber}`);
+        if (!response.ok) throw new Error('Gagal mengambil data dari API');
+        
+        const data = await response.json();
+        if (!data.status || !data.data || data.data.length === 0) {
+            return m.reply('Surah tidak ditemukan atau data tidak tersedia.');
+        }
+        
+        let quranMessage = `*Surah Nomor ${surahNumber}:*\n\n`;
+        for (const ayat of data.data) {
+            quranMessage += `*Arab*: ${ayat.arab}\n`;
+            quranMessage += `*Latin*: ${ayat.latin}\n`;
+            quranMessage += `*Indo*: ${ayat.indo}\n\n`;
+        }
+        
+        console.log('Data berhasil diambil, mengirim pesan...');
+        m.reply(quranMessage.trim());
+        sych.sendMessage(m.chat, {
+        react: {
+            text: '🕌', // Emoji yang diinginkan
+            key: m.key // Memberikan reaksi pada pesan yang baru saja dikirim
+        }
+    });
+    } catch (error) {
+        console.error('Error saat mengambil data:', error.message);
+        m.reply('Terjadi kesalahan saat mengambil data surah. Coba lagi nanti.');
+    }
+}
+break;
 			case 'tebakkata': {
 				if (iGame(tebakkata, m.chat)) return m.reply('Masih Ada Sesi Yang Belum Diselesaikan!')
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/games/tebakkata.json'));
@@ -3246,6 +3835,12 @@ break;
 				if (family100.hasOwnProperty(m.chat)) return m.reply('Masih Ada Sesi Yang Belum Diselesaikan!')
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/games/family100.json'));
 				let { key } = await m.reply(`🎮 Tebak Kata Berikut :\n\n${hasil.soal}\n\nWaktu : 5m\nHadiah *+3499*`)
+				sych.sendMessage(m.chat, {
+        react: {
+            text: '💯', // Emoji yang diinginkan
+            key: m.key // Memberikan reaksi pada pesan yang baru saja dikirim
+        }
+    });
 				family100[m.chat] = {
 					soal: hasil.soal,
 					jawaban: hasil.jawaban,
@@ -3263,6 +3858,12 @@ break;
 				if (iGame(susunkata, m.chat)) return m.reply('Masih Ada Sesi Yang Belum Diselesaikan!')
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/games/susunkata.json'));
 				let { key } = await m.reply(`🎮 Susun Kata Berikut :\n\n${hasil.soal}\nTipe : ${hasil.tipe}\n\nWaktu : 60s\nHadiah *+2989*`)
+				sych.sendMessage(m.chat, {
+        react: {
+            text: '📝', // Emoji yang diinginkan
+            key: m.key // Memberikan reaksi pada pesan yang baru saja dikirim
+        }
+    });
 				susunkata[m.chat + key.id] = {
 					jawaban: hasil.jawaban.toLowerCase(),
 					id: key.id
@@ -3293,6 +3894,12 @@ break;
 				if (iGame(caklontong, m.chat)) return m.reply('Masih Ada Sesi Yang Belum Diselesaikan!')
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/games/caklontong.json'));
 				let { key } = await m.reply(`🎮 Jawab Pertanyaan Berikut :\n\n${hasil.soal}\n\nWaktu : 60s\nHadiah *+9999*`)
+				sych.sendMessage(m.chat, {
+        react: {
+            text: '⁉️', // Emoji yang diinginkan
+            key: m.key // Memberikan reaksi pada pesan yang baru saja dikirim
+        }
+    });
 				caklontong[m.chat + key.id] = {
 					...hasil,
 					jawaban: hasil.jawaban.toLowerCase(),
@@ -3331,6 +3938,12 @@ break;
 				if (iGame(tebaknegara, m.chat)) return m.reply('Masih Ada Sesi Yang Belum Diselesaikan!')
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/games/tebaknegara.json'));
 				let { key } = await m.reply(`🎮 Tebak Negara Dari Tempat Berikut :\n\n*Tempat : ${hasil.tempat}*\n\nWaktu : 60s\nHadiah *+3499*`)
+				sych.sendMessage(m.chat, {
+        react: {
+            text: '🌍', // Emoji yang diinginkan
+            key: m.key // Memberikan reaksi pada pesan yang baru saja dikirim
+        }
+    });
 				tebaknegara[m.chat + key.id] = {
 					jawaban: hasil.negara.toLowerCase(),
 					id: key.id
@@ -3362,7 +3975,12 @@ break;
 
         // Mengirim gambar dan deskripsi permainan
         let { key } = await sych.sendFileUrl(m.chat, hasil.data.gambar, deskripsi, m);
-        
+        sych.sendMessage(m.chat, {
+        react: {
+            text: '📛', // Emoji yang diinginkan
+            key: m.key // Memberikan reaksi pada pesan yang baru saja dikirim
+        }
+    });
         // Menyimpan jawaban dan ID sesi
         tebakepep[m.chat + key.id] = {
             jawaban: hasil.data.name.toLowerCase(),
@@ -3387,6 +4005,12 @@ break;
 				if (iGame(tebakgambar, m.chat)) return m.reply('Masih Ada Sesi Yang Belum Diselesaikan!')
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/games/tebakgambar.json'));
 				let { key } = await sych.sendFileUrl(m.chat, hasil.img, `🎮 Tebak Gambar Berikut :\n\n${hasil.deskripsi}\n\nWaktu : 60s\nHadiah *+3499*`, m)
+				sych.sendMessage(m.chat, {
+        react: {
+            text: '🖼️', // Emoji yang diinginkan
+            key: m.key // Memberikan reaksi pada pesan yang baru saja dikirim
+        }
+    });
 				tebakgambar[m.chat + key.id] = {
 					jawaban: hasil.jawaban.toLowerCase(),
 					id: key.id
@@ -3402,6 +4026,12 @@ break;
 				if (iGame(tebakbendera, m.chat)) return m.reply('Masih Ada Sesi Yang Belum Diselesaikan!')
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/games/tebakbendera.json'));
 				let { key } = await m.reply(`🎮 Tebak Bendera Berikut :\n\n*Bendera : ${hasil.bendera}*\n\nWaktu : 60s\nHadiah *+3499*`)
+				sych.sendMessage(m.chat, {
+        react: {
+            text: '🌎', // Emoji yang diinginkan
+            key: m.key // Memberikan reaksi pada pesan yang baru saja dikirim
+        }
+    });
 				tebakbendera[m.chat + key.id] = {
 					jawaban: hasil.negara.toLowerCase(),
 					id: key.id
@@ -3421,6 +4051,12 @@ break;
 				if (!inputMode.includes(text.toLowerCase())) return m.reply('Mode tidak ditemukan!')
 				let result = await genMath(text.toLowerCase())
 				let { key } = await m.reply(`*Berapa hasil dari: ${result.soal.toLowerCase()}*?\n\nWaktu : ${(result.waktu / 1000).toFixed(2)} detik`)
+				sych.sendMessage(m.chat, {
+        react: {
+            text: '🔢', // Emoji yang diinginkan
+            key: m.key // Memberikan reaksi pada pesan yang baru saja dikirim
+        }
+    });
 				kuismath[m.chat + key.id] = {
 					jawaban: result.jawaban,
 					mode: text.toLowerCase(),
@@ -3429,6 +4065,7 @@ break;
 				await sleep(kuismath, result.waktu)
 				if (rdGame(m.chat + key.id)) {
 					m.reply('Waktu Habis\nJawaban: ' + kuismath[m.chat + key.id].jawaban)
+					
 					delete kuismath[m.chat + key.id]
 				}
 			}
@@ -3514,6 +4151,7 @@ break;
 │${setv} ${prefix}npm (query)
 │${setv} ${prefix}style (query)
 │${setv} ${prefix}cuaca (kota)
+│${setv} ${prefix}dukun (nama)
 ╰─┬────❍
 ╭─┴❍「 *DOWNLOAD* 」❍
 │${setv} ${prefix}spotifydl (url)
@@ -3529,6 +4167,12 @@ break;
 │${setv} ${prefix}quotes
 │${setv} ${prefix}truth
 │${setv} ${prefix}renungan
+╰─┬────❍
+╭─┴❍「 *ISLAMMIC* 」❍
+│${setv} ${prefix}quran <1-144>
+│${setv} ${prefix}listsurah
+│${setv} ${prefix}listdoa
+│${setv} ${prefix}doa <1-37>
 ╰─┬────❍
 ╭─┴❍「 *TOOLS* 」❍
 │${setv} ${prefix}get (url)
@@ -3548,6 +4192,7 @@ break;
 │${setv} ${prefix}smeme (send/reply img)
 │${setv} ${prefix}emojimix 🙃+💀
 │${setv} ${prefix}nulis
+│${setv} ${prefix}joko (teksnya)
 │${setv} ${prefix}readmore text1|text2
 │${setv} ${prefix}qc (pesannya)
 │${setv} ${prefix}translate
@@ -3568,6 +4213,7 @@ break;
 │${setv} ${prefix}earrape (reply audio)
 │${setv} ${prefix}nightcore (reply audio)
 │${setv} ${prefix}getexif (reply sticker)
+│${setv} ${prefix}sticktele
 ╰─┬────❍
 ╭─┴❍「 *AI* 」❍
 │${setv} ${prefix}ai (query)
@@ -3697,7 +4343,12 @@ break;
             }
         }
     }, { quoted: m });
-
+// Mengirim stiker
+    await sych.sendMessage(m.chat, {
+        sticker: { url: 'src/media/stc.webp' }, // Path file stiker
+        mimetype: 'image/webp',
+    }, { quoted: m });
+    
     // Mengirim reaksi dengan emoji '🌱' oleh pengirim perintah
     sych.sendMessage(m.chat, {
         react: {
@@ -3710,6 +4361,7 @@ break;
 break;
 
 			default: {
+    
 			if (budy.startsWith('>')) {
 				if (!isCreator) return
 				try {
