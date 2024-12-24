@@ -3091,6 +3091,14 @@ if (!isPremium) return m.reply(mess.prem);
     if (!text) return m.reply(`Example: ${prefix + command} url_youtube`);
     if (!text.includes('youtu')) return m.reply('Url Tidak Mengandung Result Dari Youtube!');
     m.reply('Memproses permintaan Anda, harap tunggu...');
+    await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+    await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+    await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+    await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+    await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+    await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+    await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
+    
 
     try {
         console.log('Mengambil informasi video...');
@@ -3109,7 +3117,7 @@ if (!isPremium) return m.reply(mess.prem);
         }
 
         console.log('Memulai unduhan audio...');
-        console.time('Unduhan Audio');
+        console.time('Mengunduh Audio');
         const audioStream = ytdl(text, { filter: 'audioonly', quality: 'lowestaudio' });
         const tempFile = fs.createWriteStream(outputPath);
 
@@ -3173,6 +3181,14 @@ break;
     if (!isPremium) return m.reply(mess.prem);
     if (!text) return m.reply(`Example: ${prefix + command} url_youtube`);
     if (!text.includes('youtu')) return m.reply('Url Tidak Mengandung Result Dari Youtube!');
+    await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+    await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+    await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+    await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+    await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+    await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+    await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
+    
     m.reply('Memproses permintaan Anda, harap tunggu...');
 
     try {
