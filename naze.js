@@ -1720,6 +1720,50 @@ break;
     }
 }
 break;
+case 'img2text': {
+    try {
+        // Periksa apakah file media valid (gambar)
+        if (/webp|jpg|jpeg|png/.test(mime)) {
+            // Menambahkan pesan loading dan menyimpan key untuk edit nanti
+            let { key } = await m.reply(mess.wait);
+            await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+            await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+            await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+            await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+            await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+            await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
+
+            // Unduh media
+            let media = await quoted.download();
+            
+            // Unggah media ke Uguu.se untuk mendapatkan URL
+            let anu = await UguuSe(media);
+            if (!anu.url) throw 'Gagal mengunggah media ke Uguu.se!';
+
+            // Kirim URL ke API Anda
+            let response = await fetch(`https://api.siputzx.my.id/api/ai/image2text?url=${anu.url}`);
+            let result = await response.json();
+
+            // Periksa respons API
+            if (result.status && result.data) {
+                // Terjemahkan hasil ke Bahasa Indonesia menggunakan translate-google-api
+                let translatedText = await translate(result.data, { from: 'en', to: 'id' });
+
+                // Kirim hasil terjemahan ke pengguna
+                m.reply(`*Hasil Deskripsi Gambar (Bahasa Indonesia):*\n\n${translatedText}`, { edit: key });
+            } else {
+                m.reply('Gagal mendapatkan deskripsi gambar dari API!', { edit: key });
+            }
+        } else {
+            m.reply('Kirim gambar yang ingin diubah menjadi teks!');
+        }
+    } catch (e) {
+        // Tangani error dan kirim pesan jika ada masalah
+        console.error(e);
+        m.reply('Terjadi kesalahan saat memproses gambar!', { edit: key });
+    }
+}
+break;
 			case 'texttospech': case 'tts': case 'tospech': {
 				if (!text) return m.reply('Mana text yg mau diubah menjadi audio?')
 				let { tts } = require('./lib/tts')
@@ -4599,6 +4643,8 @@ break;
 │${setv} ${prefix}aitukam
 │${setv} ${prefix}autoai (own)
 │${setv} ${prefix}txt2img (query)
+│${setv} ${prefix}img2text (reply img/stc)
+│${setv} ${prefix}aimg (query)
 ╰─┬────❍
 ╭─┴❍「 *CEWE* 」❍
 │${setv} ${prefix}cjpn 
