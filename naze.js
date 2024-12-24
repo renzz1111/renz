@@ -225,7 +225,7 @@ let _chats =
 		if (db.set[botNumber].autobio) {
 			let setbio = db.set[botNumber]
 			if (new Date() * 1 - setbio.status > 60000) {
-				await sych.updateProfileStatus(`${sych.user.name} | 🎯 Runtime : ${runtime(process.uptime())}`)
+				await sych.updateProfileStatus(`${sych.user.name} | 🎯 Runtime : ${runtime(os.uptime())}`)
 				setbio.status = new Date() * 1
 			}
 		}
@@ -673,7 +673,14 @@ let _chats =
 				if (!text) return m.reply('Masukkan Link Group!')
 				if (!isUrl(args[0]) && !args[0].includes('whatsapp.com')) return m.reply('Link Invalid!')
 				const result = args[0].split('https://chat.whatsapp.com/')[1]
-				m.reply(mess.wait)
+				                m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
 				await sych.groupAcceptInvite(result).catch((res) => {
 					if (res.data == 400) return m.reply('Grup Tidak Di Temukan❗');
 					if (res.data == 401) return m.reply('Bot Di Kick Dari Grup Tersebut❗');
@@ -1139,7 +1146,7 @@ let _chats =
 				}).catch((err) => m.reply('Gagal!'))
 			}
 			break
-			case 'group': case 'grup': {
+			case 'gc': case 'grup': {
 				if (!m.isGroup) return m.reply(mess.group)
 				if (!m.isAdmin) return m.reply(mess.admin)
 				if (!m.isBotAdmin) return m.reply(mess.botAdmin)
@@ -1382,9 +1389,9 @@ break;
 					m.reply(`Settings Bot @${botNumber.split('@')[0]}\n${settingsBot}`);
 					break
 					default:
-					if (teks[0] || teks[1]) m.reply(`*Please Sellect Settings :*\n- Mode : *${prefix + command} mode self/public*\n- Anti Call : *${prefix + command} anticall on/off*\n- Auto Bio : *${prefix + command} autobio on/off*\n- autoAi : *${prefix} autoai on/off*\n- Auto Read : *${prefix + command} autoread on/off*\n- Auto Typing : *${prefix + command} autotyping on/off*\n- Read Sw : *${prefix + command} readsw on/off*\n- Multi Prefix : *${prefix + command} multiprefix on/off*`)
+					if (teks[0] || teks[1]) m.reply(`*Please Sellect Settings :*\n- Mode : *${prefix + command} mode self/public*\n- Anti Call : *${prefix + command} anticall on/off*\n- Auto Bio : *${prefix + command} autobio on/off*\n- autoAi : *${prefix} autoai on/off*\n- Auto Read : *${prefix + command} autoread on/off*\n- Auto Typing : *${prefix + command} autotyping on/off*\n- Auto VoiceNote : *${prefix + command} autovn on/off*\n- Read Sw : *${prefix + command} readsw on/off*\n- Multi Prefix : *${prefix + command} multiprefix on/off*`)
 				}
-				if (!teks[0] && !teks[1]) return sych.sendMessage(m.chat, { text: `*Bot Telah Online Selama*\n*${runtime(process.uptime())}*` }, { quoted: m })
+				if (!teks[0] && !teks[1]) return sych.sendMessage(m.chat, { text: `*Bot Telah Online Selama*\n*${runtime(os.uptime())}*` }, { quoted: m })
 			}
 			break
 			case 'ping': case 'botstatus': case 'statusbot': {
@@ -1423,7 +1430,7 @@ break;
 				let latensi = speed() - timestamp
 				neww = performance.now()
 				oldd = performance.now()
-				respon = `Kecepatan Respon ${latensi.toFixed(4)} _Second_ \n ${oldd - neww} _miliseconds_\n\nRuntime : ${runtime(process.uptime())}\n\n💻 Info Server\nRAM: ${formatp(os.totalmem() - os.freemem())} / ${formatp(os.totalmem())}\n\n_NodeJS Memory Usaage_\n${Object.keys(used).map((key, _, arr) => `${key.padEnd(Math.max(...arr.map(v=>v.length)),' ')}: ${formatp(used[key])}`).join('\n')}\n\n${cpus[0] ? `_Total CPU Usage_\n${cpus[0].model.trim()} (${cpu.speed} MHZ)\n${Object.keys(cpu.times).map(type => `- *${(type + '*').padEnd(6)}: ${(100 * cpu.times[type] / cpu.total).toFixed(2)}%`).join('\n')}\n_CPU Core(s) Usage (${cpus.length} Core CPU)_\n${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Object.keys(cpu.times).map(type => `- *${(type + '*').padEnd(6)}: ${(100 * cpu.times[type] / cpu.total).toFixed(2)}%`).join('\n')}`).join('\n\n')}` : ''}`.trim()
+				respon = `Kecepatan Respon ${latensi.toFixed(4)} _Second_ \n ${oldd - neww} _miliseconds_\n\nRuntime : ${runtime(os.uptime())}\n\n💻 Info Server\nRAM: ${formatp(os.totalmem() - os.freemem())} / ${formatp(os.totalmem())}\n\n_NodeJS Memory Usaage_\n${Object.keys(used).map((key, _, arr) => `${key.padEnd(Math.max(...arr.map(v=>v.length)),' ')}: ${formatp(used[key])}`).join('\n')}\n\n${cpus[0] ? `_Total CPU Usage_\n${cpus[0].model.trim()} (${cpu.speed} MHZ)\n${Object.keys(cpu.times).map(type => `- *${(type + '*').padEnd(6)}: ${(100 * cpu.times[type] / cpu.total).toFixed(2)}%`).join('\n')}\n_CPU Core(s) Usage (${cpus.length} Core CPU)_\n${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Object.keys(cpu.times).map(type => `- *${(type + '*').padEnd(6)}: ${(100 * cpu.times[type] / cpu.total).toFixed(2)}%`).join('\n')}`).join('\n\n')}` : ''}`.trim()
 				m.reply(respon)
 			}
 			break
@@ -1590,7 +1597,14 @@ break;
 			break
 			case 'toaud': case 'toaudio': {
 				if (!/video|audio/.test(mime)) return m.reply(`Kirim/Reply Video/Audio Yang Ingin Dijadikan Audio Dengan Caption ${prefix + command}`)
-				m.reply(mess.wait)
+				                m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
 				let media = await quoted.download()
 				let audio = await toAudio(media, 'mp4')
 				await sych.sendMessage(m.chat, { audio: audio, mimetype: 'audio/mpeg'}, { quoted : m })
@@ -1598,7 +1612,14 @@ break;
 			break
 			case 'tomp3': {
 				if (!/video|audio/.test(mime)) return m.reply(`Kirim/Reply Video/Audio Yang Ingin Dijadikan Audio Dengan Caption ${prefix + command}`)
-				m.reply(mess.wait)
+				                m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
 				let media = await quoted.download()
 				let audio = await toAudio(media, 'mp4')
 				await sych.sendMessage(m.chat, { document: audio, mimetype: 'audio/mpeg', fileName: `Convert By Sych Bot.mp3`}, { quoted : m })
@@ -1606,7 +1627,14 @@ break;
 			break
 			case 'tovn': case 'toptt': case 'tovoice': {
 				if (!/video|audio/.test(mime)) return m.reply(`Kirim/Reply Video/Audio Yang Ingin Dijadikan Audio Dengan Caption ${prefix + command}`)
-				m.reply(mess.wait)
+				                m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
 				let media = await quoted.download()
 				let audio = await toPTT(media, 'mp4')
 				await sych.sendMessage(m.chat, { audio: audio, mimetype: 'audio/ogg; codecs=opus', ptt: true }, { quoted: m })
@@ -1614,7 +1642,14 @@ break;
 			break
 			case 'togif': {
 				if (!/webp|video/.test(mime)) return m.reply(`Reply Video/Stiker dengan caption *${prefix + command}*`)
-				m.reply(mess.wait)
+				                m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
 				let media = await sych.downloadAndSaveMediaMessage(qmsg)
 				let ran = `./database/sampah/${getRandom('.gif')}`;
 				exec(`convert ${media} ${ran}`, (err) => {
@@ -1628,7 +1663,14 @@ break;
 			break
 			case 'toimage': case 'toimg': {
 				if (!/webp|video/.test(mime)) return m.reply(`Reply Video/Stiker dengan caption *${prefix + command}*`)
-				m.reply(mess.wait)
+				                m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
 				let media = await sych.downloadAndSaveMediaMessage(qmsg)
 				let ran = `./database/sampah/${getRandom('.png')}`;
 				exec(`convert ${media}[0] ${ran}`, (err) => {
@@ -1652,20 +1694,32 @@ break;
 			}
 			break
 			case 'tourl': {
-				try {
-					if (/webp|video|sticker|audio|jpg|jpeg|png/.test(mime)) {
-						m.reply(mess.wait)
-						let media = await quoted.download()
-						let anu = await UguuSe(media)
-						m.reply('Url : ' + anu.url)
-					} else {
-						m.reply('Send Media yg ingin di Upload!')
-					}
-				} catch (e) {
-					m.reply('Server Uploader sedang offline!')
-				}
-			}
-			break
+    try {
+        if (/webp|video|sticker|audio|jpg|jpeg|png/.test(mime)) {
+            // Menambahkan pesan loading dan menyimpan key untuk edit nanti
+            let { key } = await                 m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
+            
+            let media = await quoted.download();
+            let anu = await UguuSe(media);
+            
+            // Mengedit pesan setelah URL dihasilkan
+            m.reply('Url : ' + anu.url, { edit: key });
+        } else {
+            m.reply('Send Media yg ingin di Upload!');
+        }
+    } catch (e) {
+        // Mengedit pesan error jika terjadi masalah
+        m.reply('Server Uploader sedang offline!', { edit: key });
+    }
+}
+break;
 			case 'texttospech': case 'tts': case 'tospech': {
 				if (!text) return m.reply('Mana text yg mau diubah menjadi audio?')
 				let { tts } = require('./lib/tts')
@@ -1692,7 +1746,14 @@ break;
 			break
 			case 'toqr': case 'qr': {
 				if (!text) return m.reply(`Ubah Text ke Qr dengan *${prefix + command}* textnya`)
-				m.reply(mess.wait)
+				                m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
 				await sych.sendMessage(m.chat, { image: { url: 'https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=' + text }, caption: 'Nih Bro' }, { quoted: m })
 			}
 			break
@@ -1815,7 +1876,14 @@ case 'smeme': case 'stickmeme': case 'stikmeme': case 'stickermeme': case 'stike
             return m.reply(`Kirim/reply image/sticker dengan caption ${prefix + command} atas|bawah`);
         }
 
-        m.reply(mess.wait);
+                        m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
         console.log('Menunggu proses meme...');
 
         let [atas, bawah] = text.split('|');
@@ -2092,7 +2160,14 @@ break;
 			case 'wasted': {
 				try {
 					if (/jpg|jpeg|png/.test(mime)) {
-						m.reply(mess.wait)
+						                m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
 						let media = await quoted.download()
 						let anu = await UguuSe(media)
 						await sych.sendFileUrl(m.chat, 'https://some-random-api.com/canvas/wasted?avatar=' + anu.url, 'Nih Bro', m)
@@ -2143,6 +2218,14 @@ case 'bluearchive': {
 break;
 case 'cjpn': {
     try {
+                m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});    
         // Mengirim gambar langsung tanpa memerlukan input teks
         await sych.sendMessage(m.chat, {
             image: { url: 'https://api.siputzx.my.id/api/r/cecan/japan' }
@@ -2160,6 +2243,14 @@ case 'cjpn': {
 break;
 case 'ckorea': {
     try {
+                m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});    
         // Mengirim gambar langsung tanpa memerlukan input teks
         await sych.sendMessage(m.chat, {
             image: { url: 'https://api.siputzx.my.id/api/r/cecan/korea' }
@@ -2177,6 +2268,14 @@ case 'ckorea': {
 break;
 case 'cindo': {
     try {
+                m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});    
         // Mengirim gambar langsung tanpa memerlukan input teks
         await sych.sendMessage(m.chat, {
             image: { url: 'https://api.siputzx.my.id/api/r/cecan/indonesia' }
@@ -2194,6 +2293,14 @@ case 'cindo': {
 break;
 case 'cthai': {
     try {
+                m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});    
         // Mengirim gambar langsung tanpa memerlukan input teks
         await sych.sendMessage(m.chat, {
             image: { url: 'https://api.siputzx.my.id/api/r/cecan/thailand' }
@@ -2211,6 +2318,14 @@ case 'cthai': {
 break;
 case 'cviet': {
     try {
+                m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});    
         // Mengirim gambar langsung tanpa memerlukan input teks
         await sych.sendMessage(m.chat, {
             image: { url: 'https://api.siputzx.my.id/api/r/cecan/vietnam' }
@@ -2228,6 +2343,14 @@ case 'cviet': {
 break;
 case 'cchina': {
     try {
+                m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});    
         // Mengirim gambar langsung tanpa memerlukan input teks
         await sych.sendMessage(m.chat, {
             image: { url: 'https://api.siputzx.my.id/api/r/cecan/china' }
@@ -2246,7 +2369,14 @@ break;
 			case 'trigger': case 'triggered': {
 				try {
 					if (/jpg|jpeg|png/.test(mime)) {
-						m.reply(mess.wait)
+						                m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
 						let media = await quoted.download()
 						let anu = await UguuSe(media)
 						await sych.sendMessage(m.chat, { document: { url: 'https://some-random-api.com/canvas/triggered?avatar=' + anu.url }, fileName: 'triggered.gif', mimetype: 'image/gif' }, { quoted: m })
@@ -2264,7 +2394,14 @@ break;
 			break
 			case 'nuliskiri': {
 				if (!text) return m.reply(`Kirim perintah *${prefix + command}* Teksnya`)
-				m.reply(mess.wait)
+				                m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
 				const splitText = text.replace(/(\S+\s*){1,9}/g, '$&\n')
 				const fixHeight = splitText.split('\n').slice(0, 31).join('\n')
 				spawn('convert', [
@@ -2290,7 +2427,14 @@ break;
 			break
 			case 'nuliskanan': {
 				if (!text) return m.reply(`Kirim perintah *${prefix + command}* Teksnya`)
-				m.reply(mess.wait)
+				                m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
 				const splitText = text.replace(/(\S+\s*){1,9}/g, '$&\n')
 				const fixHeight = splitText.split('\n').slice(0, 31).join('\n')
 				spawn('convert', [
@@ -2316,7 +2460,14 @@ break;
 			break
 			case 'foliokiri': {
 				if (!text) return m.reply(`Kirim perintah *${prefix + command}* Teksnya`)
-				m.reply(mess.wait)
+				                m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
 				const splitText = text.replace(/(\S+\s*){1,9}/g, '$&\n')
 				const fixHeight = splitText.split('\n').slice(0, 38).join('\n')
 				spawn('convert', [
@@ -2342,7 +2493,14 @@ break;
 			break
 			case 'foliokanan': {
 				if (!text) return m.reply(`Kirim perintah *${prefix + command}* Teksnya`)
-				m.reply(mess.wait)
+				                m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
 				const splitText = text.replace(/(\S+\s*){1,9}/g, '$&\n')
 				const fixHeight = splitText.split('\n').slice(0, 38).join('\n')
 				spawn('convert', [
@@ -2382,7 +2540,14 @@ break;
 					if (/smooth/.test(command)) set = '-filter:v "minterpolate=\'mi_mode=mci:mc_mode=aobmc:vsbmc=1:fps=120\'"'
 					if (/tupai/.test(command)) set = '-filter:a "atempo=0.5,asetrate=65100"'
 					if (/audio/.test(mime)) {
-						m.reply(mess.wait)
+						                m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
 						let media = await sych.downloadAndSaveMediaMessage(qmsg)
 						let ran = `./database/sampah/${getRandom('.mp3')}`;
 						exec(`ffmpeg -i ${media} ${set} ${ran}`, (err, stderr, stdout) => {
@@ -2495,9 +2660,17 @@ case 'ai': {
 			  if (!isPremium) return m.reply(mess.prem);
 				if (!text && (!m.quoted || !m.quoted.text)) return m.reply(`Kirim/reply pesan *${prefix + command}* Teksnya`)
 				try {
-					await sych.sendMessage(m.chat, { image: { url: 'https://api.siputzx.my.id/api/ai/dreamshaper?prompt=' + (text || m.quoted.text) }}, { quoted: m })
+                m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});				
+					await sych.sendMessage(m.chat, { image: { url: 'https://api.siputzx.my.id/api/ai/flux?prompt=' + (text || m.quoted.text) }}, { quoted: m })
 					} catch (e) {
-						m.reply('Server Brat Sedang Offline!')
+						m.reply('Server Sedang Offline!')
 					}
 				}
 			break
@@ -2505,9 +2678,17 @@ case 'ai': {
 			  if (!isPremium) return m.reply(mess.prem);
 				if (!text && (!m.quoted || !m.quoted.text)) return m.reply(`Kirim/reply pesan *${prefix + command}* Teksnya`)
 				try {
+                m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});				
 					await sych.sendMessage(m.chat, { image: { url: 'https://api.siputzx.my.id/api/ai/flux?prompt=' + (text || m.quoted.text) }}, { quoted: m })
 					} catch (e) {
-						m.reply('Server Brat Sedang Offline!')
+						m.reply('Server Sedang Offline!')
 					}
 				}
 			break
@@ -2577,7 +2758,14 @@ break;
         return m.reply(`Example: ${prefix + command} you = i korea | you = i japan`);
     }
     console.log("✅ Perintah diterima:", command, "dengan teks:", text);
-    m.reply(mess.wait);
+                    m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
     
     try {
         console.log("🔄 Memproses teks input...");
@@ -2593,7 +2781,7 @@ break;
             const res = await yts.search(query);
             console.log(`✅ Pencarian selesai untuk "${query}":`, res);
 
-            const hasil = res.all.slice(0, 1); // Ambil 2 hasil pertama per query
+            const hasil = res.all.slice(0, 1); // Ambil 1 hasil pertama per query
             console.log(`🎯 Video terpilih untuk "${query}":`, hasil);
             
             let cards = [];
@@ -2617,6 +2805,20 @@ break;
                             {
                                 name: "cta_url",
                                 buttonParamsJson: `{"display_text":"Lihat Video","url":"${video.url}"}`
+                            },
+                            {
+"name": "cta_copy",
+"buttonParamsJson": JSON.stringify({
+"display_text": "Copy Mp3",
+"copy_code": `${prefix}ytmp3 ${video.url}`
+})
+},
+{
+"name": "cta_copy",
+"buttonParamsJson": JSON.stringify({
+"display_text": "Copy Mp4",
+"copy_code": `${prefix}ytmp4 ${video.url}`
+})
                             }
                         ]
                     })
@@ -2657,7 +2859,14 @@ break;
         return m.reply(`Example: ${prefix + command} dj komang`);
     }
     console.log("✅ Perintah diterima:", command, "dengan teks:", text);
-    m.reply(mess.wait);
+                    m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
     try {
         console.log("🔄 Mencari video di YouTube...");
         const res = await yts.search(text);
@@ -2670,7 +2879,7 @@ break;
         for (let video of hasil) {
             cards.push({
                 body: proto.Message.InteractiveMessage.Body.fromObject({
-                    text: `*📍Title:* ${video.title || 'Tidak tersedia'}\n*🌟Channel:* ${video.author?.name || 'Tidak tersedia'}\n*⏳Duration:* ${video.timestamp || 'Tidak tersedia'}\n*🔎Source:* ${video.url || 'Tidak tersedia'}`,
+                    text: `*🌟Channel:* ${video.author?.name || 'Tidak tersedia'}\n*⏳Duration:* ${video.timestamp || 'Tidak tersedia'}\n*🔎Source:* ${video.url || 'Tidak tersedia'}`,
                 }),
                 footer: proto.Message.InteractiveMessage.Footer.fromObject({
                     text: `Pilih untuk detail lebih lanjut\nCommand ${prefix}ytmp3 url download audio dan ${prefix}ytmp4 url mendownload video`
@@ -2687,7 +2896,21 @@ break;
                         {
                             name: "cta_url",
                             buttonParamsJson: `{"display_text":"Lihat Video","url":"${video.url}"}`
-                        }
+                        },
+                               {
+"name": "cta_copy",
+"buttonParamsJson": JSON.stringify({
+"display_text": "Copy Mp3",
+"copy_code": `${prefix}ytmp3 ${video.url}`
+})
+},
+{
+"name": "cta_copy",
+"buttonParamsJson": JSON.stringify({
+"display_text": "Copy Mp4",
+"copy_code": `${prefix}ytmp4 ${video.url}`
+})
+                            }
                     ]
                 })
             });
@@ -2722,7 +2945,14 @@ break;
 				try {
 					let { pixivdl } = require('./lib/pixiv')
 					let res = await pixivdl(text)
-					m.reply(mess.wait)
+					                m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
 					for (let i = 0; i < res.media.length; i++) {
 						let caption = i == 0 ? `${res.caption}\n\n*By:* ${res.artist}\n*Tags:* ${res.tags.join(', ')}` : ''
 						let mime = (await FileType.fromBuffer(res.media[i])).mime 
@@ -3038,7 +3268,14 @@ break;
 			case 'ig': case 'instagram': case 'instadl': case 'igdown': case 'igdl': {
 				if (!text) return m.reply(`Example: ${prefix + command} url_instagram`)
 				if (!text.includes('instagram.com')) return m.reply('Url Tidak Mengandung Result Dari Instagram!')
-				m.reply(mess.wait)
+				                m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
 				try {
 					const hasil = await multiDownload(text);
 					if(hasil.length < 0) return m.reply('Postingan Tidak Tersedia atau Privat!')
@@ -3062,7 +3299,14 @@ break;
 				if (!text) return m.reply(`Example: ${prefix + command} usernamenya`)
 				try {
 					const hasil = await instaStory(text);
-					m.reply(mess.wait)
+					                m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
 					for (let i = 0; i < hasil.results.length; i++) {
 						await sych.sendFileUrl(m.chat, hasil.results[i].url, 'Done', m)
 					}
@@ -3091,7 +3335,14 @@ break;
         console.log('Memulai proses pengunduhan dari URL TikTok:', text);
 
         const hasil = await tiktokDl(text);
-        m.reply(mess.wait);
+                        m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
         console.log('Proses pengunduhan berhasil.');
 
         if (hasil && hasil.size_nowm) {
@@ -3136,7 +3387,14 @@ break;
         console.log('Memulai proses pengunduhan audio dari URL TikTok:', text);
 
         const hasil = await tiktokDl(text);
-        m.reply(mess.wait);
+                        m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
         console.log('Proses pengunduhan berhasil, audio ditemukan.');
 
         // Mengirimkan pesan audio
@@ -3176,7 +3434,14 @@ break;
 					if (hasil.results.length < 1) {
 						m.reply('Video Tidak ditemukan!')
 					} else {
-						m.reply(mess.wait)
+						                m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
 						await sych.sendFileUrl(m.chat, hasil.results[0].url, `*🎐Title:* ${hasil.caption}`, m);
 					}
 				} catch (e) {
@@ -3789,18 +4054,28 @@ case 'listdoa': {
 }
 case 'doa': {
     try {
+                
         // Ambil ID doa dari argumen
         const id = args[0];
         if (!id) {
             return m.reply('Mohon masukkan ID doa. Contoh: *doa 1*');
         }
 
+        // Menambahkan pesan loading dan menyimpan key untuk edit nanti
+        let { key } = await m.reply('Mencari doa, mohon tunggu...');
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
         // Ambil data dari API berdasarkan ID
         const response = await fetch(`https://doa-doa-api-ahmadramadhan.fly.dev/api/${id}`);
         const doaData = await response.json();
 
         if (doaData.length === 0) {
-            return m.reply('Doa dengan ID tersebut tidak ditemukan.');
+            return m.reply('Doa dengan ID tersebut tidak ditemukan.', { edit: key });
         }
 
         const doa = doaData[0]; // Ambil data pertama (berdasarkan struktur API)
@@ -3811,8 +4086,8 @@ case 'doa': {
             `*Latin:*\n${doa.latin}\n\n` +
             `*Artinya:*\n${doa.artinya}`;
 
-        // Kirim pesan
-        m.reply(doaMessage);
+        // Kirim pesan setelah mengambil data
+        m.reply(doaMessage, { edit: key });
 
         // Kirim reaksi (opsional)
         sych.sendMessage(m.chat, {
@@ -3823,17 +4098,48 @@ case 'doa': {
         });
     } catch (error) {
         console.error('Error fetching doa:', error.message);
-        m.reply('Terjadi kesalahan saat menampilkan doa.');
+        m.reply('Terjadi kesalahan saat menampilkan doa.', { edit: key });
     }
     break;
 }
 			case 'quran': {
     if (!text) return m.reply(`*${prefix + command}* Masukkan nomor surah!`);
-    
+                
     const surahNumber = parseInt(text);
     if (isNaN(surahNumber) || surahNumber < 1 || surahNumber > 114) {
         return m.reply('Nomor surah tidak valid! Masukkan angka antara 1 hingga 114.');
     }
+
+    // Array of surah names
+    const surahNames = [
+        "Al-Fatihah", "Al-Baqarah", "Ali Imran", "An-Nisa", "Al-Ma'idah", "Al-An'am", 
+        "Al-A'raf", "Al-Anfal", "At-Tawbah", "Yunus", "Hud", "Yusuf", "Ar-Ra'd", "Ibrahim", 
+        "Al-Hijr", "An-Nahl", "Al-Isra", "Al-Kahf", "Maryam", "Ta-Ha", "Al-Anbiya", "Al-Hajj", 
+        "Al-Mu'minun", "An-Nur", "Al-Furqan", "Ash-Shu'ara", "An-Naml", "Al-Qasas", "Al-Ankabut", 
+        "Ar-Rum", "Luqman", "As-Sajdah", "Al-Ahzab", "Saba'", "Fatir", "Ya-Sin", "As-Saffat", 
+        "Sad", "Az-Zumar", "Ghafir", "Fussilat", "Ash-Shura", "Az-Zukhruf", "Ad-Dukhan", 
+        "Al-Jathiyah", "Al-Ahqaf", "Muhammad", "Al-Fath", "Al-Hujurat", "Qaf", "Az-Zariyat", 
+        "At-Tur", "An-Najm", "Al-Qamar", "Ar-Rahman", "Al-Waqi'ah", "Al-Hadid", "Al-Mujadilah", 
+        "Al-Hashr", "Al-Mumtahanah", "As-Saff", "Al-Jumu'ah", "Al-Munafiqun", "At-Taghabun", 
+        "At-Talaq", "At-Tahrim", "Al-Mulk", "Al-Qalam", "Al-Haqqah", "Al-Ma'arij", "Nuh", 
+        "Al-Jinn", "Al-Muzzammil", "Al-Muddathir", "Al-Qiyamah", "Al-Insan", "Al-Mursalat", 
+        "An-Naba'", "An-Nazi'at", "Abasa", "At-Takwir", "Al-Infitar", "Al-Mutaffifin", "Al-Inshiqaq", 
+        "Al-Buruj", "At-Tariq", "Al-A'la", "Al-Ghashiyah", "Al-Fajr", "Al-Balad", "Ash-Shams", 
+        "Al-Lail", "Ad-Duhaa", "Al-Inshirah", "At-Tin", "Al-'Alaq", "Al-Qadr", "Al-Bayyinah", 
+        "Az-Zalzalah", "Al-Adiyat", "Al-Qari'ah", "At-Takathur", "Al-Asr", "Al-Humazah", "Al-Fil", 
+        "Quraysh", "Al-Ma'un", "Al-Kawthar", "Al-Kafirun", "An-Nasr", "Al-Masad", "Al-Ikhlas", 
+        "Al-Falaq", "An-Nas"
+    ];
+
+    // Menambahkan pesan loading dan menyimpan key untuk edit nanti
+    let { key } = await m.reply('Mencari surah, mohon tunggu...');
+    await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+    await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+    await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+    await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+    await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+    await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+    await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
     
     try {
         console.log(`Mengambil data surah nomor ${surahNumber}...`);
@@ -3843,10 +4149,13 @@ case 'doa': {
         
         const data = await response.json();
         if (!data.status || !data.data || data.data.length === 0) {
-            return m.reply('Surah tidak ditemukan atau data tidak tersedia.');
+            return m.reply('Surah tidak ditemukan atau data tidak tersedia.', { edit: key });
         }
         
-        let quranMessage = `*Surah Nomor ${surahNumber}:*\n\n`;
+        // Get surah name from the array
+        const surahName = surahNames[surahNumber - 1];
+        
+        let quranMessage = `*Surah Nomor ${surahNumber}: ${surahName}*\n\n`;
         for (const ayat of data.data) {
             quranMessage += `*Arab*: ${ayat.arab}\n`;
             quranMessage += `*Latin*: ${ayat.latin}\n`;
@@ -3854,16 +4163,17 @@ case 'doa': {
         }
         
         console.log('Data berhasil diambil, mengirim pesan...');
-        m.reply(quranMessage.trim());
+        m.reply(quranMessage.trim(), { edit: key });
+        
         sych.sendMessage(m.chat, {
-        react: {
-            text: '🕌', // Emoji yang diinginkan
-            key: m.key // Memberikan reaksi pada pesan yang baru saja dikirim
-        }
-    });
+            react: {
+                text: '🕌', // Emoji yang diinginkan
+                key: m.key // Memberikan reaksi pada pesan yang baru saja dikirim
+            }
+        });
     } catch (error) {
         console.error('Error saat mengambil data:', error.message);
-        m.reply('Terjadi kesalahan saat mengambil data surah. Coba lagi nanti.');
+        m.reply('Terjadi kesalahan saat mengambil data surah. Coba lagi nanti.', { edit: key });
     }
 }
 break;
@@ -4188,7 +4498,7 @@ break;
 │${setv} ${prefix}hidetag
 │${setv} ${prefix}totag (reply pesan)
 │${setv} ${prefix}listonline
-│${setv} ${prefix}group set
+│${setv} ${prefix}grup set
 ╰─┬────❍
 ╭─┴❍「 *SEARCH* 」❍
 │${setv} ${prefix}spotify (query)
