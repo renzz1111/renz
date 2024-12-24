@@ -73,7 +73,6 @@ let tebakgambar = db.game.tebakgambar = []
 let tebakepep = db.game.tebakepep = []
 let tebakbendera = db.game.tebakbendera = []
 let autoAi = false; // Default mati
-let spammer = {}; // Format: { userId: { count: 0, timeout: null } }
 
 let _scommand = JSON.parse(fs.readFileSync("./database/scommand.json"));
 
@@ -180,79 +179,6 @@ let _chats =
 		const isNsfw = m.isGroup ? db.groups[m.chat].nsfw : false
 		// Data untuk menyimpan status pengguna
 
-// Anti-Command Spam
-const userId = m.sender; // Mendapatkan ID pengguna
-
-console.log(`isOwner: ${isOwner}, userId: ${userId}`);
-
-if (!isOwner) {
-    // Inisialisasi spammer jika belum ada data untuk user
-    if (!spammer[userId]) {
-        console.log(`Inisialisasi spammer untuk user: ${userId}`);
-        spammer[userId] = { count: 0, timeout: null, lastCommandTime: 0, blocked: false };
-    }
-
-    // Debug: Cek status pengguna
-    console.log('Status user:', spammer[userId]);
-
-    // Jika pengguna diblokir karena spam
-    if (spammer[userId].blocked) {
-        m.reply('Anda sedang diblokir karena spam. Tidak dapat menggunakan bot selama 30 menit.');
-        console.log(`Command dari user ${userId} ditolak karena blokir aktif.`);
-        return; // Jangan proses perintah lebih lanjut
-    }
-
-    const currentTime = Date.now();
-    const timeDiff = currentTime - spammer[userId].lastCommandTime;
-
-    // Debug: Cek perbedaan waktu antar perintah
-    console.log(`Time difference: ${timeDiff}, Spam count: ${spammer[userId].count}`);
-
-    // Jika perintah datang dalam waktu kurang dari 2 detik
-    if (timeDiff < 2000) {
-        spammer[userId].count++;
-    } else {
-        spammer[userId].count = 1; // Reset jika ada jeda lebih lama dari 2 detik
-    }
-
-    spammer[userId].lastCommandTime = currentTime;
-
-    console.log(`Spam count untuk ${userId}: ${spammer[userId].count}`);
-
-    // Jika spam lebih dari 5 kali dalam waktu 10 detik
-    if (spammer[userId].count >= 5) {
-        console.log(`User ${userId} terdeteksi melakukan spam. Count: ${spammer[userId].count}`);
-
-        if (!spammer[userId].timeout) {
-            console.log(`Blokir user ${userId} selama 30 menit`);
-
-            spammer[userId].blocked = true; // Tandai pengguna sebagai diblokir
-            spammer[userId].timeout = setTimeout(() => {
-                if (spammer[userId]) {
-                    console.log(`Reset blokir untuk user: ${userId}`);
-                    spammer[userId].blocked = false; // Reset status blokir
-                    delete spammer[userId]; // Hapus data pengguna dari `spammer`
-                    console.log(`Spam timeout selesai untuk user: ${userId}`);
-                }
-            }, 1800000); // 30 menit dalam milidetik
-
-            m.reply('Anda telah melakukan spam. Tidak dapat mengirim command selama 30 menit.');
-            console.log(`Spam terdeteksi dan blokir diaktifkan untuk user: ${userId}`);
-        } else {
-            console.log(`Blokir sudah diaktifkan untuk user: ${userId}`);
-        }
-        return; // Blokir pengguna untuk mengirim command lebih lanjut
-    }
-
-    // Reset count setelah 10 detik
-    setTimeout(() => {
-        if (spammer[userId]) {
-            spammer[userId].count = 0; // Reset hitungan spam
-            console.log(`Spam count direset untuk user: ${userId}`);
-        }
-    }, 10000); // Reset count setelah 10 detik
-}
-// Eksekusi kode bot di bawah
 		const isQuotedSticker = type === "extendedTextMessage" && content.includes("stickerMessage");
 		const extendedText = MessageType;
 
@@ -1297,7 +1223,7 @@ if (!isOwner) {
                             "name": "cta_url",
                             "buttonParamsJson": JSON.stringify({
                                 display_text: "Owner (yDa🔱)",
-                                url: "https://wa.me/+62882001502155"
+                                url: "https://wa.me/+62882008702155"
                             })
                         }
                     ]
@@ -2645,6 +2571,86 @@ break;
 				});
 			}
 			break
+			case 'play2': case 'ytplay2': case 'yts2': case 'ytsearch2': case 'youtubesearch2': {
+    if (!text) {
+        console.log("⛔ Input teks kosong");
+        return m.reply(`Example: ${prefix + command} you = i korea | you = i japan`);
+    }
+    console.log("✅ Perintah diterima:", command, "dengan teks:", text);
+    m.reply(mess.wait);
+    
+    try {
+        console.log("🔄 Memproses teks input...");
+        
+        // Pisahkan query dengan simbol "|"
+        const queries = text.split('|').map(q => q.trim());
+        
+        let allCards = [];
+        
+        for (let query of queries) {
+            console.log(`🔍 Mencari video untuk: "${query}"`);
+            
+            const res = await yts.search(query);
+            console.log(`✅ Pencarian selesai untuk "${query}":`, res);
+
+            const hasil = res.all.slice(0, 1); // Ambil 2 hasil pertama per query
+            console.log(`🎯 Video terpilih untuk "${query}":`, hasil);
+            
+            let cards = [];
+            for (let video of hasil) {
+                cards.push({
+                    body: proto.Message.InteractiveMessage.Body.fromObject({
+                        text: `*🌟Channel:* ${video.author?.name || 'Tidak tersedia'}\n*⏳Duration:* ${video.timestamp || 'Tidak tersedia'}\n*🔎Source:* ${video.url || 'Tidak tersedia'}`,
+                    }),
+                    footer: proto.Message.InteractiveMessage.Footer.fromObject({
+                        text: `Pilih untuk detail lebih lanjut\nCommand ${prefix}ytmp3 url download audio dan ${prefix}ytmp4 url mendownload video`
+                    }),
+                    header: proto.Message.InteractiveMessage.Header.fromObject({
+                        title: video.title,
+                        hasMediaAttachment: true,
+                        imageMessage: (await generateWAMessageContent({
+                            image: { url: video.thumbnail }
+                        }, { upload: sych.waUploadToServer })).imageMessage
+                    }),
+                    nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.fromObject({
+                        buttons: [
+                            {
+                                name: "cta_url",
+                                buttonParamsJson: `{"display_text":"Lihat Video","url":"${video.url}"}`
+                            }
+                        ]
+                    })
+                });
+            }
+            
+            console.log(`📄 Membuat carousel untuk "${query}"...`);
+            allCards.push(...cards);
+        }
+        
+        // Gabungkan semua carousel cards
+        const carouselMessage = {
+            interactiveMessage: proto.Message.InteractiveMessage.fromObject({
+                carouselMessage: proto.Message.InteractiveMessage.CarouselMessage.fromObject({
+                    cards: allCards
+                }),
+                body: proto.Message.InteractiveMessage.Body.fromObject({
+                    text: "Pilih video dari hasil pencarian:"
+                }),
+                footer: proto.Message.InteractiveMessage.Footer.fromObject({
+                    text: global.botname
+                })
+            })
+        };
+
+        const bot = await generateWAMessageFromContent(m.chat, carouselMessage, {});
+        await sych.relayMessage(m.chat, bot.message, { messageId: bot.key.id });
+        console.log("✅ Carousel berhasil dikirim.");
+    } catch (e) {
+        console.error("❌ Terjadi kesalahan:", e);
+        m.reply('Post not available!');
+    }
+}
+break;
 		case 'play': case 'ytplay': case 'yts': case 'ytsearch': case 'youtubesearch': {
     if (!text) {
         console.log("⛔ Input teks kosong");
@@ -4187,6 +4193,7 @@ break;
 ╭─┴❍「 *SEARCH* 」❍
 │${setv} ${prefix}spotify (query)
 │${setv} ${prefix}ytsearch (query)
+│${setv} ${prefix}ytsearch2 (q) | (q)
 │${setv} ${prefix}pixiv (query)
 │${setv} ${prefix}pinterest (query)
 │${setv} ${prefix}wallpaper (query)
