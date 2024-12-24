@@ -1697,7 +1697,7 @@ break;
     try {
         if (/webp|video|sticker|audio|jpg|jpeg|png/.test(mime)) {
             // Menambahkan pesan loading dan menyimpan key untuk edit nanti
-            let { key } = await                 m.reply(mess.wait)
+            let { key } = await m.reply(mess.wait)
                 await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
                 await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
                 await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
