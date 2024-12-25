@@ -4663,6 +4663,7 @@ break;
 │${setv} ${prefix}listsurah
 │${setv} ${prefix}listdoa
 │${setv} ${prefix}doa <1-37>
+│${setv} ${prefix}bacaansholat
 ╰─┬────❍
 ╭─┴❍「 *TOOLS* 」❍
 │${setv} ${prefix}get (url)
