@@ -1720,6 +1720,102 @@ break;
     }
 }
 break;
+case 'tiktokslide': case 'ttslide': {
+    if (!isPremium) {
+        console.log('Pengguna bukan premium.');
+        return m.reply(mess.prem);
+    }
+                m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
+    if (!text) {
+        console.log('Teks URL TikTok tidak ditemukan.');
+        return m.reply(`Example: ${prefix + command} url_tiktok`);
+    }
+
+    if (!text.includes('tiktok.com')) {
+        console.log('URL tidak valid, tidak mengandung hasil dari TikTok.');
+        return m.reply('URL Tidak Mengandung Result Dari TikTok!');
+    }
+
+    try {
+        console.log('Memulai proses pengunduhan dari URL TikTok:', text);
+
+        const hasil = await tiktokDl(text);
+        if (!hasil || hasil.data.length === 0) {
+            console.log('Tidak ada gambar atau media yang ditemukan.');
+            return m.reply('Tidak ada foto yang ditemukan!');
+        }
+
+        // Buat carousel card untuk setiap gambar
+        const carouselCards = await Promise.all(hasil.data.map(async (item, index) => {
+            // Mengonversi gambar ke URL menggunakan UguuSe
+            let media = await fetch(item.url);
+            let buffer = await media.buffer();
+            let imageUrl = await UguuSe(buffer);  // Proses untuk mendapatkan URL
+
+            return {
+                header: {
+                    title: `Foto ${index + 1}`,
+                    hasMediaAttachment: true,
+                    imageMessage: (await generateWAMessageContent({
+                        image: { url: item.url }
+                    }, { upload: sych.waUploadToServer })).imageMessage
+                },
+                body: { text: `Foto ${index + 1} dari TikTok✈️.` },
+                footer: { text: "Klik tombol untuk melihat lebih detail." },
+                nativeFlowMessage: {
+                    buttons: [
+                        {
+                            "name": "cta_url",
+                            "buttonParamsJson": JSON.stringify({
+                                display_text: "Lihat di TikTok",
+                                url: text
+                            })
+                        },
+                        {
+                            "name": "cta_url",
+                            "buttonParamsJson": JSON.stringify({
+                                display_text: "Lihat Foto",
+                                url: imageUrl.url // URL gambar yang dihasilkan
+                            })
+                        }
+                    ]
+                }
+            };
+        }));
+
+        // Buat pesan carousel
+        const carouselMessage = generateWAMessageFromContent(m.chat, {
+            viewOnceMessage: {
+                message: {
+                    messageContextInfo: { deviceListMetadata: {}, deviceListMetadataVersion: 2 },
+                    interactiveMessage: proto.Message.InteractiveMessage.fromObject({
+                        body: { text: `Hasil foto dari TikTok: ${text}` },
+                        footer: { text: "TikTok Slide Bot by Sych" },
+                        header: { hasMediaAttachment: false },
+                        carouselMessage: proto.Message.InteractiveMessage.CarouselMessage.fromObject({
+                            cards: carouselCards
+                        })
+                    })
+                }
+            }
+        }, {});
+
+        // Kirim pesan carousel
+        await sych.relayMessage(m.chat, carouselMessage.message, { messageId: carouselMessage.key.id });
+        console.log('Carousel dikirimkan dengan sukses.');
+    } catch (e) {
+        console.error('Gagal mengunduh atau membuat carousel:', e);
+        m.reply('Gagal memproses permintaan Anda. Silakan coba lagi.');
+    }
+}
+break;
 case 'img2text': {
     try {
         // Periksa apakah file media valid (gambar)
@@ -4646,6 +4742,7 @@ break;
 ╭─┴❍「 *DOWNLOAD* 」❍
 │${setv} ${prefix}spotifydl (url)
 │${setv} ${prefix}ytmp3 (url)
+│${setv} ${prefix}ttslide (url)
 │${setv} ${prefix}ytmp4 (url)
 │${setv} ${prefix}instagram (url)
 │${setv} ${prefix}tiktok (url)
