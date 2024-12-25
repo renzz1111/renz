@@ -74,12 +74,33 @@ yarn
 
 ---
 
-## Run
+## Ubah file simple
 ```bash
-node .
+cd sych
+cp ../storage/downloads/sesuain/naze.js ./naze.js
 ```
 ---
 
+## For Termux/Ubuntu/SSH User
+```bash
+cd sychee
+npm install pm2 -g
+pm2 start index.js -i max
+pm2 logs
+pm2 list
+pm2 stop index
+pm2 delete index
+pm2 restart index
+```
+---
+## FUNGSI PM2
+- lancar dan tidak mudah mati
+- pm2 logs (melihat logs)
+- pm2 list (melihat status bot)
+- pm2 stop index (menghentikan bot)
+- pm2 delete index (menghapus bot di pm2)
+- pm2 restart index (mulai ulang)
+---
 ### Connection Options
 - Support Qr Code
 - Support Pairing Code
