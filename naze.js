@@ -4077,6 +4077,98 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				})
 			}
 			break
+			case 'tiktokstalk':
+case 'ttstalk':
+case 'tiktokprofile':
+case 'ttprofile': {
+    if (!text) {
+        console.log('TikTok username not provided.');
+        return m.reply('Example: ' + prefix + command + ' username_tiktok');
+    }
+
+    try {
+    m.reply(mess.wait)
+				await sych.sendMessage(m.chat, {
+					react: {
+						text: "⏳",
+						key: m.key
+					}
+				});
+				await sych.sendMessage(m.chat, {
+					react: {
+						text: "🕛",
+						key: m.key
+					}
+				});
+				await sych.sendMessage(m.chat, {
+					react: {
+						text: "🕒",
+						key: m.key
+					}
+				});
+				await sych.sendMessage(m.chat, {
+					react: {
+						text: "🕕",
+						key: m.key
+					}
+				});
+				await sych.sendMessage(m.chat, {
+					react: {
+						text: "🕘",
+						key: m.key
+					}
+				});
+				await sych.sendMessage(m.chat, {
+					react: {
+						text: "🕛",
+						key: m.key
+					}
+				});
+				await sych.sendMessage(m.chat, {
+					react: {
+						text: "✅",
+						key: m.key
+					}
+				});
+        console.log('Fetching TikTok profile for username:', text);
+        const url = `https://api.tiklydown.eu.org/api/stalk?user=${text}`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (data.status === 200 && data.data && data.data.user) {
+            const user = data.data.user;
+            const stats = data.data.stats;
+
+            const profileMessage = `
+            *Name:* ${user.nickname}
+            *Username:* @${user.uniqueId}
+            *Signature:* ${user.signature || 'No signature available'}
+            *Followers:* ${stats.followerCount}
+            *Following:* ${stats.followingCount}
+            *Likes:* ${stats.heartCount}
+            *Videos:* ${stats.videoCount}
+            *Region:* ${user.region}
+            *Verified:* ${user.verified ? 'Yes' : 'No'}
+            `;
+
+            // Send profile picture as an image with the profile details as caption
+            await sych.sendMessage(m.chat, {
+                image: { url: user.avatarLarger },
+                caption: profileMessage,
+                quoted: m, // This makes it a reply to the original message
+                key: m.key
+            });
+
+        } else {
+            console.log('Failed to retrieve TikTok profile data.');
+            m.reply('Failed to retrieve TikTok profile or invalid username.');
+        }
+    } catch (e) {
+        console.error('Error fetching TikTok profile:', e);
+        m.reply('An error occurred while fetching the profile. Please try again later.');
+    }
+    break;
+}
 			case 'foliokanan': {
 				if (!text) return m.reply(`Kirim perintah *${prefix + command}* Teksnya`)
 				m.reply(mess.wait)
@@ -6817,6 +6909,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 ╰─┬────❍
 ╭─┴❍「 *SEARCH* 」❍
 │${setv} ${prefix}spotify (query)
+│${setv} ${prefix}ttstalk (query)
 │${setv} ${prefix}ytsearch (query)
 │${setv} ${prefix}ytsearch2 (q) | (q)
 │${setv} ${prefix}pixiv (query)
