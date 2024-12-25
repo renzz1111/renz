@@ -100,6 +100,8 @@ pm2 restart index
 - pm2 stop index (menghentikan bot)
 - pm2 delete index (menghapus bot di pm2)
 - pm2 restart index (mulai ulang)
+- Ctrl + c (keluar dari logs)
+- clear (menghapus semua log)
 ---
 ### Connection Options
 - Support Qr Code
