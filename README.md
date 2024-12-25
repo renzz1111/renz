@@ -81,7 +81,7 @@ cp ../storage/downloads/sesuain/naze.js ./naze.js
 ```
 ---
 
-## For Termux/Ubuntu/SSH User
+## Agar Bot Terus Berjalan Di Termux
 ```bash
 cd sychee
 npm install pm2 -g
@@ -121,4 +121,4 @@ License: [MIT](https://choosealicense.com/licenses/mit/)
 
 | [![Nazedev](https://github.com/nazedev.png?size=100)](https://github.com/nazedev) | [![Sychyy](https://github.com/sychyy.png?size=100)](https://github.com/sychyy) | [![Zaynn](https://github.com/ZaynRcK.png?size=100)](https://github.com/ZaynRcK) | [![Dani](https://github.com/nazedev.png?size=100)](https://github.com/nazedev) | [![WhiskeySockets](https://github.com/WhiskeySockets.png?size=100)](https://github.com/WhiskeySockets) |
 | --- | --- | --- | --- |
-| [NazeDev](https://github.com/nazedev) | [Zaynn](https://github.com/ZaynRcK) | [Dani](https://github.com/dani) | [WhiskeySockets](https://github.com/WhiskeySockets) |
+| [NazeDev](https://github.com/nazedev) | [Sychyy](https://github.com/sychyy) | [Zaynn](https://github.com/ZaynRcK) | [Dani](https://github.com/dani) | [WhiskeySockets](https://github.com/WhiskeySockets) |
