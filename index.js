@@ -53,7 +53,7 @@ const { isUrl, generateMessageTag, getBuffer, getSizeMedia, fetchJson, sleep } =
 	* Follow https://github.com/nazedev
 	* Whatsapp : https://whatsapp.com/channel/0029VaWOkNm7DAWtkvkJBK43
 */
-figlet('SYCH', { font: 'block' }, (err, data) => {
+figlet('SYCH', { font: 'big' }, (err, data) => {
 	if (err) {
 		console.log('Error with figlet...');
 		return;
