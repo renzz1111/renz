@@ -11,10 +11,11 @@ const chalk = require('chalk');
 
 global.own = ['6287862997267', '0']
 global.owner = ['6287862997267', '62882008702155']
-global.packname = 'Bot WhatsApp'
+global.packname = 'SychBotz'
 global.author = 'ydaa'
 global.botname = 'Sychy Bot'
-global.listprefix = ['+','!']
+global.listprefix = ['+','!','.']
+global.themeemoji = '🪀'
 global.listv = ['•','●','■','✿','▲','➩','➢','➣','➤','✦','✧','△','❀','○','□','♤','♡','◇','♧','々','〆']
 global.emot =  ['🌱', '🌻', '🌞', '❄️', '🌿', '💫', '⭐', '🍃', '🔥', '⚡', '🫧', '🪵', '🌪️', '🍄']
 global.tempatDB = 'database.json'

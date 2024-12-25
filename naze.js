@@ -264,6 +264,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 		const readmore = String.fromCharCode(8206).repeat(999)
 		const isVip = db.users[m.sender] ? db.users[m.sender].vip : false
 		const isPremium = isCreator || prem.checkPremiumUser(m.sender, premium) || false
+		const sender = m.isGroup ? (m.key.participant ? m.key.participant : m.participant) : m.key.remoteJid
 		const isNsfw = m.isGroup ? db.groups[m.chat].nsfw : false
 		// Data untuk menyimpan status pengguna
 		const emojis = global.emot;
@@ -296,6 +297,23 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				}
 			}
 		}
+		const sycreply = (teks) => {
+sych.sendMessage(m.chat,
+{ text: teks,
+contextInfo:{
+mentionedJid:[sender],
+forwardingScore: 100,
+isForwarded: true,
+"externalAdReply": {
+"showAdAttribution": true,
+"containsAutoReply": true,
+"title": `${global.botname}`,
+"body": `${ucapanWaktu} ${m.pushName ? m.pushName : 'Tanpa Nama'} 👋🏻`,
+"previewType": "VIDEO",
+"thumbnailUrl": 'https://f.uguu.se/rBJXXdYj.jpg',
+"sourceUrl": 'https://github.com/sychyy'}}},
+{ quoted: fkontak})
+}
 		// Reset Limit
 		cron.schedule('00 00 * * *', () => {
 			let user = Object.keys(db.users)
@@ -464,7 +482,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 		// Salam
 		if (/^a(s|ss)alamu('|)alaikum(| )(wr|)( |)(wb|)$/.test(budy?.toLowerCase())) {
 			const jwb_salam = ['Wa\'alaikumusalam', 'Wa\'alaikumusalam wr wb', 'Wa\'alaikumusalam Warohmatulahi Wabarokatuh']
-			m.reply(pickRandom(jwb_salam))
+			sycreply(pickRandom(jwb_salam))
 		}
 		// Cek Expired
 		prem.expiredCheck(sych, premium);
@@ -481,7 +499,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				if (!isSurrender) return !0
 			}
 			if (!isSurrender && 1 > (ok = room.game.turn(m.sender === room.game.playerO, parseInt(m.text) - 1))) {
-				m.reply({
+				sycreply({
 					'-3': 'Game telah berakhir',
 					'-2': 'Invalid',
 					'-1': 'Posisi Invalid',
@@ -540,14 +558,14 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			let tie = false
 			if (m.sender == roof.p2 && /^(acc(ept)?|terima|gas|oke?|tolak|gamau|nanti|ga(k.)?bisa|y)/i.test(m.text) && m.isGroup && roof.status == 'wait') {
 				if (/^(tolak|gamau|nanti|n|ga(k.)?bisa)/i.test(m.text)) {
-					m.reply(`@${roof.p2.split`@`[0]} menolak suit,\nsuit dibatalkan`)
+					sycreply(`@${roof.p2.split`@`[0]} menolak suit,\nsuit dibatalkan`)
 					delete suit[roof.id]
 					return !0
 				}
 				roof.status = 'play';
 				roof.asal = m.chat;
 				clearTimeout(roof.waktu);
-				m.reply(`Suit telah dikirimkan ke chat\n\n@${roof.p.split`@`[0]} dan @${roof.p2.split`@`[0]}\n\nSilahkan pilih suit di chat masing-masing klik https://wa.me/${botNumber.split`@`[0]}`)
+				sycreply(`Suit telah dikirimkan ke chat\n\n@${roof.p.split`@`[0]} dan @${roof.p2.split`@`[0]}\n\nSilahkan pilih suit di chat masing-masing klik https://wa.me/${botNumber.split`@`[0]}`)
 				if (!roof.pilih) sych.sendMessage(roof.p, {
 					text: `Silahkan pilih \n\nBatu🗿\nKertas📄\nGunting✂️`
 				}, {
@@ -559,10 +577,10 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 					quoted: m
 				})
 				roof.waktu_milih = setTimeout(() => {
-					if (!roof.pilih && !roof.pilih2) m.reply(`Kedua pemain tidak niat main,\nSuit dibatalkan`)
+					if (!roof.pilih && !roof.pilih2) sycreply(`Kedua pemain tidak niat main,\nSuit dibatalkan`)
 					else if (!roof.pilih || !roof.pilih2) {
 						win = !roof.pilih ? roof.p2 : roof.p
-						m.reply(`@${(roof.pilih ? roof.p2 : roof.p).split`@`[0]} tidak memilih suit, game berakhir`)
+						sycreply(`@${(roof.pilih ? roof.p2 : roof.p).split`@`[0]} tidak memilih suit, game berakhir`)
 					}
 					delete suit[roof.id]
 					return !0
@@ -577,7 +595,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			if (jwb && reg.test(m.text) && !roof.pilih && !m.isGroup) {
 				roof.pilih = reg.exec(m.text.toLowerCase())[0];
 				roof.text = m.text;
-				m.reply(`Kamu telah memilih ${m.text} ${!roof.pilih2 ? `\n\nMenunggu lawan memilih` : ''}`);
+				sycreply(`Kamu telah memilih ${m.text} ${!roof.pilih2 ? `\n\nMenunggu lawan memilih` : ''}`);
 				if (!roof.pilih2) sych.sendMessage(roof.p2, {
 					text: '_Lawan sudah memilih_\nSekarang giliran kamu'
 				})
@@ -585,7 +603,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			if (jwb2 && reg.test(m.text) && !roof.pilih2 && !m.isGroup) {
 				roof.pilih2 = reg.exec(m.text.toLowerCase())[0]
 				roof.text2 = m.text
-				m.reply(`Kamu telah memilih ${m.text} ${!roof.pilih ? `\n\nMenunggu lawan memilih` : ''}`)
+				sycreply(`Kamu telah memilih ${m.text} ${!roof.pilih ? `\n\nMenunggu lawan memilih` : ''}`)
 				if (!roof.pilih) sych.sendMessage(roof.p, {
 					text: '_Lawan sudah memilih_\nSekarang giliran kamu'
 				})
@@ -631,7 +649,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				tebakbom[m.sender].nyawa.pop();
 				let brd = tebakbom[m.sender].board;
 				if (tebakbom[m.sender].nyawa.length < 1) {
-					await m.reply(`*GAME TELAH BERAKHIR*\nKamu terkena bomb\n\n ${brd.join('')}\n\n*Terpilih :* ${tebakbom[m.sender].pick}\n_Pengurangan Limit : 1_`);
+					await sycreply(`*GAME TELAH BERAKHIR*\nKamu terkena bomb\n\n ${brd.join('')}\n\n*Terpilih :* ${tebakbom[m.sender].pick}\n_Pengurangan Limit : 1_`);
 					sych.sendMessage(m.chat, {
 						react: {
 							text: '😂',
@@ -639,7 +657,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 						}
 					})
 					delete tebakbom[m.sender];
-				} else await m.reply(`*PILIH ANGKA*\n\nKamu terkena bomb\n ${brd.join('')}\n\nTerpilih: ${tebakbom[m.sender].pick}\nSisa nyawa: ${tebakbom[m.sender].nyawa}`);
+				} else await sycreply(`*PILIH ANGKA*\n\nKamu terkena bomb\n ${brd.join('')}\n\nTerpilih: ${tebakbom[m.sender].pick}\nSisa nyawa: ${tebakbom[m.sender].nyawa}`);
 				return !0;
 			}
 			if (tebakbom[m.sender].petak[parseInt(body) - 1] === 0) {
@@ -650,9 +668,9 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				let brd = tebakbom[m.sender].board;
 				if (tebakbom[m.sender].lolos < 1) {
 					db.users[m.sender].uang += 6000
-					await m.reply(`*KAMU HEBAT ಠ⁠ᴥ⁠ಠ*\n\n${brd.join('')}\n\n*Terpilih :* ${tebakbom[m.sender].pick}\n*Sisa nyawa :* ${tebakbom[m.sender].nyawa}\n*Bomb :* ${tebakbom[m.sender].bomb}\nBonus Uang 💰 *+6000*`);
+					await sycreply(`*KAMU HEBAT ಠ⁠ᴥ⁠ಠ*\n\n${brd.join('')}\n\n*Terpilih :* ${tebakbom[m.sender].pick}\n*Sisa nyawa :* ${tebakbom[m.sender].nyawa}\n*Bomb :* ${tebakbom[m.sender].bomb}\nBonus Uang 💰 *+6000*`);
 					delete tebakbom[m.sender];
-				} else m.reply(`*PILIH ANGKA*\n\n${brd.join('')}\n\nTerpilih : ${tebakbom[m.sender].pick}\nSisa nyawa : ${tebakbom[m.sender].nyawa}\nBomb : ${tebakbom[m.sender].bomb}`)
+				} else sycreply(`*PILIH ANGKA*\n\n${brd.join('')}\n\nTerpilih : ${tebakbom[m.sender].pick}\nSisa nyawa : ${tebakbom[m.sender].nyawa}\nBomb : ${tebakbom[m.sender].bomb}`)
 			}
 		}
 		// Akinator
@@ -752,9 +770,9 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 					if (!isNaN(budy)) {
 						if (budy.toLowerCase() == jawaban) {
 							db.users[m.sender].uang += randMoney * 1000
-							await m.reply(`Jawaban Benar 🎉\nBonus Uang 💰 *+${randMoney * 1000}*`)
+							await sycreply(`Jawaban Benar 🎉\nBonus Uang 💰 *+${randMoney * 1000}*`)
 							delete kuismath[m.chat + id]
-						} else m.reply('*Jawaban Salah!*')
+						} else sycreply('*Jawaban Salah!*')
 					}
 				} else {
 					jawaban = game[m.chat + id].jawaban
@@ -762,9 +780,9 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 					let bonus = gameName == 'caklontong' ? 9999 : gameName == 'tebaklirik' ? 4299 : gameName == 'susunkata' ? 2989 : 3499
 					if (jawabBenar) {
 						db.users[m.sender].uang += bonus * 1
-						await m.reply(`Jawaban Benar 🎉\nBonus Uang 💰 *+${bonus}*`)
+						await sycreply(`Jawaban Benar 🎉\nBonus Uang 💰 *+${bonus}*`)
 						delete game[m.chat + id]
-					} else m.reply('*Jawaban Salah!*')
+					} else sycreply('*Jawaban Salah!*')
 				}
 			}
 		}
@@ -781,7 +799,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				}
 				let isWin = room.terjawab.length === room.terjawab.filter(v => v).length
 				let caption = `Jawablah Pertanyaan Berikut :\n${room.soal}\n\n\nTerdapat ${room.jawaban.length} Jawaban ${room.jawaban.find(v => v.includes(' ')) ? `(beberapa Jawaban Terdapat Spasi)` : ''}\n${isWin ? `Semua Jawaban Terjawab` : isSurender ? 'Menyerah!' : ''}\n${Array.from(room.jawaban, (jawaban, index) => { return isSurender || room.terjawab[index] ? `(${index + 1}) ${jawaban} ${room.terjawab[index] ? '@' + room.terjawab[index].split('@')[0] : ''}`.trim() : false }).filter(v => v).join('\n')}\n${isSurender ? '' : `Perfect Player`}`.trim()
-				m.reply(caption)
+				sycreply(caption)
 				if (isWin || isSurender) delete family100[m.chat]
 			}
 		}
@@ -832,11 +850,11 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			let afkTime = user.afkTime
 			if (!afkTime || afkTime < 0) continue
 			let reason = user.afkReason || ''
-			m.reply(`Jangan tag dia!\nDia sedang AFK ${reason ? 'dengan alasan ' + reason : 'tanpa alasan'}\nSelama ${clockString(new Date - afkTime)}`.trim())
+			sycreply(`Jangan tag dia!\nDia sedang AFK ${reason ? 'dengan alasan ' + reason : 'tanpa alasan'}\nSelama ${clockString(new Date - afkTime)}`.trim())
 		}
 		if (db.users[m.sender].afkTime > -1) {
 			let user = db.users[m.sender]
-			m.reply(`@${m.sender.split('@')[0]} berhenti AFK${user.afkReason ? ' setelah ' + user.afkReason : ''}\nSelama ${clockString(new Date - user.afkTime)}`)
+			sycreply(`@${m.sender.split('@')[0]} berhenti AFK${user.afkReason ? ' setelah ' + user.afkReason : ''}\nSelama ${clockString(new Date - user.afkTime)}`)
 			user.afkTime = -1
 			user.afkReason = ''
 		}
@@ -848,20 +866,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			break
 			// Owner Menu
 			case 'setbio': {
-				if (!isCreator) return m.reply(mess.owner)
-				if (!text) return m.reply('Mana text nya?')
+				if (!isCreator) return sycreply(mess.owner)
+				if (!text) return sycreply('Mana text nya?')
 				sych.setStatus(q)
-				m.reply(`*Bio telah di ganti menjadi ${q}*`)
+				sycreply(`*Bio telah di ganti menjadi ${q}*`)
 			}
 			break
 			case "addcmd":
 			case "setcmd":
-				if (!isCreator) return m.reply(mess.owner)
+				if (!isCreator) return sycreply(mess.owner)
 				if (isQuotedSticker) {
-					if (!q) return m.reply(`Penggunaan : ${command} cmdnya dan tag stickernya`);
+					if (!q) return sycreply(`Penggunaan : ${command} cmdnya dan tag stickernya`);
 					var kodenya = m.message.extendedTextMessage.contextInfo.quotedMessage.stickerMessage.fileSha256.toString("base64");
 					addCmd(kodenya, q);
-					m.reply("Done!");
+					sycreply("Done!");
 					await sych.sendMessage(m.chat, {
 						react: {
 							text: '🔐', // Emoji yang diinginkan
@@ -869,16 +887,16 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 						}
 					});
 				} else {
-					m.reply("tag stickenya");
+					sycreply("tag stickenya");
 				}
 				break;
 			case "delcmd":
-				if (!isCreator) return m.reply(mess.owner)
-				if (!isQuotedSticker) return m.reply(`Penggunaan : ${command} tagsticker`);
+				if (!isCreator) return sycreply(mess.owner)
+				if (!isQuotedSticker) return sycreply(`Penggunaan : ${command} tagsticker`);
 				var kodenya = m.message.extendedTextMessage.contextInfo.quotedMessage.stickerMessage.fileSha256.toString("base64");
 				_scommand.splice(getCommandPosition(kodenya), 1);
 				fs.writeFileSync("./database/scommand.json", JSON.stringify(_scommand));
-				m.reply("Done!");
+				sycreply("Done!");
 				await sych.sendMessage(m.chat, {
 					react: {
 						text: '🚫', // Emoji yang diinginkan
@@ -887,18 +905,18 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				});
 				break;
 			case "listcmd":
-				if (!isCreator) return m.reply(mess.owner)
+				if (!isCreator) return sycreply(mess.owner)
 				teksnyee = `\`\`\`「 LIST STICKER CMD 」\`\`\``;
 				cemde = [];
 				for (let i of _scommand) {
 					cemde.push(i.id);
 					teksnyee += `\n\n➸ *ID :* ${i.id}\n➸ *Cmd* : ${i.chats}`;
 				}
-				m.reply(teksnyee, cemde, true);
+				sycreply(teksnyee, cemde, true);
 				break;
 			case 'setppbot': {
-				if (!isCreator) return m.reply(mess.owner)
-				if (!/image/.test(mime)) return m.reply(`Reply Image Dengan Caption ${prefix + command}`)
+				if (!isCreator) return sycreply(mess.owner)
+				if (!/image/.test(mime)) return sycreply(`Reply Image Dengan Caption ${prefix + command}`)
 				let media = await sych.downloadAndSaveMediaMessage(quoted, 'ppbot.jpeg')
 				if (text.length > 0) {
 					let {
@@ -920,28 +938,28 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 						}]
 					})
 					await fs.unlinkSync(media)
-					m.reply('Sukses')
+					sycreply('Sukses')
 				} else {
 					await sych.updateProfilePicture(botNumber, {
 						url: media
 					})
 					await fs.unlinkSync(media)
-					m.reply('Sukses')
+					sycreply('Sukses')
 				}
 			}
 			break
 			case 'delppbot': {
-				if (!isCreator) return m.reply(mess.owner)
+				if (!isCreator) return sycreply(mess.owner)
 				await sych.removeProfilePicture(sych.user.id)
-				m.reply('Sukses')
+				sycreply('Sukses')
 			}
 			break
 			case 'join': {
-				if (!isCreator) return m.reply(mess.owner)
-				if (!text) return m.reply('Masukkan Link Group!')
-				if (!isUrl(args[0]) && !args[0].includes('whatsapp.com')) return m.reply('Link Invalid!')
+				if (!isCreator) return sycreply(mess.owner)
+				if (!text) return sycreply('Masukkan Link Group!')
+				if (!isUrl(args[0]) && !args[0].includes('whatsapp.com')) return sycreply('Link Invalid!')
 				const result = args[0].split('https://chat.whatsapp.com/')[1]
-				m.reply(mess.wait)
+				sycreply(mess.wait)
 				await sych.sendMessage(m.chat, {
 					react: {
 						text: "⏳",
@@ -985,16 +1003,16 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 					}
 				});
 				await sych.groupAcceptInvite(result).catch((res) => {
-					if (res.data == 400) return m.reply('Grup Tidak Di Temukan❗');
-					if (res.data == 401) return m.reply('Bot Di Kick Dari Grup Tersebut❗');
-					if (res.data == 409) return m.reply('Bot Sudah Join Di Grup Tersebut❗');
-					if (res.data == 410) return m.reply('Url Grup Telah Di Setel Ulang❗');
-					if (res.data == 500) return m.reply('Grup Penuh❗');
+					if (res.data == 400) return sycreply('Grup Tidak Di Temukan❗');
+					if (res.data == 401) return sycreply('Bot Di Kick Dari Grup Tersebut❗');
+					if (res.data == 409) return sycreply('Bot Sudah Join Di Grup Tersebut❗');
+					if (res.data == 410) return sycreply('Url Grup Telah Di Setel Ulang❗');
+					if (res.data == 500) return sycreply('Grup Penuh❗');
 				})
 			}
 			break
 			case 'leave': {
-				if (!isCreator) return m.reply(mess.owner)
+				if (!isCreator) return sycreply(mess.owner)
 				await sych.groupLeave(m.chat).then(() => sych.sendFromOwner(owner, 'Sukses Keluar Dari Grup', m, {
 					contextInfo: {
 						isForwarded: true
@@ -1004,66 +1022,66 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			break
 			case 'blokir':
 			case 'block': {
-				if (!isCreator) return m.reply(mess.owner)
+				if (!isCreator) return sycreply(mess.owner)
 				if (!text && !m.quoted) {
-					m.reply(`Contoh: ${prefix + command} 62xxx`)
+					sycreply(`Contoh: ${prefix + command} 62xxx`)
 				} else {
 					const numbersOnly = m.isGroup ? (text ? text.replace(/\D/g, '') + '@s.whatsapp.net' : m.quoted?.sender) : m.chat
-					await sych.updateBlockStatus(numbersOnly, 'block').then((a) => m.reply(mess.done)).catch((err) => m.reply('Gagal!'))
+					await sych.updateBlockStatus(numbersOnly, 'block').then((a) => sycreply(mess.done)).catch((err) => sycreply('Gagal!'))
 				}
 			}
 			break
 			case 'listblock': {
 				let anu = await sych.fetchBlocklist()
-				m.reply(`Total Block : ${anu.length}\n` + anu.map(v => '• ' + v.replace(/@.+/, '')).join`\n`)
+				sycreply(`Total Block : ${anu.length}\n` + anu.map(v => '• ' + v.replace(/@.+/, '')).join`\n`)
 			}
 			break
 			case 'openblokir':
 			case 'unblokir':
 			case 'openblock':
 			case 'unblock': {
-				if (!isCreator) return m.reply(mess.owner)
+				if (!isCreator) return sycreply(mess.owner)
 				if (!text && !m.quoted) {
-					m.reply(`Contoh: ${prefix + command} 62xxx`)
+					sycreply(`Contoh: ${prefix + command} 62xxx`)
 				} else {
 					const numbersOnly = m.isGroup ? (text ? text.replace(/\D/g, '') + '@s.whatsapp.net' : m.quoted?.sender) : m.chat
-					await sych.updateBlockStatus(numbersOnly, 'unblock').then((a) => m.reply(mess.done)).catch((err) => m.reply('Gagal!'))
+					await sych.updateBlockStatus(numbersOnly, 'unblock').then((a) => sycreply(mess.done)).catch((err) => sycreply('Gagal!'))
 				}
 			}
 			break
 			case 'adduang': {
-				if (!isCreator) return m.reply(mess.owner)
-				if (!args[0] || !args[1] || isNaN(args[1])) return m.reply(`Kirim/tag Nomernya!\nExample:\n${prefix + command} 62xxx 1000`)
+				if (!isCreator) return sycreply(mess.owner)
+				if (!args[0] || !args[1] || isNaN(args[1])) return sycreply(`Kirim/tag Nomernya!\nExample:\n${prefix + command} 62xxx 1000`)
 				const nmrnya = args[0].replace(/[^0-9]/g, '') + '@s.whatsapp.net'
 				const onWa = await sych.onWhatsApp(nmrnya)
-				if (!onWa.length > 0) return m.reply('Nomer Tersebut Tidak Terdaftar Di Whatsapp!')
+				if (!onWa.length > 0) return sycreply('Nomer Tersebut Tidak Terdaftar Di Whatsapp!')
 				if (db.users[nmrnya] && db.users[nmrnya].uang) {
 					addUang(args[1], nmrnya, db)
-					m.reply('Sukses Add Uang')
+					sycreply('Sukses Add Uang')
 				} else {
-					m.reply('User tidak terdaftar di database!')
+					sycreply('User tidak terdaftar di database!')
 				}
 			}
 			break
 			case 'addlimit': {
-				if (!isCreator) return m.reply(mess.owner)
-				if (!args[0] || !args[1] || isNaN(args[1])) return m.reply(`Kirim/tag Nomernya!\nExample:\n${prefix + command} 62xxx 10`)
+				if (!isCreator) return sycreply(mess.owner)
+				if (!args[0] || !args[1] || isNaN(args[1])) return sycreply(`Kirim/tag Nomernya!\nExample:\n${prefix + command} 62xxx 10`)
 				const nmrnya = args[0].replace(/[^0-9]/g, '') + '@s.whatsapp.net'
 				const onWa = await sych.onWhatsApp(nmrnya)
-				if (!onWa.length > 0) return m.reply('Nomer Tersebut Tidak Terdaftar Di Whatsapp!')
+				if (!onWa.length > 0) return sycreply('Nomer Tersebut Tidak Terdaftar Di Whatsapp!')
 				if (db.users[nmrnya] && db.users[nmrnya].limit) {
 					addLimit(args[1], nmrnya, db)
-					m.reply('Sukses Add limit')
+					sycreply('Sukses Add limit')
 				} else {
-					m.reply('User tidak terdaftar di database!')
+					sycreply('User tidak terdaftar di database!')
 				}
 			}
 			break
 			case 'listpc': {
-				if (!isCreator) return m.reply(mess.owner)
+				if (!isCreator) return sycreply(mess.owner)
 				let anu = await store.chats.all().filter(v => v.id.endsWith('.net')).map(v => v.id)
 				let teks = `● *LIST PERSONAL CHAT*\n\nTotal Chat : ${anu.length} Chat\n\n`
-				if (anu.length === 0) return m.reply(teks)
+				if (anu.length === 0) return sycreply(teks)
 				for (let i of anu) {
 					if (store.messages[i] && store.messages[i].array && store.messages[i].array[0]) {
 						let nama = store.messages[i].array[0].pushName
@@ -1074,10 +1092,10 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			}
 			break
 			case 'listgc': {
-				if (!isCreator) return m.reply(mess.owner)
+				if (!isCreator) return sycreply(mess.owner)
 				let anu = await store.chats.all().filter(v => v.id.endsWith('@g.us')).map(v => v.id)
 				let teks = `● *LIST GROUP CHAT*\n\nTotal Group : ${anu.length} Group\n\n`
-				if (anu.length === 0) return m.reply(teks)
+				if (anu.length === 0) return sycreply(teks)
 				for (let i of anu) {
 					let metadata = store.groupMetadata[i] || await sych.groupMetadata(i)
 					teks += `${setv} *Nama :* ${metadata.subject}\n${setv} *Admin :* ${metadata.owner ? `@${metadata.owner.split('@')[0]}` : '-' }\n${setv} *ID :* ${metadata.id}\n${setv} *Dibuat :* ${moment(metadata.creation * 1000).tz('Asia/Jakarta').format('DD/MM/YYYY HH:mm:ss')}\n${setv} *Member :* ${metadata.participants.length}\n\n=====================\n\n`
@@ -1087,8 +1105,8 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			break
 			case 'creategc':
 			case 'buatgc': {
-				if (!isCreator) return m.reply(mess.owner)
-				if (!text) return m.reply(`Example:\n${prefix + command} *Nama Gc*`)
+				if (!isCreator) return sycreply(mess.owner)
+				if (!text) return sycreply(`Example:\n${prefix + command} *Nama Gc*`)
 				let group = await sych.groupCreate(q, [m.sender])
 				let res = await sych.groupInviteCode(group.id)
 				await sych.sendMessage(m.chat, {
@@ -1106,56 +1124,56 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			case 'addpr':
 			case 'addprem':
 			case 'addpremium': {
-				if (!isCreator) return m.reply(mess.owner)
-				if (!text) return m.reply(`Example:\n${prefix + command} @tag|waktu\n${prefix + command} @${m.sender.split('@')[0]}|30 hari`)
+				if (!isCreator) return sycreply(mess.owner)
+				if (!text) return sycreply(`Example:\n${prefix + command} @tag|waktu\n${prefix + command} @${m.sender.split('@')[0]}|30 hari`)
 				let [teks1, teks2] = text.split`|`
 				const nmrnya = teks1.replace(/[^0-9]/g, '') + '@s.whatsapp.net'
 				const onWa = await sych.onWhatsApp(nmrnya)
-				if (!onWa.length > 0) return m.reply('Nomer Tersebut Tidak Terdaftar Di Whatsapp!')
+				if (!onWa.length > 0) return sycreply('Nomer Tersebut Tidak Terdaftar Di Whatsapp!')
 				if (teks2) {
 					if (db.users[nmrnya] && db.users[nmrnya].limit) {
 						prem.addPremiumUser(nmrnya, teks2.replace(/[^0-9]/g, '') + 'd', premium);
-						m.reply(`Sukses ${command} @${nmrnya.split('@')[0]} Selama ${teks2}`)
+						sycreply(`Sukses ${command} @${nmrnya.split('@')[0]} Selama ${teks2}`)
 						db.users[nmrnya].limit += db.users[nmrnya].vip ? limit.vip : limit.premium
 						db.users[nmrnya].uang += db.users[nmrnya].vip ? uang.vip : uang.premium
-					} else m.reply('Nomer tidak terdaftar di BOT !')
+					} else sycreply('Nomer tidak terdaftar di BOT !')
 				} else {
-					m.reply(`Masukkan waktunya!\Example:\n${prefix + command} @tag|waktu\n${prefix + command} @${m.sender.split('@')[0]}|30d\n_d = day_`)
+					sycreply(`Masukkan waktunya!\Example:\n${prefix + command} @tag|waktu\n${prefix + command} @${m.sender.split('@')[0]}|30d\n_d = day_`)
 				}
 			}
 			break
 			case 'delpr':
 			case 'delprem':
 			case 'delpremium': {
-				if (!isCreator) return m.reply(mess.owner)
-				if (!text) return m.reply(`Example:\n${prefix + command} @tag`)
+				if (!isCreator) return sycreply(mess.owner)
+				if (!text) return sycreply(`Example:\n${prefix + command} @tag`)
 				const nmrnya = text.replace(/[^0-9]/g, '') + '@s.whatsapp.net'
 				if (db.users[nmrnya] && db.users[nmrnya].limit) {
 					if (prem.checkPremiumUser(nmrnya, premium)) {
 						premium.splice(prem.getPremiumPosition(nmrnya, premium), 1);
 						fs.writeFileSync('./database/premium.json', JSON.stringify(premium));
-						m.reply(`Sukses ${command} @${nmrnya.split('@')[0]}`)
+						sycreply(`Sukses ${command} @${nmrnya.split('@')[0]}`)
 						db.users[nmrnya].limit += db.users[nmrnya].vip ? limit.vip : limit.free
 						db.users[nmrnya].uang += db.users[nmrnya].vip ? uang.vip : uang.free
 					} else {
-						m.reply(`User @${nmrnya.split('@')[0]} Bukan Premium❗`)
+						sycreply(`User @${nmrnya.split('@')[0]} Bukan Premium❗`)
 					}
-				} else m.reply('Nomer tidak terdaftar di BOT !')
+				} else sycreply('Nomer tidak terdaftar di BOT !')
 			}
 			break
 			case 'listpr':
 			case 'listprem':
 			case 'listpremium': {
-				if (!isCreator) return m.reply(mess.owner)
+				if (!isCreator) return sycreply(mess.owner)
 				let txt = `*------「 LIST PREMIUM 」------*\n\n`
 				for (let userprem of premium) {
 					txt += `➸ *Nomer*: @${userprem.id.split('@')[0]}\n➸ *Limit*: ${db.users[userprem.id].limit}\n➸ *Uang*: ${db.users[userprem.id].uang.toLocaleString('id-ID')}\n➸ *Expired*: ${formatDate(userprem.expired)}\n\n`
 				}
-				m.reply(txt)
+				sycreply(txt)
 			}
 			break
 			case 'upsw': {
-				if (!isCreator) return m.reply(mess.owner)
+				if (!isCreator) return sycreply(mess.owner)
 				const statusJidList = Object.keys(db.users)
 				const backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
 				if (quoted.isMedia) {
@@ -1187,7 +1205,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 								key: m.key
 							}
 						})
-					} else m.reply('Only Support video/audio/image/text')
+					} else sycreply('Only Support video/audio/image/text')
 				} else if (quoted.text) {
 					await sych.sendMessage('status@broadcast', {
 						text: text || m.quoted?.body || ''
@@ -1203,12 +1221,12 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 							key: m.key
 						}
 					})
-				} else m.reply('Only Support video/audio/image/text')
+				} else sycreply('Only Support video/audio/image/text')
 			}
 			break
 			case 'addcase': {
-				if (!isCreator) return m.reply(mess.owner)
-				if (!text && !text.startsWith('case')) return m.reply('Masukkan Casenya!')
+				if (!isCreator) return sycreply(mess.owner)
+				if (!text && !text.startsWith('case')) return sycreply('Masukkan Casenya!')
 				fs.readFile('naze.js', 'utf8', (err, data) => {
 					if (err) {
 						console.error('Terjadi kesalahan saat membaca file:', err);
@@ -1219,33 +1237,33 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 						const codeBaru = data.slice(0, posisi) + '\n' + `${text}` + '\n' + data.slice(posisi);
 						fs.writeFile('naze.js', codeBaru, 'utf8', (err) => {
 							if (err) {
-								m.reply('Terjadi kesalahan saat menulis file: ', err);
+								sycreply('Terjadi kesalahan saat menulis file: ', err);
 							} else {
-								m.reply('Case berhasil ditambahkan');
+								sycreply('Case berhasil ditambahkan');
 							}
 						});
 					} else {
-						m.reply('Gagal Menambahkan case!');
+						sycreply('Gagal Menambahkan case!');
 					}
 				});
 			}
 			break
 			case 'getcase': {
-				if (!isCreator) return m.reply(mess.owner)
-				if (!text) return m.reply('Masukkan Nama Casenya!')
+				if (!isCreator) return sycreply(mess.owner)
+				if (!text) return sycreply('Masukkan Nama Casenya!')
 				try {
 					const getCase = (cases) => {
 						return "case" + `'${cases}'` + fs.readFileSync("naze.js").toString().split('case \'' + cases + '\'')[1].split("break")[0] + "break"
 					}
-					m.reply(`${getCase(text)}`)
+					sycreply(`${getCase(text)}`)
 				} catch (e) {
-					m.reply(`case ${text} tidak ditemukan!`)
+					sycreply(`case ${text} tidak ditemukan!`)
 				}
 			}
 			break
 			case 'delcase': {
-				if (!isCreator) return m.reply(mess.owner)
-				if (!text) return m.reply('Masukkan Nama Casenya!')
+				if (!isCreator) return sycreply(mess.owner)
+				if (!text) return sycreply('Masukkan Nama Casenya!')
 				fs.readFile('naze.js', 'utf8', (err, data) => {
 					if (err) {
 						console.error('Terjadi kesalahan saat membaca file:', err);
@@ -1255,16 +1273,16 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 					const modifiedData = data.replace(regex, '');
 					fs.writeFile('naze.js', modifiedData, 'utf8', (err) => {
 						if (err) {
-							m.reply('Terjadi kesalahan saat menulis file: ', err);
+							sycreply('Terjadi kesalahan saat menulis file: ', err);
 						} else {
-							m.reply('Case berhasil dihapus dari file');
+							sycreply('Case berhasil dihapus dari file');
 						}
 					});
 				});
 			}
 			break
 			case 'getsession': {
-				if (!isCreator) return m.reply(mess.owner)
+				if (!isCreator) return sycreply(mess.owner)
 				await sych.sendMessage(m.chat, {
 					document: fs.readFileSync('./nazedev/creds.json'),
 					mimetype: 'application/json',
@@ -1276,15 +1294,15 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			break
 			case 'deletesession':
 			case 'delsession': {
-				if (!isCreator) return m.reply(mess.owner)
+				if (!isCreator) return sycreply(mess.owner)
 				fs.readdir('./nazedev', async function(err, files) {
 					if (err) {
 						console.error('Unable to scan directory: ' + err);
-						return m.reply('Unable to scan directory: ' + err);
+						return sycreply('Unable to scan directory: ' + err);
 					}
 					let filteredArray = await files.filter(item => ['session-', 'pre-key', 'sender-key', 'app-state'].some(ext => item.startsWith(ext)));
 					let teks = `Terdeteksi ${filteredArray.length} Session file\n\n`
-					if (filteredArray.length == 0) return m.reply(teks);
+					if (filteredArray.length == 0) return sycreply(teks);
 					filteredArray.map(function(e, i) {
 						teks += (i + 1) + `. ${e}\n`
 					})
@@ -1299,21 +1317,21 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 						m.reply('Berhasil Menghapus Semua Sampah Session', {
 							edit: key
 						})
-					} else m.reply(teks + `\nKetik _${prefix + command} true_\nUntuk Menghapus`)
+					} else sycreply(teks + `\nKetik _${prefix + command} true_\nUntuk Menghapus`)
 				});
 			}
 			break
 			case 'deletesampah':
 			case 'delsampah': {
-				if (!isCreator) return m.reply(mess.owner)
+				if (!isCreator) return sycreply(mess.owner)
 				fs.readdir('./database/sampah', async function(err, files) {
 					if (err) {
 						console.error('Unable to scan directory: ' + err);
-						return m.reply('Unable to scan directory: ' + err);
+						return sycreply('Unable to scan directory: ' + err);
 					}
 					let filteredArray = await files.filter(item => ['gif', 'png', 'bin', 'mp3', 'mp4', 'jpg', 'webp', 'webm', 'opus', 'jpeg'].some(ext => item.endsWith(ext)));
 					let teks = `Terdeteksi ${filteredArray.length} Sampah file\n\n`
-					if (filteredArray.length == 0) return m.reply(teks);
+					if (filteredArray.length == 0) return sycreply(teks);
 					filteredArray.map(function(e, i) {
 						teks += (i + 1) + `. ${e}\n`
 					})
@@ -1328,7 +1346,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 						m.reply('Berhasil Menghapus Semua Sampah', {
 							edit: key
 						})
-					} else m.reply(teks + `\nKetik _${prefix + command} true_\nUntuk Menghapus`)
+					} else sycreply(teks + `\nKetik _${prefix + command} true_\nUntuk Menghapus`)
 				});
 			}
 			break
@@ -1367,26 +1385,26 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			break
 			case 'donasi':
 			case 'donate': {
-				m.reply('Donasi Dapat Melalui Url Dibawah Ini :\nhttps://saweria.co/sych')
+				sycreply('Donasi Dapat Melalui Url Dibawah Ini :\nhttps://saweria.co/sych')
 			}
 			break
 			// Group Menu
 			case 'add': {
-				if (!m.isGroup) return m.reply(mess.group)
-				if (!m.isAdmin) return m.reply(mess.admin)
-				if (!m.isBotAdmin) return m.reply(mess.botAdmin)
+				if (!m.isGroup) return sycreply(mess.group)
+				if (!m.isAdmin) return sycreply(mess.admin)
+				if (!m.isBotAdmin) return sycreply(mess.botAdmin)
 				if (!text && !m.quoted) {
-					m.reply(`Contoh: ${prefix + command} 62xxx`)
+					sycreply(`Contoh: ${prefix + command} 62xxx`)
 				} else {
 					const numbersOnly = text ? text.replace(/\D/g, '') + '@s.whatsapp.net' : m.quoted?.sender
 					try {
 						await sych.groupParticipantsUpdate(m.chat, [numbersOnly], 'add').then(async (res) => {
 							for (let i of res) {
 								let invv = await sych.groupInviteCode(m.chat)
-								if (i.status == 408) return m.reply('Dia Baru-Baru Saja Keluar Dari Grub Ini!')
-								if (i.status == 401) return m.reply('Dia Memblokir Bot!')
-								if (i.status == 409) return m.reply('Dia Sudah Join!')
-								if (i.status == 500) return m.reply('Grub Penuh!')
+								if (i.status == 408) return sycreply('Dia Baru-Baru Saja Keluar Dari Grub Ini!')
+								if (i.status == 401) return sycreply('Dia Memblokir Bot!')
+								if (i.status == 409) return sycreply('Dia Sudah Join!')
+								if (i.status == 500) return sycreply('Grub Penuh!')
 								if (i.status == 403) {
 									await sych.sendMessage(m.chat, {
 										text: `@${numbersOnly.split('@')[0]} Tidak Dapat Ditambahkan\n\nKarena Target Private\n\nUndangan Akan Dikirimkan Ke\n-> wa.me/${numbersOnly.replace(/\D/g, '')}\nMelalui Jalur Pribadi`,
@@ -1400,51 +1418,51 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 										mentions: [numbersOnly, m.sender]
 									}, {
 										quoted: fkontak
-									}).catch((err) => m.reply('Gagal Mengirim Undangan!'))
+									}).catch((err) => sycreply('Gagal Mengirim Undangan!'))
 								} else if (i.status !== 200) {
-									m.reply('Gagal Add User')
+									sycreply('Gagal Add User')
 								}
 							}
 						})
 					} catch (e) {
-						m.reply('Terjadi Kesalahan! Gagal Add User')
+						sycreply('Terjadi Kesalahan! Gagal Add User')
 					}
 				}
 			}
 			break
 			case 'kick': {
-				if (!m.isGroup) return m.reply(mess.group)
-				if (!m.isAdmin) return m.reply(mess.admin)
-				if (!m.isBotAdmin) return m.reply(mess.botAdmin)
+				if (!m.isGroup) return sycreply(mess.group)
+				if (!m.isAdmin) return sycreply(mess.admin)
+				if (!m.isBotAdmin) return sycreply(mess.botAdmin)
 				if (!text && !m.quoted) {
-					m.reply(`Contoh: ${prefix + command} 62xxx`)
+					sycreply(`Contoh: ${prefix + command} 62xxx`)
 				} else {
 					const numbersOnly = text ? text.replace(/\D/g, '') + '@s.whatsapp.net' : m.quoted?.sender
-					await sych.groupParticipantsUpdate(m.chat, [numbersOnly], 'remove').catch((err) => m.reply('Gagal Kick User!'))
+					await sych.groupParticipantsUpdate(m.chat, [numbersOnly], 'remove').catch((err) => sycreply('Gagal Kick User!'))
 				}
 			}
 			break
 			case 'promote': {
-				if (!m.isGroup) return m.reply(mess.group)
-				if (!m.isAdmin) return m.reply(mess.admin)
-				if (!m.isBotAdmin) return m.reply(mess.botAdmin)
+				if (!m.isGroup) return sycreply(mess.group)
+				if (!m.isAdmin) return sycreply(mess.admin)
+				if (!m.isBotAdmin) return sycreply(mess.botAdmin)
 				if (!text && !m.quoted) {
-					m.reply(`Contoh: ${prefix + command} 62xxx`)
+					sycreply(`Contoh: ${prefix + command} 62xxx`)
 				} else {
 					const numbersOnly = text ? text.replace(/\D/g, '') + '@s.whatsapp.net' : m.quoted?.sender
-					await sych.groupParticipantsUpdate(m.chat, [numbersOnly], 'promote').catch((err) => m.reply('Gagal!'))
+					await sych.groupParticipantsUpdate(m.chat, [numbersOnly], 'promote').catch((err) => sycreply('Gagal!'))
 				}
 			}
 			break
 			case 'demote': {
-				if (!m.isGroup) return m.reply(mess.group)
-				if (!m.isAdmin) return m.reply(mess.admin)
-				if (!m.isBotAdmin) return m.reply(mess.botAdmin)
+				if (!m.isGroup) return sycreply(mess.group)
+				if (!m.isAdmin) return sycreply(mess.admin)
+				if (!m.isBotAdmin) return sycreply(mess.botAdmin)
 				if (!text && !m.quoted) {
-					m.reply(`Contoh: ${prefix + command} 62xxx`)
+					sycreply(`Contoh: ${prefix + command} 62xxx`)
 				} else {
 					const numbersOnly = text ? text.replace(/\D/g, '') + '@s.whatsapp.net' : m.quoted?.sender
-					await sych.groupParticipantsUpdate(m.chat, [numbersOnly], 'demote').catch((err) => m.reply('Gagal!'))
+					await sych.groupParticipantsUpdate(m.chat, [numbersOnly], 'demote').catch((err) => sycreply('Gagal!'))
 				}
 			}
 			break
@@ -1452,14 +1470,14 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			case 'setnamegc':
 			case 'setsubject':
 			case 'setsubjectgc': {
-				if (!m.isGroup) return m.reply(mess.group)
-				if (!m.isAdmin) return m.reply(mess.admin)
-				if (!m.isBotAdmin) return m.reply(mess.botAdmin)
+				if (!m.isGroup) return sycreply(mess.group)
+				if (!m.isAdmin) return sycreply(mess.admin)
+				if (!m.isBotAdmin) return sycreply(mess.botAdmin)
 				if (!text && !m.quoted) {
-					m.reply(`Contoh: ${prefix + command} textnya`)
+					sycreply(`Contoh: ${prefix + command} textnya`)
 				} else {
 					const teksnya = text ? text : m.quoted.text
-					await sych.groupUpdateSubject(m.chat, teksnya).catch((err) => m.reply('Gagal!'))
+					await sych.groupUpdateSubject(m.chat, teksnya).catch((err) => sycreply('Gagal!'))
 				}
 			}
 			break
@@ -1467,25 +1485,25 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			case 'setdescgc':
 			case 'setdesk':
 			case 'setdeskgc': {
-				if (!m.isGroup) return m.reply(mess.group)
-				if (!m.isAdmin) return m.reply(mess.admin)
-				if (!m.isBotAdmin) return m.reply(mess.botAdmin)
+				if (!m.isGroup) return sycreply(mess.group)
+				if (!m.isAdmin) return sycreply(mess.admin)
+				if (!m.isBotAdmin) return sycreply(mess.botAdmin)
 				if (!text && !m.quoted) {
-					m.reply(`Contoh: ${prefix + command} textnya`)
+					sycreply(`Contoh: ${prefix + command} textnya`)
 				} else {
 					const teksnya = text ? text : m.quoted.text
-					await sych.groupUpdateDescription(m.chat, teksnya).catch((err) => m.reply('Gagal!'))
+					await sych.groupUpdateDescription(m.chat, teksnya).catch((err) => sycreply('Gagal!'))
 				}
 			}
 			break
 			case 'setppgroups':
 			case 'setppgrup':
 			case 'setppgc': {
-				if (!m.isGroup) return m.reply(mess.group)
-				if (!m.isAdmin) return m.reply(mess.admin)
-				if (!m.isBotAdmin) return m.reply(mess.botAdmin)
-				if (!m.quoted) return m.reply('Reply Gambar yang mau dipasang di Profile Bot')
-				if (!/image/.test(mime) && /webp/.test(mime)) return m.reply(`Reply Image Dengan Caption ${prefix + command}`)
+				if (!m.isGroup) return sycreply(mess.group)
+				if (!m.isAdmin) return sycreply(mess.admin)
+				if (!m.isBotAdmin) return sycreply(mess.botAdmin)
+				if (!m.quoted) return sycreply('Reply Gambar yang mau dipasang di Profile Bot')
+				if (!/image/.test(mime) && /webp/.test(mime)) return sycreply(`Reply Image Dengan Caption ${prefix + command}`)
 				let media = await sych.downloadAndSaveMediaMessage(quoted, 'ppgc.jpeg')
 				if (text.length > 0) {
 					let {
@@ -1507,20 +1525,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 						}]
 					})
 					await fs.unlinkSync(media)
-					m.reply('Sukses')
+					sycreply('Sukses')
 				} else {
 					await sych.updateProfilePicture(m.chat, {
 						url: media
 					})
 					await fs.unlinkSync(media)
-					m.reply('Sukses')
+					sycreply('Sukses')
 				}
 			}
 			break
 			case 'delete':
 			case 'del':
 			case 'd': {
-				if (!m.quoted) return m.reply('Reply pesan yang mau di delete')
+				if (!m.quoted) return sycreply('Reply pesan yang mau di delete')
 				await sych.sendMessage(m.chat, {
 					delete: {
 						remoteJid: m.chat,
@@ -1537,9 +1555,9 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			case 'urlgroup':
 			case 'urlgrup':
 			case 'urlgc': {
-				if (!m.isGroup) return m.reply(mess.group)
-				if (!m.isAdmin) return m.reply(mess.admin)
-				if (!m.isBotAdmin) return m.reply(mess.botAdmin)
+				if (!m.isGroup) return sycreply(mess.group)
+				if (!m.isAdmin) return sycreply(mess.admin)
+				if (!m.isBotAdmin) return sycreply(mess.botAdmin)
 				let response = await sych.groupInviteCode(m.chat)
 				await sych.sendMessage(m.chat, {
 					text: `https://chat.whatsapp.com/${response}\n\nLink Group : ${(await sych.groupMetadata(m.chat)).subject}`,
@@ -1552,25 +1570,25 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			case 'revoke':
 			case 'newlink':
 			case 'newurl': {
-				if (!m.isGroup) return m.reply(mess.group)
-				if (!m.isAdmin) return m.reply(mess.admin)
-				if (!m.isBotAdmin) return m.reply(mess.botAdmin)
+				if (!m.isGroup) return sycreply(mess.group)
+				if (!m.isAdmin) return sycreply(mess.admin)
+				if (!m.isBotAdmin) return sycreply(mess.botAdmin)
 				await sych.groupRevokeInvite(m.chat).then((a) => {
-					m.reply(`Sukses Menyetel Ulang, Tautan Undangan Grup ${m.metadata.subject}`)
-				}).catch((err) => m.reply('Gagal!'))
+					sycreply(`Sukses Menyetel Ulang, Tautan Undangan Grup ${m.metadata.subject}`)
+				}).catch((err) => sycreply('Gagal!'))
 			}
 			break
 			case 'gc':
 			case 'grup': {
-				if (!m.isGroup) return m.reply(mess.group)
-				if (!m.isAdmin) return m.reply(mess.admin)
-				if (!m.isBotAdmin) return m.reply(mess.botAdmin)
+				if (!m.isGroup) return sycreply(mess.group)
+				if (!m.isAdmin) return sycreply(mess.admin)
+				if (!m.isBotAdmin) return sycreply(mess.botAdmin)
 				let teks = text.split(' ')
 				let set = db.groups[m.chat]
 				switch (teks[0]) {
 					case 'close':
 					case 'open':
-						await sych.groupSettingUpdate(m.chat, teks[0] == 'close' ? 'announcement' : 'not_announcement').then(a => m.reply(`*Sukses ${teks[0] == 'open' ? 'Membuka' : 'Menutup'} Group*`))
+						await sych.groupSettingUpdate(m.chat, teks[0] == 'close' ? 'announcement' : 'not_announcement').then(a => sycreply(`*Sukses ${teks[0] == 'open' ? 'Membuka' : 'Menutup'} Group*`))
 						break
 					case 'antilink':
 					case 'antivirtex':
@@ -1581,25 +1599,25 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 					case 'waktusholat':
 					case 'nsfw':
 						if (teks[1] == 'on' || teks[1] == 'true') {
-							if (set[teks[0]]) return m.reply('*Sudah Aktif Sebelumnya*')
+							if (set[teks[0]]) return sycreply('*Sudah Aktif Sebelumnya*')
 							set[teks[0]] = true
-							m.reply('*Sukse Change To On*')
+							sycreply('*Sukse Change To On*')
 						} else if (teks[1] == 'off' || teks[1] == 'false') {
 							set[teks[0]] = false
-							m.reply('*Sukse Change To Off*')
+							sycreply('*Sukse Change To Off*')
 						} else {
-							m.reply(`❗${teks[0].charAt(0).toUpperCase() + teks[0].slice(1)} on/off`)
+							sycreply(`❗${teks[0].charAt(0).toUpperCase() + teks[0].slice(1)} on/off`)
 						}
 						break
 					default:
-						m.reply(`${m.metadata.subject}\n- Mute : ${set.mute ? '✅' : '❌'}\n- Anti Link : ${set.antilink ? '✅' : '❌'}\n- Anti Virtex : ${set.antivirtex ? '✅' : '❌'}\n- Anti Delete : ${set.antidelete ? '✅' : '❌'}\n- Welcome : ${set.welcome ? '✅' : '❌'}\n\nExample:\n${prefix + command} antilink off`)
+						sycreply(`${m.metadata.subject}\n- Mute : ${set.mute ? '✅' : '❌'}\n- Anti Link : ${set.antilink ? '✅' : '❌'}\n- Anti Virtex : ${set.antivirtex ? '✅' : '❌'}\n- Anti Delete : ${set.antidelete ? '✅' : '❌'}\n- Welcome : ${set.welcome ? '✅' : '❌'}\n\nExample:\n${prefix + command} antilink off`)
 				}
 			}
 			break
 			case 'tagall': {
-				if (!m.isGroup) return m.reply(mess.group)
-				if (!m.isAdmin) return m.reply(mess.admin)
-				if (!m.isBotAdmin) return m.reply(mess.botAdmin)
+				if (!m.isGroup) return sycreply(mess.group)
+				if (!m.isAdmin) return sycreply(mess.admin)
+				if (!m.isBotAdmin) return sycreply(mess.botAdmin)
 				let setv = pickRandom(listv)
 				let teks = `*Tag All*\n\n*Pesan :* ${q ? q : ''}\n\n`
 				for (let mem of m.metadata.participants) {
@@ -1615,9 +1633,9 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			break
 			case 'hidetag':
 			case 'h': {
-				if (!m.isGroup) return m.reply(mess.group)
-				if (!m.isAdmin) return m.reply(mess.admin)
-				if (!m.isBotAdmin) return m.reply(mess.botAdmin)
+				if (!m.isGroup) return sycreply(mess.group)
+				if (!m.isAdmin) return sycreply(mess.admin)
+				if (!m.isBotAdmin) return sycreply(mess.botAdmin)
 				sych.sendMessage(m.chat, {
 					text: q ? q : '',
 					mentions: m.metadata.participants.map(a => a.id)
@@ -1627,10 +1645,10 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			}
 			break
 			case 'totag': {
-				if (!m.isGroup) return m.reply(mess.group)
-				if (!m.isAdmin) return m.reply(mess.admin)
-				if (!m.isBotAdmin) return m.reply(mess.botAdmin)
-				if (!m.quoted) return m.reply(`Reply pesan dengan caption ${prefix + command}`)
+				if (!m.isGroup) return sycreply(mess.group)
+				if (!m.isAdmin) return sycreply(mess.admin)
+				if (!m.isBotAdmin) return sycreply(mess.botAdmin)
+				if (!m.quoted) return sycreply(`Reply pesan dengan caption ${prefix + command}`)
 				delete m.quoted.chat
 				await sych.sendMessage(m.chat, {
 					forward: m.quoted.fakeObj,
@@ -1640,16 +1658,16 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			break
 			case 'listonline':
 			case 'liston': {
-				if (!m.isGroup) return m.reply(mess.group)
+				if (!m.isGroup) return sycreply(mess.group)
 				let id = args && /\d+\-\d+@g.us/.test(args[0]) ? args[0] : m.chat
-				if (!store.presences || !store.presences[id]) return m.reply('Sedang Tidak ada yang online!')
+				if (!store.presences || !store.presences[id]) return sycreply('Sedang Tidak ada yang online!')
 				let online = [...Object.keys(store.presences[id]), botNumber]
 				await sych.sendMessage(m.chat, {
 					text: 'List Online:\n\n' + online.map(v => setv + ' @' + v.replace(/@.+/, '')).join`\n`,
 					mentions: online
 				}, {
 					quoted: m
-				}).catch((e) => m.reply('Gagal'))
+				}).catch((e) => sycreply('Gagal'))
 			}
 			break
 			// Bot Menu
@@ -1753,7 +1771,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			case 'cek': {
 				const user = Object.keys(db.users)
 				const infoUser = db.users[m.sender]
-				await m.reply(`*👤Profile @${m.sender.split('@')[0]}* :\n🐋User Bot : ${user.includes(m.sender) ? 'True' : 'False'}\n🔥User : ${isVip ? 'VIP' : isPremium ? 'PREMIUM' : 'FREE'}\n🎫Limit : ${infoUser.limit}\n💰Uang : ${infoUser ? infoUser.uang.toLocaleString('id-ID') : '0'}`)
+				await sycreply(`*👤Profile @${m.sender.split('@')[0]}* :\n🐋User Bot : ${user.includes(m.sender) ? 'True' : 'False'}\n🔥User : ${isVip ? 'VIP' : isPremium ? 'PREMIUM' : 'FREE'}\n🎫Limit : ${infoUser.limit}\n💰Uang : ${infoUser ? infoUser.uang.toLocaleString('id-ID') : '0'}`)
 			}
 			break
 			case 'leaderboard': {
@@ -1762,12 +1780,12 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				for (let i = 0; i < entries.length; i++) {
 					teksnya += `│• ${i + 1}. @${entries[i].split('@')[0]}\n│• Balance : ${db.users[entries[i]].uang.toLocaleString('id-ID')}\n│\n`
 				}
-				m.reply(teksnya + '╰──────❍');
+				sycreply(teksnya + '╰──────❍');
 			}
 			break
 			case 'req':
 			case 'request': {
-				if (!text) return m.reply('Mau Request apa ke Owner?')
+				if (!text) return sycreply('Mau Request apa ke Owner?')
 				await sych.sendMessage(m.chat, {
 					text: `*Request Telah Terkirim Ke Owner*\n_Terima Kasih🙏_`
 				}, {
@@ -1783,7 +1801,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			break
 			case 'totalfitur': {
 				const total = ((fs.readFileSync('./naze.js').toString()).match(/case '/g) || []).length
-				m.reply(`Total Fitur : ${total}`);
+				sycreply(`Total Fitur : ${total}`);
 			}
 			break
 			case 'daily':
@@ -1832,24 +1850,24 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				switch (teks[0]) {
 					case 'mode':
 						if (!teks[1]) {
-							return m.reply('Gunakan perintah: mode self/public');
+							return sycreply('Gunakan perintah: mode self/public');
 						}
 						if (teks[1].toLowerCase() === 'public') {
 							if (sych.public) {
-								return m.reply('*Mode public sudah aktif sebelumnya.*');
+								return sycreply('*Mode public sudah aktif sebelumnya.*');
 							}
 							sych.public = true;
 							console.log("Mode diubah ke public");
-							return m.reply('*Sukses mengubah mode ke Public Usage.*');
+							return sycreply('*Sukses mengubah mode ke Public Usage.*');
 						} else if (teks[1].toLowerCase() === 'self') {
 							if (!sych.public) {
-								return m.reply('*Mode self sudah aktif sebelumnya.*');
+								return sycreply('*Mode self sudah aktif sebelumnya.*');
 							}
 							sych.public = false;
 							console.log("Mode diubah ke self");
-							return m.reply('*Sukses mengubah mode ke Self Usage.*');
+							return sycreply('*Sukses mengubah mode ke Self Usage.*');
 						} else {
-							return m.reply('Gunakan perintah: mode self/public');
+							return sycreply('Gunakan perintah: mode self/public');
 						}
 						break;
 					case 'anticall':
@@ -1860,14 +1878,14 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 					case 'readsw':
 					case 'multiprefix':
 						if (teks[1] == 'on') {
-							if (set[teks[0]]) return m.reply('*Sudah Aktif Sebelumnya*')
+							if (set[teks[0]]) return sycreply('*Sudah Aktif Sebelumnya*')
 							set[teks[0]] = true
-							m.reply('*Sukse Change To On*')
+							sycreply('*Sukse Change To On*')
 						} else if (teks[1] == 'off') {
 							set[teks[0]] = false
-							m.reply('*Sukse Change To Off*')
+							sycreply('*Sukse Change To Off*')
 						} else {
-							m.reply(`${teks[0].charAt(0).toUpperCase() + teks[0].slice(1)} on/off`)
+							sycreply(`${teks[0].charAt(0).toUpperCase() + teks[0].slice(1)} on/off`)
 						}
 						break
 					case 'set':
@@ -1880,10 +1898,10 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 							}) : (typeof value === 'boolean') ? (value ? 'on🟢' : 'off🔴') : value;
 							return `- ${key.charAt(0).toUpperCase() + key.slice(1)} : ${list}`;
 						}).join('\n');
-						m.reply(`Settings Bot @${botNumber.split('@')[0]}\n${settingsBot}`);
+						sycreply(`Settings Bot @${botNumber.split('@')[0]}\n${settingsBot}`);
 						break
 					default:
-						if (teks[0] || teks[1]) m.reply(`*Please Sellect Settings :*\n- Mode : *${prefix + command} mode self/public*\n- Anti Call : *${prefix + command} anticall on/off*\n- Auto Bio : *${prefix + command} autobio on/off*\n- autoAi : *${prefix} autoai on/off*\n- Auto Read : *${prefix + command} autoread on/off*\n- Auto Typing : *${prefix + command} autotyping on/off*\n- Auto VoiceNote : *${prefix + command} autovn on/off*\n- Read Sw : *${prefix + command} readsw on/off*\n- Multi Prefix : *${prefix + command} multiprefix on/off*`)
+						if (teks[0] || teks[1]) sycreply(`*Please Sellect Settings :*\n- Mode : *${prefix + command} mode self/public*\n- Anti Call : *${prefix + command} anticall on/off*\n- Auto Bio : *${prefix + command} autobio on/off*\n- autoAi : *${prefix} autoai on/off*\n- Auto Read : *${prefix + command} autoread on/off*\n- Auto Typing : *${prefix + command} autotyping on/off*\n- Auto VoiceNote : *${prefix + command} autovn on/off*\n- Read Sw : *${prefix + command} readsw on/off*\n- Multi Prefix : *${prefix + command} multiprefix on/off*`)
 				}
 				if (!teks[0] && !teks[1]) return sych.sendMessage(m.chat, {
 					text: `*Bot Telah Online Selama*\n*${runtime(os.uptime())}*`
@@ -1933,12 +1951,12 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				neww = performance.now()
 				oldd = performance.now()
 				respon = `Kecepatan Respon ${latensi.toFixed(4)} _Second_ \n ${oldd - neww} _miliseconds_\n\nRuntime : ${runtime(os.uptime())}\n\n💻 Info Server\nRAM: ${formatp(os.totalmem() - os.freemem())} / ${formatp(os.totalmem())}\n\n_NodeJS Memory Usaage_\n${Object.keys(used).map((key, _, arr) => `${key.padEnd(Math.max(...arr.map(v=>v.length)),' ')}: ${formatp(used[key])}`).join('\n')}\n\n${cpus[0] ? `_Total CPU Usage_\n${cpus[0].model.trim()} (${cpu.speed} MHZ)\n${Object.keys(cpu.times).map(type => `- *${(type + '*').padEnd(6)}: ${(100 * cpu.times[type] / cpu.total).toFixed(2)}%`).join('\n')}\n_CPU Core(s) Usage (${cpus.length} Core CPU)_\n${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Object.keys(cpu.times).map(type => `- *${(type + '*').padEnd(6)}: ${(100 * cpu.times[type] / cpu.total).toFixed(2)}%`).join('\n')}`).join('\n\n')}` : ''}`.trim()
-				m.reply(respon)
+				sycreply(respon)
 			}
 			break
 			case 'speedtest':
 			case 'speed': {
-				m.reply('Testing Speed...')
+				sycreply('Testing Speed...')
 				let cp = require('child_process')
 				let {
 					promisify
@@ -1954,8 +1972,8 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 						stdout,
 						stderr
 					} = o
-					if (stdout.trim()) m.reply(stdout)
-					if (stderr.trim()) m.reply(stderr)
+					if (stdout.trim()) sycreply(stdout)
+					if (stderr.trim()) sycreply(stderr)
 				}
 			}
 			break
@@ -1963,13 +1981,13 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				let user = db.users[m.sender]
 				user.afkTime = +new Date
 				user.afkReason = text
-				m.reply(`@${m.sender.split('@')[0]} Telah Afk${text ? ': ' + text : ''}`)
+				sycreply(`@${m.sender.split('@')[0]} Telah Afk${text ? ': ' + text : ''}`)
 			}
 			break
 			case 'readviewonce':
 			case 'readviewone':
 			case 'rvo': {
-				if (!m.quoted) return m.reply(`Reply view once message\nExample: ${prefix + command}`)
+				if (!m.quoted) return sycreply(`Reply view once message\nExample: ${prefix + command}`)
 				try {
 					if (m.quoted.msg.viewOnce) {
 						m.quoted.msg.viewOnce = false
@@ -1987,17 +2005,17 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 						}
 						await sych.relayMessage(m.chat, m.quoted.msg.message, {})
 					} else {
-						m.reply(`Reply view once message\nExample: ${prefix + command}`)
+						sycreply(`Reply view once message\nExample: ${prefix + command}`)
 					}
 				} catch (e) {
-					m.reply('Media Tidak Valid!')
+					sycreply('Media Tidak Valid!')
 				}
 			}
 			break
 			case 'inspect': {
-				if (!text) return m.reply('Masukkan Link Group!')
+				if (!text) return sycreply('Masukkan Link Group!')
 				let code = q.match(/chat.whatsapp.com\/([\w\d]*)/g);
-				if (code === null) return m.reply('No invite url detected.');
+				if (code === null) return sycreply('No invite url detected.');
 				code = code[0].replace('chat.whatsapp.com/', '');
 				await sych.groupGetInviteInfo(code).then(anu => {
 					let {
@@ -2015,39 +2033,39 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 					let par = `*Nama Gc* : ${subject}\n*ID* : ${id}\n${owner ? `*Creator* : @${owner.split('@')[0]}` : '*Creator* : -'}\n*Jumlah Member* : ${size}\n*Gc Dibuat Tanggal* : ${new Date(creation * 1000).toLocaleString()}\n*DescID* : ${descId ? descId : '-'}\n${subjectOwner ? `*Nama GC Diubah Oleh* : @${subjectOwner.split('@')[0]}` : '*Nama GC Diubah Oleh* : -'}\n${descOwner ? `*Desc diubah oleh* : @${descOwner.split('@')[0]}` : '*Desc diubah oleh* : -'}\n\n*Desc* : ${desc ? desc : '-'}\n`;
 					sych.sendTextMentions(m.chat, par, m);
 				}).catch((res) => {
-					if (res.data == 406) return m.reply('Grup Tidak Di Temukan❗');
-					if (res.data == 410) return m.reply('Url Grup Telah Di Setel Ulang❗');
+					if (res.data == 406) return sycreply('Grup Tidak Di Temukan❗');
+					if (res.data == 410) return sycreply('Url Grup Telah Di Setel Ulang❗');
 				});
 			}
 			break
 			case 'addmsg': {
-				if (!m.quoted) return m.reply('Reply Pesan Yang Ingin Disave Di Database')
-				if (!text) return m.reply(`Example : ${prefix + command} file name`)
+				if (!m.quoted) return sycreply('Reply Pesan Yang Ingin Disave Di Database')
+				if (!text) return sycreply(`Example : ${prefix + command} file name`)
 				let msgs = db.database
-				if (text.toLowerCase() in msgs) return m.reply(`'${text}' telah terdaftar di list pesan`)
+				if (text.toLowerCase() in msgs) return sycreply(`'${text}' telah terdaftar di list pesan`)
 				msgs[text.toLowerCase()] = m.quoted
 				delete msgs[text.toLowerCase()].chat
-				m.reply(`Berhasil menambahkan pesan di list pesan sebagai '${text}'\nAkses dengan ${prefix}getmsg ${text}\nLihat list Pesan Dengan ${prefix}listmsg`)
+				sycreply(`Berhasil menambahkan pesan di list pesan sebagai '${text}'\nAkses dengan ${prefix}getmsg ${text}\nLihat list Pesan Dengan ${prefix}listmsg`)
 			}
 			break
 			case 'delmsg':
 			case 'deletemsg': {
-				if (!text) return m.reply('Nama msg yg mau di delete?')
+				if (!text) return sycreply('Nama msg yg mau di delete?')
 				let msgs = db.database
 				if (text == 'allmsg') {
 					db.database = {}
-					m.reply('Berhasil menghapus seluruh msg dari list pesan')
+					sycreply('Berhasil menghapus seluruh msg dari list pesan')
 				} else {
-					if (!(text.toLowerCase() in msgs)) return m.reply(`'${text}' tidak terdaftar didalam list pesan`)
+					if (!(text.toLowerCase() in msgs)) return sycreply(`'${text}' tidak terdaftar didalam list pesan`)
 					delete msgs[text.toLowerCase()]
-					m.reply(`Berhasil menghapus '${text}' dari list pesan`)
+					sycreply(`Berhasil menghapus '${text}' dari list pesan`)
 				}
 			}
 			break
 			case 'getmsg': {
-				if (!text) return m.reply(`Example : ${prefix + command} file name\n\nLihat list pesan dengan ${prefix}listmsg`)
+				if (!text) return sycreply(`Example : ${prefix + command} file name\n\nLihat list pesan dengan ${prefix}listmsg`)
 				let msgs = db.database
-				if (!(text.toLowerCase() in msgs)) return m.reply(`'${text}' tidak terdaftar di list pesan`)
+				if (!(text.toLowerCase() in msgs)) return sycreply(`'${text}' tidak terdaftar di list pesan`)
 				await sych.relayMessage(m.chat, msgs[text.toLowerCase()], {})
 			}
 			break
@@ -2062,15 +2080,15 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				for (let i of seplit) {
 					teks += `${setv} *Name :* ${i.nama}\n${setv} *Type :* ${i.message?.replace(/Message/i, '')}\n───────────────\n`
 				}
-				m.reply(teks)
+				sycreply(teks)
 			}
 			break
 			case 'q':
 			case 'quoted': {
-				if (!m.quoted) return m.reply('Reply Pesannya!')
+				if (!m.quoted) return sycreply('Reply Pesannya!')
 				const anu = await m.getQuotedObj()
-				if (!anu) return m.reply('Format Tidak Tersedia!')
-				if (!anu.quoted) return m.reply('Pesan Yang Anda Reply Tidak Mengandung Reply')
+				if (!anu) return sycreply('Format Tidak Tersedia!')
+				if (!anu.quoted) return sycreply('Pesan Yang Anda Reply Tidak Mengandung Reply')
 				await sych.relayMessage(m.chat, {
 					[anu.quoted.type]: anu.quoted.msg
 				}, {})
@@ -2080,19 +2098,19 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			case 'confess':
 			case 'menfes':
 			case 'menfess': {
-				if (m.isGroup) return m.reply(mess.private)
-				if (menfes[m.sender]) return m.reply(`Kamu Sedang Berada Di Sesi ${command}!`)
-				if (!text) return m.reply(`Example : ${prefix + command} 62xxxx|Nama Samaran`)
+				if (m.isGroup) return sycreply(mess.private)
+				if (menfes[m.sender]) return sycreply(`Kamu Sedang Berada Di Sesi ${command}!`)
+				if (!text) return sycreply(`Example : ${prefix + command} 62xxxx|Nama Samaran`)
 				let [teks1, teks2] = text.split`|`
 				if (teks1) {
 					const tujuan = teks1.replace(/[^0-9]/g, '') + '@s.whatsapp.net'
 					const onWa = await sych.onWhatsApp(tujuan)
-					if (!onWa.length > 0) return m.reply('Nomer Tersebut Tidak Terdaftar Di Whatsapp!')
+					if (!onWa.length > 0) return sycreply('Nomer Tersebut Tidak Terdaftar Di Whatsapp!')
 					menfes[m.sender] = {
 						tujuan: tujuan,
 						nama: teks2 ? teks2 : 'Orang',
 						waktu: setTimeout(() => {
-							if (menfes[m.sender]) m.reply(`_Waktu ${command} habis_`)
+							if (menfes[m.sender]) sycreply(`_Waktu ${command} habis_`)
 							delete menfes[m.sender];
 						}, 600000)
 					};
@@ -2109,9 +2127,9 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 					sych.sendMessage(tujuan, {
 						text: `_${command} connected_\n*Note :* jika ingin mengakhiri ketik _*${prefix}del${command}*_`
 					});
-					m.reply(`_Memulai ${command}..._\n*Silahkan Mulai kirim pesan/media*\n*Durasi ${command} hanya selama 10 menit*\n*Note :* jika ingin mengakhiri ketik _*${prefix}del${command}*_`)
+					sycreply(`_Memulai ${command}..._\n*Silahkan Mulai kirim pesan/media*\n*Durasi ${command} hanya selama 10 menit*\n*Note :* jika ingin mengakhiri ketik _*${prefix}del${command}*_`)
 				} else {
-					m.reply(`Masukkan Nomernya!\nExample : ${prefix + command} 62xxxx|Nama Samaran`)
+					sycreply(`Masukkan Nomernya!\nExample : ${prefix + command} 62xxxx|Nama Samaran`)
 				}
 			}
 			break
@@ -2119,12 +2137,12 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			case 'delconfess':
 			case 'delmenfes':
 			case 'delmenfess': {
-				if (!menfes[m.sender]) return m.reply(`Kamu Tidak Sedang Berada Di Sesi ${command.split('del')[1]}!`)
+				if (!menfes[m.sender]) return sycreply(`Kamu Tidak Sedang Berada Di Sesi ${command.split('del')[1]}!`)
 				let anu = menfes[m.sender]
 				sych.sendMessage(anu.tujuan, {
 					text: `Chat Di Akhiri Oleh ${anu.nama ? anu.nama : 'Seseorang'}`
 				})
-				m.reply(`Sukses Mengakhiri Sesi ${command.split('del')[1]}!`)
+				sycreply(`Sukses Mengakhiri Sesi ${command.split('del')[1]}!`)
 				delete menfes[anu.tujuan];
 				delete menfes[m.sender];
 			}
@@ -2132,23 +2150,23 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			// Tools Menu
 			case 'fetch':
 			case 'get': {
-				if (!/^https?:\/\//.test(text)) return m.reply('Awali dengan http:// atau https://');
+				if (!/^https?:\/\//.test(text)) return sycreply('Awali dengan http:// atau https://');
 				try {
 					const res = await axios.get(isUrl(text) ? isUrl(text)[0] : text)
 					if (!/text|json|html|plain/.test(res.headers['content-type'])) {
-						await m.reply(text)
+						await sycreply(text)
 					} else {
-						m.reply(util.format(res.data))
+						sycreply(util.format(res.data))
 					}
 				} catch (e) {
-					m.reply(util.format(e))
+					sycreply(util.format(e))
 				}
 			}
 			break
 			case 'toaud':
 			case 'toaudio': {
-				if (!/video|audio/.test(mime)) return m.reply(`Kirim/Reply Video/Audio Yang Ingin Dijadikan Audio Dengan Caption ${prefix + command}`)
-				m.reply(mess.wait)
+				if (!/video|audio/.test(mime)) return sycreply(`Kirim/Reply Video/Audio Yang Ingin Dijadikan Audio Dengan Caption ${prefix + command}`)
+				sycreply(mess.wait)
 				await sych.sendMessage(m.chat, {
 					react: {
 						text: "⏳",
@@ -2202,8 +2220,8 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			}
 			break
 			case 'tomp3': {
-				if (!/video|audio/.test(mime)) return m.reply(`Kirim/Reply Video/Audio Yang Ingin Dijadikan Audio Dengan Caption ${prefix + command}`)
-				m.reply(mess.wait)
+				if (!/video|audio/.test(mime)) return sycreply(`Kirim/Reply Video/Audio Yang Ingin Dijadikan Audio Dengan Caption ${prefix + command}`)
+				sycreply(mess.wait)
 				await sych.sendMessage(m.chat, {
 					react: {
 						text: "⏳",
@@ -2260,8 +2278,8 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			case 'tovn':
 			case 'toptt':
 			case 'tovoice': {
-				if (!/video|audio/.test(mime)) return m.reply(`Kirim/Reply Video/Audio Yang Ingin Dijadikan Audio Dengan Caption ${prefix + command}`)
-				m.reply(mess.wait)
+				if (!/video|audio/.test(mime)) return sycreply(`Kirim/Reply Video/Audio Yang Ingin Dijadikan Audio Dengan Caption ${prefix + command}`)
+				sycreply(mess.wait)
 				await sych.sendMessage(m.chat, {
 					react: {
 						text: "⏳",
@@ -2316,8 +2334,8 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			}
 			break
 			case 'togif': {
-				if (!/webp|video/.test(mime)) return m.reply(`Reply Video/Stiker dengan caption *${prefix + command}*`)
-				m.reply(mess.wait)
+				if (!/webp|video/.test(mime)) return sycreply(`Reply Video/Stiker dengan caption *${prefix + command}*`)
+				sycreply(mess.wait)
 				await sych.sendMessage(m.chat, {
 					react: {
 						text: "⏳",
@@ -2364,7 +2382,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				let ran = `./database/sampah/${getRandom('.gif')}`;
 				exec(`convert ${media} ${ran}`, (err) => {
 					fs.unlinkSync(media)
-					if (err) return m.reply('Gagal❗')
+					if (err) return sycreply('Gagal❗')
 					let buffer = fs.readFileSync(ran)
 					sych.sendMessage(m.chat, {
 						video: buffer,
@@ -2378,8 +2396,8 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			break
 			case 'toimage':
 			case 'toimg': {
-				if (!/webp|video/.test(mime)) return m.reply(`Reply Video/Stiker dengan caption *${prefix + command}*`)
-				m.reply(mess.wait)
+				if (!/webp|video/.test(mime)) return sycreply(`Reply Video/Stiker dengan caption *${prefix + command}*`)
+				sycreply(mess.wait)
 				await sych.sendMessage(m.chat, {
 					react: {
 						text: "⏳",
@@ -2426,7 +2444,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				let ran = `./database/sampah/${getRandom('.png')}`;
 				exec(`convert ${media}[0] ${ran}`, (err) => {
 					fs.unlinkSync(media)
-					if (err) return m.reply('Gagal❗')
+					if (err) return sycreply('Gagal❗')
 					let buffer = fs.readFileSync(ran)
 					sych.sendMessage(m.chat, {
 						image: buffer
@@ -2438,7 +2456,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			}
 			break
 			case 'toptv': {
-				if (!/video/.test(mime)) return m.reply(`Kirim/Reply Video Yang Ingin Dijadikan PTV Message Dengan Caption ${prefix + command}`)
+				if (!/video/.test(mime)) return sycreply(`Kirim/Reply Video Yang Ingin Dijadikan PTV Message Dengan Caption ${prefix + command}`)
 				if ((m.quoted ? m.quoted.type : m.type) === 'videoMessage') {
 					const anu = await quoted.download()
 					const msg = await generateWAMessageContent({
@@ -2450,7 +2468,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 						ptvMessage: msg.videoMessage
 					}, {})
 				} else {
-					m.reply('Reply Video Yang Mau Di Ubah Ke PTV Message!')
+					sycreply('Reply Video Yang Mau Di Ubah Ke PTV Message!')
 				}
 			}
 			break
@@ -2510,7 +2528,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 							edit: key
 						});
 					} else {
-						m.reply('Send Media yg ingin di Upload!');
+						sycreply('Send Media yg ingin di Upload!');
 					}
 				} catch (e) {
 					// Mengedit pesan error jika terjadi masalah
@@ -2524,9 +2542,9 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			case 'ttslide': {
 				if (!isPremium) {
 					console.log('Pengguna bukan premium.');
-					return m.reply(mess.prem);
+					return sycreply(mess.prem);
 				}
-				m.reply(mess.wait)
+				sycreply(mess.wait)
 				await sych.sendMessage(m.chat, {
 					react: {
 						text: "⏳",
@@ -2571,18 +2589,18 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				});
 				if (!text) {
 					console.log('Teks URL TikTok tidak ditemukan.');
-					return m.reply(`Example: ${prefix + command} url_tiktok`);
+					return sycreply(`Example: ${prefix + command} url_tiktok`);
 				}
 				if (!text.includes('tiktok.com')) {
 					console.log('URL tidak valid, tidak mengandung hasil dari TikTok.');
-					return m.reply('URL Tidak Mengandung Result Dari TikTok!');
+					return sycreply('URL Tidak Mengandung Result Dari TikTok!');
 				}
 				try {
 					console.log('Memulai proses pengunduhan dari URL TikTok:', text);
 					const hasil = await tiktokDl(text);
 					if (!hasil || hasil.data.length === 0) {
 						console.log('Tidak ada gambar atau media yang ditemukan.');
-						return m.reply('Tidak ada foto yang ditemukan!');
+						return sycreply('Tidak ada foto yang ditemukan!');
 					}
 					// Buat carousel card untuk setiap gambar
 					const carouselCards = await Promise.all(hasil.data.map(async (item, index) => {
@@ -2657,7 +2675,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 					console.log('Carousel dikirimkan dengan sukses.');
 				} catch (e) {
 					console.error('Gagal mengunduh atau membuat carousel:', e);
-					m.reply('Gagal memproses permintaan Anda. Silakan coba lagi.');
+					sycreply('Gagal memproses permintaan Anda. Silakan coba lagi.');
 				}
 			}
 			break;
@@ -2730,7 +2748,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 							});
 						}
 					} else {
-						m.reply('Kirim gambar yang ingin diubah menjadi teks!');
+						sycreply('Kirim gambar yang ingin diubah menjadi teks!');
 					}
 				} catch (e) {
 					// Tangani error dan kirim pesan jika ada masalah
@@ -2744,7 +2762,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			case 'texttospech':
 			case 'tts':
 			case 'tospech': {
-				if (!text) return m.reply('Mana text yg mau diubah menjadi audio?')
+				if (!text) return sycreply('Mana text yg mau diubah menjadi audio?')
 				let {
 					tts
 				} = require('./lib/tts')
@@ -2762,9 +2780,9 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			case 'tr': {
 				if (text && text == 'list') {
 					let list_tr = `╭──❍「 *Kode Bahasa* 」❍\n│• af : Afrikaans\n│• ar : Arab\n│• zh : Chinese\n│• en : English\n│• en-us : English (United States)\n│• fr : French\n│• de : German\n│• hi : Hindi\n│• hu : Hungarian\n│• is : Icelandic\n│• id : Indonesian\n│• it : Italian\n│• ja : Japanese\n│• ko : Korean\n│• la : Latin\n│• no : Norwegian\n│• pt : Portuguese\n│• pt : Portuguese\n│• pt-br : Portuguese (Brazil)\n│• ro : Romanian\n│• ru : Russian\n│• sr : Serbian\n│• es : Spanish\n│• sv : Swedish\n│• ta : Tamil\n│• th : Thai\n│• tr : Turkish\n│• vi : Vietnamese\n╰──────❍`;
-					m.reply(list_tr)
+					sycreply(list_tr)
 				} else {
-					if (!m.quoted && (!text || !args[1])) return m.reply(`Kirim/reply text dengan caption ${prefix + command}`)
+					if (!m.quoted && (!text || !args[1])) return sycreply(`Kirim/reply text dengan caption ${prefix + command}`)
 					let lang = args[0] ? args[0] : 'id'
 					let teks = args[1] ? args.slice(1).join(' ') : m.quoted.text
 					try {
@@ -2772,17 +2790,17 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 							to: lang,
 							autoCorrect: true
 						})
-						m.reply(`To : ${lang}\n${hasil[0]}`)
+						sycreply(`To : ${lang}\n${hasil[0]}`)
 					} catch (e) {
-						m.reply(`Lang *${lang}* Tidak Di temukan!\nSilahkan lihat list, ${prefix + command} list`)
+						sycreply(`Lang *${lang}* Tidak Di temukan!\nSilahkan lihat list, ${prefix + command} list`)
 					}
 				}
 			}
 			break
 			case 'toqr':
 			case 'qr': {
-				if (!text) return m.reply(`Ubah Text ke Qr dengan *${prefix + command}* textnya`)
-				m.reply(mess.wait)
+				if (!text) return sycreply(`Ubah Text ke Qr dengan *${prefix + command}* textnya`)
+				sycreply(mess.wait)
 				await sych.sendMessage(m.chat, {
 					react: {
 						text: "⏳",
@@ -2847,15 +2865,15 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 						}, {
 							quoted: m
 						});
-					}).catch(e => m.reply('Server sedang offline!'));
+					}).catch(e => sycreply('Server sedang offline!'));
 				} else {
-					m.reply(`Kirim/Reply Gambar dengan format\nExample: ${prefix + command}`)
+					sycreply(`Kirim/Reply Gambar dengan format\nExample: ${prefix + command}`)
 				}
 			}
 			break
 			case 'shutdown': {
 				if (!isCreator) {
-					return m.reply('Hanya pemilik bot yang dapat mengeksekusi perintah ini.');
+					return sycreply('Hanya pemilik bot yang dapat mengeksekusi perintah ini.');
 				}
 				await sych.sendMessage(m.chat, {
 					text: 'Bot sedang dimatikan...'
@@ -2866,7 +2884,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			}
 			break;
 			case 'ssweb': {
-				if (!text) return m.reply(`Example: ${prefix + command} https://github.com/nazedev/naze-md`)
+				if (!text) return sycreply(`Example: ${prefix + command} https://github.com/nazedev/naze-md`)
 				try {
 					let anu = 'https://' + text.replace(/^https?:\/\//, '')
 					await sych.sendMessage(m.chat, {
@@ -2878,32 +2896,32 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 						quoted: m
 					})
 				} catch (e) {
-					m.reply('Server SS web Sedang Offline!')
+					sycreply('Server SS web Sedang Offline!')
 				}
 			}
 			break
 			case 'readmore': {
 				let teks1 = text.split`|` [0] ? text.split`|` [0] : ''
 				let teks2 = text.split`|` [1] ? text.split`|` [1] : ''
-				m.reply(teks1 + readmore + teks2)
+				sycreply(teks1 + readmore + teks2)
 			}
 			break
 			case 'getexif': {
-				if (!m.quoted) return m.reply(`Reply sticker\nDengan caption ${prefix + command}`)
-				if (!/sticker|webp/.test(quoted.type)) return m.reply(`Reply sticker\nDengan caption ${prefix + command}`)
+				if (!m.quoted) return sycreply(`Reply sticker\nDengan caption ${prefix + command}`)
+				if (!/sticker|webp/.test(quoted.type)) return sycreply(`Reply sticker\nDengan caption ${prefix + command}`)
 				const img = new webp.Image()
 				await img.load(await m.quoted.download())
-				m.reply(util.format(JSON.parse(img.exif.slice(22).toString())))
+				sycreply(util.format(JSON.parse(img.exif.slice(22).toString())))
 			}
 			break
 			case 'cuaca':
 			case 'weather': {
-				if (!text) return m.reply(`Example: ${prefix + command} jakarta`)
+				if (!text) return sycreply(`Example: ${prefix + command} jakarta`)
 				try {
 					let data = await fetchJson(`https://api.openweathermap.org/data/2.5/weather?q=${text}&units=metric&appid=060a6bcfa19809c2cd4d97a212b19273&language=en`)
-					m.reply(`*🏙 Cuaca Kota ${data.name}*\n\n*🌤️ Cuaca :* ${data.weather[0].main}\n*📝 Deskripsi :* ${data.weather[0].description}\n*🌡️ Suhu Rata-rata :* ${data.main.temp} °C\n*🤔 Terasa Seperti :* ${data.main.feels_like} °C\n*🌬️ Tekanan :* ${data.main.pressure} hPa\n*💧 Kelembapan :* ${data.main.humidity}%\n*🌪️ Kecepatan Angin :* ${data.wind.speed} Km/h\n*📍Lokasi :*\n- *Bujur :* ${data.coord.lat}\n- *Lintang :* ${data.coord.lon}\n*🌏 Negara :* ${data.sys.country}`)
+					sycreply(`*🏙 Cuaca Kota ${data.name}*\n\n*🌤️ Cuaca :* ${data.weather[0].main}\n*📝 Deskripsi :* ${data.weather[0].description}\n*🌡️ Suhu Rata-rata :* ${data.main.temp} °C\n*🤔 Terasa Seperti :* ${data.main.feels_like} °C\n*🌬️ Tekanan :* ${data.main.pressure} hPa\n*💧 Kelembapan :* ${data.main.humidity}%\n*🌪️ Kecepatan Angin :* ${data.wind.speed} Km/h\n*📍Lokasi :*\n- *Bujur :* ${data.coord.lat}\n- *Lintang :* ${data.coord.lon}\n*🌏 Negara :* ${data.sys.country}`)
 				} catch (e) {
-					m.reply('Kota Tidak Di Temukan!')
+					sycreply('Kota Tidak Di Temukan!')
 				}
 			}
 			break
@@ -2914,7 +2932,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 					console.log('Memulai proses konversi ke stiker...');
 					if (!/image|webp/.test(mime)) {
 						console.log('Mime tipe tidak valid, harus image atau webp.');
-						return m.reply(`Kirim/reply image/sticker untuk mengonversi ke stiker.`);
+						return sycreply(`Kirim/reply image/sticker untuk mengonversi ke stiker.`);
 					}
 					let media = await quoted.download(); // Unduh gambar/sticker yang direply
 					console.log('Gambar/sticker berhasil diunduh.');
@@ -2940,11 +2958,11 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 							console.log('Stiker berhasil dikirim.');
 						}).catch((err) => {
 							console.error('Terjadi kesalahan saat memproses gambar:', err);
-							m.reply('Terjadi kesalahan saat mengonversi gambar ke stiker!');
+							sycreply('Terjadi kesalahan saat mengonversi gambar ke stiker!');
 						});
 				} catch (e) {
 					console.error('Terjadi kesalahan saat memproses gambar:', e);
-					m.reply('Terjadi kesalahan saat memproses gambar!');
+					sycreply('Terjadi kesalahan saat memproses gambar!');
 				}
 			}
 			break;
@@ -2957,18 +2975,18 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 					console.log('Memulai proses pembuatan stiker meme...');
 					if (!isPremium) {
 						console.log('Pengguna bukan premium.');
-						return m.reply(mess.prem);
+						return sycreply(mess.prem);
 					}
 					let mime = (quoted.msg || m.msg).mimetype || '';
 					if (!/image|webp/.test(mime)) {
 						console.log('Mime tipe tidak valid, harus image atau webp.');
-						return m.reply(`Kirim/reply image/sticker\nDengan caption ${prefix + command} atas|bawah`);
+						return sycreply(`Kirim/reply image/sticker\nDengan caption ${prefix + command} atas|bawah`);
 					}
 					if (!text) {
 						console.log('Teks caption tidak ditemukan.');
-						return m.reply(`Kirim/reply image/sticker dengan caption ${prefix + command} atas|bawah`);
+						return sycreply(`Kirim/reply image/sticker dengan caption ${prefix + command} atas|bawah`);
 					}
-					m.reply(mess.wait)
+					sycreply(mess.wait)
 					await sych.sendMessage(m.chat, {
 						react: {
 							text: "⏳",
@@ -3054,19 +3072,19 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 					console.log('Reaksi berhasil diberikan pada pesan.');
 				} catch (e) {
 					console.error('Terjadi kesalahan:', e);
-					m.reply('Terjadi kesalahan saat membuat stiker meme!');
+					sycreply('Terjadi kesalahan saat membuat stiker meme!');
 				}
 			}
 			break;
 			case 'emojimix': {
 				if (!text) {
 					console.log("Input kosong!");
-					return m.reply(`Example: ${prefix + command} 😅+🤔`);
+					return sycreply(`Example: ${prefix + command} 😅+🤔`);
 				}
 				let [emoji1, emoji2] = text.split`+`;
 				if (!emoji1 || !emoji2) {
 					console.log("Emoji tidak valid atau tidak dipisahkan dengan '+'.");
-					return m.reply(`Example: ${prefix + command} 😅+🤔`);
+					return sycreply(`Example: ${prefix + command} 😅+🤔`);
 				}
 				console.log(`Emoji1: ${emoji1}, Emoji2: ${emoji2}`);
 				try {
@@ -3076,7 +3094,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 					let results = response.data.results;
 					if (results.length < 1) {
 						console.log("Hasil emoji mix tidak ditemukan.");
-						return m.reply(`Mix Emoji ${text} Tidak Ditemukan!`);
+						return sycreply(`Mix Emoji ${text} Tidak Ditemukan!`);
 					}
 					console.log(`Jumlah hasil ditemukan: ${results.length}`);
 					for (let res of results) {
@@ -3114,14 +3132,14 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 					}
 				} catch (e) {
 					console.error("Terjadi kesalahan:", e);
-					m.reply('Gagal Mix Emoji!');
+					sycreply('Gagal Mix Emoji!');
 				}
 			}
 			break;
 			case 'qc':
 			case 'quote':
 			case 'fakechat': {
-				if (!text && !m.quoted) return m.reply(`Kirim/reply pesan *${prefix + command}* Teksnya`);
+				if (!text && !m.quoted) return sycreply(`Kirim/reply pesan *${prefix + command}* Teksnya`);
 				try {
 					let ppnya = await sych.profilePictureUrl(m.sender, 'image').catch(() => 'https://i.pinimg.com/564x/8a/e9/e9/8ae9e92fa4e69967aa61bf2bda967b7b.jpg');
 					let pesan = text || m.quoted.text;
@@ -3158,12 +3176,12 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 					});
 				} catch (e) {
 					console.error(e);
-					m.reply('Terjadi kesalahan: ' + e.message);
+					sycreply('Terjadi kesalahan: ' + e.message);
 				}
 			}
 			break;
 			case 'brat': {
-				if (!text && (!m.quoted || !m.quoted.text)) return m.reply(`*${prefix + command}* Teksnya`);
+				if (!text && (!m.quoted || !m.quoted.text)) return sycreply(`*${prefix + command}* Teksnya`);
 				try {
 					// Log langkah pertama
 					console.log('Mengambil gambar dari API pertama...');
@@ -3214,7 +3232,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 						fs.unlinkSync(outputPath);
 					} catch (e) {
 						console.error('Error pada API kedua:', e.message);
-						m.reply('Server Brat Sedang Offline!');
+						sycreply('Server Brat Sedang Offline!');
 					}
 				}
 			}
@@ -3233,7 +3251,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				return exifBuffer;
 			}
 			case 'sticktele': {
-				if (!text) return m.reply(`*${prefix + command}* membutuhkan query teks`);
+				if (!text) return sycreply(`*${prefix + command}* membutuhkan query teks`);
 				try {
 					console.log('Mengambil data dari API Telegram Sticker...');
 					const apiUrl = `https://api.siputzx.my.id/api/d/telegramsticker?query=${encodeURIComponent(text)}`;
@@ -3241,7 +3259,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 					if (!response.ok) throw new Error('Gagal merespons dari API');
 					const result = await response.json();
 					if (!result.stickers || result.stickers.length === 0) {
-						return m.reply('Tidak ada stiker yang ditemukan untuk query tersebut.');
+						return sycreply('Tidak ada stiker yang ditemukan untuk query tersebut.');
 					}
 					console.log('Stiker ditemukan, mengambil stiker pertama...');
 					const sticker = result.stickers[0]; // Ambil stiker pertama
@@ -3255,14 +3273,14 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 					console.log('Stiker berhasil dikirim.');
 				} catch (e) {
 					console.error('Error:', e.message);
-					m.reply(`Terjadi kesalahan: ${e.message}`);
+					sycreply(`Terjadi kesalahan: ${e.message}`);
 				}
 			}
 			break;
 			case 'wasted': {
 				try {
 					if (/jpg|jpeg|png/.test(mime)) {
-						m.reply(mess.wait)
+						sycreply(mess.wait)
 						await sych.sendMessage(m.chat, {
 							react: {
 								text: "⏳",
@@ -3309,19 +3327,19 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 						let anu = await UguuSe(media)
 						await sych.sendFileUrl(m.chat, 'https://some-random-api.com/canvas/wasted?avatar=' + anu.url, 'Nih Bro', m)
 					} else {
-						m.reply('Send Media yg ingin di Upload!')
+						sycreply('Send Media yg ingin di Upload!')
 					}
 				} catch (e) {
-					m.reply('Server Canvas Sedang Offline!')
+					sycreply('Server Canvas Sedang Offline!')
 				}
 			}
 			break
 			case 'drivedl': {
-    if (!text) return m.reply(`Example: ${prefix + command} url_drive`)
-    if (!text.includes('drive.google.com')) return m.reply('Url Tidak Mengandung Hasil Dari Google Drive!')
+    if (!text) return sycreply(`Example: ${prefix + command} url_drive`)
+    if (!text.includes('drive.google.com')) return sycreply('Url Tidak Mengandung Hasil Dari Google Drive!')
 
     try {
-    m.reply(mess.wait);
+    sycreply(mess.wait);
             await sych.sendMessage(m.chat, {
                 react: {
                     text: "⏳",
@@ -3369,20 +3387,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
         const hasil = await response.json();
 
         if (hasil.status !== 200 || !hasil.data) {
-            m.reply('File Tidak ditemukan!')
+            sycreply('File Tidak ditemukan!')
         } else {
             
             await sych.sendFileUrl(m.chat, hasil.data.download, `*🎐File:* ${hasil.data.name}\n*Link:* ${hasil.data.link}`, m);
         }
     } catch (e) {
-        m.reply('Server downloader Google Drive sedang offline!');
+        sycreply('Server downloader Google Drive sedang offline!');
     }
 }
 break;
 			case 'kucing': {
 				try {
 					// Memberi tahu pengguna bahwa gambar sedang dimuat
-					m.reply('Loading, mohon tunggu sebentar...');
+					sycreply('Loading, mohon tunggu sebentar...');
 					// Logging untuk proses pengambilan data
 					console.log('Mengambil gambar kucing dari server...');
 					// Mengirim gambar langsung tanpa memerlukan input teks
@@ -3402,34 +3420,34 @@ break;
 					console.log('Gambar kucing berhasil dikirim.');
 				} catch (e) {
 					console.error('Error saat mengambil gambar kucing:', e);
-					m.reply('Server Sedang Offline!');
+					sycreply('Server Sedang Offline!');
 				}
 			}
 			break;
 			case 'encode': {
-				if (!text) return m.reply('Harap masukkan teks yang ingin dienkripsi!');
+				if (!text) return sycreply('Harap masukkan teks yang ingin dienkripsi!');
 				try {
 					// Proses encoding Base64
 					const encodedText = Buffer.from(text, 'utf-8').toString('base64');
-					m.reply(`${encodedText}`);
+					sycreply(`${encodedText}`);
 				} catch (err) {
-					m.reply('Terjadi kesalahan saat mengenkripsi teks.');
+					sycreply('Terjadi kesalahan saat mengenkripsi teks.');
 				}
 			}
 			break;
 			case 'decode': {
-				if (!text) return m.reply('Harap masukkan teks terenkripsi untuk didekode!');
+				if (!text) return sycreply('Harap masukkan teks terenkripsi untuk didekode!');
 				try {
 					// Proses decoding Base64
 					const decodedText = Buffer.from(text, 'base64').toString('utf-8');
-					m.reply(`${decodedText}`);
+					sycreply(`${decodedText}`);
 				} catch (err) {
-					m.reply('Pesan tidak valid atau bukan Base64.');
+					sycreply('Pesan tidak valid atau bukan Base64.');
 				}
 			}
 			break;
 			case 'cekcuaca': {
-				if (!text) return m.reply('Masukkan lokasi! Contoh: cekcuaca Jakarta');
+				if (!text) return sycreply('Masukkan lokasi! Contoh: cekcuaca Jakarta');
 				try {
 					const url = `https://wttr.in/${encodeURIComponent(text)}?format=%l:+%C+%t+%h+%w`;
 					const res = await fetch(url);
@@ -3439,10 +3457,10 @@ break;
 					const translated = await translate(weatherInfo, {
 						to: 'id'
 					});
-					m.reply(`🌤️ Informasi Cuaca:\n\n${translated}`);
+					sycreply(`🌤️ Informasi Cuaca:\n\n${translated}`);
 				} catch (error) {
 					console.error(error);
-					m.reply('Terjadi kesalahan saat mengambil data cuaca. Pastikan lokasi yang dimasukkan benar.');
+					sycreply('Terjadi kesalahan saat mengambil data cuaca. Pastikan lokasi yang dimasukkan benar.');
 				}
 			}
 			break;
@@ -3457,13 +3475,13 @@ break;
 						quoted: m
 					});
 				} catch (e) {
-					m.reply('Server Sedang Offline!');
+					sycreply('Server Sedang Offline!');
 				}
 			}
 			break;
 			case 'cjpn': {
 				try {
-					m.reply(mess.wait)
+					sycreply(mess.wait)
 					await sych.sendMessage(m.chat, {
 						react: {
 							text: "⏳",
@@ -3521,13 +3539,13 @@ break;
 						}
 					});
 				} catch (e) {
-					m.reply('Server Sedang Offline!');
+					sycreply('Server Sedang Offline!');
 				}
 			}
 			break;
 			case 'ckorea': {
 				try {
-					m.reply(mess.wait)
+					sycreply(mess.wait)
 					await sych.sendMessage(m.chat, {
 						react: {
 							text: "⏳",
@@ -3585,17 +3603,17 @@ break;
 						}
 					});
 				} catch (e) {
-					m.reply('Server Sedang Offline!');
+					sycreply('Server Sedang Offline!');
 				}
 			}
 			break;
 			// CASE untuk memulai chat rahasia
 			case 'startsecret': {
-				if (!m.isGroup) return m.reply('Fitur ini hanya bisa digunakan di grup!');
+				if (!m.isGroup) return sycreply('Fitur ini hanya bisa digunakan di grup!');
 				let target = m.mentionedJid[0]; // Ambil pengguna yang ditandai
-				if (!target) return m.reply('Tag pengguna yang ingin diajak chat rahasia!');
+				if (!target) return sycreply('Tag pengguna yang ingin diajak chat rahasia!');
 				// Cek apakah target sudah dalam sesi rahasia
-				if (secretChat[target]) return m.reply('Pengguna tersebut sudah berada dalam sesi rahasia!');
+				if (secretChat[target]) return sycreply('Pengguna tersebut sudah berada dalam sesi rahasia!');
 				// Simpan sesi rahasia
 				secretChat[target] = {
 					partner: m.sender,
@@ -3605,12 +3623,12 @@ break;
 					partner: target,
 					chat: []
 				};
-				m.reply(`✅ Sesi chat rahasia dimulai dengan @${target.split('@')[0]}.\nGunakan perintah "!endsecret" untuk mengakhiri sesi.`);
+				sycreply(`✅ Sesi chat rahasia dimulai dengan @${target.split('@')[0]}.\nGunakan perintah "!endsecret" untuk mengakhiri sesi.`);
 			}
 			break;
 			// CASE untuk mengirim pesan rahasia
 			case 'secretmsg': {
-				if (!secretChat[m.sender]) return m.reply('Kamu tidak berada dalam sesi rahasia!');
+				if (!secretChat[m.sender]) return sycreply('Kamu tidak berada dalam sesi rahasia!');
 				let partner = secretChat[m.sender].partner;
 				let msg = text; // Ambil teks dari pengguna
 				// Kirim pesan rahasia
@@ -3621,17 +3639,17 @@ break;
 				}, {
 					quoted: m
 				});
-				m.reply('📨 Pesan rahasia terkirim!');
+				sycreply('📨 Pesan rahasia terkirim!');
 			}
 			break;
 			// CASE untuk mengakhiri sesi chat rahasia
 			case 'endsecret': {
-				if (!secretChat[m.sender]) return m.reply('Kamu tidak berada dalam sesi rahasia!');
+				if (!secretChat[m.sender]) return sycreply('Kamu tidak berada dalam sesi rahasia!');
 				let partner = secretChat[m.sender].partner;
 				// Hapus sesi rahasia
 				delete secretChat[m.sender];
 				delete secretChat[partner];
-				m.reply('🚫 Sesi chat rahasia telah berakhir.');
+				sycreply('🚫 Sesi chat rahasia telah berakhir.');
 				sych.sendMessage(partner, {
 					text: '🚫 Sesi chat rahasia telah berakhir.'
 				});
@@ -3639,7 +3657,7 @@ break;
 			break;
 			case 'cindo': {
 				try {
-					m.reply(mess.wait)
+					sycreply(mess.wait)
 					await sych.sendMessage(m.chat, {
 						react: {
 							text: "⏳",
@@ -3697,13 +3715,13 @@ break;
 						}
 					});
 				} catch (e) {
-					m.reply('Server Sedang Offline!');
+					sycreply('Server Sedang Offline!');
 				}
 			}
 			break;
 			case 'cthai': {
 				try {
-					m.reply(mess.wait)
+					sycreply(mess.wait)
 					await sych.sendMessage(m.chat, {
 						react: {
 							text: "⏳",
@@ -3761,13 +3779,13 @@ break;
 						}
 					});
 				} catch (e) {
-					m.reply('Server Sedang Offline!');
+					sycreply('Server Sedang Offline!');
 				}
 			}
 			break;
 			case 'cviet': {
 				try {
-					m.reply(mess.wait)
+					sycreply(mess.wait)
 					await sych.sendMessage(m.chat, {
 						react: {
 							text: "⏳",
@@ -3825,13 +3843,13 @@ break;
 						}
 					});
 				} catch (e) {
-					m.reply('Server Sedang Offline!');
+					sycreply('Server Sedang Offline!');
 				}
 			}
 			break;
 			case 'cchina': {
 				try {
-					m.reply(mess.wait)
+					sycreply(mess.wait)
 					await sych.sendMessage(m.chat, {
 						react: {
 							text: "⏳",
@@ -3889,7 +3907,7 @@ break;
 						}
 					});
 				} catch (e) {
-					m.reply('Server Sedang Offline!');
+					sycreply('Server Sedang Offline!');
 				}
 			}
 			break;
@@ -3897,7 +3915,7 @@ break;
 			case 'triggered': {
 				try {
 					if (/jpg|jpeg|png/.test(mime)) {
-						m.reply(mess.wait)
+						sycreply(mess.wait)
 						await sych.sendMessage(m.chat, {
 							react: {
 								text: "⏳",
@@ -3952,20 +3970,28 @@ break;
 							quoted: m
 						})
 					} else {
-						m.reply('Send Media yg ingin di Upload!')
+						sycreply('Send Media yg ingin di Upload!')
 					}
 				} catch (e) {
-					m.reply('Server Canvas Sedang Offline!')
+					sycreply('Server Canvas Sedang Offline!')
 				}
 			}
 			break
+			case 'setexif': {
+               if (!isCreator) return sycreply(mess.owner)
+               if (!text) return sycreply(`Example : ${prefix + command} packname|author`)
+          global.packname = text.split("|")[0]
+          global.author = text.split("|")[1]
+          sycreply(`Exif has been successfully changed to\n\n${themeemoji} Packname : ${global.packname}\n${themeemoji} Author : ${global.author}`)
+            }
+            break
 			case 'nulis': {
-				m.reply(`*Example*\n${prefix}nuliskiri\n${prefix}nuliskanan\n${prefix}foliokiri\n${prefix}foliokanan`)
+				sycreply(`*Example*\n${prefix}nuliskiri\n${prefix}nuliskanan\n${prefix}foliokiri\n${prefix}foliokanan`)
 			}
 			break
 			case 'nuliskiri': {
-				if (!text) return m.reply(`Kirim perintah *${prefix + command}* Teksnya`)
-				m.reply(mess.wait)
+				if (!text) return sycreply(`Kirim perintah *${prefix + command}* Teksnya`)
+				sycreply(mess.wait)
 				await sych.sendMessage(m.chat, {
 					react: {
 						text: "⏳",
@@ -4012,7 +4038,7 @@ break;
 				const fixHeight = splitText.split('\n').slice(0, 31).join('\n')
 				spawn('convert', ['./src/nulis/images/buku/sebelumkiri.jpg', '-font', './src/nulis/font/Indie-Flower.ttf', '-size', '960x1280', '-pointsize', '23', '-interline-spacing', '2', '-annotate', '+140+153',
 					fixHeight, './src/nulis/images/buku/setelahkiri.jpg'
-				]).on('error', () => m.reply(mess.error)).on('exit', () => {
+				]).on('error', () => sycreply(mess.error)).on('exit', () => {
 					sych.sendMessage(m.chat, {
 						image: fs.readFileSync('./src/nulis/images/buku/setelahkiri.jpg'),
 						caption: 'Jangan Malas Lord. Jadilah siswa yang rajin ರ_ರ'
@@ -4023,8 +4049,8 @@ break;
 			}
 			break
 			case 'nuliskanan': {
-				if (!text) return m.reply(`Kirim perintah *${prefix + command}* Teksnya`)
-				m.reply(mess.wait)
+				if (!text) return sycreply(`Kirim perintah *${prefix + command}* Teksnya`)
+				sycreply(mess.wait)
 				await sych.sendMessage(m.chat, {
 					react: {
 						text: "⏳",
@@ -4071,7 +4097,7 @@ break;
 				const fixHeight = splitText.split('\n').slice(0, 31).join('\n')
 				spawn('convert', ['./src/nulis/images/buku/sebelumkanan.jpg', '-font', './src/nulis/font/Indie-Flower.ttf', '-size', '960x1280', '-pointsize', '23', '-interline-spacing', '2', '-annotate', '+128+129',
 					fixHeight, './src/nulis/images/buku/setelahkanan.jpg'
-				]).on('error', () => m.reply(mess.error)).on('exit', () => {
+				]).on('error', () => sycreply(mess.error)).on('exit', () => {
 					sych.sendMessage(m.chat, {
 						image: fs.readFileSync('./src/nulis/images/buku/setelahkanan.jpg'),
 						caption: 'Jangan Malas Lord. Jadilah siswa yang rajin ರ_ರ'
@@ -4082,8 +4108,8 @@ break;
 			}
 			break
 			case 'foliokiri': {
-				if (!text) return m.reply(`Kirim perintah *${prefix + command}* Teksnya`)
-				m.reply(mess.wait)
+				if (!text) return sycreply(`Kirim perintah *${prefix + command}* Teksnya`)
+				sycreply(mess.wait)
 				await sych.sendMessage(m.chat, {
 					react: {
 						text: "⏳",
@@ -4130,7 +4156,7 @@ break;
 				const fixHeight = splitText.split('\n').slice(0, 38).join('\n')
 				spawn('convert', ['./src/nulis/images/folio/sebelumkiri.jpg', '-font', './src/nulis/font/Indie-Flower.ttf', '-size', '1720x1280', '-pointsize', '23', '-interline-spacing', '4', '-annotate', '+48+185',
 					fixHeight, './src/nulis/images/folio/setelahkiri.jpg'
-				]).on('error', () => m.reply(mess.error)).on('exit', () => {
+				]).on('error', () => sycreply(mess.error)).on('exit', () => {
 					sych.sendMessage(m.chat, {
 						image: fs.readFileSync('./src/nulis/images/folio/setelahkiri.jpg'),
 						caption: 'Jangan Malas Lord. Jadilah siswa yang rajin ರ_ರ'
@@ -4146,11 +4172,11 @@ case 'tiktokprofile':
 case 'ttprofile': {
     if (!text) {
         console.log('TikTok username not provided.');
-        return m.reply('Example: ' + prefix + command + ' username_tiktok');
+        return sycreply('Example: ' + prefix + command + ' username_tiktok');
     }
 
     try {
-    m.reply(mess.wait)
+    sycreply(mess.wait)
 				await sych.sendMessage(m.chat, {
 					react: {
 						text: "⏳",
@@ -4224,17 +4250,17 @@ case 'ttprofile': {
 
         } else {
             console.log('Failed to retrieve TikTok profile data.');
-            m.reply('Failed to retrieve TikTok profile or invalid username.');
+            sycreply('Failed to retrieve TikTok profile or invalid username.');
         }
     } catch (e) {
         console.error('Error fetching TikTok profile:', e);
-        m.reply('An error occurred while fetching the profile. Please try again later.');
+        sycreply('An error occurred while fetching the profile. Please try again later.');
     }
     break;
 }
 			case 'foliokanan': {
-				if (!text) return m.reply(`Kirim perintah *${prefix + command}* Teksnya`)
-				m.reply(mess.wait)
+				if (!text) return sycreply(`Kirim perintah *${prefix + command}* Teksnya`)
+				sycreply(mess.wait)
 				await sych.sendMessage(m.chat, {
 					react: {
 						text: "⏳",
@@ -4281,7 +4307,7 @@ case 'ttprofile': {
 				const fixHeight = splitText.split('\n').slice(0, 38).join('\n')
 				spawn('convert', ['./src/nulis/images/folio/sebelumkanan.jpg', '-font', './src/nulis/font/Indie-Flower.ttf', '-size', '1720x1280', '-pointsize', '23', '-interline-spacing', '4', '-annotate', '+89+190',
 					fixHeight, './src/nulis/images/folio/setelahkanan.jpg'
-				]).on('error', () => m.reply(mess.error)).on('exit', () => {
+				]).on('error', () => sycreply(mess.error)).on('exit', () => {
 					sych.sendMessage(m.chat, {
 						image: fs.readFileSync('./src/nulis/images/folio/setelahkanan.jpg'),
 						caption: 'Jangan Malas Lord. Jadilah siswa yang rajin ರ_ರ'
@@ -4318,7 +4344,7 @@ case 'ttprofile': {
 					if (/smooth/.test(command)) set = '-filter:v "minterpolate=\'mi_mode=mci:mc_mode=aobmc:vsbmc=1:fps=120\'"'
 					if (/tupai/.test(command)) set = '-filter:a "atempo=0.5,asetrate=65100"'
 					if (/audio/.test(mime)) {
-						m.reply(mess.wait)
+						sycreply(mess.wait)
 						await sych.sendMessage(m.chat, {
 							react: {
 								text: "⏳",
@@ -4365,7 +4391,7 @@ case 'ttprofile': {
 						let ran = `./database/sampah/${getRandom('.mp3')}`;
 						exec(`ffmpeg -i ${media} ${set} ${ran}`, (err, stderr, stdout) => {
 							fs.unlinkSync(media)
-							if (err) return m.reply(err)
+							if (err) return sycreply(err)
 							let buff = fs.readFileSync(ran)
 							sych.sendMessage(m.chat, {
 								audio: buff,
@@ -4376,29 +4402,29 @@ case 'ttprofile': {
 							fs.unlinkSync(ran)
 						});
 					} else {
-						m.reply(`Balas audio yang ingin diubah dengan caption *${prefix + command}*`)
+						sycreply(`Balas audio yang ingin diubah dengan caption *${prefix + command}*`)
 					}
 				} catch (e) {
-					m.reply('Gagal!')
+					sycreply('Gagal!')
 				}
 			}
 			break
 			case 'tinyurl':
 			case 'shorturl':
 			case 'shortlink': {
-				if (!text || !isUrl(text)) return m.reply(`Example: ${prefix + command} https://github.com/nazedev/hitori`)
+				if (!text || !isUrl(text)) return sycreply(`Example: ${prefix + command} https://github.com/nazedev/hitori`)
 				try {
 					let anu = await axios.get('https://tinyurl.com/api-create.php?url=' + text)
-					m.reply('Url : ' + anu.data)
+					sycreply('Url : ' + anu.data)
 				} catch (e) {
-					m.reply('Gagal!')
+					sycreply('Gagal!')
 				}
 			}
 			break
 			case 'git':
 			case 'gitclone': {
-				if (!args[0]) return m.reply(`Example: ${prefix + command} https://github.com/nazedev/hitori`)
-				if (!isUrl(args[0]) && !args[0].includes('github.com')) return m.reply('Gunakan Url Github!')
+				if (!args[0]) return sycreply(`Example: ${prefix + command} https://github.com/nazedev/hitori`)
+				if (!isUrl(args[0]) && !args[0].includes('github.com')) return sycreply('Gunakan Url Github!')
 				let [, user, repo] = args[0].match(/(?:https|git)(?::\/\/|@)github\.com[\/:]([^\/:]+)\/(.+)/i) || []
 				try {
 					sych.sendMessage(m.chat, {
@@ -4409,9 +4435,9 @@ case 'ttprofile': {
 						mimetype: 'application/zip'
 					}, {
 						quoted: m
-					}).catch((e) => m.reply(mess.error))
+					}).catch((e) => sycreply(mess.error))
 				} catch (e) {
-					m.reply('Gagal!')
+					sycreply('Gagal!')
 				}
 			}
 			break
@@ -4419,65 +4445,65 @@ case 'ttprofile': {
 			// Variabel global untuk menyimpan status auto AI
 			// Case untuk mengatur autoai
 			case 'autoai': {
-				if (!isCreator) return m.reply(mess.owner); // Memeriksa apakah pengirim adalah pembuat bot
-				if (!text) return m.reply(`Gunakan: ${prefix + command} on/off`); // Memastikan ada teks untuk mengaktifkan/mematikan
+				if (!isCreator) return sycreply(mess.owner); // Memeriksa apakah pengirim adalah pembuat bot
+				if (!text) return sycreply(`Gunakan: ${prefix + command} on/off`); // Memastikan ada teks untuk mengaktifkan/mematikan
 				if (text.toLowerCase() === 'on') {
 					if (autoAi) {
 						// Jika autoAi sudah aktif, beri tahu bahwa sudah aktif sebelumnya
-						m.reply('Auto AI sudah aktif sebelumnya!');
+						sycreply('Auto AI sudah aktif sebelumnya!');
 					} else {
 						// Mengaktifkan autoAi jika belum aktif
 						autoAi = true;
-						m.reply('Auto AI telah diaktifkan!');
+						sycreply('Auto AI telah diaktifkan!');
 					}
 				} else if (text.toLowerCase() === 'off') {
 					if (!autoAi) {
 						// Jika autoAi sudah dimatikan, beri tahu bahwa sudah dimatikan sebelumnya
-						m.reply('Auto AI sudah dimatikan sebelumnya!');
+						sycreply('Auto AI sudah dimatikan sebelumnya!');
 					} else {
 						// Mematikan autoAi jika aktif
 						autoAi = false;
-						m.reply('Auto AI telah dimatikan!');
+						sycreply('Auto AI telah dimatikan!');
 					}
 				} else {
-					m.reply('Gunakan: autoai on/off');
+					sycreply('Gunakan: autoai on/off');
 				}
 				break;
 			}
 			// Case untuk AI utama
 			case 'ai': {
-				if (!text) return m.reply(`Example: ${prefix + command} query`);
+				if (!text) return sycreply(`Example: ${prefix + command} query`);
 				try {
 					let promt = `kalo jawab pake bahasa indonesia ga baku aja: ${text}`;
 					let hasil = await yanzGpt(promt);
-					m.reply(hasil.choices[0].message.content);
+					sycreply(hasil.choices[0].message.content);
 				} catch (e) {
 					try {
 						let promt = `kalo jawab pake bahasa indonesia ga baku aja: ${text}`;
 						let hasil = await bk9Ai(promt);
-						m.reply(hasil.BK9);
+						sycreply(hasil.BK9);
 					} catch (e) {
-						m.reply(pickRandom(['Fitur Ai sedang bermasalah!', 'Tidak dapat terhubung ke ai!', 'Sistem Ai sedang sibuk sekarang!', 'Fitur sedang tidak dapat digunakan!']));
+						sycreply(pickRandom(['Fitur Ai sedang bermasalah!', 'Tidak dapat terhubung ke ai!', 'Sistem Ai sedang sibuk sekarang!', 'Fitur sedang tidak dapat digunakan!']));
 					}
 				}
 				break;
 			}
 			// Auto AI: memproses semua pesan secara otomatis jika autoAi aktif
 			case 'simi': {
-				if (!text) return m.reply(`Example: ${prefix + command} query`)
+				if (!text) return sycreply(`Example: ${prefix + command} query`)
 				try {
 					const hasil = await simi(text)
-					m.reply(hasil.success)
+					sycreply(hasil.success)
 				} catch (e) {
-					m.reply('Server simi sedang offline!')
+					sycreply('Server simi sedang offline!')
 				}
 			}
 			break
 			case 'txt2img': {
-				if (!isPremium) return m.reply(mess.prem);
-				if (!text && (!m.quoted || !m.quoted.text)) return m.reply(`Kirim/reply pesan *${prefix + command}* Teksnya`)
+				if (!isPremium) return sycreply(mess.prem);
+				if (!text && (!m.quoted || !m.quoted.text)) return sycreply(`Kirim/reply pesan *${prefix + command}* Teksnya`)
 				try {
-					m.reply(mess.wait)
+					sycreply(mess.wait)
 					await sych.sendMessage(m.chat, {
 						react: {
 							text: "⏳",
@@ -4528,15 +4554,15 @@ case 'ttprofile': {
 						quoted: m
 					})
 				} catch (e) {
-					m.reply('Server Sedang Offline!')
+					sycreply('Server Sedang Offline!')
 				}
 			}
 			break
 			case 'aimg': {
-				if (!isPremium) return m.reply(mess.prem);
-				if (!text && (!m.quoted || !m.quoted.text)) return m.reply(`Kirim/reply pesan *${prefix + command}* Teksnya`)
+				if (!isPremium) return sycreply(mess.prem);
+				if (!text && (!m.quoted || !m.quoted.text)) return sycreply(`Kirim/reply pesan *${prefix + command}* Teksnya`)
 				try {
-					m.reply(mess.wait)
+					sycreply(mess.wait)
 					await sych.sendMessage(m.chat, {
 						react: {
 							text: "⏳",
@@ -4587,14 +4613,14 @@ case 'ttprofile': {
 						quoted: m
 					})
 				} catch (e) {
-					m.reply('Server Sedang Offline!')
+					sycreply('Server Sedang Offline!')
 				}
 			}
 			break
 			case 'dukun': {
-				if (!text) return m.reply(`Kirim perintah *${prefix + command}* diikuti dengan nama yang ingin dicari artinya.`);
+				if (!text) return sycreply(`Kirim perintah *${prefix + command}* diikuti dengan nama yang ingin dicari artinya.`);
 				const nama = text.trim();
-				const loadingMessage = await m.reply('Sedang mencari arti nama... Mohon tunggu sebentar.');
+				const loadingMessage = await sycreply('Sedang mencari arti nama... Mohon tunggu sebentar.');
 				console.log(`Memulai proses pencarian arti nama untuk: ${nama}`);
 				try {
 					let response = await fetch(`https://api.siputzx.my.id/api/ai/dukun?content=${encodeURIComponent(nama)}`);
@@ -4625,7 +4651,7 @@ case 'ttprofile': {
 			break;
 			// Search Menu
 			case 'google': {
-				if (!text) return m.reply(`Example: ${prefix + command} query`)
+				if (!text) return sycreply(`Example: ${prefix + command} query`)
 				try {
 					let anu = await google.search(text);
 					let msg = anu.knowledge_panel.metadata.map(({
@@ -4634,19 +4660,19 @@ case 'ttprofile': {
 					}) => {
 						return `*${title}*\n_${value}_`
 					}).join('\n\n');
-					if (!anu.knowledge_panel.description && !anu.knowledge_panel.url) return m.reply('Result tidak ditemukan!')
-					m.reply(anu.knowledge_panel.description + '\n' + anu.knowledge_panel.url + '\n\n' + msg)
+					if (!anu.knowledge_panel.description && !anu.knowledge_panel.url) return sycreply('Result tidak ditemukan!')
+					sycreply(anu.knowledge_panel.description + '\n' + anu.knowledge_panel.url + '\n\n' + msg)
 				} catch (e) {
-					m.reply('Pencarian Tidak Ditemukan!')
+					sycreply('Pencarian Tidak Ditemukan!')
 				}
 			}
 			break
 			case 'gimage': {
-				if (!text) return m.reply(`Example: ${prefix + command} query`)
+				if (!text) return sycreply(`Example: ${prefix + command} query`)
 				gis(text, async (err, result) => {
-					if (err) return m.reply(`Image Untuk Query : _${text}_\nTidak Ditemukan!`)
+					if (err) return sycreply(`Image Untuk Query : _${text}_\nTidak Ditemukan!`)
 					if (result == undefined) {
-						m.reply(`Image Untuk Query : _${text}_\nTidak Ditemukan!`)
+						sycreply(`Image Untuk Query : _${text}_\nTidak Ditemukan!`)
 					} else if (result.length > 1) {
 						let anu = pickRandom(result)
 						await sych.sendMessage(m.chat, {
@@ -4657,7 +4683,7 @@ case 'ttprofile': {
 						}, {
 							quoted: m
 						})
-					} else m.reply('Gagal Mencari Gambar!')
+					} else sycreply('Gagal Mencari Gambar!')
 				});
 			}
 			break
@@ -4668,10 +4694,10 @@ case 'ttprofile': {
 			case 'youtubesearch2': {
 				if (!text) {
 					console.log("⛔ Input teks kosong");
-					return m.reply(`Example: ${prefix + command} you = i korea | you = i japan`);
+					return sycreply(`Example: ${prefix + command} you = i korea | you = i japan`);
 				}
 				console.log("✅ Perintah diterima:", command, "dengan teks:", text);
-				m.reply(mess.wait)
+				sycreply(mess.wait)
 				await sych.sendMessage(m.chat, {
 					react: {
 						text: "⏳",
@@ -4789,7 +4815,7 @@ case 'ttprofile': {
 					console.log("✅ Carousel berhasil dikirim.");
 				} catch (e) {
 					console.error("❌ Terjadi kesalahan:", e);
-					m.reply('Post not available!');
+					sycreply('Post not available!');
 				}
 			}
 			break;
@@ -4800,10 +4826,10 @@ case 'ttprofile': {
 			case 'youtubesearch': {
 				if (!text) {
 					console.log("⛔ Input teks kosong");
-					return m.reply(`Example: ${prefix + command} dj komang`);
+					return sycreply(`Example: ${prefix + command} dj komang`);
 				}
 				console.log("✅ Perintah diterima:", command, "dengan teks:", text);
-				m.reply(mess.wait)
+				sycreply(mess.wait)
 				await sych.sendMessage(m.chat, {
 					react: {
 						text: "⏳",
@@ -4913,18 +4939,18 @@ case 'ttprofile': {
 					console.log("✅ Carousel berhasil dikirim.");
 				} catch (e) {
 					console.error("❌ Terjadi kesalahan:", e);
-					m.reply('Post not available!');
+					sycreply('Post not available!');
 				}
 			}
 			break;
 			case 'pixiv': {
-				if (!text) return m.reply(`Example: ${prefix + command} hu tao`)
+				if (!text) return sycreply(`Example: ${prefix + command} hu tao`)
 				try {
 					let {
 						pixivdl
 					} = require('./lib/pixiv')
 					let res = await pixivdl(text)
-					m.reply(mess.wait)
+					sycreply(mess.wait)
 					await sych.sendMessage(m.chat, {
 						react: {
 							text: "⏳",
@@ -4979,15 +5005,15 @@ case 'ttprofile': {
 						})
 					}
 				} catch (e) {
-					m.reply('Post not available!')
+					sycreply('Post not available!')
 				}
 			}
 			break
 			case 'pinterest':
 			case 'pint': {
-				if (!text) return m.reply(`Example: ${prefix + command} hu tao`);
+				if (!text) return sycreply(`Example: ${prefix + command} hu tao`);
 				try {
-					m.reply(mess.wait)
+					sycreply(mess.wait)
 					await sych.sendMessage(m.chat, {
 						react: {
 							text: "⏳",
@@ -5031,7 +5057,7 @@ case 'ttprofile': {
 						}
 					});
 					let anu = await pinterest(text); // Panggil API pencarian Pinterest
-					if (anu.length < 1) return m.reply('Pencarian tidak ditemukan!');
+					if (anu.length < 1) return sycreply('Pencarian tidak ditemukan!');
 					// Batasi hasil ke 5 item teratas dan siapkan carousel card
 					const carouselCards = await Promise.all(anu.slice(0, 5).map(async (url, index) => ({
 						header: {
@@ -5101,12 +5127,12 @@ case 'ttprofile': {
 			}
 			break;
 			case 'wallpaper': {
-				if (!text) return m.reply(`Example: ${prefix + command} hu tao`)
+				if (!text) return sycreply(`Example: ${prefix + command} hu tao`)
 				try {
 					let anu = await wallpaper(text)
 					let result = pickRandom(anu)
 					if (anu.length < 1) {
-						m.reply('Post not available!');
+						sycreply('Post not available!');
 					} else {
 						await sych.sendMessage(m.chat, {
 							image: {
@@ -5118,12 +5144,12 @@ case 'ttprofile': {
 						})
 					}
 				} catch (e) {
-					m.reply('Server wallpaper sedang offline!')
+					sycreply('Server wallpaper sedang offline!')
 				}
 			}
 			break
 			case 'checklocation': {
-				if (!isCreator) return m.reply('Fitur ini hanya dapat digunakan oleh owner bot.');
+				if (!isCreator) return sycreply('Fitur ini hanya dapat digunakan oleh owner bot.');
 				let ipUrl = 'https://ipinfo.io/json';
 				try {
 					const res = await axios.get(ipUrl);
@@ -5135,20 +5161,20 @@ case 'ttprofile': {
 					response += `- Koordinat: ${locationInfo.loc}\n`;
 					response += `- Zona Waktu: ${locationInfo.timezone}\n\n`;
 					response += `_Lokasi ini berdasarkan data IP server bot._`;
-					m.reply(response);
+					sycreply(response);
 				} catch (error) {
-					m.reply('Tidak dapat mendeteksi lokasi bot. Coba lagi nanti.');
+					sycreply('Tidak dapat mendeteksi lokasi bot. Coba lagi nanti.');
 				}
 			}
 			break;
 			case 'cermin': {
-				if (!text) return m.reply('Harap masukkan teks yang ingin dibalik!');
+				if (!text) return sycreply('Harap masukkan teks yang ingin dibalik!');
 				const reversedText = text.split('').reverse().join('');
-				m.reply(`Hasil:\n${reversedText}`);
+				sycreply(`Hasil:\n${reversedText}`);
 			}
 			break;
 			case 'ringtone': {
-				if (!text) return m.reply(`Example: ${prefix + command} black rover`)
+				if (!text) return sycreply(`Example: ${prefix + command} black rover`)
 				let anu = await ringtone(text)
 				let result = pickRandom(anu)
 				await sych.sendMessage(m.chat, {
@@ -5164,36 +5190,36 @@ case 'ttprofile': {
 			break
 			case 'npm':
 			case 'npmjs': {
-				if (!text) return m.reply(`Example: ${prefix + command} axios`)
+				if (!text) return sycreply(`Example: ${prefix + command} axios`)
 				let res = await fetch(`http://registry.npmjs.com/-/v1/search?text=${text}`)
 				let {
 					objects
 				} = await res.json()
-				if (!objects.length) return m.reply('Pencarian Tidak di temukan')
+				if (!objects.length) return sycreply('Pencarian Tidak di temukan')
 				let txt = objects.map(({
 					package: pkg
 				}) => {
 					return `*${pkg.name}* (v${pkg.version})\n_${pkg.links.npm}_\n_${pkg.description}_`
 				}).join`\n\n`
-				m.reply(txt)
+				sycreply(txt)
 			}
 			break
 			case 'style': {
-				if (!text) return m.reply(`Example: ${prefix + command} sych`)
+				if (!text) return sycreply(`Example: ${prefix + command} sych`)
 				let anu = await styletext(text)
 				let txt = anu.map(a => `*${a.name}*\n${a.result}`).join`\n\n`
-				m.reply(txt)
+				sycreply(txt)
 			}
 			break
 			case 'spotify':
 			case 'spotifysearch': {
-				if (!text) return m.reply(`Example: ${prefix + command} alan walker alone`)
+				if (!text) return sycreply(`Example: ${prefix + command} alan walker alone`)
 				try {
 					let hasil = await fetchJson('https://www.bhandarimilan.info.np/spotisearch?query=' + encodeURIComponent(text));
 					let txt = hasil.map(a => {
 						return `*Name : ${a.name}*\n- Artist : ${a.artist}\n- Url : ${a.link}`
 					}).join`\n\n`
-					m.reply(txt)
+					sycreply(txt)
 					await sych.sendMessage(m.chat, {
 						react: {
 							text: '🔍', // Emoji yang diinginkan
@@ -5201,7 +5227,7 @@ case 'ttprofile': {
 						}
 					});
 				} catch (e) {
-					m.reply('Server Search Offline!')
+					sycreply('Server Search Offline!')
 				}
 			}
 			break
@@ -5209,10 +5235,10 @@ case 'ttprofile': {
 			case 'ytmp3':
 			case 'ytaudio':
 			case 'ytplayaudio': {
-				if (!isPremium) return m.reply(mess.prem);
-				if (!text) return m.reply(`Example: ${prefix + command} url_youtube`);
-				if (!text.includes('youtu')) return m.reply('Url Tidak Mengandung Result Dari Youtube!');
-				m.reply('Memproses permintaan Anda, harap tunggu...');
+				if (!isPremium) return sycreply(mess.prem);
+				if (!text) return sycreply(`Example: ${prefix + command} url_youtube`);
+				if (!text.includes('youtu')) return sycreply('Url Tidak Mengandung Result Dari Youtube!');
+				sycreply('Memproses permintaan Anda, harap tunggu...');
 				await sych.sendMessage(m.chat, {
 					react: {
 						text: "⏳",
@@ -5259,7 +5285,7 @@ case 'ttprofile': {
 					console.log('Mengambil informasi video...');
 					const info = await ytdl.getInfo(text);
 					if (info.videoDetails.lengthSeconds > 360) {
-						return m.reply('Video terlalu panjang. Silakan coba video dengan durasi lebih pendek.');
+						return sycreply('Video terlalu panjang. Silakan coba video dengan durasi lebih pendek.');
 					}
 					const title = info.videoDetails.title.replace(/[<>:"/\\|?*]/g, '');
 					const outputPath = path.join('./downloads', `${title}.mp3`);
@@ -5315,25 +5341,25 @@ case 'ttprofile': {
 								console.log('Proses selesai, file dikirim!');
 							}).on('error', (err) => {
 								console.error('Error saat mengompresi audio:', err);
-								m.reply('Terjadi kesalahan saat mengompresi audio.');
+								sycreply('Terjadi kesalahan saat mengompresi audio.');
 							}).save(compressedPath);
 					});
 					tempFile.on('error', (err) => {
 						console.error('Error saat menulis file:', err);
-						m.reply('Terjadi kesalahan saat menyimpan audio.');
+						sycreply('Terjadi kesalahan saat menyimpan audio.');
 					});
 				} catch (e) {
 					console.error('Error:', e);
-					m.reply('Gagal memproses audio! Error: ' + e.message);
+					sycreply('Gagal memproses audio! Error: ' + e.message);
 				}
 			}
 			break;
 			case 'ytmp4':
 			case 'ytvideo':
 			case 'ytplayvideo': {
-				if (!isPremium) return m.reply(mess.prem);
-				if (!text) return m.reply(`Example: ${prefix + command} url_youtube`);
-				if (!text.includes('youtu')) return m.reply('Url Tidak Mengandung Result Dari Youtube!');
+				if (!isPremium) return sycreply(mess.prem);
+				if (!text) return sycreply(`Example: ${prefix + command} url_youtube`);
+				if (!text.includes('youtu')) return sycreply('Url Tidak Mengandung Result Dari Youtube!');
 				await sych.sendMessage(m.chat, {
 					react: {
 						text: "⏳",
@@ -5376,12 +5402,12 @@ case 'ttprofile': {
 						key: m.key
 					}
 				});
-				m.reply('Memproses permintaan Anda, harap tunggu...');
+				sycreply('Memproses permintaan Anda, harap tunggu...');
 				try {
 					console.log('Mengambil informasi video...');
 					const info = await ytdl.getInfo(text);
 					if (info.videoDetails.lengthSeconds > 300) {
-						return m.reply('Video terlalu panjang. Silakan coba video dengan durasi lebih pendek.');
+						return sycreply('Video terlalu panjang. Silakan coba video dengan durasi lebih pendek.');
 					}
 					const title = info.videoDetails.title.replace(/[<>:"/\\|?*]/g, '');
 					const videoPath = path.join('./downloads', `${title}_video.mp4`);
@@ -5443,21 +5469,21 @@ case 'ttprofile': {
 									console.log('Proses selesai, file dikirim!');
 								}).on('error', (err) => {
 									console.error('Error saat menggabungkan video:', err);
-									m.reply('Terjadi kesalahan saat menggabungkan video.');
+									sycreply('Terjadi kesalahan saat menggabungkan video.');
 								}).save(outputPath);
 						});
 						tempAudioFile.on('error', (err) => {
 							console.error('Error saat menulis audio:', err);
-							m.reply('Terjadi kesalahan saat menyimpan audio.');
+							sycreply('Terjadi kesalahan saat menyimpan audio.');
 						});
 					});
 					tempVideoFile.on('error', (err) => {
 						console.error('Error saat menulis video:', err);
-						m.reply('Terjadi kesalahan saat menyimpan video.');
+						sycreply('Terjadi kesalahan saat menyimpan video.');
 					});
 				} catch (e) {
 					console.error('Error:', e);
-					m.reply('Gagal memproses video! Error: ' + e.message);
+					sycreply('Gagal memproses video! Error: ' + e.message);
 				}
 			}
 			break;
@@ -5466,9 +5492,9 @@ case 'ttprofile': {
 			case 'instadl':
 			case 'igdown':
 			case 'igdl': {
-				if (!text) return m.reply(`Example: ${prefix + command} url_instagram`)
-				if (!text.includes('instagram.com')) return m.reply('Url Tidak Mengandung Result Dari Instagram!')
-				m.reply(mess.wait)
+				if (!text) return sycreply(`Example: ${prefix + command} url_instagram`)
+				if (!text.includes('instagram.com')) return sycreply('Url Tidak Mengandung Result Dari Instagram!')
+				sycreply(mess.wait)
 				await sych.sendMessage(m.chat, {
 					react: {
 						text: "⏳",
@@ -5513,7 +5539,7 @@ case 'ttprofile': {
 				});
 				try {
 					const hasil = await multiDownload(text);
-					if (hasil.length < 0) return m.reply('Postingan Tidak Tersedia atau Privat!')
+					if (hasil.length < 0) return sycreply('Postingan Tidak Tersedia atau Privat!')
 					for (let i = 0; i < hasil.length; i++) {
 						await sych.sendFileUrl(m.chat, hasil[i].path, 'Done', m)
 					}
@@ -5522,12 +5548,12 @@ case 'ttprofile': {
 						let hasil = await fetchJson(api('hitori', '/download/instagram', {
 							url: text
 						}, 'apikey'))
-						if (hasil.result.length < 0) return m.reply('Postingan Tidak Tersedia atau Privat!')
+						if (hasil.result.length < 0) return sycreply('Postingan Tidak Tersedia atau Privat!')
 						for (let i = 0; i < hasil.result.length; i++) {
 							await sych.sendFileUrl(m.chat, hasil.result[i].imageUrl, 'Done', m)
 						}
 					} catch (e) {
-						m.reply('Postingan Tidak Tersedia atau Privat!')
+						sycreply('Postingan Tidak Tersedia atau Privat!')
 					}
 				}
 			}
@@ -5536,10 +5562,10 @@ case 'ttprofile': {
 			case 'instagramstory':
 			case 'instastory':
 			case 'storyig': {
-				if (!text) return m.reply(`Example: ${prefix + command} usernamenya`)
+				if (!text) return sycreply(`Example: ${prefix + command} usernamenya`)
 				try {
 					const hasil = await instaStory(text);
-					m.reply(mess.wait)
+					sycreply(mess.wait)
 					await sych.sendMessage(m.chat, {
 						react: {
 							text: "⏳",
@@ -5586,7 +5612,7 @@ case 'ttprofile': {
 						await sych.sendFileUrl(m.chat, hasil.results[i].url, 'Done', m)
 					}
 				} catch (e) {
-					m.reply('Username tidak ditemukan atau Privat!');
+					sycreply('Username tidak ditemukan atau Privat!');
 				}
 			}
 			break
@@ -5601,20 +5627,20 @@ case 'ttprofile': {
 			case 'tiktokvideo': {
 				if (!isPremium) {
 					console.log('Pengguna bukan premium.');
-					return m.reply(mess.prem);
+					return sycreply(mess.prem);
 				}
 				if (!text) {
 					console.log('Teks URL TikTok tidak ditemukan.');
-					return m.reply(`Example: ${prefix + command} url_tiktok`);
+					return sycreply(`Example: ${prefix + command} url_tiktok`);
 				}
 				if (!text.includes('tiktok.com')) {
 					console.log('URL tidak valid, tidak mengandung hasil dari TikTok.');
-					return m.reply('Url Tidak Mengandung Result Dari Tiktok!');
+					return sycreply('Url Tidak Mengandung Result Dari Tiktok!');
 				}
 				try {
 					console.log('Memulai proses pengunduhan dari URL TikTok:', text);
 					const hasil = await tiktokDl(text);
-					m.reply(mess.wait)
+					sycreply(mess.wait)
 					await sych.sendMessage(m.chat, {
 						react: {
 							text: "⏳",
@@ -5676,7 +5702,7 @@ case 'ttprofile': {
 					}
 				} catch (e) {
 					console.error('Gagal mengunduh atau URL tidak valid:', e);
-					m.reply('Gagal/Url tidak valid!');
+					sycreply('Gagal/Url tidak valid!');
 				}
 			}
 			break;
@@ -5686,20 +5712,20 @@ case 'ttprofile': {
 			case 'tiktokaudio': {
 				if (!isPremium) {
 					console.log('Pengguna bukan premium.');
-					return m.reply(mess.prem);
+					return sycreply(mess.prem);
 				}
 				if (!text) {
 					console.log('Teks URL TikTok tidak ditemukan.');
-					return m.reply(`Example: ${prefix + command} url_tiktok`);
+					return sycreply(`Example: ${prefix + command} url_tiktok`);
 				}
 				if (!text.includes('tiktok.com')) {
 					console.log('URL tidak valid, tidak mengandung hasil dari TikTok.');
-					return m.reply('Url Tidak Mengandung Result Dari Tiktok!');
+					return sycreply('Url Tidak Mengandung Result Dari Tiktok!');
 				}
 				try {
 					console.log('Memulai proses pengunduhan audio dari URL TikTok:', text);
 					const hasil = await tiktokDl(text);
-					m.reply(mess.wait)
+					sycreply(mess.wait)
 					await sych.sendMessage(m.chat, {
 						react: {
 							text: "⏳",
@@ -5772,7 +5798,7 @@ case 'ttprofile': {
 					console.log('Audio berhasil dikirimkan dengan informasi terkait.');
 				} catch (e) {
 					console.error('Gagal mengunduh atau URL tidak valid:', e);
-					m.reply('Gagal/Url tidak valid!');
+					sycreply('Gagal/Url tidak valid!');
 				}
 			}
 			break;
@@ -5785,14 +5811,14 @@ case 'ttprofile': {
 			case 'fbdownload':
 			case 'fbmp4':
 			case 'fbvideo': {
-				if (!text) return m.reply(`Example: ${prefix + command} url_facebook`)
-				if (!text.includes('facebook.com')) return m.reply('Url Tidak Mengandung Result Dari Facebook!')
+				if (!text) return sycreply(`Example: ${prefix + command} url_facebook`)
+				if (!text.includes('facebook.com')) return sycreply('Url Tidak Mengandung Result Dari Facebook!')
 				try {
 					const hasil = await facebookDl(text);
 					if (hasil.results.length < 1) {
-						m.reply('Video Tidak ditemukan!')
+						sycreply('Video Tidak ditemukan!')
 					} else {
-						m.reply(mess.wait)
+						sycreply(mess.wait)
 						await sych.sendMessage(m.chat, {
 							react: {
 								text: "⏳",
@@ -5838,17 +5864,17 @@ case 'ttprofile': {
 						await sych.sendFileUrl(m.chat, hasil.results[0].url, `*🎐Title:* ${hasil.caption}`, m);
 					}
 				} catch (e) {
-					m.reply('Server downloader facebook sedang offline!')
+					sycreply('Server downloader facebook sedang offline!')
 				}
 			}
 			break
 			case 'videymp4': {
-	if (!isPremium) return m.reply(mess.prem);		
-    if (!text) return m.reply(`Example: ${prefix + command} url_videy`)
-    if (!text.includes('videy.co')) return m.reply('Url Tidak Mengandung Hasil Dari Videy!')
+	if (!isPremium) return sycreply(mess.prem);		
+    if (!text) return sycreply(`Example: ${prefix + command} url_videy`)
+    if (!text.includes('videy.co')) return sycreply('Url Tidak Mengandung Hasil Dari Videy!')
 
     try {
-    m.reply(mess.wait);
+    sycreply(mess.wait);
             await sych.sendMessage(m.chat, {
                 react: {
                     text: "⏳",
@@ -5896,24 +5922,24 @@ case 'ttprofile': {
         const hasil = await response.json();
 
         if (hasil.status !== 200 || !hasil.data) {
-            m.reply('Video Tidak ditemukan!')
+            sycreply('Video Tidak ditemukan!')
         } else {
             
             await sych.sendFileUrl(m.chat, hasil.data, `*🎐Video Link:* ${hasil.data}`, m);
         }
     } catch (e) {
-        m.reply('Server downloader Videy sedang offline!');
+        sycreply('Server downloader Videy sedang offline!');
     }
 }
 break;
 			case 'mediafire': {
 				if (!text) {
 					console.log('URL tidak diberikan');
-					return m.reply(`Contoh: ${prefix + command} https://www.mediafire.com/file/xxxxxxxxx/xxxxx.zip/file`);
+					return sycreply(`Contoh: ${prefix + command} https://www.mediafire.com/file/xxxxxxxxx/xxxxx.zip/file`);
 				}
 				if (!isUrl(args[0]) && !args[0].includes('mediafire.com')) {
 					console.log('URL tidak valid: ' + args[0]);
-					return m.reply('URL tidak valid!');
+					return sycreply('URL tidak valid!');
 				}
 				console.log('URL MediaFire yang valid diterima:', args[0]);
 				try {
@@ -5930,7 +5956,7 @@ break;
 					});
 				} catch (e) {
 					console.log('Terjadi kesalahan saat mengunduh:', e);
-					m.reply('Server download sedang offline!');
+					sycreply('Server download sedang offline!');
 				}
 			}
 			break
@@ -5939,12 +5965,12 @@ break;
 				// Cek apakah ada URL yang diberikan
 				if (!text) {
 					console.log("URL tidak diberikan. Mengirimkan contoh penggunaan.");
-					return m.reply(`Example: ${prefix + command} https://open.spotify.com/track/0JiVRyTJcJnmlwCZ854K4p`);
+					return sycreply(`Example: ${prefix + command} https://open.spotify.com/track/0JiVRyTJcJnmlwCZ854K4p`);
 				}
 				// Validasi format URL
 				if (!isUrl(args[0]) && !args[0].includes('open.spotify.com/track')) {
 					console.log("URL tidak valid: " + args[0]);
-					return m.reply('Url Invalid!');
+					return sycreply('Url Invalid!');
 				}
 				try {
 					// Coba kirim media dengan URL untuk mendownload
@@ -5960,39 +5986,39 @@ break;
 				} catch (e) {
 					// Jika terjadi error (misalnya server offline)
 					console.error("Terjadi kesalahan saat mencoba mengunduh: " + e.message);
-					m.reply('Server download sedang offline!');
+					sycreply('Server download sedang offline!');
 				}
 			}
 			break;
 			// Quotes Menu
 			case 'motivasi': {
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/kata-kata/motivasi.json'));
-				m.reply(hasil)
+				sycreply(hasil)
 			}
 			break
 			case 'bijak': {
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/kata-kata/bijak.json'));
-				m.reply(hasil)
+				sycreply(hasil)
 			}
 			break
 			case 'dare': {
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/kata-kata/dare.json'));
-				m.reply(hasil)
+				sycreply(hasil)
 			}
 			break
 			case 'quotes': {
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/kata-kata/quotes.json'));
-				m.reply(`_${hasil.quotes}_\n\n*- ${hasil.author}*`)
+				sycreply(`_${hasil.quotes}_\n\n*- ${hasil.author}*`)
 			}
 			break
 			case 'truth': {
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/kata-kata/truth.json'));
-				m.reply(`_${hasil}_`)
+				sycreply(`_${hasil}_`)
 			}
 			break
 			case 'renungan': {
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/kata-kata/renungan.json'));
-				m.reply('', {
+				sycreply('', {
 					contextInfo: {
 						forwardingScore: 10,
 						isForwarded: true,
@@ -6009,7 +6035,7 @@ break;
 			break
 			case 'bucin': {
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/kata-kata/bucin.json'));
-				m.reply(hasil)
+				sycreply(hasil)
 			}
 			break
 			// Random Menu
@@ -6029,7 +6055,7 @@ break;
 						await sych.sendFileUrl(m.chat, res.url, 'Random Waifu', m)
 					}
 				} catch (e) {
-					m.reply('Server sedang offline!')
+					sycreply('Server sedang offline!')
 				}
 			}
 			break
@@ -6043,7 +6069,7 @@ break;
 						await sych.sendFileUrl(m.chat, res.url, 'Random Neko', m)
 					}
 				} catch (e) {
-					m.reply('Server sedang offline!')
+					sycreply('Server sedang offline!')
 				}
 			}
 			break
@@ -6086,7 +6112,7 @@ break;
 					fs.unlinkSync(outputPath);
 				} catch (err) {
 					console.error('Terjadi kesalahan:', err);
-					m.reply('Terjadi kesalahan saat mengirimkan stiker.');
+					sycreply('Terjadi kesalahan saat mengirimkan stiker.');
 				}
 			}
 			break;
@@ -6095,93 +6121,93 @@ break;
 			case 'huluh':
 			case 'heleh':
 			case 'holoh': {
-				if (!m.quoted && !text) return m.reply(`Kirim/reply text dengan caption ${prefix + command}`)
+				if (!m.quoted && !text) return sycreply(`Kirim/reply text dengan caption ${prefix + command}`)
 				ter = command[1].toLowerCase()
 				tex = m.quoted ? m.quoted.text ? m.quoted.text : q ? q : m.text : q ? q : m.text
-				m.reply(tex.replace(/[aiueo]/g, ter).replace(/[AIUEO]/g, ter.toUpperCase()))
+				sycreply(tex.replace(/[aiueo]/g, ter).replace(/[AIUEO]/g, ter.toUpperCase()))
 			}
 			break
 			case 'bisakah': {
-				if (!text) return m.reply(`Example : ${prefix + command} saya menang?`)
+				if (!text) return sycreply(`Example : ${prefix + command} saya menang?`)
 				let bisa = ['Bisa', 'Coba Saja', 'Pasti Bisa', 'Mungkin Saja', 'Tidak Bisa', 'Tidak Mungkin', 'Coba Ulangi', 'Ngimpi kah?', 'yakin bisa?']
 				let keh = bisa[Math.floor(Math.random() * bisa.length)]
-				m.reply(`*Bisakah ${text}*\nJawab : ${keh}`)
+				sycreply(`*Bisakah ${text}*\nJawab : ${keh}`)
 			}
 			break
 			case 'apakah': {
-				if (!text) return m.reply(`Example : ${prefix + command} saya bisa menang?`)
+				if (!text) return sycreply(`Example : ${prefix + command} saya bisa menang?`)
 				let apa = ['Iya', 'Tidak', 'Bisa Jadi', 'Coba Ulangi', 'Mungkin Saja', 'Mungkin Tidak', 'Mungkin Iya', 'Ntahlah']
 				let kah = apa[Math.floor(Math.random() * apa.length)]
-				m.reply(`*${command} ${text}*\nJawab : ${kah}`)
+				sycreply(`*${command} ${text}*\nJawab : ${kah}`)
 			}
 			break
 			case 'kapan':
 			case 'kapankah': {
-				if (!text) return m.reply(`Example : ${prefix + command} saya menang?`)
+				if (!text) return sycreply(`Example : ${prefix + command} saya menang?`)
 				let kapan = ['Besok', 'Lusa', 'Nanti', '4 Hari Lagi', '5 Hari Lagi', '6 Hari Lagi', '1 Minggu Lagi', '2 Minggu Lagi', '3 Minggu Lagi', '1 Bulan Lagi', '2 Bulan Lagi', '3 Bulan Lagi', '4 Bulan Lagi', '5 Bulan Lagi', '6 Bulan Lagi', '1 Tahun Lagi', '2 Tahun Lagi', '3 Tahun Lagi', '4 Tahun Lagi', '5 Tahun Lagi', '6 Tahun Lagi', '1 Abad lagi', '3 Hari Lagi', 'Bulan Depan', 'Ntahlah', 'Tidak Akan Pernah']
 				let koh = kapan[Math.floor(Math.random() * kapan.length)]
-				m.reply(`*${command} ${text}*\nJawab : ${koh}`)
+				sycreply(`*${command} ${text}*\nJawab : ${koh}`)
 			}
 			break
 			case 'tanyakerang':
 			case 'kerangajaib':
 			case 'kerang': {
-				if (!text) return m.reply(`Example : ${prefix + command} boleh pinjam 100?`)
+				if (!text) return sycreply(`Example : ${prefix + command} boleh pinjam 100?`)
 				let krng = ['Mungkin suatu hari', 'Tidak juga', 'Tidak keduanya', 'Kurasa tidak', 'Ya', 'Tidak', 'Coba tanya lagi', 'Tidak ada']
 				let jwb = pickRandom(krng)
-				m.reply(`*Pertanyaan : ${text}*\n*Jawab : ${jwb}*`)
+				sycreply(`*Pertanyaan : ${text}*\n*Jawab : ${jwb}*`)
 			}
 			break
 			case 'cekmati': {
-				if (!text) return m.reply(`Example : ${prefix + command} nama lu`)
+				if (!text) return sycreply(`Example : ${prefix + command} nama lu`)
 				let teksnya = text.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, '').replace(/\d/g, '');
 				let {
 					data
 				} = await axios.get(`https://api.agify.io/?name=${teksnya ? teksnya : 'bot'}`);
-				m.reply(`Nama : ${text}\n*Mati Pada Umur :* ${data.age == null ? (Math.floor(Math.random() * 90) + 20) : data.age} Tahun.\n\n_Cepet Cepet Tobat Bro_\n_Soalnya Mati ga ada yang tau_`)
+				sycreply(`Nama : ${text}\n*Mati Pada Umur :* ${data.age == null ? (Math.floor(Math.random() * 90) + 20) : data.age} Tahun.\n\n_Cepet Cepet Tobat Bro_\n_Soalnya Mati ga ada yang tau_`)
 			}
 			break
 			case 'ceksifat': {
 				let sifat_a = ['Bijak', 'Sabar', 'Kreatif', 'Humoris', 'Mudah bergaul', 'Mandiri', 'Setia', 'Jujur', 'Dermawan', 'Idealis', 'Adil', 'Sopan', 'Tekun', 'Rajin', 'Pemaaf', 'Murah hati', 'Ceria', 'Percaya diri', 'Penyayang', 'Disiplin', 'Optimis', 'Berani', 'Bersyukur', 'Bertanggung jawab', 'Bisa diandalkan', 'Tenang', 'Kalem', 'Logis']
 				let sifat_b = ['Sombong', 'Minder', 'Pendendam', 'Sensitif', 'Perfeksionis', 'Caper', 'Pelit', 'Egois', 'Pesimis', 'Penyendiri', 'Manipulatif', 'Labil', 'Penakut', 'Vulgar', 'Tidak setia', 'Pemalas', 'Kasar', 'Rumit', 'Boros', 'Keras kepala', 'Tidak bijak', 'Pembelot', 'Serakah', 'Tamak', 'Penggosip', 'Rasis', 'Ceroboh', 'Intoleran']
 				let teks = `╭──❍「 *Cek Sifat* 」❍\n│• Sifat ${text && m.mentionedJid ? text : '@' + m.sender.split('@')[0]}${(text && m.mentionedJid ? '' : (`\n│• Nama : *${text ? text : m.pushName}*` || '\n│• Nama : *Tanpa Nama*'))}\n│• Orang yang : *${pickRandom(sifat_a)}*\n│• Kekurangan : *${pickRandom(sifat_b)}*\n│• Keberanian : *${Math.floor(Math.random() * 100)}%*\n│• Kepedulian : *${Math.floor(Math.random() * 100)}%*\n│• Kecemasan : *${Math.floor(Math.random() * 100)}%*\n│• Ketakutan : *${Math.floor(Math.random() * 100)}%*\n│• Akhlak Baik : *${Math.floor(Math.random() * 100)}%*\n│• Akhlak Buruk : *${Math.floor(Math.random() * 100)}%*\n╰──────❍`
-				m.reply(teks)
+				sycreply(teks)
 			}
 			break
 			case 'cekkhodam': {
-				if (!text) return m.reply(`Example : ${prefix + command} nama lu`);
+				if (!text) return sycreply(`Example : ${prefix + command} nama lu`);
 				try {
 					const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/random/cekkhodam.json'));
 					// Validasi apakah hasil memiliki properti yang dibutuhkan
 					if (hasil && hasil.nama && hasil.deskripsi) {
-						m.reply(`Khodam dari *${text}* adalah *${hasil.nama}*\n_${hasil.deskripsi}_`);
+						sycreply(`Khodam dari *${text}* adalah *${hasil.nama}*\n_${hasil.deskripsi}_`);
 					} else {
-						m.reply('Maaf, data khodam tidak ditemukan atau sedang bermasalah.');
+						sycreply('Maaf, data khodam tidak ditemukan atau sedang bermasalah.');
 					}
 				} catch (error) {
 					console.error(error);
-					m.reply('Terjadi kesalahan saat mengambil data khodam.');
+					sycreply('Terjadi kesalahan saat mengambil data khodam.');
 				}
 			}
 			break;
 			case 'jodohku': {
-				if (!m.isGroup) return m.reply(mess.group)
+				if (!m.isGroup) return sycreply(mess.group)
 				let member = (store.groupMetadata[m.chat] ? store.groupMetadata[m.chat].participants : m.metadata.participants).map(a => a.id)
 				let jodoh = pickRandom(member)
-				m.reply(`👫Jodoh mu adalah\n@${m.sender.split('@')[0]} ❤ @${jodoh.split('@')[0]}`);
+				sycreply(`👫Jodoh mu adalah\n@${m.sender.split('@')[0]} ❤ @${jodoh.split('@')[0]}`);
 			}
 			break
 			case 'jadian': {
-				if (!m.isGroup) return m.reply(mess.group)
+				if (!m.isGroup) return sycreply(mess.group)
 				let member = (store.groupMetadata[m.chat] ? store.groupMetadata[m.chat].participants : m.metadata.participants).map(a => a.id)
 				let jadian1 = pickRandom(member)
 				let jadian2 = pickRandom(member)
-				m.reply(`Ciee yang Jadian💖 Jangan lupa Donasi🗿\n@${jadian1.split('@')[0]} ❤ @${jadian2.split('@')[0]}`);
+				sycreply(`Ciee yang Jadian💖 Jangan lupa Donasi🗿\n@${jadian1.split('@')[0]} ❤ @${jadian2.split('@')[0]}`);
 			}
 			break
 			case 'fitnah': {
 				let [teks1, teks2, teks3] = text.split`|`
-				if (!teks1 || !teks2 || !teks3) return m.reply(`Example : ${prefix + command} pesan target|pesan mu|nomer/tag target`)
+				if (!teks1 || !teks2 || !teks3) return sycreply(`Example : ${prefix + command} pesan target|pesan mu|nomer/tag target`)
 				let ftelo = {
 					key: {
 						fromMe: false,
@@ -6226,22 +6252,22 @@ break;
 				let poin = 10
 				let poin_lose = 10
 				let timeout = 60000
-				if (Object.values(suit).find(roof => roof.id.startsWith('suit') && [roof.p, roof.p2].includes(m.sender))) m.reply(`Selesaikan suit mu yang sebelumnya`)
-				if (m.mentionedJid[0] === m.sender) return m.reply(`Tidak bisa bermain dengan diri sendiri !`)
-				if (!m.mentionedJid[0]) return m.reply(`_Siapa yang ingin kamu tantang?_\nTag orangnya..\n\nContoh : ${prefix}suit @${owner[0]}`, m.chat, {
+				if (Object.values(suit).find(roof => roof.id.startsWith('suit') && [roof.p, roof.p2].includes(m.sender))) sycreply(`Selesaikan suit mu yang sebelumnya`)
+				if (m.mentionedJid[0] === m.sender) return sycreply(`Tidak bisa bermain dengan diri sendiri !`)
+				if (!m.mentionedJid[0]) return sycreply(`_Siapa yang ingin kamu tantang?_\nTag orangnya..\n\nContoh : ${prefix}suit @${owner[0]}`, m.chat, {
 					mentions: [owner[1] + '@s.whatsapp.net']
 				})
-				if (Object.values(suit).find(roof => roof.id.startsWith('suit') && [roof.p, roof.p2].includes(m.mentionedJid[0]))) return m.reply(`Orang yang kamu tantang sedang bermain suit bersama orang lain :(`)
+				if (Object.values(suit).find(roof => roof.id.startsWith('suit') && [roof.p, roof.p2].includes(m.mentionedJid[0]))) return sycreply(`Orang yang kamu tantang sedang bermain suit bersama orang lain :(`)
 				let id = 'suit_' + new Date() * 1
 				let caption = `_*SUIT PvP*_\n\n@${m.sender.split`@`[0]} menantang @${m.mentionedJid[0].split`@`[0]} untuk bermain suit\n\nSilahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
 				suit[id] = {
-					chat: m.reply(caption),
+					chat: sycreply(caption),
 					id: id,
 					p: m.sender,
 					p2: m.mentionedJid[0],
 					status: 'wait',
 					waktu: setTimeout(() => {
-						if (suit[id]) m.reply(`_Waktu suit habis_`)
+						if (suit[id]) sycreply(`_Waktu suit habis_`)
 						delete suit[id]
 					}, 60000),
 					poin,
@@ -6252,7 +6278,7 @@ break;
 			break
 			//[ *CASE AI JOKO SIJAWA* ]
 			case "joko": {
-				if (!text) return m.reply("mau nanya apa sama joko\nExampel: .joko nama kamu siapa?")
+				if (!text) return sycreply("mau nanya apa sama joko\nExampel: .joko nama kamu siapa?")
 				await sych.sendMessage(m.chat, {
 					mimetype: 'audio/mp4',
 					audio: {
@@ -6267,10 +6293,10 @@ break;
 			case 'ttt':
 			case 'tictactoe': {
 				let TicTacToe = require('./lib/tictactoe');
-				if (Object.values(tictactoe).find(room => room.id.startsWith('tictactoe') && [room.game.playerX, room.game.playerO].includes(m.sender))) return m.reply(`Kamu masih didalam game!\nKetik *${prefix}del${command}* Jika Ingin Mengakhiri sesi`);
+				if (Object.values(tictactoe).find(room => room.id.startsWith('tictactoe') && [room.game.playerX, room.game.playerO].includes(m.sender))) return sycreply(`Kamu masih didalam game!\nKetik *${prefix}del${command}* Jika Ingin Mengakhiri sesi`);
 				let room = Object.values(tictactoe).find(room => room.state === 'WAITING' && (text ? room.name === text : true))
 				if (room) {
-					m.reply('Partner ditemukan!')
+					sycreply('Partner ditemukan!')
 					room.o = m.chat
 					room.game.playerO = m.sender
 					room.state = 'PLAYING'
@@ -6310,7 +6336,7 @@ break;
 						game: new TicTacToe(m.sender, 'o'),
 						state: 'WAITING',
 						waktu: setTimeout(() => {
-							if (tictactoe[roomnya.id]) m.reply(`_Waktu ${command} habis_`)
+							if (tictactoe[roomnya.id]) sycreply(`_Waktu ${command} habis_`)
 							delete tictactoe[roomnya.id]
 						}, 300000)
 					}
@@ -6326,9 +6352,9 @@ break;
 			}
 			break
 			case 'akinator': {
-				if (!isPremium) return m.reply(mess.prem);
+				if (!isPremium) return sycreply(mess.prem);
 				if (text == 'start') {
-					if (akinator[m.sender]) return m.reply('Masih Ada Sesi Yang Belum Diselesaikan!')
+					if (akinator[m.sender]) return sycreply('Masih Ada Sesi Yang Belum Diselesaikan!')
 					akinator[m.sender] = new Akinator({
 						region: 'id',
 						childMode: false
@@ -6345,18 +6371,18 @@ break;
 					});
 					akinator[m.sender].key = key.id
 					akinator[m.sender].waktu = setTimeout(() => {
-						if (akinator[m.sender]) m.reply(`_Waktu ${command} habis_`)
+						if (akinator[m.sender]) sycreply(`_Waktu ${command} habis_`)
 						delete akinator[m.sender];
 					}, 3600000)
 				} else if (text == 'end') {
-					if (!akinator[m.sender]) return m.reply('Kamu tidak Sedang bermain Akinator!')
+					if (!akinator[m.sender]) return sycreply('Kamu tidak Sedang bermain Akinator!')
 					delete akinator[m.sender];
-					m.reply('Sukses Mengakhiri sessi Akinator')
-				} else m.reply(`Example : ${prefix + command} start/end`)
+					sycreply('Sukses Mengakhiri sessi Akinator')
+				} else sycreply(`Example : ${prefix + command} start/end`)
 			}
 			break
 			case 'tebakbom': {
-				if (tebakbom[m.sender]) return m.reply('Masih Ada Sesi Yang Belum Diselesaikan!')
+				if (tebakbom[m.sender]) return sycreply('Masih Ada Sesi Yang Belum Diselesaikan!')
 				tebakbom[m.sender] = {
 					petak: [0, 0, 0, 2, 0, 2, 0, 2, 0, 0].sort(() => Math.random() - 0.5),
 					board: ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '🔟'],
@@ -6365,11 +6391,11 @@ break;
 					pick: 0,
 					nyawa: ['❤️', '❤️', '❤️'],
 					waktu: setTimeout(() => {
-						if (tebakbom[m.sender]) m.reply(`_Waktu ${command} habis_`)
+						if (tebakbom[m.sender]) sycreply(`_Waktu ${command} habis_`)
 						delete tebakbom[m.sender];
 					}, 120000)
 				}
-				m.reply(`*TEBAK BOM*\n\n${tebakbom[m.sender].board.join("")}\n\nPilih lah nomor tersebut! dan jangan sampai terkena Bom!\nBomb : ${tebakbom[m.sender].bomb}\nNyawa : ${tebakbom[m.sender].nyawa.join("")}`);
+				sycreply(`*TEBAK BOM*\n\n${tebakbom[m.sender].board.join("")}\n\nPilih lah nomor tersebut! dan jangan sampai terkena Bom!\nBomb : ${tebakbom[m.sender].bomb}\nNyawa : ${tebakbom[m.sender].nyawa.join("")}`);
 				sych.sendMessage(m.chat, {
 					react: {
 						text: '💣', // Emoji yang diinginkan
@@ -6379,7 +6405,7 @@ break;
 			}
 			break
 			case 'tekateki': {
-				if (iGame(tekateki, m.chat)) return m.reply('Masih Ada Sesi Yang Belum Diselesaikan!')
+				if (iGame(tekateki, m.chat)) return sycreply('Masih Ada Sesi Yang Belum Diselesaikan!')
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/games/tekateki.json'));
 				let {
 					key
@@ -6396,13 +6422,13 @@ break;
 				}
 				await sleep(60000)
 				if (rdGame(tekateki, m.chat, key.id)) {
-					m.reply('Waktu Habis\nJawaban: ' + tekateki[m.chat + key.id].jawaban)
+					sycreply('Waktu Habis\nJawaban: ' + tekateki[m.chat + key.id].jawaban)
 					delete tekateki[m.chat + key.id]
 				}
 			}
 			break
 			case 'tebaklirik': {
-				if (iGame(tebaklirik, m.chat)) return m.reply('Masih Ada Sesi Yang Belum Diselesaikan!')
+				if (iGame(tebaklirik, m.chat)) return sycreply('Masih Ada Sesi Yang Belum Diselesaikan!')
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/games/tebaklirik.json'));
 				let {
 					key
@@ -6419,7 +6445,7 @@ break;
 				}
 				await sleep(90000)
 				if (rdGame(tebaklirik, m.chat, key.id)) {
-					m.reply('Waktu Habis\nJawaban: ' + tebaklirik[m.chat + key.id].jawaban)
+					sycreply('Waktu Habis\nJawaban: ' + tebaklirik[m.chat + key.id].jawaban)
 					delete tebaklirik[m.chat + key.id]
 				}
 			}
@@ -6428,7 +6454,7 @@ break;
 				try {
 					const surahList = ["1. Al-Fatihah", "2. Al-Baqarah", "3. Ali Imran", "4. An-Nisa", "5. Al-Ma'idah", "6. Al-An'am", "7. Al-A'raf", "8. Al-Anfal", "9. At-Tawbah", "10. Yunus", "11. Hud", "12. Yusuf", "13. Ar-Ra'd", "14. Ibrahim", "15. Al-Hijr", "16. An-Nahl", "17. Al-Isra", "18. Al-Kahf", "19. Maryam", "20. Ta-Ha", "21. Al-Anbiya", "22. Al-Hajj", "23. Al-Mu'minun", "24. An-Nur", "25. Al-Furqan", "26. Ash-Shu'ara", "27. An-Naml", "28. Al-Qasas", "29. Al-Ankabut", "30. Ar-Rum", "31. Luqman", "32. As-Sajdah", "33. Al-Ahzab", "34. Saba'", "35. Fatir", "36. Ya-Sin", "37. As-Saffat", "38. Sad", "39. Az-Zumar", "40. Ghafir", "41. Fussilat", "42. Ash-Shura", "43. Az-Zukhruf", "44. Ad-Dukhan", "45. Al-Jathiyah", "46. Al-Ahqaf", "47. Muhammad", "48. Al-Fath", "49. Al-Hujurat", "50. Qaf", "51. Az-Zariyat", "52. At-Tur", "53. An-Najm", "54. Al-Qamar", "55. Ar-Rahman", "56. Al-Waqi'ah", "57. Al-Hadid", "58. Al-Mujadilah", "59. Al-Hashr", "60. Al-Mumtahanah", "61. As-Saff", "62. Al-Jumu'ah", "63. Al-Munafiqun", "64. At-Taghabun", "65. At-Talaq", "66. At-Tahrim", "67. Al-Mulk", "68. Al-Qalam", "69. Al-Haqqah", "70. Al-Ma'arij", "71. Nuh", "72. Al-Jinn", "73. Al-Muzzammil", "74. Al-Muddathir", "75. Al-Qiyamah", "76. Al-Insan", "77. Al-Mursalat", "78. An-Naba'", "79. An-Nazi'at", "80. Abasa", "81. At-Takwir", "82. Al-Infitar", "83. Al-Mutaffifin", "84. Al-Inshiqaq", "85. Al-Buruj", "86. At-Tariq", "87. Al-A'la", "88. Al-Ghashiyah", "89. Al-Fajr", "90. Al-Balad", "91. Ash-Shams", "92. Al-Lail", "93. Ad-Duhaa", "94. Al-Inshirah", "95. At-Tin", "96. Al-'Alaq", "97. Al-Qadr", "98. Al-Bayyinah", "99. Az-Zalzalah", "100. Al-Adiyat", "101. Al-Qari'ah", "102. At-Takathur", "103. Al-Asr", "104. Al-Humazah", "105. Al-Fil", "106. Quraysh", "107. Al-Ma'un", "108. Al-Kawthar", "109. Al-Kafirun", "110. An-Nasr", "111. Al-Masad", "112. Al-Ikhlas", "113. Al-Falaq", "114. An-Nas"];
 					const surahMessage = `*Daftar Surah Al-Qur'an:*\n\n${surahList.join('\n')}`;
-					m.reply(surahMessage);
+					sycreply(surahMessage);
 					sych.sendMessage(m.chat, {
 						react: {
 							text: '🕋', // Emoji yang diinginkan
@@ -6437,7 +6463,7 @@ break;
 					});
 				} catch (error) {
 					console.error('Error:', error.message);
-					m.reply('Terjadi kesalahan saat menampilkan daftar surah.');
+					sycreply('Terjadi kesalahan saat menampilkan daftar surah.');
 				}
 			}
 			break;
@@ -6497,7 +6523,7 @@ break;
 				let json = JSON.parse(bacaan)
 				let data = json.result.map((v, i) => `${i + 1}. ${v.name}\n${v.arabic}\n${v.latin}\n*Artinya:*\n_"${v.terjemahan}"_`).join('\n\n')
 				let contoh = `*「 Bacaan Shalat 」*\n\n`
-				m.reply(`${contoh} + ${data}`)
+				sycreply(`${contoh} + ${data}`)
 			}
 			break
 			case 'listdoa': {
@@ -6508,7 +6534,7 @@ break;
 					// Format pesan
 					const doaMessage = `*Daftar Doa Harian:*\n\n${doaList.map(doa => `${doa.id}. ${doa.doa}`).join('\n')}`;
 					// Kirim pesan
-					m.reply(doaMessage);
+					sycreply(doaMessage);
 					// Kirim reaksi (opsional)
 					sych.sendMessage(m.chat, {
 						react: {
@@ -6518,7 +6544,7 @@ break;
 					});
 				} catch (error) {
 					console.error('Error fetching doa list:', error.message);
-					m.reply('Terjadi kesalahan saat menampilkan daftar doa.');
+					sycreply('Terjadi kesalahan saat menampilkan daftar doa.');
 				}
 				break;
 			}
@@ -6527,7 +6553,7 @@ break;
 					// Ambil ID doa dari argumen
 					const id = args[0];
 					if (!id) {
-						return m.reply('Mohon masukkan ID doa. Contoh: *doa 1*');
+						return sycreply('Mohon masukkan ID doa. Contoh: *doa 1*');
 					}
 					// Menambahkan pesan loading dan menyimpan key untuk edit nanti
 					let {
@@ -6606,10 +6632,10 @@ break;
 				break;
 			}
 			case 'quran': {
-				if (!text) return m.reply(`*${prefix + command}* Masukkan nomor surah!`);
+				if (!text) return sycreply(`*${prefix + command}* Masukkan nomor surah!`);
 				const surahNumber = parseInt(text);
 				if (isNaN(surahNumber) || surahNumber < 1 || surahNumber > 114) {
-					return m.reply('Nomor surah tidak valid! Masukkan angka antara 1 hingga 114.');
+					return sycreply('Nomor surah tidak valid! Masukkan angka antara 1 hingga 114.');
 				}
 				// Array of surah names
 				const surahNames = ["Al-Fatihah", "Al-Baqarah", "Ali Imran", "An-Nisa", "Al-Ma'idah", "Al-An'am", "Al-A'raf", "Al-Anfal", "At-Tawbah", "Yunus", "Hud", "Yusuf", "Ar-Ra'd", "Ibrahim", "Al-Hijr", "An-Nahl", "Al-Isra", "Al-Kahf", "Maryam", "Ta-Ha", "Al-Anbiya", "Al-Hajj", "Al-Mu'minun", "An-Nur", "Al-Furqan", "Ash-Shu'ara", "An-Naml", "Al-Qasas", "Al-Ankabut", "Ar-Rum", "Luqman", "As-Sajdah", "Al-Ahzab", "Saba'", "Fatir", "Ya-Sin", "As-Saffat", "Sad", "Az-Zumar", "Ghafir", "Fussilat", "Ash-Shura", "Az-Zukhruf", "Ad-Dukhan", "Al-Jathiyah", "Al-Ahqaf", "Muhammad", "Al-Fath", "Al-Hujurat", "Qaf", "Az-Zariyat", "At-Tur", "An-Najm", "Al-Qamar", "Ar-Rahman", "Al-Waqi'ah", "Al-Hadid", "Al-Mujadilah", "Al-Hashr", "Al-Mumtahanah", "As-Saff", "Al-Jumu'ah", "Al-Munafiqun", "At-Taghabun", "At-Talaq", "At-Tahrim", "Al-Mulk", "Al-Qalam", "Al-Haqqah", "Al-Ma'arij", "Nuh", "Al-Jinn", "Al-Muzzammil", "Al-Muddathir", "Al-Qiyamah", "Al-Insan", "Al-Mursalat", "An-Naba'", "An-Nazi'at", "Abasa", "At-Takwir", "Al-Infitar", "Al-Mutaffifin", "Al-Inshiqaq", "Al-Buruj", "At-Tariq", "Al-A'la", "Al-Ghashiyah", "Al-Fajr", "Al-Balad", "Ash-Shams", "Al-Lail", "Ad-Duhaa", "Al-Inshirah", "At-Tin", "Al-'Alaq", "Al-Qadr", "Al-Bayyinah", "Az-Zalzalah", "Al-Adiyat", "Al-Qari'ah", "At-Takathur", "Al-Asr", "Al-Humazah", "Al-Fil", "Quraysh", "Al-Ma'un", "Al-Kawthar", "Al-Kafirun", "An-Nasr", "Al-Masad", "Al-Ikhlas", "Al-Falaq", "An-Nas"];
@@ -6696,7 +6722,7 @@ break;
 			}
 			break;
 			case 'tebakkata': {
-				if (iGame(tebakkata, m.chat)) return m.reply('Masih Ada Sesi Yang Belum Diselesaikan!')
+				if (iGame(tebakkata, m.chat)) return sycreply('Masih Ada Sesi Yang Belum Diselesaikan!')
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/games/tebakkata.json'));
 				let {
 					key
@@ -6707,13 +6733,13 @@ break;
 				}
 				await sleep(60000)
 				if (rdGame(tebakkata, m.chat, key.id)) {
-					m.reply('Waktu Habis\nJawaban: ' + tebakkata[m.chat + key.id].jawaban)
+					sycreply('Waktu Habis\nJawaban: ' + tebakkata[m.chat + key.id].jawaban)
 					delete tebakkata[m.chat + key.id]
 				}
 			}
 			break
 			case 'family100': {
-				if (family100.hasOwnProperty(m.chat)) return m.reply('Masih Ada Sesi Yang Belum Diselesaikan!')
+				if (family100.hasOwnProperty(m.chat)) return sycreply('Masih Ada Sesi Yang Belum Diselesaikan!')
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/games/family100.json'));
 				let {
 					key
@@ -6732,13 +6758,13 @@ break;
 				}
 				await sleep(300000)
 				if (family100.hasOwnProperty(m.chat)) {
-					m.reply('Waktu Habis\nJawaban:\n- ' + family100[m.chat].jawaban.join('\n- '))
+					sycreply('Waktu Habis\nJawaban:\n- ' + family100[m.chat].jawaban.join('\n- '))
 					delete family100[m.chat]
 				}
 			}
 			break
 			case 'susunkata': {
-				if (iGame(susunkata, m.chat)) return m.reply('Masih Ada Sesi Yang Belum Diselesaikan!')
+				if (iGame(susunkata, m.chat)) return sycreply('Masih Ada Sesi Yang Belum Diselesaikan!')
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/games/susunkata.json'));
 				let {
 					key
@@ -6755,13 +6781,13 @@ break;
 				}
 				await sleep(60000)
 				if (rdGame(susunkata, m.chat, key.id)) {
-					m.reply('Waktu Habis\nJawaban: ' + susunkata[m.chat + key.id].jawaban)
+					sycreply('Waktu Habis\nJawaban: ' + susunkata[m.chat + key.id].jawaban)
 					delete susunkata[m.chat + key.id]
 				}
 			}
 			break
 			case 'tebakkimia': {
-				if (iGame(tebakkimia, m.chat)) return m.reply('Masih Ada Sesi Yang Belum Diselesaikan!')
+				if (iGame(tebakkimia, m.chat)) return sycreply('Masih Ada Sesi Yang Belum Diselesaikan!')
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/games/tebakkimia.json'));
 				let {
 					key
@@ -6772,13 +6798,13 @@ break;
 				}
 				await sleep(60000)
 				if (rdGame(tebakkimia, m.chat, key.id)) {
-					m.reply('Waktu Habis\nJawaban: ' + tebakkimia[m.chat + key.id].jawaban)
+					sycreply('Waktu Habis\nJawaban: ' + tebakkimia[m.chat + key.id].jawaban)
 					delete tebakkimia[m.chat + key.id]
 				}
 			}
 			break
 			case 'caklontong': {
-				if (iGame(caklontong, m.chat)) return m.reply('Masih Ada Sesi Yang Belum Diselesaikan!')
+				if (iGame(caklontong, m.chat)) return sycreply('Masih Ada Sesi Yang Belum Diselesaikan!')
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/games/caklontong.json'));
 				let {
 					key
@@ -6796,13 +6822,13 @@ break;
 				}
 				await sleep(60000)
 				if (rdGame(caklontong, m.chat, key.id)) {
-					m.reply(`Waktu Habis\nJawaban: ${caklontong[m.chat + key.id].jawaban}\n"${caklontong[m.chat + key.id].deskripsi}"`)
+					sycreply(`Waktu Habis\nJawaban: ${caklontong[m.chat + key.id].jawaban}\n"${caklontong[m.chat + key.id].deskripsi}"`)
 					delete caklontong[m.chat + key.id]
 				}
 			}
 			break
 			case 'aitukam': {
-				if (!text && (!m.quoted || !m.quoted.text)) return m.reply(`Kirim/reply pesan *${prefix + command}* Teksnya`);
+				if (!text && (!m.quoted || !m.quoted.text)) return sycreply(`Kirim/reply pesan *${prefix + command}* Teksnya`);
 				try {
 					// Mengambil teks dari pesan atau pesan yang diteruskan
 					const query = text || m.quoted.text;
@@ -6810,18 +6836,18 @@ break;
 					const hasil = await fetchJson(`https://api.siputzx.my.id/api/ai/latukam?content=${encodeURIComponent(query)}`);
 					// Mengecek apakah API memberikan respons yang benar
 					if (hasil.status === true && hasil.data) {
-						m.reply(hasil.data); // Mengirim balasan sesuai respons dari API
+						sycreply(hasil.data); // Mengirim balasan sesuai respons dari API
 					} else {
-						m.reply('Terjadi kesalahan saat mengambil data dari API!');
+						sycreply('Terjadi kesalahan saat mengambil data dari API!');
 					}
 				} catch (error) {
-					m.reply('Terjadi kesalahan saat mengambil data dari API!');
+					sycreply('Terjadi kesalahan saat mengambil data dari API!');
 					console.error('Error saat mengambil data dari API:', error);
 				}
 			}
 			break;
 			case 'tebaknegara': {
-				if (iGame(tebaknegara, m.chat)) return m.reply('Masih Ada Sesi Yang Belum Diselesaikan!')
+				if (iGame(tebaknegara, m.chat)) return sycreply('Masih Ada Sesi Yang Belum Diselesaikan!')
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/games/tebaknegara.json'));
 				let {
 					key
@@ -6838,13 +6864,13 @@ break;
 				}
 				await sleep(60000)
 				if (rdGame(tebaknegara, m.chat, key.id)) {
-					m.reply('Waktu Habis\nJawaban: ' + tebaknegara[m.chat + key.id].jawaban)
+					sycreply('Waktu Habis\nJawaban: ' + tebaknegara[m.chat + key.id].jawaban)
 					delete tebaknegara[m.chat + key.id]
 				}
 			}
 			break
 			case 'tebakepep': {
-				if (iGame(tebakepep, m.chat)) return m.reply('Masih Ada Sesi Yang Belum Diselesaikan!');
+				if (iGame(tebakepep, m.chat)) return sycreply('Masih Ada Sesi Yang Belum Diselesaikan!');
 				try {
 					// Mengambil data dari API
 					const hasil = await fetchJson('https://api.siputzx.my.id/api/games/karakter-freefire');
@@ -6852,7 +6878,7 @@ break;
 					console.log('Response dari API:', hasil);
 					// Mengecek apakah statusnya true dan data lengkap
 					if (!hasil || hasil.status !== true || !hasil.data || !hasil.data.gambar || !hasil.data.name) {
-						return m.reply('Terjadi kesalahan saat mengambil data dari API! Response tidak valid atau tidak lengkap.');
+						return sycreply('Terjadi kesalahan saat mengambil data dari API! Response tidak valid atau tidak lengkap.');
 					}
 					// Menyusun deskripsi permainan
 					const deskripsi = `🎮 Tebak Karakter Berikut :\n\nNama Karakter: AYO TEBAK📍\n\nWaktu: 60s\nHadiah *+3499*`;
@@ -6875,17 +6901,17 @@ break;
 					await sleep(60000);
 					// Mengecek apakah game sudah selesai
 					if (rdGame(tebakepep, m.chat, key.id)) {
-						m.reply('Waktu Habis\nJawaban: ' + tebakepep[m.chat + key.id].jawaban);
+						sycreply('Waktu Habis\nJawaban: ' + tebakepep[m.chat + key.id].jawaban);
 						delete tebakepep[m.chat + key.id];
 					}
 				} catch (error) {
-					m.reply('Terjadi kesalahan saat mengambil data dari API!');
+					sycreply('Terjadi kesalahan saat mengambil data dari API!');
 					console.error('Error saat mengambil data dari API:', error);
 				}
 			}
 			break;
 			case 'tebakgambar': {
-				if (iGame(tebakgambar, m.chat)) return m.reply('Masih Ada Sesi Yang Belum Diselesaikan!')
+				if (iGame(tebakgambar, m.chat)) return sycreply('Masih Ada Sesi Yang Belum Diselesaikan!')
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/games/tebakgambar.json'));
 				let {
 					key
@@ -6902,13 +6928,13 @@ break;
 				}
 				await sleep(60000)
 				if (rdGame(tebakgambar, m.chat, key.id)) {
-					m.reply('Waktu Habis\nJawaban: ' + tebakgambar[m.chat + key.id].jawaban)
+					sycreply('Waktu Habis\nJawaban: ' + tebakgambar[m.chat + key.id].jawaban)
 					delete tebakgambar[m.chat + key.id]
 				}
 			}
 			break
 			case 'tebakbendera': {
-				if (iGame(tebakbendera, m.chat)) return m.reply('Masih Ada Sesi Yang Belum Diselesaikan!')
+				if (iGame(tebakbendera, m.chat)) return sycreply('Masih Ada Sesi Yang Belum Diselesaikan!')
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/games/tebakbendera.json'));
 				let {
 					key
@@ -6925,7 +6951,7 @@ break;
 				}
 				await sleep(60000)
 				if (rdGame(tebakbendera, m.chat, key.id)) {
-					m.reply('Waktu Habis\nJawaban: ' + tebakbendera[m.chat + key.id].jawaban)
+					sycreply('Waktu Habis\nJawaban: ' + tebakbendera[m.chat + key.id].jawaban)
 					delete tebakbendera[m.chat + key.id]
 				}
 			}
@@ -6937,9 +6963,9 @@ break;
 					modes
 				} = require('./lib/math');
 				const inputMode = ['noob', 'easy', 'medium', 'hard', 'extreme', 'impossible', 'impossible2'];
-				if (iGame(kuismath, m.chat)) return m.reply('Masih Ada Sesi Yang Belum Diselesaikan!')
-				if (!text) return m.reply(`Mode: ${Object.keys(modes).join(' | ')}\nContoh penggunaan: ${prefix}math medium`)
-				if (!inputMode.includes(text.toLowerCase())) return m.reply('Mode tidak ditemukan!')
+				if (iGame(kuismath, m.chat)) return sycreply('Masih Ada Sesi Yang Belum Diselesaikan!')
+				if (!text) return sycreply(`Mode: ${Object.keys(modes).join(' | ')}\nContoh penggunaan: ${prefix}math medium`)
+				if (!inputMode.includes(text.toLowerCase())) return sycreply('Mode tidak ditemukan!')
 				let result = await genMath(text.toLowerCase())
 				let {
 					key
@@ -6957,7 +6983,7 @@ break;
 				}
 				await sleep(kuismath, result.waktu)
 				if (rdGame(m.chat + key.id)) {
-					m.reply('Waktu Habis\nJawaban: ' + kuismath[m.chat + key.id].jawaban)
+					sycreply('Waktu Habis\nJawaban: ' + kuismath[m.chat + key.id].jawaban)
 					delete kuismath[m.chat + key.id]
 				}
 			}
@@ -7064,6 +7090,7 @@ break;
 ╭─┴❍「 *QUOTES* 」❍
 │${setv} ${prefix}motivasi
 │${setv} ${prefix}quotes
+│${setv} ${prefix}dare
 │${setv} ${prefix}truth
 │${setv} ${prefix}renungan
 ╰─┬────❍
@@ -7187,6 +7214,7 @@ break;
 ╰─┬────❍
 ╭─┴❍「 *OWNER* 」❍
 │${setv} ${prefix}bot [set]
+│${setv} ${prefix}setexif
 │${setv} ${prefix}setbio
 │${setv} ${prefix}setppbot
 │${setv} ${prefix}join
@@ -7274,9 +7302,9 @@ break;
 					try {
 						let evaled = await eval(budy.slice(2))
 						if (typeof evaled !== 'string') evaled = require('util').inspect(evaled)
-						await m.reply(evaled)
+						await sycreply(evaled)
 					} catch (err) {
-						await m.reply(String(err))
+						await sycreply(String(err))
 					}
 				}
 				if (budy.startsWith('<')) {
@@ -7284,17 +7312,17 @@ break;
 					try {
 						let evaled = await eval(`(async () => { ${budy.slice(2)} })()`)
 						if (typeof evaled !== 'string') evaled = require('util').inspect(evaled)
-						await m.reply(evaled)
+						await sycreply(evaled)
 					} catch (err) {
-						await m.reply(String(err))
+						await sycreply(String(err))
 					}
 				}
 				if (budy.startsWith('$')) {
 					if (!isCreator) return
 					if (!text) return
 					exec(budy.slice(2), (err, stdout) => {
-						if (err) return m.reply(`${err}`)
-						if (stdout) return m.reply(stdout)
+						if (err) return sycreply(`${err}`)
+						if (stdout) return sycreply(stdout)
 					})
 				}
 			}
@@ -7302,14 +7330,14 @@ break;
 				try {
 					let promt = `kalo jawab pake bahasa indonesia ga baku aja: ${text}`;
 					let hasil = await yanzGpt(promt);
-					m.reply(hasil.choices[0].message.content);
+					sycreply(hasil.choices[0].message.content);
 				} catch (e) {
 					try {
 						let promt = `kalo jawab pake bahasa indonesia ga baku aja: ${text}`;
 						let hasil = await bk9Ai(promt);
-						m.reply(hasil.BK9);
+						sycreply(hasil.BK9);
 					} catch (e) {
-						m.reply(pickRandom(['Fitur Ai sedang bermasalah!', 'Tidak dapat terhubung ke ai!', 'Sistem Ai sedang sibuk sekarang!', 'Fitur sedang tidak dapat digunakan!']));
+						sycreply(pickRandom(['Fitur Ai sedang bermasalah!', 'Tidak dapat terhubung ke ai!', 'Sistem Ai sedang sibuk sekarang!', 'Fitur sedang tidak dapat digunakan!']));
 					}
 				}
 			}
@@ -7317,7 +7345,7 @@ break;
 		}
 	} catch (err) {
 		console.log(util.format(err));
-		//m.reply('*❗ Internal server error️*');
+		//sycreply('*❗ Internal server error️*');
 		sych.sendFromOwner(owner, 'Halo sayang, sepertinya ada yang error nih, jangan lupa diperbaiki ya\n\n*Log error:*\n\n' + util.format(err), m, {
 			contextInfo: {
 				isForwarded: true
