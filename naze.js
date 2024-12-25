@@ -3316,6 +3316,69 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				}
 			}
 			break
+			case 'drivedl': {
+    if (!text) return m.reply(`Example: ${prefix + command} url_drive`)
+    if (!text.includes('drive.google.com')) return m.reply('Url Tidak Mengandung Hasil Dari Google Drive!')
+
+    try {
+    m.reply(mess.wait);
+            await sych.sendMessage(m.chat, {
+                react: {
+                    text: "⏳",
+                    key: m.key
+                }
+            });
+            await sych.sendMessage(m.chat, {
+                react: {
+                    text: "🕛",
+                    key: m.key
+                }
+            });
+            await sych.sendMessage(m.chat, {
+                react: {
+                    text: "🕒",
+                    key: m.key
+                }
+            });
+            await sych.sendMessage(m.chat, {
+                react: {
+                    text: "🕕",
+                    key: m.key
+                }
+            });
+            await sych.sendMessage(m.chat, {
+                react: {
+                    text: "🕘",
+                    key: m.key
+                }
+            });
+            await sych.sendMessage(m.chat, {
+                react: {
+                    text: "🕛",
+                    key: m.key
+                }
+            });
+            await sych.sendMessage(m.chat, {
+                react: {
+                    text: "✅",
+                    key: m.key
+                }
+            });
+        const apiUrl = `https://api.agatz.xyz/api/drivedl?url=${text}`;
+        const response = await fetch(apiUrl);
+        const hasil = await response.json();
+
+        if (hasil.status !== 200 || !hasil.data) {
+            m.reply('File Tidak ditemukan!')
+        } else {
+            
+            await sych.sendFileUrl(m.chat, hasil.data.download, `*🎐File:* ${hasil.data.name}\n*Link:* ${hasil.data.link}`, m);
+        }
+    } catch (e) {
+        m.reply('Server downloader Google Drive sedang offline!');
+    }
+}
+break;
 			case 'kucing': {
 				try {
 					// Memberi tahu pengguna bahwa gambar sedang dimuat
@@ -5195,7 +5258,7 @@ case 'ttprofile': {
 				try {
 					console.log('Mengambil informasi video...');
 					const info = await ytdl.getInfo(text);
-					if (info.videoDetails.lengthSeconds > 300) {
+					if (info.videoDetails.lengthSeconds > 360) {
 						return m.reply('Video terlalu panjang. Silakan coba video dengan durasi lebih pendek.');
 					}
 					const title = info.videoDetails.title.replace(/[<>:"/\\|?*]/g, '');
@@ -5779,6 +5842,70 @@ case 'ttprofile': {
 				}
 			}
 			break
+			case 'videymp4': {
+	if (!isPremium) return m.reply(mess.prem);		
+    if (!text) return m.reply(`Example: ${prefix + command} url_videy`)
+    if (!text.includes('videy.co')) return m.reply('Url Tidak Mengandung Hasil Dari Videy!')
+
+    try {
+    m.reply(mess.wait);
+            await sych.sendMessage(m.chat, {
+                react: {
+                    text: "⏳",
+                    key: m.key
+                }
+            });
+            await sych.sendMessage(m.chat, {
+                react: {
+                    text: "🕛",
+                    key: m.key
+                }
+            });
+            await sych.sendMessage(m.chat, {
+                react: {
+                    text: "🕒",
+                    key: m.key
+                }
+            });
+            await sych.sendMessage(m.chat, {
+                react: {
+                    text: "🕕",
+                    key: m.key
+                }
+            });
+            await sych.sendMessage(m.chat, {
+                react: {
+                    text: "🕘",
+                    key: m.key
+                }
+            });
+            await sych.sendMessage(m.chat, {
+                react: {
+                    text: "🕛",
+                    key: m.key
+                }
+            });
+            await sych.sendMessage(m.chat, {
+                react: {
+                    text: "✅",
+                    key: m.key
+                }
+            });
+        const apiUrl = `https://api.agatz.xyz/api/videydl?url=${text}`;
+        const response = await fetch(apiUrl);
+        const hasil = await response.json();
+
+        if (hasil.status !== 200 || !hasil.data) {
+            m.reply('Video Tidak ditemukan!')
+        } else {
+            
+            await sych.sendFileUrl(m.chat, hasil.data, `*🎐Video Link:* ${hasil.data}`, m);
+        }
+    } catch (e) {
+        m.reply('Server downloader Videy sedang offline!');
+    }
+}
+break;
 			case 'mediafire': {
 				if (!text) {
 					console.log('URL tidak diberikan');
@@ -6932,6 +7059,7 @@ case 'ttprofile': {
 │${setv} ${prefix}tiktok (url)
 │${setv} ${prefix}facebook (url)
 │${setv} ${prefix}mediafire (url)
+│${setv} ${prefix}videymp4 (url)
 ╰─┬────❍
 ╭─┴❍「 *QUOTES* 」❍
 │${setv} ${prefix}motivasi
