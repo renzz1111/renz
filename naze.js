@@ -283,21 +283,21 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			}
 		};
 		const ftrol = {
-	key : {
-                          participant : '0@s.whatsapp.net'
-                        },
-       message: {
-                    orderMessage: {
-                            itemCount : 123,
-                            status: 1,
-                            surface : 1,
-                            message: `${ucapanWaktu} ${m.pushName ? m.pushName : 'Tanpa Nama'} 👋🏻`,
-                            orderTitle: `${ucapanWaktu} ${m.pushName ? m.pushName : 'Tanpa Nama'} 👋🏻`,
-                            thumbnail: fake.trolTn, 
-                            sellerJid: '0@s.whatsapp.net' 
-                          }
-                        }
-                      }
+			key: {
+				participant: '0@s.whatsapp.net'
+			},
+			message: {
+				orderMessage: {
+					itemCount: 123,
+					status: 1,
+					surface: 1,
+					message: `${ucapanWaktu} ${m.pushName ? m.pushName : 'Tanpa Nama'} 👋🏻`,
+					orderTitle: `${ucapanWaktu} ${m.pushName ? m.pushName : 'Tanpa Nama'} 👋🏻`,
+					thumbnail: fake.trolTn,
+					sellerJid: '0@s.whatsapp.net'
+				}
+			}
+		}
 		const fkontak = {
 			key: {
 				remoteJid: 'status@broadcast',
@@ -314,38 +314,42 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			}
 		}
 		const ftroli2 = {
-	key : {
-                          participant : '0@s.whatsapp.net'
-                        },
-       message: {
-                    orderMessage: {
-                            itemCount : 123,
-                            status: 1,
-                            surface : 1,
-                            message: `${ucapanWaktu} ${m.pushName ? m.pushName : 'Tanpa Nama'} 👋🏻`,
-                            orderTitle: `${ucapanWaktu} ${m.pushName ? m.pushName : 'Tanpa Nama'} 👋🏻`,
-                            thumbnail: fake.texz, //Gambarnye
-                            sellerJid: '0@s.whatsapp.net' 
-                          }
-                        }
-                      }
+			key: {
+				participant: '0@s.whatsapp.net'
+			},
+			message: {
+				orderMessage: {
+					itemCount: 123,
+					status: 1,
+					surface: 1,
+					message: `${ucapanWaktu} ${m.pushName ? m.pushName : 'Tanpa Nama'} 👋🏻`,
+					orderTitle: `${ucapanWaktu} ${m.pushName ? m.pushName : 'Tanpa Nama'} 👋🏻`,
+					thumbnail: fake.texz, //Gambarnye
+					sellerJid: '0@s.whatsapp.net'
+				}
+			}
+		}
 		const sycreply = (teks) => {
-sych.sendMessage(m.chat,
-{ text: teks,
-contextInfo:{
-mentionedJid:[sender],
-forwardingScore: 100,
-isForwarded: true,
-"externalAdReply": {
-"showAdAttribution": true,
-"containsAutoReply": true,
-"title": `${global.botname}`,
-"body": `${ucapanWaktu} ${m.pushName ? m.pushName : 'Tanpa Nama'} 👋🏻`,
-"previewType": "VIDEO",
-"thumbnailUrl": 'https://f.uguu.se/rBJXXdYj.jpg',
-"sourceUrl": 'https://github.com/sychyy'}}},
-{ quoted: fkontak})
-}
+			sych.sendMessage(m.chat, {
+				text: teks,
+				contextInfo: {
+					mentionedJid: [sender],
+					forwardingScore: 100,
+					isForwarded: true,
+					"externalAdReply": {
+						"showAdAttribution": true,
+						"containsAutoReply": true,
+						"title": `${global.botname}`,
+						"body": `${ucapanWaktu} ${m.pushName ? m.pushName : 'Tanpa Nama'} 👋🏻`,
+						"previewType": "VIDEO",
+						"thumbnailUrl": 'https://i.ibb.co.com/3rqCPX6/fk.jpg',
+						"sourceUrl": 'https://github.com/sychyy'
+					}
+				}
+			}, {
+				quoted: fkontak
+			})
+		}
 		// Reset Limit
 		cron.schedule('00 00 * * *', () => {
 			let user = Object.keys(db.users)
@@ -2308,12 +2312,12 @@ isForwarded: true,
 			}
 			break
 			case 'restart':
-if (!isCreator) return sycreply(mess.owner)
-sycreply(`restarting ${global.botname}`)
-sycreply(`Done ✅`)
-await sleep(3000)
-process.exit()
-break
+				if (!isCreator) return sycreply(mess.owner)
+				sycreply(`restarting ${global.botname}`)
+				sycreply(`Done ✅`)
+				await sleep(3000)
+				process.exit()
+				break
 			case 'tovn':
 			case 'toptt':
 			case 'tovoice': {
@@ -3374,68 +3378,65 @@ break
 			}
 			break
 			case 'drivedl': {
-    if (!text) return sycreply(`Example: ${prefix + command} url_drive`)
-    if (!text.includes('drive.google.com')) return sycreply('Url Tidak Mengandung Hasil Dari Google Drive!')
-
-    try {
-    sycreply(mess.wait);
-            await sych.sendMessage(m.chat, {
-                react: {
-                    text: "⏳",
-                    key: m.key
-                }
-            });
-            await sych.sendMessage(m.chat, {
-                react: {
-                    text: "🕛",
-                    key: m.key
-                }
-            });
-            await sych.sendMessage(m.chat, {
-                react: {
-                    text: "🕒",
-                    key: m.key
-                }
-            });
-            await sych.sendMessage(m.chat, {
-                react: {
-                    text: "🕕",
-                    key: m.key
-                }
-            });
-            await sych.sendMessage(m.chat, {
-                react: {
-                    text: "🕘",
-                    key: m.key
-                }
-            });
-            await sych.sendMessage(m.chat, {
-                react: {
-                    text: "🕛",
-                    key: m.key
-                }
-            });
-            await sych.sendMessage(m.chat, {
-                react: {
-                    text: "✅",
-                    key: m.key
-                }
-            });
-        const apiUrl = `https://api.agatz.xyz/api/drivedl?url=${text}`;
-        const response = await fetch(apiUrl);
-        const hasil = await response.json();
-
-        if (hasil.status !== 200 || !hasil.data) {
-            sycreply('File Tidak ditemukan!')
-        } else {
-            
-            await sych.sendFileUrl(m.chat, hasil.data.download, `*🎐File:* ${hasil.data.name}\n*Link:* ${hasil.data.link}`, m);
-        }
-    } catch (e) {
-        sycreply('Server downloader Google Drive sedang offline!');
-    }
-}
-break;
+				if (!text) return sycreply(`Example: ${prefix + command} url_drive`)
+				if (!text.includes('drive.google.com')) return sycreply('Url Tidak Mengandung Hasil Dari Google Drive!')
+				try {
+					sycreply(mess.wait);
+					await sych.sendMessage(m.chat, {
+						react: {
+							text: "⏳",
+							key: m.key
+						}
+					});
+					await sych.sendMessage(m.chat, {
+						react: {
+							text: "🕛",
+							key: m.key
+						}
+					});
+					await sych.sendMessage(m.chat, {
+						react: {
+							text: "🕒",
+							key: m.key
+						}
+					});
+					await sych.sendMessage(m.chat, {
+						react: {
+							text: "🕕",
+							key: m.key
+						}
+					});
+					await sych.sendMessage(m.chat, {
+						react: {
+							text: "🕘",
+							key: m.key
+						}
+					});
+					await sych.sendMessage(m.chat, {
+						react: {
+							text: "🕛",
+							key: m.key
+						}
+					});
+					await sych.sendMessage(m.chat, {
+						react: {
+							text: "✅",
+							key: m.key
+						}
+					});
+					const apiUrl = `https://api.agatz.xyz/api/drivedl?url=${text}`;
+					const response = await fetch(apiUrl);
+					const hasil = await response.json();
+					if (hasil.status !== 200 || !hasil.data) {
+						sycreply('File Tidak ditemukan!')
+					} else {
+						await sych.sendFileUrl(m.chat, hasil.data.download, `*🎐File:* ${hasil.data.name}\n*Link:* ${hasil.data.link}`, m);
+					}
+				} catch (e) {
+					sycreply('Server downloader Google Drive sedang offline!');
+				}
+			}
+			break;
 			case 'kucing': {
 				try {
 					// Memberi tahu pengguna bahwa gambar sedang dimuat
@@ -4017,13 +4018,13 @@ break;
 			}
 			break
 			case 'setexif': {
-               if (!isCreator) return sycreply(mess.owner)
-               if (!text) return sycreply(`Example : ${prefix + command} packname|author`)
-          global.packname = text.split("|")[0]
-          global.author = text.split("|")[1]
-          sycreply(`Exif has been successfully changed to\n\n${themeemoji} Packname : ${global.packname}\n${themeemoji} Author : ${global.author}`)
-            }
-            break
+				if (!isCreator) return sycreply(mess.owner)
+				if (!text) return sycreply(`Example : ${prefix + command} packname|author`)
+				global.packname = text.split("|")[0]
+				global.author = text.split("|")[1]
+				sycreply(`Exif has been successfully changed to\n\n${themeemoji} Packname : ${global.packname}\n${themeemoji} Author : ${global.author}`)
+			}
+			break
 			case 'nulis': {
 				sycreply(`*Example*\n${prefix}nuliskiri\n${prefix}nuliskanan\n${prefix}foliokiri\n${prefix}foliokanan`)
 			}
@@ -4206,68 +4207,65 @@ break;
 			}
 			break
 			case 'tiktokstalk':
-case 'ttstalk':
-case 'tiktokprofile':
-case 'ttprofile': {
-    if (!text) {
-        console.log('TikTok username not provided.');
-        return sycreply('Example: ' + prefix + command + ' username_tiktok');
-    }
-
-    try {
-    sycreply(mess.wait)
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "⏳",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕒",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕕",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕘",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "✅",
-						key: m.key
-					}
-				});
-        console.log('Fetching TikTok profile for username:', text);
-        const url = `https://api.tiklydown.eu.org/api/stalk?user=${text}`;
-        const response = await fetch(url);
-        const data = await response.json();
-
-        if (data.status === 200 && data.data && data.data.user) {
-            const user = data.data.user;
-            const stats = data.data.stats;
-
-            const profileMessage = `
+			case 'ttstalk':
+			case 'tiktokprofile':
+			case 'ttprofile': {
+				if (!text) {
+					console.log('TikTok username not provided.');
+					return sycreply('Example: ' + prefix + command + ' username_tiktok');
+				}
+				try {
+					sycreply(mess.wait)
+					await sych.sendMessage(m.chat, {
+						react: {
+							text: "⏳",
+							key: m.key
+						}
+					});
+					await sych.sendMessage(m.chat, {
+						react: {
+							text: "🕛",
+							key: m.key
+						}
+					});
+					await sych.sendMessage(m.chat, {
+						react: {
+							text: "🕒",
+							key: m.key
+						}
+					});
+					await sych.sendMessage(m.chat, {
+						react: {
+							text: "🕕",
+							key: m.key
+						}
+					});
+					await sych.sendMessage(m.chat, {
+						react: {
+							text: "🕘",
+							key: m.key
+						}
+					});
+					await sych.sendMessage(m.chat, {
+						react: {
+							text: "🕛",
+							key: m.key
+						}
+					});
+					await sych.sendMessage(m.chat, {
+						react: {
+							text: "✅",
+							key: m.key
+						}
+					});
+					console.log('Fetching TikTok profile for username:', text);
+					const url = `https://api.tiklydown.eu.org/api/stalk?user=${text}`;
+					const response = await fetch(url);
+					const data = await response.json();
+					if (data.status === 200 && data.data && data.data.user) {
+						const user = data.data.user;
+						const stats = data.data.stats;
+						const profileMessage = `
             *Name:* ${user.nickname}
             *Username:* @${user.uniqueId}
             *Signature:* ${user.signature || 'No signature available'}
@@ -4278,25 +4276,25 @@ case 'ttprofile': {
             *Region:* ${user.region}
             *Verified:* ${user.verified ? 'Yes' : 'No'}
             `;
-
-            // Send profile picture as an image with the profile details as caption
-            await sych.sendMessage(m.chat, {
-                image: { url: user.avatarLarger },
-                caption: profileMessage,
-                quoted: m, // This makes it a reply to the original message
-                key: m.key
-            });
-
-        } else {
-            console.log('Failed to retrieve TikTok profile data.');
-            sycreply('Failed to retrieve TikTok profile or invalid username.');
-        }
-    } catch (e) {
-        console.error('Error fetching TikTok profile:', e);
-        sycreply('An error occurred while fetching the profile. Please try again later.');
-    }
-    break;
-}
+						// Send profile picture as an image with the profile details as caption
+						await sych.sendMessage(m.chat, {
+							image: {
+								url: user.avatarLarger
+							},
+							caption: profileMessage,
+							quoted: m, // This makes it a reply to the original message
+							key: m.key
+						});
+					} else {
+						console.log('Failed to retrieve TikTok profile data.');
+						sycreply('Failed to retrieve TikTok profile or invalid username.');
+					}
+				} catch (e) {
+					console.error('Error fetching TikTok profile:', e);
+					sycreply('An error occurred while fetching the profile. Please try again later.');
+				}
+				break;
+			}
 			case 'foliokanan': {
 				if (!text) return sycreply(`Kirim perintah *${prefix + command}* Teksnya`)
 				sycreply(mess.wait)
@@ -5358,12 +5356,8 @@ case 'ttprofile': {
 									contextInfo: {
 										externalAdReply: {
 											title: title,
-											body: info.videoDetails.author.name,
-											previewType: 'PHOTO',
-											thumbnailUrl: info.videoDetails.thumbnails[0].url,
-											mediaType: 1,
-											renderLargerThumbnail: true,
-											sourceUrl: text
+											body: 'Klik untuk melihat sumber',
+											sourceUrl: url
 										}
 									}
 								}, {
@@ -5390,6 +5384,126 @@ case 'ttprofile': {
 				} catch (e) {
 					console.error('Error:', e);
 					sycreply('Gagal memproses audio! Error: ' + e.message);
+				}
+			}
+			break;
+			case 'play3': {
+				if (!text) return sycreply(`Example: ${prefix + command} dj komang`);
+				sycreply(mess.wait);
+				await sych.sendMessage(m.chat, {
+					react: {
+						text: "⏳",
+						key: m.key
+					}
+				});
+				await sych.sendMessage(m.chat, {
+					react: {
+						text: "🕛",
+						key: m.key
+					}
+				});
+				await sych.sendMessage(m.chat, {
+					react: {
+						text: "🕒",
+						key: m.key
+					}
+				});
+				await sych.sendMessage(m.chat, {
+					react: {
+						text: "🕕",
+						key: m.key
+					}
+				});
+				await sych.sendMessage(m.chat, {
+					react: {
+						text: "🕘",
+						key: m.key
+					}
+				});
+				await sych.sendMessage(m.chat, {
+					react: {
+						text: "🕛",
+						key: m.key
+					}
+				});
+				await sych.sendMessage(m.chat, {
+					react: {
+						text: "✅",
+						key: m.key
+					}
+				});
+				try {
+					const res = await yts.search(text);
+					const hasil = res.all[0]; // Mengambil hasil pertama dari pencarian
+					if (!hasil || !hasil.url) return sycreply('Tidak ada hasil yang ditemukan!');
+					// Mengirim informasi video
+					const teksnya = `*📍Title:* ${hasil.title || 'Tidak tersedia'}\n*✏Description:* ${hasil.description || 'Tidak tersedia'}\n*🌟Channel:* ${hasil.author?.name || 'Tidak tersedia'}\n*⏳Duration:* ${hasil.seconds || 'Tidak tersedia'} second (${hasil.timestamp || 'Tidak tersedia'})\n*🔎Source:* ${hasil.url || 'Tidak tersedia'}`;
+					await sych.sendMessage(m.chat, {
+						image: {
+							url: hasil.thumbnail
+						},
+						caption: teksnya
+					}, {
+						quoted: m
+					});
+					// Proses download audio secara otomatis
+					const url = hasil.url;
+					await sych.sendMessage(m.chat, {
+						react: {
+							text: "⏳",
+							key: m.key
+						}
+					});
+					const info = await ytdl.getInfo(url);
+					if (info.videoDetails.lengthSeconds > 360) {
+						return sycreply('Video terlalu panjang. Silakan coba video dengan durasi lebih pendek.');
+					}
+					const title = info.videoDetails.title.replace(/[<>:"/\\|?*]/g, '');
+					const outputPath = path.join('./downloads', `${title}.mp3`);
+					const compressedPath = path.join('./downloads', `${title}_compressed.mp3`);
+					if (!fs.existsSync('./downloads')) {
+						fs.mkdirSync('./downloads', {
+							recursive: true
+						});
+					}
+					console.log('Mengunduh audio...');
+					const audioStream = ytdl(url, {
+						filter: 'audioonly',
+						quality: 'lowestaudio'
+					});
+					const tempFile = fs.createWriteStream(outputPath);
+					audioStream.pipe(tempFile);
+					tempFile.on('finish', () => {
+						ffmpeg(outputPath).audioBitrate(128).outputOptions('-preset ultrafast').on('end', async () => {
+							await sych.sendMessage(m.chat, {
+								audio: {
+									url: compressedPath
+								},
+								mimetype: 'audio/mpeg',
+								contextInfo: {
+									externalAdReply: {
+										title: title,
+										body: 'Klik untuk melihat sumber',
+										sourceUrl: url
+									}
+								}
+							}, {
+								quoted: m
+							});
+							fs.unlinkSync(outputPath);
+							fs.unlinkSync(compressedPath);
+						}).on('error', (err) => {
+							console.error('Error saat mengompresi audio:', err);
+							sycreply('Terjadi kesalahan saat mengompresi audio.');
+						}).save(compressedPath);
+					});
+					tempFile.on('error', (err) => {
+						console.error('Error saat menulis file:', err);
+						sycreply('Terjadi kesalahan saat menyimpan audio.');
+					});
+				} catch (e) {
+					console.error('Error:', e);
+					sycreply('Gagal memproses permintaan!');
 				}
 			}
 			break;
@@ -5485,11 +5599,7 @@ case 'ttprofile': {
 										contextInfo: {
 											externalAdReply: {
 												title: title,
-												body: info.videoDetails.author.name,
-												previewType: 'PHOTO',
-												thumbnailUrl: info.videoDetails.thumbnails[0].url,
-												mediaType: 1,
-												renderLargerThumbnail: true,
+												body: 'Klik untuk melihat sumber',
 												sourceUrl: text
 											}
 										}
@@ -5908,69 +6018,66 @@ case 'ttprofile': {
 			}
 			break
 			case 'videymp4': {
-	if (!isPremium) return sycreply(mess.prem);		
-    if (!text) return sycreply(`Example: ${prefix + command} url_videy`)
-    if (!text.includes('videy.co')) return sycreply('Url Tidak Mengandung Hasil Dari Videy!')
-
-    try {
-    sycreply(mess.wait);
-            await sych.sendMessage(m.chat, {
-                react: {
-                    text: "⏳",
-                    key: m.key
-                }
-            });
-            await sych.sendMessage(m.chat, {
-                react: {
-                    text: "🕛",
-                    key: m.key
-                }
-            });
-            await sych.sendMessage(m.chat, {
-                react: {
-                    text: "🕒",
-                    key: m.key
-                }
-            });
-            await sych.sendMessage(m.chat, {
-                react: {
-                    text: "🕕",
-                    key: m.key
-                }
-            });
-            await sych.sendMessage(m.chat, {
-                react: {
-                    text: "🕘",
-                    key: m.key
-                }
-            });
-            await sych.sendMessage(m.chat, {
-                react: {
-                    text: "🕛",
-                    key: m.key
-                }
-            });
-            await sych.sendMessage(m.chat, {
-                react: {
-                    text: "✅",
-                    key: m.key
-                }
-            });
-        const apiUrl = `https://api.agatz.xyz/api/videydl?url=${text}`;
-        const response = await fetch(apiUrl);
-        const hasil = await response.json();
-
-        if (hasil.status !== 200 || !hasil.data) {
-            sycreply('Video Tidak ditemukan!')
-        } else {
-            
-            await sych.sendFileUrl(m.chat, hasil.data, `*🎐Video Link:* ${hasil.data}`, m);
-        }
-    } catch (e) {
-        sycreply('Server downloader Videy sedang offline!');
-    }
-}
-break;
+				if (!isPremium) return sycreply(mess.prem);
+				if (!text) return sycreply(`Example: ${prefix + command} url_videy`)
+				if (!text.includes('videy.co')) return sycreply('Url Tidak Mengandung Hasil Dari Videy!')
+				try {
+					sycreply(mess.wait);
+					await sych.sendMessage(m.chat, {
+						react: {
+							text: "⏳",
+							key: m.key
+						}
+					});
+					await sych.sendMessage(m.chat, {
+						react: {
+							text: "🕛",
+							key: m.key
+						}
+					});
+					await sych.sendMessage(m.chat, {
+						react: {
+							text: "🕒",
+							key: m.key
+						}
+					});
+					await sych.sendMessage(m.chat, {
+						react: {
+							text: "🕕",
+							key: m.key
+						}
+					});
+					await sych.sendMessage(m.chat, {
+						react: {
+							text: "🕘",
+							key: m.key
+						}
+					});
+					await sych.sendMessage(m.chat, {
+						react: {
+							text: "🕛",
+							key: m.key
+						}
+					});
+					await sych.sendMessage(m.chat, {
+						react: {
+							text: "✅",
+							key: m.key
+						}
+					});
+					const apiUrl = `https://api.agatz.xyz/api/videydl?url=${text}`;
+					const response = await fetch(apiUrl);
+					const hasil = await response.json();
+					if (hasil.status !== 200 || !hasil.data) {
+						sycreply('Video Tidak ditemukan!')
+					} else {
+						await sych.sendFileUrl(m.chat, hasil.data, `*🎐Video Link:* ${hasil.data}`, m);
+					}
+				} catch (e) {
+					sycreply('Server downloader Videy sedang offline!');
+				}
+			}
+			break;
 			case 'mediafire': {
 				if (!text) {
 					console.log('URL tidak diberikan');
@@ -7030,49 +7137,49 @@ break;
 			// Menu
 			case 'allmenu':
 			case 'menu': {
-			await sych.sendMessage(m.chat, {
-						react: {
-							text: "⏳",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕒",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕕",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕘",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "✅",
-							key: m.key
-						}
-					});
-			sycreply('Menampilkan Menu...')
+				await sych.sendMessage(m.chat, {
+					react: {
+						text: "⏳",
+						key: m.key
+					}
+				});
+				await sych.sendMessage(m.chat, {
+					react: {
+						text: "🕛",
+						key: m.key
+					}
+				});
+				await sych.sendMessage(m.chat, {
+					react: {
+						text: "🕒",
+						key: m.key
+					}
+				});
+				await sych.sendMessage(m.chat, {
+					react: {
+						text: "🕕",
+						key: m.key
+					}
+				});
+				await sych.sendMessage(m.chat, {
+					react: {
+						text: "🕘",
+						key: m.key
+					}
+				});
+				await sych.sendMessage(m.chat, {
+					react: {
+						text: "🕛",
+						key: m.key
+					}
+				});
+				await sych.sendMessage(m.chat, {
+					react: {
+						text: "✅",
+						key: m.key
+					}
+				});
+				sycreply('Menampilkan Menu...')
 				let profile;
 				try {
 					profile = await sych.profilePictureUrl(m.sender, 'image');
@@ -7154,6 +7261,7 @@ break;
 │${setv} ${prefix}google (query)
 │${setv} ${prefix}gimage (query)
 │${setv} ${prefix}npm (query)
+│${setv} ${prefix}play3 (query)
 │${setv} ${prefix}style (query)
 │${setv} ${prefix}cuaca (kota)
 │${setv} ${prefix}dukun (nama)
