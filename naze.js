@@ -282,6 +282,22 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				console.error(`Gagal menghapus pesan: ChatID - ${chatId}, Key -`, key, 'Error:', error);
 			}
 		};
+		const ftrol = {
+	key : {
+                          participant : '0@s.whatsapp.net'
+                        },
+       message: {
+                    orderMessage: {
+                            itemCount : 123,
+                            status: 1,
+                            surface : 1,
+                            message: `${ucapanWaktu} ${m.pushName ? m.pushName : 'Tanpa Nama'} 👋🏻`,
+                            orderTitle: `${ucapanWaktu} ${m.pushName ? m.pushName : 'Tanpa Nama'} 👋🏻`,
+                            thumbnail: fake.trolTn, 
+                            sellerJid: '0@s.whatsapp.net' 
+                          }
+                        }
+                      }
 		const fkontak = {
 			key: {
 				remoteJid: '0@s.whatsapp.net',
@@ -297,6 +313,22 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				}
 			}
 		}
+		const ftroli2 = {
+	key : {
+                          participant : '0@s.whatsapp.net'
+                        },
+       message: {
+                    orderMessage: {
+                            itemCount : 123,
+                            status: 1,
+                            surface : 1,
+                            message: `${ucapanWaktu} ${m.pushName ? m.pushName : 'Tanpa Nama'} 👋🏻`,
+                            orderTitle: `${ucapanWaktu} ${m.pushName ? m.pushName : 'Tanpa Nama'} 👋🏻`,
+                            thumbnail: fake.texz, //Gambarnye
+                            sellerJid: '0@s.whatsapp.net' 
+                          }
+                        }
+                      }
 		const sycreply = (teks) => {
 sych.sendMessage(m.chat,
 { text: teks,
@@ -2275,6 +2307,13 @@ isForwarded: true,
 				})
 			}
 			break
+			case 'restart':
+if (!isCreator) return sycreply(mess.owner)
+sycreply(`restarting ${global.botname}`)
+sycreply(`Done ✅`)
+await sleep(3000)
+process.exit()
+break
 			case 'tovn':
 			case 'toptt':
 			case 'tovoice': {
@@ -6991,6 +7030,49 @@ break;
 			// Menu
 			case 'allmenu':
 			case 'menu': {
+			await sych.sendMessage(m.chat, {
+						react: {
+							text: "⏳",
+							key: m.key
+						}
+					});
+					await sych.sendMessage(m.chat, {
+						react: {
+							text: "🕛",
+							key: m.key
+						}
+					});
+					await sych.sendMessage(m.chat, {
+						react: {
+							text: "🕒",
+							key: m.key
+						}
+					});
+					await sych.sendMessage(m.chat, {
+						react: {
+							text: "🕕",
+							key: m.key
+						}
+					});
+					await sych.sendMessage(m.chat, {
+						react: {
+							text: "🕘",
+							key: m.key
+						}
+					});
+					await sych.sendMessage(m.chat, {
+						react: {
+							text: "🕛",
+							key: m.key
+						}
+					});
+					await sych.sendMessage(m.chat, {
+						react: {
+							text: "✅",
+							key: m.key
+						}
+					});
+			sycreply('Menampilkan Menu...')
 				let profile;
 				try {
 					profile = await sych.profilePictureUrl(m.sender, 'image');
@@ -7244,6 +7326,7 @@ break;
 │${setv} ${prefix}delsampah
 │${setv} ${prefix}upsw
 │${setv} ${prefix}shutdown
+│${setv} ${prefix}restart
 │${setv} $
 │${setv} >
 │${setv} <

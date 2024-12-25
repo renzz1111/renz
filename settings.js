@@ -13,6 +13,7 @@ global.own = ['6287862997267', '0']
 global.owner = ['6287862997267', '62882008702155']
 global.packname = 'SychBotz'
 global.author = 'ydaa'
+global.owname = 'mzyda'
 global.botname = 'Sychy Bot'
 global.listprefix = ['+','!','.']
 global.themeemoji = '🪀'
@@ -22,6 +23,8 @@ global.tempatDB = 'database.json'
 global.pairing_code = true
 
 global.fake = {
+    texz: `Owner: ${owname}\nBot: ${botname}`,
+    trolTn: fs.readFileSync('./src/media/fk.jpg'),
 	anonim: 'https://telegra.ph/file/95670d63378f7f4210f03.png',
 	thumbnailUrl: 'https://telegra.ph/file/fe4843a1261fc414542c4.jpg',
 	thumbnail: fs.readFileSync('./src/media/sych.png'),
