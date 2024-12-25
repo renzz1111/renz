@@ -26,7 +26,7 @@ global.fake = {
     texz: `Owner: ${owname}\nBot: ${botname}`,
     trolTn: fs.readFileSync('./src/media/fk.jpg'),
 	anonim: 'https://telegra.ph/file/95670d63378f7f4210f03.png',
-	thumbnailUrl: 'https://telegra.ph/file/fe4843a1261fc414542c4.jpg',
+	thumbnailUrl: 'https://f.uguu.se/rBJXXdYj.jpg',
 	thumbnail: fs.readFileSync('./src/media/sych.png'),
 	docs: fs.readFileSync('./src/media/fake.pdf'),
 	listfakedocs: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.openxmlformats-officedocument.presentationml.presentation','application/vnd.openxmlformats-officedocument.wordprocessingml.document','application/pdf'],

@@ -300,7 +300,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
                       }
 		const fkontak = {
 			key: {
-				remoteJid: '0@s.whatsapp.net',
+				remoteJid: 'status@broadcast',
 				participant: '0@s.whatsapp.net',
 				fromMe: false,
 				id: 'sych'
