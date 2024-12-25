@@ -178,6 +178,8 @@ let _chats =
 		const isPremium = isCreator || prem.checkPremiumUser(m.sender, premium) || false
 		const isNsfw = m.isGroup ? db.groups[m.chat].nsfw : false
 		// Data untuk menyimpan status pengguna
+        const emojis = global.emot;
+        const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
 
 		const isQuotedSticker = type === "extendedTextMessage" && content.includes("stickerMessage");
 		const extendedText = MessageType;
@@ -981,7 +983,7 @@ let _chats =
 						forwardedNewsletterMessageInfo: {
 							newsletterJid: my.ch,
 							serverMessageId: null,
-							newsletterName: 'SYCHEE🌱'
+							newsletterName: `SYCHEE${randomEmoji}`
 						},
 						externalAdReply: {
 							title: author,
@@ -4918,7 +4920,7 @@ break;
             forwardedNewsletterMessageInfo: {
                 newsletterJid: my.ch,
                 serverMessageId: null,
-                newsletterName: 'SYCHEE🌱'
+                newsletterName: `SYCHEE${randomEmoji}`
             },
             externalAdReply: {
                 title: author,
@@ -4939,13 +4941,12 @@ break;
         mimetype: 'image/webp',
     }, { quoted: m });
     
-    // Mengirim reaksi dengan emoji '🌱' oleh pengirim perintah
-    sych.sendMessage(m.chat, {
-        react: {
-            text: '🌱', // Emoji yang diinginkan
-            key: m.key // Memberikan reaksi pada pesan yang baru saja dikirim
-        }
-    });
+sych.sendMessage(m.chat, {
+    react: {
+        text: randomEmoji, // Emoji acak
+        key: m.key // Memberikan reaksi pada pesan yang baru saja dikirim
+    }
+});
 
 }
 break;

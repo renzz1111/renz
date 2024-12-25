@@ -16,6 +16,7 @@ global.author = 'ydaa'
 global.botname = 'Sychy Bot'
 global.listprefix = ['+','!']
 global.listv = ['•','●','■','✿','▲','➩','➢','➣','➤','✦','✧','△','❀','○','□','♤','♡','◇','♧','々','〆']
+global.emot =  ['🌱', '🌻', '🌞', '❄️', '🌿', '💫', '⭐', '🍃', '🔥', '⚡', '🫧', '🪵', '🌪️', '🍄']
 global.tempatDB = 'database.json'
 global.pairing_code = true
 
