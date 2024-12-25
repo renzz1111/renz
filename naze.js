@@ -5454,6 +5454,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 							key: m.key
 						}
 					});
+					sycreply('Bentar mengunduh lagu..')
 					const info = await ytdl.getInfo(url);
 					if (info.videoDetails.lengthSeconds > 360) {
 						return sycreply('Video terlalu panjang. Silakan coba video dengan durasi lebih pendek.');
