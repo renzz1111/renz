@@ -73,6 +73,9 @@ let tebakgambar = db.game.tebakgambar = []
 let tebakepep = db.game.tebakepep = []
 let tebakbendera = db.game.tebakbendera = []
 let autoAi = false; // Default mati
+// Variabel penyimpanan sesi chat rahasia
+let secretChat = {};
+
 
 let _scommand = JSON.parse(fs.readFileSync("./database/scommand.json"));
 
@@ -2347,6 +2350,48 @@ case 'kucing': {
     }
 }
 break;
+case 'encode': {
+    if (!text) return m.reply('Harap masukkan teks yang ingin dienkripsi!');
+    try {
+        // Proses encoding Base64
+        const encodedText = Buffer.from(text, 'utf-8').toString('base64');
+        m.reply(`${encodedText}`);
+    } catch (err) {
+        m.reply('Terjadi kesalahan saat mengenkripsi teks.');
+    }
+}
+break;
+case 'decode': {
+    if (!text) return m.reply('Harap masukkan teks terenkripsi untuk didekode!');
+    try {
+        // Proses decoding Base64
+        const decodedText = Buffer.from(text, 'base64').toString('utf-8');
+        m.reply(`${decodedText}`);
+    } catch (err) {
+        m.reply('Pesan tidak valid atau bukan Base64.');
+    }
+}
+break;
+
+case 'cekcuaca': {
+    if (!text) return m.reply('Masukkan lokasi! Contoh: cekcuaca Jakarta');
+    try {
+        const url = `https://wttr.in/${encodeURIComponent(text)}?format=%l:+%C+%t+%h+%w`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('Gagal mendapatkan data cuaca!');
+        
+        const weatherInfo = await res.text();
+
+        // Terjemahkan hasil cuaca ke Bahasa Indonesia
+        const translated = await translate(weatherInfo, { to: 'id' });
+
+        m.reply(`🌤️ Informasi Cuaca:\n\n${translated}`);
+    } catch (error) {
+        console.error(error);
+        m.reply('Terjadi kesalahan saat mengambil data cuaca. Pastikan lokasi yang dimasukkan benar.');
+    }
+}
+break;
 case 'bluearchive': {
     try {
         // Mengirim gambar langsung tanpa memerlukan input teks
@@ -2406,6 +2451,54 @@ case 'ckorea': {
     } catch (e) {
         m.reply('Server Sedang Offline!');
     }
+}
+break;
+
+// CASE untuk memulai chat rahasia
+case 'startsecret': {
+    if (!m.isGroup) return m.reply('Fitur ini hanya bisa digunakan di grup!');
+    let target = m.mentionedJid[0]; // Ambil pengguna yang ditandai
+    if (!target) return m.reply('Tag pengguna yang ingin diajak chat rahasia!');
+
+    // Cek apakah target sudah dalam sesi rahasia
+    if (secretChat[target]) return m.reply('Pengguna tersebut sudah berada dalam sesi rahasia!');
+
+    // Simpan sesi rahasia
+    secretChat[target] = { partner: m.sender, chat: [] };
+    secretChat[m.sender] = { partner: target, chat: [] };
+
+    m.reply(`✅ Sesi chat rahasia dimulai dengan @${target.split('@')[0]}.\nGunakan perintah "!endsecret" untuk mengakhiri sesi.`);
+}
+break;
+
+// CASE untuk mengirim pesan rahasia
+case 'secretmsg': {
+    if (!secretChat[m.sender]) return m.reply('Kamu tidak berada dalam sesi rahasia!');
+
+    let partner = secretChat[m.sender].partner;
+    let msg = text; // Ambil teks dari pengguna
+
+    // Kirim pesan rahasia
+    secretChat[partner].chat.push(msg);
+    secretChat[m.sender].chat.push(msg);
+
+    sych.sendMessage(partner, { text: `📩 Pesan Rahasia: ${msg}` }, { quoted: m });
+    m.reply('📨 Pesan rahasia terkirim!');
+}
+break;
+
+// CASE untuk mengakhiri sesi chat rahasia
+case 'endsecret': {
+    if (!secretChat[m.sender]) return m.reply('Kamu tidak berada dalam sesi rahasia!');
+    
+    let partner = secretChat[m.sender].partner;
+
+    // Hapus sesi rahasia
+    delete secretChat[m.sender];
+    delete secretChat[partner];
+
+    m.reply('🚫 Sesi chat rahasia telah berakhir.');
+    sych.sendMessage(partner, { text: '🚫 Sesi chat rahasia telah berakhir.' });
 }
 break;
 case 'cindo': {
@@ -3108,6 +3201,14 @@ break;
 			case 'pinterest': case 'pint': {
     if (!text) return m.reply(`Example: ${prefix + command} hu tao`);
     try {
+            m.reply(mess.wait)
+                await sych.sendMessage(m.chat, { react: { text: "⏳", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕒", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕕", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕘", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "🕛", key: m.key }});
+                await sych.sendMessage(m.chat, { react: { text: "✅", key: m.key }});
         let anu = await pinterest(text); // Panggil API pencarian Pinterest
         if (anu.length < 1) return m.reply('Pencarian tidak ditemukan!');
 
@@ -3177,8 +3278,32 @@ break;
 				}
 			}
 			break
-			// Handler perintah
-// Handler perintah
+		 case 'checklocation': {
+    if (!isCreator) return m.reply('Fitur ini hanya dapat digunakan oleh owner bot.');
+    let ipUrl = 'https://ipinfo.io/json';
+    
+    try {
+        const res = await axios.get(ipUrl);
+        let locationInfo = res.data;
+        let response = `📍 *Lokasi Bot:*\n\n`;
+        response += `- Negara: ${locationInfo.country}\n`;
+        response += `- Kota: ${locationInfo.city}\n`;
+        response += `- ISP: ${locationInfo.org}\n`;
+        response += `- Koordinat: ${locationInfo.loc}\n`;
+        response += `- Zona Waktu: ${locationInfo.timezone}\n\n`;
+        response += `_Lokasi ini berdasarkan data IP server bot._`;
+        m.reply(response);
+    } catch (error) {
+        m.reply('Tidak dapat mendeteksi lokasi bot. Coba lagi nanti.');
+    }
+}
+break;
+case 'cermin': {
+    if (!text) return m.reply('Harap masukkan teks yang ingin dibalik!');
+    const reversedText = text.split('').reverse().join('');
+    m.reply(`Hasil:\n${reversedText}`);
+}
+break;
 case 'ringtone': {
 				if (!text) return m.reply(`Example: ${prefix + command} black rover`)
 				let anu = await ringtone(text)
@@ -4720,6 +4845,9 @@ break;
 │${setv} ${prefix}delete (reply pesan)
 │${setv} ${prefix}linkgrup
 │${setv} ${prefix}revoke
+│${setv} ${prefix}startsecret (@tag)
+│${setv} ${prefix}secretmsg (q)
+│${setv} ${prefix}endsecret
 │${setv} ${prefix}tagall
 │${setv} ${prefix}hidetag
 │${setv} ${prefix}totag (reply pesan)
@@ -4766,6 +4894,9 @@ break;
 ╰─┬────❍
 ╭─┴❍「 *TOOLS* 」❍
 │${setv} ${prefix}get (url)
+│${setv} ${prefix}encode (q)
+│${setv} ${prefix}cekcuaca (kota)
+│${setv} ${prefix}decode (q encode)
 │${setv} ${prefix}hd (reply pesan)
 │${setv} ${prefix}brat (txt)
 │${setv} ${prefix}toaudio (reply pesan)
@@ -4850,6 +4981,7 @@ break;
 ╰─┬────❍
 ╭─┴❍「 *FUN* 」❍
 │${setv} ${prefix}dadu
+│${setv} ${prefix}cermin (q)
 │${setv} ${prefix}bisakah (text)
 │${setv} ${prefix}apakah (text)
 │${setv} ${prefix}kapan (text)
@@ -4885,6 +5017,7 @@ break;
 │${setv} ${prefix}getcase
 │${setv} ${prefix}delcase
 │${setv} ${prefix}listgc
+│${setv} ${prefix}checklocation
 │${setv} ${prefix}creategc
 │${setv} ${prefix}addprem
 │${setv} ${prefix}setcmd (reply stc)
