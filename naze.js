@@ -183,6 +183,8 @@ let autoAi = false; // Default mati
 // Variabel penyimpanan sesi chat rahasia
 let secretChat = {};
 let _scommand = JSON.parse(fs.readFileSync("./database/scommand.json"));
+// Variabel global untuk menyimpan prompt default
+let llamaPrompt = "kamu adalah doraemon";
 // Fungsi Menambahkan Command
 const addCmd = (id, command) => {
 	// Konversi hash ke Base64
@@ -907,7 +909,6 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			break
 			case "addcmd":
 			case "setcmd":
-				if (!isCreator) return sycreply(mess.owner)
 				if (isQuotedSticker) {
 					if (!q) return sycreply(`Penggunaan : ${command} cmdnya dan tag stickernya`);
 					var kodenya = m.message.extendedTextMessage.contextInfo.quotedMessage.stickerMessage.fileSha256.toString("base64");
@@ -924,7 +925,6 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				}
 				break;
 			case "delcmd":
-				if (!isCreator) return sycreply(mess.owner)
 				if (!isQuotedSticker) return sycreply(`Penggunaan : ${command} tagsticker`);
 				var kodenya = m.message.extendedTextMessage.contextInfo.quotedMessage.stickerMessage.fileSha256.toString("base64");
 				_scommand.splice(getCommandPosition(kodenya), 1);
@@ -938,7 +938,6 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				});
 				break;
 			case "listcmd":
-				if (!isCreator) return sycreply(mess.owner)
 				teksnyee = `\`\`\`「 LIST STICKER CMD 」\`\`\``;
 				cemde = [];
 				for (let i of _scommand) {
@@ -1905,7 +1904,7 @@ for (const emoji of reactEmojis) {
 						sycreply(`Settings Bot @${botNumber.split('@')[0]}\n${settingsBot}`);
 						break
 					default:
-						if (teks[0] || teks[1]) sycreply(`*Please Sellect Settings :*\n- Mode : *${prefix + command} mode self/public*\n- Anti Call : *${prefix + command} anticall on/off*\n- Auto Bio : *${prefix + command} autobio on/off*\n- autoAi : *${prefix} autoai on/off*\n- Auto Read : *${prefix + command} autoread on/off*\n- Auto Typing : *${prefix + command} autotyping on/off*\n- Auto VoiceNote : *${prefix + command} autovn on/off*\n- Read Sw : *${prefix + command} readsw on/off*\n- Multi Prefix : *${prefix + command} multiprefix on/off*`)
+						if (teks[0] || teks[1]) sycreply(`*Please Sellect Settings :*\n- Mode : *${prefix + command} mode self/public*\n- Anti Call : *${prefix + command} anticall on/off*\n- Auto Bio : *${prefix + command} autobio on/off*\n- autoAi : ${prefix} *autoai on/off*\n- Auto Read : *${prefix + command} autoread on/off*\n- Auto Typing : *${prefix + command} autotyping on/off*\n- Auto VoiceNote : *${prefix + command} autovn on/off*\n- Read Sw : *${prefix + command} readsw on/off*\n- Multi Prefix : *${prefix + command} multiprefix on/off*`)
 				}
 				if (!teks[0] && !teks[1]) return sych.sendMessage(m.chat, {
 					text: `*Bot Telah Online Selama*\n*${runtime(os.uptime())}*`
@@ -3750,14 +3749,14 @@ for (const emoji of reactEmojis) {
 				try {
 					let promt = `kalo jawab pake bahasa indonesia ga baku aja: ${text}`;
 					let hasil = await yanzGpt(promt);
-					sycreply(hasil.choices[0].message.content);
+					m.reply(hasil.choices[0].message.content);
 				} catch (e) {
 					try {
 						let promt = `kalo jawab pake bahasa indonesia ga baku aja: ${text}`;
 						let hasil = await bk9Ai(promt);
-						sycreply(hasil.BK9);
+						m.reply(hasil.BK9);
 					} catch (e) {
-						sycreply(pickRandom(['Fitur Ai sedang bermasalah!', 'Tidak dapat terhubung ke ai!', 'Sistem Ai sedang sibuk sekarang!', 'Fitur sedang tidak dapat digunakan!']));
+						m.reply(pickRandom(['Fitur Ai sedang bermasalah!', 'Tidak dapat terhubung ke ai!', 'Sistem Ai sedang sibuk sekarang!', 'Fitur sedang tidak dapat digunakan!']));
 					}
 				}
 				break;
@@ -3767,9 +3766,9 @@ for (const emoji of reactEmojis) {
 				if (!text) return sycreply(`Example: ${prefix + command} query`)
 				try {
 					const hasil = await simi(text)
-					sycreply(hasil.success)
+					m.reply(hasil.success)
 				} catch (e) {
-					sycreply('Server simi sedang offline!')
+					m.reply('Server simi sedang offline!')
 				}
 			}
 			break
@@ -5754,16 +5753,114 @@ for (const emoji of reactEmojis) {
 					const hasil = await fetchJson(`https://api.siputzx.my.id/api/ai/latukam?content=${encodeURIComponent(query)}`);
 					// Mengecek apakah API memberikan respons yang benar
 					if (hasil.status === true && hasil.data) {
-						sycreply(hasil.data); // Mengirim balasan sesuai respons dari API
+						m.reply(hasil.data); // Mengirim balasan sesuai respons dari API
 					} else {
-						sycreply('Terjadi kesalahan saat mengambil data dari API!');
+						m.reply('Terjadi kesalahan saat mengambil data dari API!');
 					}
 				} catch (error) {
-					sycreply('Terjadi kesalahan saat mengambil data dari API!');
+					m.reply('Terjadi kesalahan saat mengambil data dari API!');
 					console.error('Error saat mengambil data dari API:', error);
 				}
 			}
 			break;
+			case 'meta': {
+				if (!text && (!m.quoted || !m.quoted.text)) return sycreply(`Kirim/reply pesan *${prefix + command}* Teksnya`);
+				try {
+					// Mengambil teks dari pesan atau pesan yang diteruskan
+					const query = text || m.quoted.text;
+					// Mengambil respons dari API
+					const hasil = await fetchJson(`https://api.siputzx.my.id/api/ai/metaai?query=${encodeURIComponent(query)}`);
+					// Mengecek apakah API memberikan respons yang benar
+					if (hasil.status === true && hasil.data) {
+						m.reply(hasil.data); // Mengirim balasan sesuai respons dari API
+					} else {
+						m.reply('Terjadi kesalahan saat mengambil data dari API!');
+					}
+				} catch (error) {
+					m.reply('Terjadi kesalahan saat mengambil data dari API!');
+					console.error('Error saat mengambil data dari API:', error);
+				}
+			}
+			break;
+			case 'luminai': {
+    // Cek apakah ada teks yang dikirim atau teks dari pesan yang dikutip
+    if (!text && (!m.quoted || !m.quoted.text)) return sycreply(`Kirim/reply pesan *${prefix + command}* Teksnya`);
+
+    try {
+        // Mengambil teks dari pesan atau pesan yang dikutip
+        const query = text || m.quoted.text;
+
+        // Mengambil respons dari API
+        const hasil = await fetchJson(`https://api.siputzx.my.id/api/ai/luminai?content=${encodeURIComponent(query)}`);
+
+        // Mengecek apakah API memberikan respons yang benar
+        if (hasil.status === true && hasil.data) {
+            m.reply(hasil.data); // Mengirim balasan sesuai respons dari API
+        } else {
+            m.reply('Terjadi kesalahan saat mengambil data dari API!');
+        }
+    } catch (error) {
+        m.reply('Terjadi kesalahan saat mengambil data dari API!');
+        console.error('Error saat mengambil data dari API:', error);
+    }
+}
+break;
+case 'gemini': {
+    // Cek apakah ada teks yang dikirim atau teks dari pesan yang dikutip
+    if (!text && (!m.quoted || !m.quoted.text)) return sycreply(`Kirim/reply pesan *${prefix + command}* Teksnya`);
+
+    try {
+        // Mengambil teks dari pesan atau pesan yang dikutip
+        const query = text || m.quoted.text;
+
+        // Mengambil respons dari API
+        const hasil = await fetchJson(`https://api.siputzx.my.id/api/ai/bard?query=${encodeURIComponent(query)}`);
+
+        // Mengecek apakah API memberikan respons yang benar
+        if (hasil.status === true && hasil.data) {
+            m.reply(hasil.data); // Mengirim balasan sesuai respons dari API
+        } else {
+            m.reply('Terjadi kesalahan saat mengambil data dari API!');
+        }
+    } catch (error) {
+        m.reply('Terjadi kesalahan saat mengambil data dari API!');
+        console.error('Error saat mengambil data dari API:', error);
+    }
+}
+break;
+case 'llama': {
+    // Cek apakah ada teks yang dikirim atau teks dari pesan yang dikutip
+    if (!text && (!m.quoted || !m.quoted.text)) return sycreply(`Kirim/reply pesan *${prefix + command}* Teksnya`);
+
+    try {
+        // Mengambil teks dari pesan atau pesan yang dikutip
+        const query = text || m.quoted.text;
+
+        // Mengambil respons dari API dengan prompt yang tersimpan
+        const hasil = await fetchJson(`https://api.siputzx.my.id/api/ai/llama?prompt=${encodeURIComponent(llamaPrompt)}&message=${encodeURIComponent(query)}`);
+
+        // Mengecek apakah API memberikan respons yang benar
+        if (hasil.status === true && hasil.data) {
+            m.reply(hasil.data); // Mengirim balasan sesuai respons dari API
+        } else {
+            m.reply('Terjadi kesalahan saat mengambil data dari API!');
+        }
+    } catch (error) {
+        m.reply('Terjadi kesalahan saat mengambil data dari API!');
+        console.error('Error saat mengambil data dari API:', error);
+    }
+}
+break;
+
+case 'setpromtllama': {
+    // Cek apakah pengguna mengirim prompt baru
+    if (!text) return sycreply(`Kirim perintah *${prefix + command}* <prompt baru>`);
+
+    // Menyimpan prompt baru
+    llamaPrompt = text;
+    sycreply(`Prompt berhasil diperbarui!\nPrompt baru: ${llamaPrompt}`);
+}
+break;
 			case 'tebaknegara': {
 				if (iGame(tebaknegara, m.chat)) return sycreply('Masih Ada Sesi Yang Belum Diselesaikan!')
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/games/tebaknegara.json'));
@@ -6037,6 +6134,9 @@ for (const emoji of reactEmojis) {
 ╭─┴❍「 *TOOLS* 」❍
 │${setv} ${prefix}get (url)
 │${setv} ${prefix}encode (q)
+│${setv} ${prefix}setcmd (reply stc)
+│${setv} ${prefix}listcmd
+│${setv} ${prefix}delcmd (reply stc)
 │${setv} ${prefix}cekcuaca (kota)
 │${setv} ${prefix}decode (q encode)
 │${setv} ${prefix}hd (reply pesan)
@@ -6081,6 +6181,11 @@ for (const emoji of reactEmojis) {
 ╰─┬────❍
 ╭─┴❍「 *AI* 」❍
 │${setv} ${prefix}ai (query)
+│${setv} ${prefix}gemini (query)
+│${setv} ${prefix}luminai (query)
+│${setv} ${prefix}meta (query)
+│${setv} ${prefix}llama (query)
+│${setv} ${prefix}setpromtllama (query)
 │${setv} ${prefix}simi (query)
 │${setv} ${prefix}aitukam
 │${setv} ${prefix}autoai (own)
@@ -6164,9 +6269,6 @@ for (const emoji of reactEmojis) {
 │${setv} ${prefix}checklocation
 │${setv} ${prefix}creategc
 │${setv} ${prefix}addprem
-│${setv} ${prefix}setcmd (reply stc)
-│${setv} ${prefix}listcmd
-│${setv} ${prefix}delcmd (reply stc)
 │${setv} ${prefix}delprem
 │${setv} ${prefix}listprem
 │${setv} ${prefix}addlimit
@@ -6265,14 +6367,14 @@ for (const emoji of reactEmojis) {
 				try {
 					let promt = `kalo jawab pake bahasa indonesia ga baku aja: ${text}`;
 					let hasil = await yanzGpt(promt);
-					sycreply(hasil.choices[0].message.content);
+					m.reply(hasil.choices[0].message.content);
 				} catch (e) {
 					try {
 						let promt = `kalo jawab pake bahasa indonesia ga baku aja: ${text}`;
 						let hasil = await bk9Ai(promt);
-						sycreply(hasil.BK9);
+						m.reply(hasil.BK9);
 					} catch (e) {
-						sycreply(pickRandom(['Fitur Ai sedang bermasalah!', 'Tidak dapat terhubung ke ai!', 'Sistem Ai sedang sibuk sekarang!', 'Fitur sedang tidak dapat digunakan!']));
+						m.reply(pickRandom(['Fitur Ai sedang bermasalah!', 'Tidak dapat terhubung ke ai!', 'Sistem Ai sedang sibuk sekarang!', 'Fitur sedang tidak dapat digunakan!']));
 					}
 				}
 			}
