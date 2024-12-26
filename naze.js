@@ -333,10 +333,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			sych.sendMessage(m.chat, {
 				text: teks,
 				contextInfo: {
-					mentionedJid: [sender],
-					forwardingScore: 100,
-					isForwarded: true,
-					"externalAdReply": {
+					externalAdReply: {
 						"showAdAttribution": true,
 						"containsAutoReply": true,
 						"title": `${global.botname}`,
@@ -995,49 +992,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				if (!text) return sycreply('Masukkan Link Group!')
 				if (!isUrl(args[0]) && !args[0].includes('whatsapp.com')) return sycreply('Link Invalid!')
 				const result = args[0].split('https://chat.whatsapp.com/')[1]
-				sycreply(mess.wait)
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "⏳",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕒",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕕",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕘",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "✅",
-						key: m.key
-					}
-				});
+				sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 				await sych.groupAcceptInvite(result).catch((res) => {
 					if (res.data == 400) return sycreply('Grup Tidak Di Temukan❗');
 					if (res.data == 401) return sycreply('Bot Di Kick Dari Grup Tersebut❗');
@@ -2202,49 +2170,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			case 'toaud':
 			case 'toaudio': {
 				if (!/video|audio/.test(mime)) return sycreply(`Kirim/Reply Video/Audio Yang Ingin Dijadikan Audio Dengan Caption ${prefix + command}`)
-				sycreply(mess.wait)
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "⏳",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕒",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕕",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕘",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "✅",
-						key: m.key
-					}
-				});
+				sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 				let media = await quoted.download()
 				let audio = await toAudio(media, 'mp4')
 				await sych.sendMessage(m.chat, {
@@ -2257,49 +2196,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			break
 			case 'tomp3': {
 				if (!/video|audio/.test(mime)) return sycreply(`Kirim/Reply Video/Audio Yang Ingin Dijadikan Audio Dengan Caption ${prefix + command}`)
-				sycreply(mess.wait)
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "⏳",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕒",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕕",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕘",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "✅",
-						key: m.key
-					}
-				});
+				sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 				let media = await quoted.download()
 				let audio = await toAudio(media, 'mp4')
 				await sych.sendMessage(m.chat, {
@@ -2322,49 +2232,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			case 'toptt':
 			case 'tovoice': {
 				if (!/video|audio/.test(mime)) return sycreply(`Kirim/Reply Video/Audio Yang Ingin Dijadikan Audio Dengan Caption ${prefix + command}`)
-				sycreply(mess.wait)
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "⏳",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕒",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕕",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕘",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "✅",
-						key: m.key
-					}
-				});
+				sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 				let media = await quoted.download()
 				let audio = await toPTT(media, 'mp4')
 				await sych.sendMessage(m.chat, {
@@ -2378,49 +2259,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			break
 			case 'togif': {
 				if (!/webp|video/.test(mime)) return sycreply(`Reply Video/Stiker dengan caption *${prefix + command}*`)
-				sycreply(mess.wait)
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "⏳",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕒",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕕",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕘",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "✅",
-						key: m.key
-					}
-				});
+				sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 				let media = await sych.downloadAndSaveMediaMessage(qmsg)
 				let ran = `./database/sampah/${getRandom('.gif')}`;
 				exec(`convert ${media} ${ran}`, (err) => {
@@ -2440,49 +2292,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			case 'toimage':
 			case 'toimg': {
 				if (!/webp|video/.test(mime)) return sycreply(`Reply Video/Stiker dengan caption *${prefix + command}*`)
-				sycreply(mess.wait)
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "⏳",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕒",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕕",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕘",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "✅",
-						key: m.key
-					}
-				});
+				sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 				let media = await sych.downloadAndSaveMediaMessage(qmsg)
 				let ran = `./database/sampah/${getRandom('.png')}`;
 				exec(`convert ${media}[0] ${ran}`, (err) => {
@@ -2522,48 +2345,19 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 						let {
 							key
 						} = await m.reply(mess.wait)
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "⏳",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕛",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕒",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕕",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕘",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕛",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "✅",
-								key: m.key
-							}
-						});
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 						let media = await quoted.download();
 						let anu = await UguuSe(media);
 						// Mengedit pesan setelah URL dihasilkan
@@ -2587,49 +2381,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 					console.log('Pengguna bukan premium.');
 					return sycreply(mess.prem);
 				}
-				sycreply(mess.wait)
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "⏳",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕒",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕕",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕘",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "✅",
-						key: m.key
-					}
-				});
+				sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 				if (!text) {
 					console.log('Teks URL TikTok tidak ditemukan.');
 					return sycreply(`Example: ${prefix + command} url_tiktok`);
@@ -2730,42 +2495,19 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 						let {
 							key
 						} = await m.reply(mess.wait);
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "⏳",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕛",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕒",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕕",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕘",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "✅",
-								key: m.key
-							}
-						});
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 						// Unduh media
 						let media = await quoted.download();
 						// Unggah media ke Uguu.se untuk mendapatkan URL
@@ -2843,49 +2585,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			case 'toqr':
 			case 'qr': {
 				if (!text) return sycreply(`Ubah Text ke Qr dengan *${prefix + command}* textnya`)
-				sycreply(mess.wait)
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "⏳",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕒",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕕",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕘",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "✅",
-						key: m.key
-					}
-				});
+				sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 				await sych.sendMessage(m.chat, {
 					image: {
 						url: 'https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=' + text
@@ -3029,49 +2742,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 						console.log('Teks caption tidak ditemukan.');
 						return sycreply(`Kirim/reply image/sticker dengan caption ${prefix + command} atas|bawah`);
 					}
-					sycreply(mess.wait)
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "⏳",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕒",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕕",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕘",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "✅",
-							key: m.key
-						}
-					});
+					sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 					console.log('Menunggu proses meme...');
 					let [atas, bawah] = text.split('|');
 					atas = atas ? atas.trim() : '-';
@@ -3323,49 +3007,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			case 'wasted': {
 				try {
 					if (/jpg|jpeg|png/.test(mime)) {
-						sycreply(mess.wait)
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "⏳",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕛",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕒",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕕",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕘",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕛",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "✅",
-								key: m.key
-							}
-						});
+						sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 						let media = await quoted.download()
 						let anu = await UguuSe(media)
 						await sych.sendFileUrl(m.chat, 'https://some-random-api.com/canvas/wasted?avatar=' + anu.url, 'Nih Bro', m)
@@ -3382,42 +3037,19 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				if (!text.includes('drive.google.com')) return sycreply('Url Tidak Mengandung Hasil Dari Google Drive!')
 				try {
 					sycreply(mess.wait);
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "⏳",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕒",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕕",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕘",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 					await sych.sendMessage(m.chat, {
 						react: {
 							text: "✅",
@@ -3521,49 +3153,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			break;
 			case 'cjpn': {
 				try {
-					sycreply(mess.wait)
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "⏳",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕒",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕕",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕘",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "✅",
-							key: m.key
-						}
-					});
+					sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 					// Mengirim gambar langsung tanpa memerlukan input teks
 					await sych.sendMessage(m.chat, {
 						image: {
@@ -3585,49 +3188,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			break;
 			case 'ckorea': {
 				try {
-					sycreply(mess.wait)
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "⏳",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕒",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕕",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕘",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "✅",
-							key: m.key
-						}
-					});
+					sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 					// Mengirim gambar langsung tanpa memerlukan input teks
 					await sych.sendMessage(m.chat, {
 						image: {
@@ -3697,49 +3271,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			break;
 			case 'cindo': {
 				try {
-					sycreply(mess.wait)
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "⏳",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕒",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕕",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕘",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "✅",
-							key: m.key
-						}
-					});
+					sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 					// Mengirim gambar langsung tanpa memerlukan input teks
 					await sych.sendMessage(m.chat, {
 						image: {
@@ -3761,49 +3306,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			break;
 			case 'cthai': {
 				try {
-					sycreply(mess.wait)
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "⏳",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕒",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕕",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕘",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "✅",
-							key: m.key
-						}
-					});
+					sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 					// Mengirim gambar langsung tanpa memerlukan input teks
 					await sych.sendMessage(m.chat, {
 						image: {
@@ -3825,49 +3341,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			break;
 			case 'cviet': {
 				try {
-					sycreply(mess.wait)
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "⏳",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕒",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕕",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕘",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "✅",
-							key: m.key
-						}
-					});
+					sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 					// Mengirim gambar langsung tanpa memerlukan input teks
 					await sych.sendMessage(m.chat, {
 						image: {
@@ -3889,49 +3376,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			break;
 			case 'cchina': {
 				try {
-					sycreply(mess.wait)
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "⏳",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕒",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕕",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕘",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "✅",
-							key: m.key
-						}
-					});
+					sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 					// Mengirim gambar langsung tanpa memerlukan input teks
 					await sych.sendMessage(m.chat, {
 						image: {
@@ -3955,49 +3413,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			case 'triggered': {
 				try {
 					if (/jpg|jpeg|png/.test(mime)) {
-						sycreply(mess.wait)
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "⏳",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕛",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕒",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕕",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕘",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕛",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "✅",
-								key: m.key
-							}
-						});
+						sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 						let media = await quoted.download()
 						let anu = await UguuSe(media)
 						await sych.sendMessage(m.chat, {
@@ -4031,49 +3460,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			break
 			case 'nuliskiri': {
 				if (!text) return sycreply(`Kirim perintah *${prefix + command}* Teksnya`)
-				sycreply(mess.wait)
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "⏳",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕒",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕕",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕘",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "✅",
-						key: m.key
-					}
-				});
+				sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 				const splitText = text.replace(/(\S+\s*){1,9}/g, '$&\n')
 				const fixHeight = splitText.split('\n').slice(0, 31).join('\n')
 				spawn('convert', ['./src/nulis/images/buku/sebelumkiri.jpg', '-font', './src/nulis/font/Indie-Flower.ttf', '-size', '960x1280', '-pointsize', '23', '-interline-spacing', '2', '-annotate', '+140+153',
@@ -4090,49 +3490,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			break
 			case 'nuliskanan': {
 				if (!text) return sycreply(`Kirim perintah *${prefix + command}* Teksnya`)
-				sycreply(mess.wait)
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "⏳",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕒",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕕",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕘",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "✅",
-						key: m.key
-					}
-				});
+				sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 				const splitText = text.replace(/(\S+\s*){1,9}/g, '$&\n')
 				const fixHeight = splitText.split('\n').slice(0, 31).join('\n')
 				spawn('convert', ['./src/nulis/images/buku/sebelumkanan.jpg', '-font', './src/nulis/font/Indie-Flower.ttf', '-size', '960x1280', '-pointsize', '23', '-interline-spacing', '2', '-annotate', '+128+129',
@@ -4149,49 +3520,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			break
 			case 'foliokiri': {
 				if (!text) return sycreply(`Kirim perintah *${prefix + command}* Teksnya`)
-				sycreply(mess.wait)
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "⏳",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕒",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕕",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕘",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "✅",
-						key: m.key
-					}
-				});
+				sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 				const splitText = text.replace(/(\S+\s*){1,9}/g, '$&\n')
 				const fixHeight = splitText.split('\n').slice(0, 38).join('\n')
 				spawn('convert', ['./src/nulis/images/folio/sebelumkiri.jpg', '-font', './src/nulis/font/Indie-Flower.ttf', '-size', '1720x1280', '-pointsize', '23', '-interline-spacing', '4', '-annotate', '+48+185',
@@ -4215,49 +3557,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 					return sycreply('Example: ' + prefix + command + ' username_tiktok');
 				}
 				try {
-					sycreply(mess.wait)
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "⏳",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕒",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕕",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕘",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "✅",
-							key: m.key
-						}
-					});
+					sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 					console.log('Fetching TikTok profile for username:', text);
 					const url = `https://api.tiklydown.eu.org/api/stalk?user=${text}`;
 					const response = await fetch(url);
@@ -4265,26 +3578,8 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 					if (data.status === 200 && data.data && data.data.user) {
 						const user = data.data.user;
 						const stats = data.data.stats;
-						const profileMessage = `
-            *Name:* ${user.nickname}
-            *Username:* @${user.uniqueId}
-            *Signature:* ${user.signature || 'No signature available'}
-            *Followers:* ${stats.followerCount}
-            *Following:* ${stats.followingCount}
-            *Likes:* ${stats.heartCount}
-            *Videos:* ${stats.videoCount}
-            *Region:* ${user.region}
-            *Verified:* ${user.verified ? 'Yes' : 'No'}
-            `;
-						// Send profile picture as an image with the profile details as caption
-						await sych.sendMessage(m.chat, {
-							image: {
-								url: user.avatarLarger
-							},
-							caption: profileMessage,
-							quoted: m, // This makes it a reply to the original message
-							key: m.key
-						});
+						const profileMessage = `*Name:* ${user.nickname}\n*Username:* @${user.uniqueId}\n*Signature:* ${user.signature || 'No signature available'}\n*Followers:* ${stats.followerCount}\n*Following:* ${stats.followingCount}\n*Likes:* ${stats.heartCount}\n*Videos:* ${stats.videoCount}\n*Region:* ${user.region}\n*Verified:* ${user.verified ? 'Yes' : 'No'}`;
+						sycreply(profileMessage)
 					} else {
 						console.log('Failed to retrieve TikTok profile data.');
 						sycreply('Failed to retrieve TikTok profile or invalid username.');
@@ -4297,49 +3592,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			}
 			case 'foliokanan': {
 				if (!text) return sycreply(`Kirim perintah *${prefix + command}* Teksnya`)
-				sycreply(mess.wait)
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "⏳",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕒",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕕",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕘",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "✅",
-						key: m.key
-					}
-				});
+				sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 				const splitText = text.replace(/(\S+\s*){1,9}/g, '$&\n')
 				const fixHeight = splitText.split('\n').slice(0, 38).join('\n')
 				spawn('convert', ['./src/nulis/images/folio/sebelumkanan.jpg', '-font', './src/nulis/font/Indie-Flower.ttf', '-size', '1720x1280', '-pointsize', '23', '-interline-spacing', '4', '-annotate', '+89+190',
@@ -4381,49 +3647,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 					if (/smooth/.test(command)) set = '-filter:v "minterpolate=\'mi_mode=mci:mc_mode=aobmc:vsbmc=1:fps=120\'"'
 					if (/tupai/.test(command)) set = '-filter:a "atempo=0.5,asetrate=65100"'
 					if (/audio/.test(mime)) {
-						sycreply(mess.wait)
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "⏳",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕛",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕒",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕕",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕘",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕛",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "✅",
-								key: m.key
-							}
-						});
+						sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 						let media = await sych.downloadAndSaveMediaMessage(qmsg)
 						let ran = `./database/sampah/${getRandom('.mp3')}`;
 						exec(`ffmpeg -i ${media} ${set} ${ran}`, (err, stderr, stdout) => {
@@ -4540,49 +3777,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				if (!isPremium) return sycreply(mess.prem);
 				if (!text && (!m.quoted || !m.quoted.text)) return sycreply(`Kirim/reply pesan *${prefix + command}* Teksnya`)
 				try {
-					sycreply(mess.wait)
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "⏳",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕒",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕕",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕘",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "✅",
-							key: m.key
-						}
-					});
+					sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 					await sych.sendMessage(m.chat, {
 						image: {
 							url: 'https://api.siputzx.my.id/api/ai/flux?prompt=' + (text || m.quoted.text)
@@ -4599,49 +3807,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				if (!isPremium) return sycreply(mess.prem);
 				if (!text && (!m.quoted || !m.quoted.text)) return sycreply(`Kirim/reply pesan *${prefix + command}* Teksnya`)
 				try {
-					sycreply(mess.wait)
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "⏳",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕒",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕕",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕘",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "✅",
-							key: m.key
-						}
-					});
+					sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 					await sych.sendMessage(m.chat, {
 						image: {
 							url: 'https://api.siputzx.my.id/api/ai/flux?prompt=' + (text || m.quoted.text)
@@ -4734,49 +3913,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 					return sycreply(`Example: ${prefix + command} you = i korea | you = i japan`);
 				}
 				console.log("✅ Perintah diterima:", command, "dengan teks:", text);
-				sycreply(mess.wait)
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "⏳",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕒",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕕",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕘",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "✅",
-						key: m.key
-					}
-				});
+				sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 				try {
 					console.log("🔄 Memproses teks input...");
 					// Pisahkan query dengan simbol "|"
@@ -4866,49 +4016,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 					return sycreply(`Example: ${prefix + command} dj komang`);
 				}
 				console.log("✅ Perintah diterima:", command, "dengan teks:", text);
-				sycreply(mess.wait)
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "⏳",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕒",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕕",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕘",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "✅",
-						key: m.key
-					}
-				});
+				sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 				try {
 					console.log("🔄 Mencari video di YouTube...");
 					const res = await yts.search(text);
@@ -4987,49 +4108,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 						pixivdl
 					} = require('./lib/pixiv')
 					let res = await pixivdl(text)
-					sycreply(mess.wait)
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "⏳",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕒",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕕",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕘",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "✅",
-							key: m.key
-						}
-					});
+					sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 					for (let i = 0; i < res.media.length; i++) {
 						let caption = i == 0 ? `${res.caption}\n\n*By:* ${res.artist}\n*Tags:* ${res.tags.join(', ')}` : ''
 						let mime = (await FileType.fromBuffer(res.media[i])).mime
@@ -5050,49 +4142,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			case 'pint': {
 				if (!text) return sycreply(`Example: ${prefix + command} hu tao`);
 				try {
-					sycreply(mess.wait)
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "⏳",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕒",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕕",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕘",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "✅",
-							key: m.key
-						}
-					});
+					sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 					let anu = await pinterest(text); // Panggil API pencarian Pinterest
 					if (anu.length < 1) return sycreply('Pencarian tidak ditemukan!');
 					// Batasi hasil ke 5 item teratas dan siapkan carousel card
@@ -5276,48 +4339,19 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				if (!text) return sycreply(`Example: ${prefix + command} url_youtube`);
 				if (!text.includes('youtu')) return sycreply('Url Tidak Mengandung Result Dari Youtube!');
 				sycreply('Memproses permintaan Anda, harap tunggu...');
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "⏳",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕒",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕕",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕘",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "✅",
-						key: m.key
-					}
-				});
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 				try {
 					console.log('Mengambil informasi video...');
 					const info = await ytdl.getInfo(text);
@@ -5389,49 +4423,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			break;
 			case 'play3': {
 				if (!text) return sycreply(`Example: ${prefix + command} dj komang`);
-				sycreply(mess.wait);
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "⏳",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕒",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕕",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕘",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "✅",
-						key: m.key
-					}
-				});
+				ssycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 				try {
 					const res = await yts.search(text);
 					const hasil = res.all[0]; // Mengambil hasil pertama dari pencarian
@@ -5514,48 +4519,19 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				if (!isPremium) return sycreply(mess.prem);
 				if (!text) return sycreply(`Example: ${prefix + command} url_youtube`);
 				if (!text.includes('youtu')) return sycreply('Url Tidak Mengandung Result Dari Youtube!');
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "⏳",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕒",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕕",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕘",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "✅",
-						key: m.key
-					}
-				});
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 				sycreply('Memproses permintaan Anda, harap tunggu...');
 				try {
 					console.log('Mengambil informasi video...');
@@ -5644,49 +4620,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			case 'igdl': {
 				if (!text) return sycreply(`Example: ${prefix + command} url_instagram`)
 				if (!text.includes('instagram.com')) return sycreply('Url Tidak Mengandung Result Dari Instagram!')
-				sycreply(mess.wait)
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "⏳",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕒",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕕",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕘",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "✅",
-						key: m.key
-					}
-				});
+				sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 				try {
 					const hasil = await multiDownload(text);
 					if (hasil.length < 0) return sycreply('Postingan Tidak Tersedia atau Privat!')
@@ -5708,6 +4655,23 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				}
 			}
 			break
+			case 'getq': {
+    if (!m.quoted) return sycreply('Balas pesan yang ingin diambil datanya!');
+    let quotedMessage = m.quoted;
+    let messageContent = quotedMessage.msg || quotedMessage;
+    let messageType = Object.keys(messageContent)[0];
+    let messageData = {
+        key: {
+            remoteJid: quotedMessage.chat,
+            participant: quotedMessage.sender,
+            fromMe: quotedMessage.fromMe,
+            id: quotedMessage.id,
+        },
+        message: messageContent,
+    };
+    sycreply(`Kode yang dihasilkan:\n\n` + monospace(JSON.stringify(messageData, null, 2)));
+}
+break;
 			case 'igstory':
 			case 'instagramstory':
 			case 'instastory':
@@ -5715,49 +4679,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				if (!text) return sycreply(`Example: ${prefix + command} usernamenya`)
 				try {
 					const hasil = await instaStory(text);
-					sycreply(mess.wait)
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "⏳",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕒",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕕",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕘",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "✅",
-							key: m.key
-						}
-					});
+					sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 					for (let i = 0; i < hasil.results.length; i++) {
 						await sych.sendFileUrl(m.chat, hasil.results[i].url, 'Done', m)
 					}
@@ -5790,49 +4725,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				try {
 					console.log('Memulai proses pengunduhan dari URL TikTok:', text);
 					const hasil = await tiktokDl(text);
-					sycreply(mess.wait)
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "⏳",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕒",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕕",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕘",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "✅",
-							key: m.key
-						}
-					});
+					sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 					console.log('Proses pengunduhan berhasil.');
 					if (hasil && hasil.size_nowm) {
 						console.log('Video tanpa watermark ditemukan.');
@@ -5875,49 +4781,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				try {
 					console.log('Memulai proses pengunduhan audio dari URL TikTok:', text);
 					const hasil = await tiktokDl(text);
-					sycreply(mess.wait)
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "⏳",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕒",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕕",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕘",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "✅",
-							key: m.key
-						}
-					});
+					sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 					console.log('Proses pengunduhan berhasil, audio ditemukan.');
 					// Mengirimkan pesan audio
 					await sych.sendMessage(m.chat, {
@@ -5968,49 +4845,20 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 					if (hasil.results.length < 1) {
 						sycreply('Video Tidak ditemukan!')
 					} else {
-						sycreply(mess.wait)
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "⏳",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕛",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕒",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕕",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕘",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "🕛",
-								key: m.key
-							}
-						});
-						await sych.sendMessage(m.chat, {
-							react: {
-								text: "✅",
-								key: m.key
-							}
-						});
+						sycreply(mess.wait);
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 						await sych.sendFileUrl(m.chat, hasil.results[0].url, `*🎐Title:* ${hasil.caption}`, m);
 					}
 				} catch (e) {
@@ -6024,42 +4872,19 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				if (!text.includes('videy.co')) return sycreply('Url Tidak Mengandung Hasil Dari Videy!')
 				try {
 					sycreply(mess.wait);
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "⏳",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕒",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕕",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕘",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 					await sych.sendMessage(m.chat, {
 						react: {
 							text: "✅",
@@ -6706,48 +5531,19 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 					let {
 						key
 					} = await m.reply('Mencari doa, mohon tunggu...');
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "⏳",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕒",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕕",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕘",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "🕛",
-							key: m.key
-						}
-					});
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "✅",
-							key: m.key
-						}
-					});
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 					// Ambil data dari API berdasarkan ID
 					const response = await fetch(`https://doa-doa-api-ahmadramadhan.fly.dev/api/${id}`);
 					const doaData = await response.json();
@@ -6790,48 +5586,19 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				let {
 					key
 				} = await m.reply('Mencari surah, mohon tunggu...');
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "⏳",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕒",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕕",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕘",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "✅",
-						key: m.key
-					}
-				});
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 				try {
 					console.log(`Mengambil data surah nomor ${surahNumber}...`);
 					const response = await fetch(`https://api.siputzx.my.id/api/s/surah?no=${surahNumber}`);
@@ -7138,48 +5905,19 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			// Menu
 			case 'allmenu':
 			case 'menu': {
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "⏳",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕒",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕕",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕘",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "🕛",
-						key: m.key
-					}
-				});
-				await sych.sendMessage(m.chat, {
-					react: {
-						text: "✅",
-						key: m.key
-					}
-				});
+
+// Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
 				sycreply('Menampilkan Menu...')
 				let profile;
 				try {
@@ -7305,6 +6043,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 │${setv} ${prefix}toimage (reply pesan)
 │${setv} ${prefix}toptv (reply pesan)
 │${setv} ${prefix}tourl (reply pesan)
+│${setv} ${prefix}getq (reply pesan)
 │${setv} ${prefix}tts (textnya)
 │${setv} ${prefix}toqr (textnya)
 │${setv} ${prefix}ssweb (url)
