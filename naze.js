@@ -3834,37 +3834,41 @@ for (const emoji of reactEmojis) {
 			}
 			break
 			case 'dukun': {
-				if (!text) return sycreply(`Kirim perintah *${prefix + command}* diikuti dengan nama yang ingin dicari artinya.`);
-				const nama = text.trim();
-				const loadingMessage = await sycreply('Sedang mencari arti nama... Mohon tunggu sebentar.');
-				console.log(`Memulai proses pencarian arti nama untuk: ${nama}`);
-				try {
-					let response = await fetch(`https://api.siputzx.my.id/api/ai/dukun?content=${encodeURIComponent(nama)}`);
-					console.log(`Mengirim permintaan ke API: https://api.siputzx.my.id/api/ai/dukun?content=${nama}`);
-					let result = await response.json();
-					console.log('Respon API diterima:', result);
-					if (result.status) {
-						await sych.sendMessage(m.chat, {
-							text: result.data
-						});
-						console.log('Pesan arti nama berhasil dikirim ke pengguna.');
-					} else {
-						await sych.sendMessage(m.chat, {
-							text: 'Maaf, tidak dapat menemukan arti nama. Silakan coba lagi nanti.'
-						});
-						console.log('API gagal memberikan hasil yang valid.');
-					}
-				} catch (e) {
-					console.error('Terjadi kesalahan saat memproses permintaan:', e);
-					await sych.sendMessage(m.chat, {
-						text: 'Server sedang mengalami gangguan. Silakan coba lagi nanti.'
-					});
-				} finally {
-					await sych.deleteMessage(m.chat, loadingMessage.key);
-					console.log('Pesan loading telah dihapus.');
-				}
-			}
-			break;
+    if (!text) return sycreply(`Kirim perintah *${prefix + command}* diikuti dengan nama yang ingin dicari artinya.`);
+    const nama = text.trim();
+    const loadingMessage = await sycreply('Sedang mencari arti nama... Mohon tunggu sebentar.');
+    console.log(`Memulai proses pencarian arti nama untuk: ${nama}`);
+    try {
+        let response = await fetch(`https://api.siputzx.my.id/api/ai/dukun?content=${encodeURIComponent(nama)}`);
+        console.log(`Mengirim permintaan ke API: https://api.siputzx.my.id/api/ai/dukun?content=${nama}`);
+        let result = await response.json();
+        console.log('Respon API diterima:', result);
+        if (result.status) {
+            await sych.sendMessage(m.chat, {
+                text: result.data
+            });
+            console.log('Pesan arti nama berhasil dikirim ke pengguna.');
+        } else {
+            await sych.sendMessage(m.chat, {
+                text: 'Maaf, tidak dapat menemukan arti nama. Silakan coba lagi nanti.'
+            });
+            console.log('API gagal memberikan hasil yang valid.');
+        }
+    } catch (e) {
+        console.error('Terjadi kesalahan saat memproses permintaan:', e);
+        await sych.sendMessage(m.chat, {
+            text: 'Server sedang mengalami gangguan. Silakan coba lagi nanti.'
+        });
+    } finally {
+        if (loadingMessage && loadingMessage.key) {
+            await sych.deleteMessage(m.chat, loadingMessage.key);
+            console.log('Pesan loading telah dihapus.');
+        } else {
+            console.log('Pesan loading tidak ditemukan atau tidak valid.');
+        }
+    }
+}
+break;
 			// Search Menu
 			case 'google': {
 				if (!text) return sycreply(`Example: ${prefix + command} query`)
