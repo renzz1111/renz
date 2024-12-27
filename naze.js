@@ -2176,6 +2176,7 @@ for (const emoji of reactEmojis) {
 		
 // Case untuk listthumb
 case 'listthumb': {
+if (!isCreator) return sycreply(mess.owner)
     const thumbList = readThumbList();
     if (thumbList.length === 0) {
         return sycreply('Tidak ada thumbnail yang tersimpan.');
@@ -2190,6 +2191,7 @@ case 'listthumb': {
 
 // Case untuk addthumb
 case 'addthumb': {
+if (!isCreator) return sycreply(mess.owner)
     if (!text) return sycreply(`Example: ${prefix + command} thumbnail_name|image_url`);
     let [nama, url] = text.split('|');
     if (!nama || !url) return sycreply(`Please provide both name and URL in the correct format.`);
@@ -2209,6 +2211,7 @@ case 'addthumb': {
 // Case untuk delthumb
 case 'delthumb':
 case 'deletethumb': {
+if (!isCreator) return sycreply(mess.owner)
     if (!text) return sycreply('Nama thumbnail yang ingin dihapus?');
     const thumbList = readThumbList();
     const index = thumbList.findIndex(thumb => thumb.name === text.toLowerCase());
@@ -6475,6 +6478,9 @@ for (const emoji of reactEmojis) {
 ╰─┬────❍
 ╭─┴❍「 *OWNER* 」❍
 │${setv} ${prefix}bot [set]
+│${setv} ${prefix}addthumb <nme|lnk>
+│${setv} ${prefix}delthumb <nme>
+│${setv} ${prefix}listthumb
 │${setv} ${prefix}setexif
 │${setv} ${prefix}setbio
 │${setv} ${prefix}setppbot
