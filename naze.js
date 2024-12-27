@@ -3619,6 +3619,67 @@ for (const emoji of reactEmojis) {
 				})
 			}
 			break
+			case 'liriksearch': case 'liriks': {
+    if (!text) {
+        console.log('Lirik lagu tidak diberikan.');
+        return sycreply('Contoh: ' + prefix + command + ' tak bisa ku teruskan dunia kita berbeda');
+    }
+    try {
+        sycreply(mess.wait); // Memberikan respons sementara
+
+        // Emoji animasi selama proses
+        const reactEmojis = ["🎵", "🎶", "🔍", "🎶", "🎵", "✅"];
+        for (const emoji of reactEmojis) {
+            await sych.sendMessage(m.chat, {
+                react: {
+                    text: emoji,
+                    key: m.key
+                }
+            });
+        }
+
+        console.log('Mencari lirik untuk:', text);
+        const url = `https://api.agatz.xyz/api/lirik?message=${encodeURIComponent(text)}`;
+        const response = await fetch(url);
+        const result = await response.json();
+
+        if (result.status === 200 && result.data && result.data.status) {
+            const { title, album, thumb, lyrics } = result.data;
+
+            // Mengirimkan hasil pencarian lirik dengan thumbnail API
+            const message = `🎶 *Lirik Lagu* 🎶\n\n` +
+                `*Judul:* ${title}\n` +
+                `*Album:* ${album || 'Tidak diketahui'}\n\n` +
+                `*Lirik:*\n${lyrics}`;
+
+            // Menggunakan thumbnail dari API
+            sych.sendMessage(m.chat, {
+                text: message,
+                contextInfo: {
+                    externalAdReply: {
+                        "showAdAttribution": true,
+                        "containsAutoReply": true,
+                        "title": `${title}`,
+                        "body": `Album: ${album}`,
+                        "previewType": "PHOTO",
+                        "thumbnailUrl": thumb, // Mengambil thumbnail dari API
+                        "sourceUrl": 'https://github.com/sychyy'
+                    }
+                }
+            }, {
+                quoted: fkontak
+            });
+
+        } else {
+            console.log('Gagal mengambil data lirik.');
+            sycreply('Gagal menemukan lirik lagu atau lagu tidak ditemukan.');
+        }
+    } catch (e) {
+        console.error('Error fetching lyrics:', e);
+        sycreply('Terjadi kesalahan saat mencari lirik lagu. Silakan coba lagi nanti.');
+    }
+    break;
+}
 			case 'bass':
 			case 'blown':
 			case 'deep':
@@ -6098,6 +6159,7 @@ for (const emoji of reactEmojis) {
 │${setv} ${prefix}pinterest (query)
 │${setv} ${prefix}wallpaper (query)
 │${setv} ${prefix}ringtone (query)
+│${setv} ${prefix}liriks (lirik/judul)
 │${setv} ${prefix}google (query)
 │${setv} ${prefix}gimage (query)
 │${setv} ${prefix}npm (query)
