@@ -1796,7 +1796,7 @@ for (const emoji of reactEmojis) {
 							hasMediaAttachment: true,
 							imageMessage: (await generateWAMessageContent({
 								image: {
-									url: './src/media/sych.png'
+									url: './src/media/sychy.png'
 								}
 							}, {
 								upload: sych.waUploadToServer
