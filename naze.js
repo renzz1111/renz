@@ -1,9 +1,9 @@
 process.on('uncaughtException', console.error)
 process.on('unhandledRejection', console.error)
 /*
- * Create By sych
- * Follow https://github.com/sychdev
- * Whatsapp : https://whatsapp.com/channel/0029Vb0v3F71yT264EejzJ3e
+ * Recode By Sychyy @Naze
+ * Follow https://github.com/sychyy
+ * Whatsapp : https://wa.me/6287862997267
  */
 require('./settings');
 const sharp = require('sharp');
