@@ -235,6 +235,28 @@ const checkSCommand = (id) => {
 function monospace(string) {
 	return '```' + string + '```';
 }
+
+// 1. Fungsi untuk membaca semua nama case dari file
+const getAllCases = () => {
+    const fileContent = fs.readFileSync("./naze.js", "utf-8");
+    const caseRegex = /case\s*['"`](.*?)['"`]\s*:/g;
+    let match;
+    const cases = [];
+    while ((match = caseRegex.exec(fileContent)) !== null) {
+        cases.push(match[1]);
+    }
+    return cases;
+};
+
+// 2. Deteksi typo dengan didYouMean
+const detectTypoCommand = (input) => {
+    const validCommands = getAllCases(); // Ambil semua nama case
+    const suggestedCommand = didYouMean(input, validCommands);
+    if (suggestedCommand) {
+        return suggestedCommand;
+    }
+    return null;
+};
 module.exports = sych = async (sych, m, chatUpdate, store) => {
 	try {
 		await LoadDataBase(sych, m);
@@ -252,6 +274,8 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 		const args = body.trim().split(/ +/).slice(1)
 		const quoted = m.quoted ? m.quoted : m
 		const command = isCreator ? body.replace(prefix, '').trim().split(/ +/).shift().toLowerCase() : isCmd ? body.replace(prefix, '').trim().split(/ +/).shift().toLowerCase() : ''
+		
+    
 		const text = args.join(' ')
 		const q = args.join(' ')
 		const mime = (quoted.msg || quoted).mimetype || ''
@@ -354,9 +378,6 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 		}
 		*/
 		// Daftar thumbnail URL yang bisa dipilih secara random
-const fs = require('fs');
-const path = require('path');
-
 // Lokasi file JSON di folder 'database'
 const thumbListFilePath = path.join(__dirname, 'database', 'thumbList.json');
 
@@ -435,7 +456,12 @@ const sycreply = (teks) => {
         quoted: fkontak
     })
 }
-
+// 3. Modifikasi pengolahan command
+if (isCmd) {
+    let typoCorrection = detectTypoCommand(command);
+    if (typoCorrection && typoCorrection !== command) {
+        return sycreply(`Mungkin yang Anda maksud adalah: *${prefix}${typoCorrection}*`);
+    }}
 		// Reset Limit
 		cron.schedule('00 00 * * *', () => {
 			let user = Object.keys(db.users)
