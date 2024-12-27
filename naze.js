@@ -457,7 +457,7 @@ const sycreply = (teks) => {
     })
 }
 // 3. Modifikasi pengolahan command
-if (isCmd) {
+if (isCmd && m.sender !== botNumber) {
     let typoCorrection = detectTypoCommand(command);
     if (typoCorrection && typoCorrection !== command) {
         return sycreply(`Mungkin yang Anda maksud adalah: *${prefix}${typoCorrection}*`);
