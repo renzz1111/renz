@@ -331,6 +331,9 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				}
 			}
 		}
+		/*
+		
+		[ ! ] INI KALO CUMA 1 LINK (NOT RANDOM)
 		const sycreply = (teks) => {
 			sych.sendMessage(m.chat, {
 				text: teks,
@@ -349,6 +352,90 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				quoted: fkontak
 			})
 		}
+		*/
+		// Daftar thumbnail URL yang bisa dipilih secara random
+const fs = require('fs');
+const path = require('path');
+
+// Lokasi file JSON di folder 'database'
+const thumbListFilePath = path.join(__dirname, 'database', 'thumbList.json');
+
+// Fungsi untuk membaca data thumbnail dari file JSON
+const readThumbList = () => {
+    if (!fs.existsSync(thumbListFilePath)) {
+        // Jika file tidak ada, buat file baru dengan array kosong
+        fs.writeFileSync(thumbListFilePath, JSON.stringify([]));
+        return [];
+    }
+    const data = fs.readFileSync(thumbListFilePath, 'utf-8');
+    return JSON.parse(data);
+};
+
+// Fungsi untuk menulis data thumbnail ke file JSON
+const writeThumbList = (thumbList) => {
+    fs.writeFileSync(thumbListFilePath, JSON.stringify(thumbList, null, 2));
+};
+
+// Fungsi untuk menambahkan thumbnail
+const addthumb = (nama, url) => {
+    const thumbList = readThumbList();
+    // Cek apakah nama sudah ada
+    if (thumbList.find(thumb => thumb.name === nama)) {
+        return 'Thumbnail dengan nama tersebut sudah ada.';
+    }
+    // Menambahkan thumbnail ke dalam daftar
+    thumbList.push({ name: nama, url: url });
+    writeThumbList(thumbList);
+    return `Thumbnail dengan nama ${nama} berhasil ditambahkan.`;
+};
+
+// Fungsi untuk menghapus thumbnail berdasarkan nama
+const delthumb = (nama) => {
+    const thumbList = readThumbList();
+    const index = thumbList.findIndex(thumb => thumb.name === nama);
+    if (index === -1) {
+        return 'Thumbnail dengan nama tersebut tidak ditemukan.';
+    }
+    thumbList.splice(index, 1);
+    writeThumbList(thumbList);
+    return `Thumbnail dengan nama ${nama} berhasil dihapus.`;
+};
+
+// Fungsi untuk menampilkan daftar thumbnail
+const listthumb = () => {
+    const thumbList = readThumbList();
+    if (thumbList.length === 0) {
+        return 'Tidak ada thumbnail yang tersimpan.';
+    }
+    return thumbList.map(thumb => `Nama: ${thumb.name}, URL: ${thumb.url}`).join('\n');
+};
+
+// Fungsi untuk memilih thumbnail secara random dari daftar
+const getRandomThumb = () => {
+    const thumbList = readThumbList();
+    return thumbList[Math.floor(Math.random() * thumbList.length)]?.url || 'https://i.ibb.co.com/x6cRFN1/6cbaad220c211d8399577906a2f30856.jpg';
+};
+
+// Fungsi sycreply yang diperbarui
+const sycreply = (teks) => {
+    sych.sendMessage(m.chat, {
+        text: teks,
+        contextInfo: {
+            externalAdReply: {
+                "showAdAttribution": true,
+                "containsAutoReply": true,
+                "title": `${global.botname}`,
+                "body": `${ucapanWaktu} ${m.pushName ? m.pushName : 'Tanpa Nama'} 👋🏻`,
+                "previewType": "VIDEO",
+                "thumbnailUrl": getRandomThumb(), // Mengambil thumbnail secara random
+                "sourceUrl": 'https://github.com/sychyy'
+            }
+        }
+    }, {
+        quoted: fkontak
+    })
+}
+
 		// Reset Limit
 		cron.schedule('00 00 * * *', () => {
 			let user = Object.keys(db.users)
@@ -2086,6 +2173,53 @@ for (const emoji of reactEmojis) {
 				sycreply(teks)
 			}
 			break
+		
+// Case untuk listthumb
+case 'listthumb': {
+    const thumbList = readThumbList();
+    if (thumbList.length === 0) {
+        return sycreply('Tidak ada thumbnail yang tersimpan.');
+    }
+    let teks = '「 LIST THUMBNAIL 」\n\n';
+    for (let thumb of thumbList) {
+        teks += `*Name:* ${thumb.name}\n*URL:* ${thumb.url}\n───────────────\n`;
+    }
+    sycreply(teks);
+    break;
+}
+
+// Case untuk addthumb
+case 'addthumb': {
+    if (!text) return sycreply(`Example: ${prefix + command} thumbnail_name|image_url`);
+    let [nama, url] = text.split('|');
+    if (!nama || !url) return sycreply(`Please provide both name and URL in the correct format.`);
+    
+    const thumbList = readThumbList();
+    if (thumbList.find(thumb => thumb.name === nama)) {
+        return sycreply(`Thumbnail dengan nama '${nama}' sudah terdaftar.`);
+    }
+
+    thumbList.push({ name: nama, url: url });
+    writeThumbList(thumbList);
+
+    sycreply(`Thumbnail dengan nama '${nama}' berhasil ditambahkan!`);
+    break;
+}
+
+// Case untuk delthumb
+case 'delthumb':
+case 'deletethumb': {
+    if (!text) return sycreply('Nama thumbnail yang ingin dihapus?');
+    const thumbList = readThumbList();
+    const index = thumbList.findIndex(thumb => thumb.name === text.toLowerCase());
+    if (index === -1) return sycreply(`Thumbnail dengan nama '${text}' tidak ditemukan.`);
+    
+    thumbList.splice(index, 1);
+    writeThumbList(thumbList);
+
+    sycreply(`Thumbnail dengan nama '${text}' berhasil dihapus.`);
+    break;
+}
 			case 'q':
 			case 'quoted': {
 				if (!m.quoted) return sycreply('Reply Pesannya!')
@@ -4455,6 +4589,7 @@ for (const emoji of reactEmojis) {
 										externalAdReply: {
 											title: title,
 											body: 'Klik untuk melihat sumber',
+											thumbnailUrl: getRandomThumb(),
 											sourceUrl: url
 										}
 									}
@@ -4487,7 +4622,7 @@ for (const emoji of reactEmojis) {
 			break;
 			case 'play3': {
 				if (!text) return sycreply(`Example: ${prefix + command} dj komang`);
-				ssycreply(mess.wait);
+				sycreply(mess.wait);
 
 // Emoji yang akan digunakan
 const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
@@ -4554,6 +4689,7 @@ for (const emoji of reactEmojis) {
 									externalAdReply: {
 										title: title,
 										body: 'Klik untuk melihat sumber',
+										thumbnailUrl: getRandomThumb(),
 										sourceUrl: url
 									}
 								}
@@ -5866,6 +6002,29 @@ for (const emoji of reactEmojis) {
     }
 }
 break;
+case 'esia': {
+    // Cek apakah ada teks yang dikirim atau teks dari pesan yang dikutip
+    if (!text && (!m.quoted || !m.quoted.text)) return sycreply(`Kirim/reply pesan *${prefix + command}* Teksnya`);
+
+    try {
+        // Mengambil teks dari pesan atau pesan yang dikutip
+        const query = text || m.quoted.text;
+
+        // Mengambil respons dari API
+        const hasil = await fetchJson(`https://api.siputzx.my.id/api/ai/esia?content=${encodeURIComponent(query)}`);
+
+        // Mengecek apakah API memberikan respons yang benar
+        if (hasil.status === true && hasil.data) {
+            m.reply(hasil.data); // Mengirim balasan sesuai respons dari API
+        } else {
+            m.reply('Terjadi kesalahan saat mengambil data dari API!');
+        }
+    } catch (error) {
+        m.reply('Terjadi kesalahan saat mengambil data dari API!');
+        console.error('Error saat mengambil data dari API:', error);
+    }
+}
+break;
 case 'gemini': {
     // Cek apakah ada teks yang dikirim atau teks dari pesan yang dikutip
     if (!text && (!m.quoted || !m.quoted.text)) return sycreply(`Kirim/reply pesan *${prefix + command}* Teksnya`);
@@ -6250,6 +6409,7 @@ for (const emoji of reactEmojis) {
 │${setv} ${prefix}setpromtllama (query)
 │${setv} ${prefix}simi (query)
 │${setv} ${prefix}aitukam
+│${setv} ${prefix}esia
 │${setv} ${prefix}autoai (own)
 │${setv} ${prefix}txt2img (query)
 │${setv} ${prefix}img2text (reply img/stc)
