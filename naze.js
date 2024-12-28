@@ -4319,13 +4319,13 @@ for (const emoji of reactEmojis) {
 										"name": "quick_reply",
 										"buttonParamsJson": JSON.stringify({
 											"display_text": "Copy Mp3",
-											"id": `${prefix}ytmp3 ${video.url}`
+											"id": `.ytmp3 ${video.url}`
 										})
 									}, {
 										"name": "quick_reply",
 										"buttonParamsJson": JSON.stringify({
 											"display_text": "Copy Mp4",
-											"id": `${prefix}ytmp4 ${video.url}`
+											"id": `.ytmp4 ${video.url}`
 										})
 									}]
 								})
@@ -4417,13 +4417,13 @@ for (const emoji of reactEmojis) {
 									"name": "quick_reply",
 									"buttonParamsJson": JSON.stringify({
 										"display_text": "Download Mp3",
-										"id": `${prefix}ytmp3 ${video.url}`
+										"id": `.ytmp3 ${video.url}`
 									})
 								}, {
 									"name": "quick_reply",
 									"buttonParamsJson": JSON.stringify({
 										"display_text": "Download Mp4",
-										"id": `${prefix}ytmp4 ${video.url}`
+										"id": `.ytmp4 ${video.url}`
 									})
 								}]
 							})
@@ -7321,4 +7321,17 @@ fs.watchFile(file, () => {
 	console.log(chalk.redBright(`Update ${__filename}`))
 	delete require.cache[file]
 	require(file)
-});
+})
+
+process.on('uncaughtException', function (err) {
+let e = String(err)
+if (e.includes("conflict")) return
+if (e.includes("Socket connection timeout")) return
+if (e.includes("not-authorized")) return
+if (e.includes("already-exists")) return
+if (e.includes("rate-overlimit")) return
+if (e.includes("Connection Closed")) return
+if (e.includes("Timed Out")) return
+if (e.includes("Value not found")) return
+console.log('Caught exception: ', err)
+})
