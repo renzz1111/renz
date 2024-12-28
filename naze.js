@@ -4318,13 +4318,13 @@ for (const emoji of reactEmojis) {
 									}, {
 										"name": "quick_reply",
 										"buttonParamsJson": JSON.stringify({
-											"display_text": "Copy Mp3",
+											"display_text": "Download Mp3",
 											"id": `ytmp3 ${video.url}`
 										})
 									}, {
 										name: "quick_reply",
 										buttonParamsJson: JSON.stringify({
-											display_text: "Copy Mp4",
+											display_text: "Download Mp4",
 											id: `ytmp4 ${video.url}`
 										})
 									}]
