@@ -270,7 +270,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 		const from = m.key.remoteJid;
 		const isCreator = isOwner = [botNumber, ...owner].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
 		const prefix = isCreator ? (/^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@()#,'"*+÷/\%^&.©^]/gi.test(cmd) ? cmd.match(/^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@()#,'"*+÷/\%^&.©^]/gi)[0] : /[\uD800-\uDBFF][\uDC00-\uDFFF]/gi.test(cmd) ? cmd.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/gi)[0] : listprefix.find(a => cmd.startsWith(a)) || '') : db.set[botNumber].multiprefix ? (/^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@()#,'"*+÷/\%^&.©^]/gi.test(cmd) ? cmd.match(/^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@()#,'"*+÷/\%^&.©^]/gi)[0] : /[\uD800-\uDBFF][\uDC00-\uDFFF]/gi.test(cmd) ? cmd.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/gi)[0] : listprefix.find(a => cmd.startsWith(a)) || '¿') : listprefix.find(a => cmd.startsWith(a)) || '¿'
-		const body = (type === 'listResponseMessage' && m.message.listResponseMessage.title) ? m.message.listResponseMessage.title : (type === 'buttonsResponseMessage' && m.message.buttonsResponseMessage.selectedButtonId) ? m.message.buttonsResponseMessage.selectedButtonId : (type === 'conversation' && m.message.conversation.startsWith(prefix)) ? m.message.conversation : (type == 'imageMessage') && m.message.imageMessage.caption.startsWith(prefix) ? m.message.imageMessage.caption : (type == 'videoMessage') && m.message.videoMessage.caption.startsWith(prefix) ? m.message.videoMessage.caption : (type == 'extendedTextMessage') && m.message.extendedTextMessage.text.startsWith(prefix) ? m.message.extendedTextMessage.text : (type == 'stickerMessage') && (getCmd(m.message.stickerMessage.fileSha256.toString('base64')) !== null && getCmd(m.message.stickerMessage.fileSha256.toString('base64')) !== undefined) ? getCmd(m.message.stickerMessage.fileSha256.toString('base64')) : ""
+		const body = (type === 'conversation') ? m.message.conversation : (type == 'imageMessage') ? m.message.imageMessage.caption : (type == 'videoMessage') ? m.message.videoMessage.caption : (type == 'extendedTextMessage') ? m.message.extendedTextMessage.text : (type == 'buttonsResponseMessage') ? m.message.buttonsResponseMessage.selectedButtonId : (type == 'listResponseMessage') ? m.message.listResponseMessage.singleSelectReply.selectedRowId : (type === 'interactiveResponseMessage') ? JSON.parse(m.message.interactiveResponseMessage.nativeFlowResponseMessage.paramsJson).id : (type == 'templateButtonReplyMessage') ? m.message.templateButtonReplyMessage.selectedId : (type === 'messageContextInfo') ? (m.message.buttonsResponseMessage?.selectedButtonId || m.message.listResponseMessage?.singleSelectReply.selectedRowId || m.text) : (type == 'stickerMessage') && (getCmd(m.message.stickerMessage.fileSha256.toString('base64')) !== null && getCmd(m.message.stickerMessage.fileSha256.toString('base64')) !== undefined) ? getCmd(m.message.stickerMessage.fileSha256.toString('base64')) : ""
 		const budy = (typeof m.text == 'string' ? m.text : '')
 		const isCmd = body.startsWith(prefix)
 		const args = body.trim().split(/ +/).slice(1)
@@ -356,6 +356,21 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 		}
 	}
 }
+const qchanel = {
+key: {
+remoteJid: 'status@broadcast',
+fromMe: false,
+participant: '0@s.whatsapp.net'
+},
+message: {
+newsletterAdminInviteMessage: {
+newsletterJid: my.ch,
+newsletterName: `${botname}`,
+jpegThumbnail: fake.thumbnail,
+caption: `${botname}`,
+inviteExpiration: Date.now() + 1814400000
+}
+}}
 		const fkontak = {
 			key: {
 				remoteJid: 'status@broadcast',
@@ -4278,16 +4293,16 @@ for (const emoji of reactEmojis) {
 										name: "cta_url",
 										buttonParamsJson: `{"display_text":"Lihat Video","url":"${video.url}"}`
 									}, {
-										"name": "cta_copy",
+										"name": "quick_reply",
 										"buttonParamsJson": JSON.stringify({
 											"display_text": "Copy Mp3",
-											"copy_code": `${prefix}ytmp3 ${video.url}`
+											"id": `${prefix}ytmp3 ${video.url}`
 										})
 									}, {
-										"name": "cta_copy",
+										"name": "quick_reply",
 										"buttonParamsJson": JSON.stringify({
 											"display_text": "Copy Mp4",
-											"copy_code": `${prefix}ytmp4 ${video.url}`
+											"id": `${prefix}ytmp4 ${video.url}`
 										})
 									}]
 								})
@@ -4376,16 +4391,16 @@ for (const emoji of reactEmojis) {
 									name: "cta_url",
 									buttonParamsJson: `{"display_text":"Lihat Video","url":"${video.url}"}`
 								}, {
-									"name": "cta_copy",
+									"name": "quick_reply",
 									"buttonParamsJson": JSON.stringify({
-										"display_text": "Copy Mp3",
-										"copy_code": `${prefix}ytmp3 ${video.url}`
+										"display_text": "Download Mp3",
+										"id": `${prefix}ytmp3 ${video.url}`
 									})
 								}, {
-									"name": "cta_copy",
+									"name": "quick_reply",
 									"buttonParamsJson": JSON.stringify({
-										"display_text": "Copy Mp4",
-										"copy_code": `${prefix}ytmp4 ${video.url}`
+										"display_text": "Download Mp4",
+										"id": `${prefix}ytmp4 ${video.url}`
 									})
 								}]
 							})
@@ -4707,7 +4722,7 @@ for (const emoji of reactEmojis) {
 											title: title,
 											body: 'Klik untuk melihat sumber',
 											thumbnailUrl: getRandomThumb(),
-											sourceUrl: url
+											sourceUrl: text
 										}
 									}
 								}, {
@@ -4807,7 +4822,7 @@ for (const emoji of reactEmojis) {
 										title: title,
 										body: 'Klik untuk melihat sumber',
 										thumbnailUrl: getRandomThumb(),
-										sourceUrl: url
+										sourceUrl: text
 									}
 								}
 							}, {
@@ -6413,6 +6428,13 @@ await sych.sendMessage(m.chat, {
         text: inimenu,
         contextInfo: {
         mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net'],
+						forwardingScore: 1000,
+						isForwarded: true,
+						forwardedNewsletterMessageInfo: {
+							newsletterJid: my.ch,
+							serverMessageId: null,
+							newsletterName: `SYCHEE${randomEmoji}`
+						},
             externalAdReply: {
                 "showAdAttribution": true,
                 "containsAutoReply": true,
@@ -6427,7 +6449,7 @@ await sych.sendMessage(m.chat, {
             }
         }
     }, {
-        quoted: fkontak
+        quoted: qchanel
     })
 }
     break
