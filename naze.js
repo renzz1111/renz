@@ -6,6 +6,7 @@ process.on('unhandledRejection', console.error)
  * Whatsapp : https://wa.me/6287862997267
  */
 require('./settings');
+require('./setown');
 const sharp = require('sharp');
 const fs = require('fs');
 const os = require('os');
@@ -3416,6 +3417,28 @@ for (const emoji of reactEmojis) {
 				}
 			}
 			break;
+			case 'delowner':
+    if (!isCreator) return sycreply('Perintah ini hanya dapat digunakan oleh creator!');
+    if (!args[0]) return sycreply('Masukkan nomor yang ingin dihapus dari owner!');
+    const removeOwner = args[0].replace(/[^0-9]/g, '');
+    if (!global.owner.includes(removeOwner)) return sycreply('Nomor tersebut tidak ada dalam daftar owner!');
+    global.owner = global.owner.filter(num => num !== removeOwner);
+    fs.writeFileSync('./setown.js', `global.owner = ${JSON.stringify(global.owner)};`);
+    sycreply(`Berhasil menghapus owner: ${removeOwner}`);
+    break;
+    case 'addowner':
+    if (!isCreator) return sycreply('Perintah ini hanya dapat digunakan oleh creator!');
+    if (!args[0]) return sycreply('Masukkan nomor yang ingin ditambahkan sebagai owner!');
+    const newOwner = args[0].replace(/[^0-9]/g, '');
+    if (global.owner.includes(newOwner)) return sycreply('Nomor tersebut sudah menjadi owner!');
+    global.owner.push(newOwner);
+    fs.writeFileSync('./setown.js', `global.owner = ${JSON.stringify(global.owner)};`);
+    sycreply(`Berhasil menambahkan owner: ${newOwner}`);
+    break;
+    case 'listowner':
+    const ownerList = global.owner.map((num, index) => `${index + 1}. ${num}`).join('\n');
+    sycreply(`Daftar Owner:\n${ownerList}`);
+    break;
 			case 'cjpn': {
 				try {
 					sycreply(mess.wait);
@@ -4644,6 +4667,16 @@ for (const emoji of reactEmojis) {
 			case 'spotify':
 			case 'spotifysearch': {
 				if (!text) return sycreply(`*< / >* Example: ${prefix + command} alan walker alone`)
+				const reactEmojis = ["🎵", "🎶", "🔍", "🎶", "🎵", "✅"];
+        for (const emoji of reactEmojis) {
+            await sych.sendMessage(m.chat, {
+                react: {
+                    text: emoji,
+                    key: m.key
+                }
+            });
+        }
+        
 				try {
 					let hasil = await fetchJson('https://www.bhandarimilan.info.np/spotisearch?query=' + encodeURIComponent(text));
 					let txt = hasil.map(a => {
@@ -5271,6 +5304,16 @@ for (const emoji of reactEmojis) {
 					console.log("URL tidak diberikan. Mengirimkan contoh penggunaan.");
 					return sycreply(`*< / >* Example: ${prefix + command} https://open.spotify.com/track/0JiVRyTJcJnmlwCZ854K4p`);
 				}
+				const reactEmojis = ["🎵", "🎶", "🔍", "🎶", "🎵", "✅"];
+        for (const emoji of reactEmojis) {
+            await sych.sendMessage(m.chat, {
+                react: {
+                    text: emoji,
+                    key: m.key
+                }
+            });
+        }
+        
 				// Validasi format URL
 				if (!isUrl(args[0]) && !args[0].includes('open.spotify.com/track')) {
 					console.log("URL tidak valid: " + args[0]);
@@ -5377,6 +5420,8 @@ for (const emoji of reactEmojis) {
 				}
 			}
 			break
+			
+
 			// Fun Menu
 			case 'dadu': {
 				let ddsa = [{
@@ -6414,6 +6459,7 @@ ${f}╰━━━╯╱╰╯╱╰━━━┻╯╱╰╯╱╰╯
 
 ${n}ᯓ★ BERIKUT ADALAH MENU SYCHY BOTz ★ᯓ${n}
 
+${setv} ${prefix} ALLMENU
 ${setv} ${prefix} GROUPMENU
 ${setv} ${prefix} OWNERMENU
 ${setv} ${prefix} DOWNLOADMENU
@@ -6764,6 +6810,9 @@ ${setv} ${prefix}addcase
 ${setv} ${prefix}getcase
 ${setv} ${prefix}delcase
 ${setv} ${prefix}listgc
+${setv} ${prefix}liatowner
+${setv} ${prefix}addowner
+${setv} ${prefix}delowner
 ${setv} ${prefix}checklocation
 ${setv} ${prefix}creategc
 ${setv} ${prefix}addprem

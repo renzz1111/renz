@@ -6,8 +6,7 @@ const chalk = require('chalk');
  * Whatsapp : https://whatsapp.com/channel/0029Vb0v3F71yT264EejzJ3e
  */
 //~~~~~~~~~~~~< GLOBAL SETTINGS >~~~~~~~~~~~~\\
-global.own = ['6287862997267', '0']
-global.owner = ['6287862997267', '62882008702155']
+//settings owner di ./setown.js
 global.packname = 'SychBotz'
 global.author = 'ydaa'
 global.owname = 'mzyda'
