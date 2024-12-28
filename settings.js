@@ -14,13 +14,14 @@ global.owname = 'mzyda'
 global.botname = 'Sychy Bot'
 global.listprefix = ['+', '!', '.']
 global.themeemoji = '🪀'
-global.listv = ['⛏', '●', '■', '✿', '▲', 'ଳ', 'ϟ', '( ၴႅၴ', '➤', '✦', '✧', '△', '❀', '⋆𖦹', '□', '𖤓', 'ᨒ', '◇', '𖣂', '々', '〆', 'ᯓ★', '꩜', '✮']
-global.emot = ['🌱', '🌻', '🌞', '❄️', '🌿', '💫', '⭐', '🍃', '🔥', '⚡', '🫧', '🪵', '🌪️', '🍄']
+global.f = '> '
+global.n = '`'
+global.listv = ['⛏', '●', '■', '✿', '▲', 'ଳ', 'ϟ', '✶', '➤', '✦', '✧', '△', '❀', '⋆𖦹', '□', '𖤓', 'ᨒ', '◇', '𖣂', '々', '〆', 'ᯓ★', '꩜', '✮']
+global.emot = ['🌱', '🌻', '🌞', '❄️', '🌿', '💫', '⭐', '🍃', '🔥', '⚡', '🫧', '🌵', '🪺', '🪨', '🪵', '🌪️', '🍄']
 global.tempatDB = 'database.json'
 global.pairing_code = true
 global.fake = {
 	texz: `Owner: ${owname}\nBot: ${botname}`,
-	trolTn: fs.readFileSync('./src/media/fk.jpg'),
 	anonim: 'https://telegra.ph/file/95670d63378f7f4210f03.png',
 	thumbnailUrl: 'https://i.ibb.co.com/3rqCPX6/fk.jpg',
 	thumbnail: fs.readFileSync('./src/media/sych.png'),

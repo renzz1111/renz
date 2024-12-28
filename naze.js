@@ -182,9 +182,11 @@ let tebakbendera = db.game.tebakbendera = []
 let autoAi = false; // Default mati
 // Variabel penyimpanan sesi chat rahasia
 let secretChat = {};
+// Penyimpanan status autoai2 (gunakan database jika diperlukan)
+let autoAIStatus = false;
 let _scommand = JSON.parse(fs.readFileSync("./database/scommand.json"));
 // Variabel global untuk menyimpan prompt default
-let llamaPrompt = "kamu adalah doraemon";
+let llamaPrompt = "kamu adalah SychyyBotz";
 // Fungsi Menambahkan Command
 const addCmd = (id, command) => {
 	// Konversi hash ke Base64
@@ -319,11 +321,41 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 					surface: 1,
 					message: `${ucapanWaktu} ${m.pushName ? m.pushName : 'Tanpa Nama'} 👋🏻`,
 					orderTitle: `${ucapanWaktu} ${m.pushName ? m.pushName : 'Tanpa Nama'} 👋🏻`,
-					thumbnail: fake.trolTn,
+					thumbnail: fake.thumbnail,
 					sellerJid: '0@s.whatsapp.net'
 				}
 			}
 		}
+		const floc = {
+      key: { participant: "0@s.whatsapp.net" },
+      message: { locationMessage: { name: fake.texz, jpegThumbnail: fake.thumbnail } },
+    };
+		const repPy = {
+	key: {
+		remoteJid: '0@s.whatsapp.net',
+		fromMe: false,
+		id: `${owname}`,
+		participant: '0@s.whatsapp.net'
+	},
+	message: {
+		requestPaymentMessage: {
+			currencyCodeIso4217: "USD",
+			amount1000: 999999999,
+			requestFrom: '0@s.whatsapp.net',
+			noteMessage: {
+				extendedTextMessage: {
+					text: `${botname}`
+				}
+			},
+			expiryTimestamp: 999999999,
+			amount: {
+				value: 91929291929,
+				offset: 1000,
+				currencyCode: "INR"
+			}
+		}
+	}
+}
 		const fkontak = {
 			key: {
 				remoteJid: 'status@broadcast',
@@ -442,6 +474,7 @@ const sycreply = (teks) => {
     sych.sendMessage(m.chat, {
         text: teks,
         contextInfo: {
+        mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net'],
             externalAdReply: {
                 "showAdAttribution": true,
                 "containsAutoReply": true,
@@ -1140,7 +1173,7 @@ for (const emoji of reactEmojis) {
 			case 'block': {
 				if (!isCreator) return sycreply(mess.owner)
 				if (!text && !m.quoted) {
-					sycreply(`Contoh: ${prefix + command} 62xxx`)
+					sycreply(`*< / >* Example: ${prefix + command} 62xxx`)
 				} else {
 					const numbersOnly = m.isGroup ? (text ? text.replace(/\D/g, '') + '@s.whatsapp.net' : m.quoted?.sender) : m.chat
 					await sych.updateBlockStatus(numbersOnly, 'block').then((a) => sycreply(mess.done)).catch((err) => sycreply('Gagal!'))
@@ -1158,7 +1191,7 @@ for (const emoji of reactEmojis) {
 			case 'unblock': {
 				if (!isCreator) return sycreply(mess.owner)
 				if (!text && !m.quoted) {
-					sycreply(`Contoh: ${prefix + command} 62xxx`)
+					sycreply(`*< / >* Example: ${prefix + command} 62xxx`)
 				} else {
 					const numbersOnly = m.isGroup ? (text ? text.replace(/\D/g, '') + '@s.whatsapp.net' : m.quoted?.sender) : m.chat
 					await sych.updateBlockStatus(numbersOnly, 'unblock').then((a) => sycreply(mess.done)).catch((err) => sycreply('Gagal!'))
@@ -1167,7 +1200,7 @@ for (const emoji of reactEmojis) {
 			break
 			case 'adduang': {
 				if (!isCreator) return sycreply(mess.owner)
-				if (!args[0] || !args[1] || isNaN(args[1])) return sycreply(`Kirim/tag Nomernya!\nExample:\n${prefix + command} 62xxx 1000`)
+				if (!args[0] || !args[1] || isNaN(args[1])) return sycreply(`Kirim/tag Nomernya!\n*< / >* Example:\n${prefix + command} 62xxx 1000`)
 				const nmrnya = args[0].replace(/[^0-9]/g, '') + '@s.whatsapp.net'
 				const onWa = await sych.onWhatsApp(nmrnya)
 				if (!onWa.length > 0) return sycreply('Nomer Tersebut Tidak Terdaftar Di Whatsapp!')
@@ -1181,7 +1214,7 @@ for (const emoji of reactEmojis) {
 			break
 			case 'addlimit': {
 				if (!isCreator) return sycreply(mess.owner)
-				if (!args[0] || !args[1] || isNaN(args[1])) return sycreply(`Kirim/tag Nomernya!\nExample:\n${prefix + command} 62xxx 10`)
+				if (!args[0] || !args[1] || isNaN(args[1])) return sycreply(`Kirim/tag Nomernya!\n*< / >* Example:\n${prefix + command} 62xxx 10`)
 				const nmrnya = args[0].replace(/[^0-9]/g, '') + '@s.whatsapp.net'
 				const onWa = await sych.onWhatsApp(nmrnya)
 				if (!onWa.length > 0) return sycreply('Nomer Tersebut Tidak Terdaftar Di Whatsapp!')
@@ -1222,7 +1255,7 @@ for (const emoji of reactEmojis) {
 			case 'creategc':
 			case 'buatgc': {
 				if (!isCreator) return sycreply(mess.owner)
-				if (!text) return sycreply(`Example:\n${prefix + command} *Nama Gc*`)
+				if (!text) return sycreply(`*< / >* Example:\n${prefix + command} *Nama Gc*`)
 				let group = await sych.groupCreate(q, [m.sender])
 				let res = await sych.groupInviteCode(group.id)
 				await sych.sendMessage(m.chat, {
@@ -1241,7 +1274,7 @@ for (const emoji of reactEmojis) {
 			case 'addprem':
 			case 'addpremium': {
 				if (!isCreator) return sycreply(mess.owner)
-				if (!text) return sycreply(`Example:\n${prefix + command} @tag|waktu\n${prefix + command} @${m.sender.split('@')[0]}|30 hari`)
+				if (!text) return sycreply(`*< / >* Example:\n${prefix + command} @tag|waktu\n${prefix + command} @${m.sender.split('@')[0]}|30 hari`)
 				let [teks1, teks2] = text.split`|`
 				const nmrnya = teks1.replace(/[^0-9]/g, '') + '@s.whatsapp.net'
 				const onWa = await sych.onWhatsApp(nmrnya)
@@ -1254,7 +1287,7 @@ for (const emoji of reactEmojis) {
 						db.users[nmrnya].uang += db.users[nmrnya].vip ? uang.vip : uang.premium
 					} else sycreply('Nomer tidak terdaftar di BOT !')
 				} else {
-					sycreply(`Masukkan waktunya!\Example:\n${prefix + command} @tag|waktu\n${prefix + command} @${m.sender.split('@')[0]}|30d\n_d = day_`)
+					sycreply(`Masukkan waktunya!\*< / >* Example:\n${prefix + command} @tag|waktu\n${prefix + command} @${m.sender.split('@')[0]}|30d\n_d = day_`)
 				}
 			}
 			break
@@ -1262,7 +1295,7 @@ for (const emoji of reactEmojis) {
 			case 'delprem':
 			case 'delpremium': {
 				if (!isCreator) return sycreply(mess.owner)
-				if (!text) return sycreply(`Example:\n${prefix + command} @tag`)
+				if (!text) return sycreply(`*< / >* Example:\n${prefix + command} @tag`)
 				const nmrnya = text.replace(/[^0-9]/g, '') + '@s.whatsapp.net'
 				if (db.users[nmrnya] && db.users[nmrnya].limit) {
 					if (prem.checkPremiumUser(nmrnya, premium)) {
@@ -1510,7 +1543,7 @@ for (const emoji of reactEmojis) {
 				if (!m.isAdmin) return sycreply(mess.admin)
 				if (!m.isBotAdmin) return sycreply(mess.botAdmin)
 				if (!text && !m.quoted) {
-					sycreply(`Contoh: ${prefix + command} 62xxx`)
+					sycreply(`*< / >* Example: ${prefix + command} 62xxx`)
 				} else {
 					const numbersOnly = text ? text.replace(/\D/g, '') + '@s.whatsapp.net' : m.quoted?.sender
 					try {
@@ -1551,7 +1584,7 @@ for (const emoji of reactEmojis) {
 				if (!m.isAdmin) return sycreply(mess.admin)
 				if (!m.isBotAdmin) return sycreply(mess.botAdmin)
 				if (!text && !m.quoted) {
-					sycreply(`Contoh: ${prefix + command} 62xxx`)
+					sycreply(`*< / >* Example: ${prefix + command} 62xxx`)
 				} else {
 					const numbersOnly = text ? text.replace(/\D/g, '') + '@s.whatsapp.net' : m.quoted?.sender
 					await sych.groupParticipantsUpdate(m.chat, [numbersOnly], 'remove').catch((err) => sycreply('Gagal Kick User!'))
@@ -1563,7 +1596,7 @@ for (const emoji of reactEmojis) {
 				if (!m.isAdmin) return sycreply(mess.admin)
 				if (!m.isBotAdmin) return sycreply(mess.botAdmin)
 				if (!text && !m.quoted) {
-					sycreply(`Contoh: ${prefix + command} 62xxx`)
+					sycreply(`*< / >* Example: ${prefix + command} 62xxx`)
 				} else {
 					const numbersOnly = text ? text.replace(/\D/g, '') + '@s.whatsapp.net' : m.quoted?.sender
 					await sych.groupParticipantsUpdate(m.chat, [numbersOnly], 'promote').catch((err) => sycreply('Gagal!'))
@@ -1575,7 +1608,7 @@ for (const emoji of reactEmojis) {
 				if (!m.isAdmin) return sycreply(mess.admin)
 				if (!m.isBotAdmin) return sycreply(mess.botAdmin)
 				if (!text && !m.quoted) {
-					sycreply(`Contoh: ${prefix + command} 62xxx`)
+					sycreply(`*< / >* Example: ${prefix + command} 62xxx`)
 				} else {
 					const numbersOnly = text ? text.replace(/\D/g, '') + '@s.whatsapp.net' : m.quoted?.sender
 					await sych.groupParticipantsUpdate(m.chat, [numbersOnly], 'demote').catch((err) => sycreply('Gagal!'))
@@ -1590,7 +1623,7 @@ for (const emoji of reactEmojis) {
 				if (!m.isAdmin) return sycreply(mess.admin)
 				if (!m.isBotAdmin) return sycreply(mess.botAdmin)
 				if (!text && !m.quoted) {
-					sycreply(`Contoh: ${prefix + command} textnya`)
+					sycreply(`*< / >* Example: ${prefix + command} textnya`)
 				} else {
 					const teksnya = text ? text : m.quoted.text
 					await sych.groupUpdateSubject(m.chat, teksnya).catch((err) => sycreply('Gagal!'))
@@ -1605,7 +1638,7 @@ for (const emoji of reactEmojis) {
 				if (!m.isAdmin) return sycreply(mess.admin)
 				if (!m.isBotAdmin) return sycreply(mess.botAdmin)
 				if (!text && !m.quoted) {
-					sycreply(`Contoh: ${prefix + command} textnya`)
+					sycreply(`*< / >* Example: ${prefix + command} textnya`)
 				} else {
 					const teksnya = text ? text : m.quoted.text
 					await sych.groupUpdateDescription(m.chat, teksnya).catch((err) => sycreply('Gagal!'))
@@ -1726,7 +1759,7 @@ for (const emoji of reactEmojis) {
 						}
 						break
 					default:
-						sycreply(`${m.metadata.subject}\n- Mute : ${set.mute ? '✅' : '❌'}\n- Anti Link : ${set.antilink ? '✅' : '❌'}\n- Anti Virtex : ${set.antivirtex ? '✅' : '❌'}\n- Anti Delete : ${set.antidelete ? '✅' : '❌'}\n- Welcome : ${set.welcome ? '✅' : '❌'}\n\nExample:\n${prefix + command} antilink off`)
+						sycreply(`${m.metadata.subject}\n- Mute : ${set.mute ? '✅' : '❌'}\n- Anti Link : ${set.antilink ? '✅' : '❌'}\n- Anti Virtex : ${set.antivirtex ? '✅' : '❌'}\n- Anti Delete : ${set.antidelete ? '✅' : '❌'}\n- Welcome : ${set.welcome ? '✅' : '❌'}\n\n*< / >* Example:\n${prefix + command} antilink off`)
 				}
 			}
 			break
@@ -2017,7 +2050,7 @@ for (const emoji of reactEmojis) {
 						sycreply(`Settings Bot @${botNumber.split('@')[0]}\n${settingsBot}`);
 						break
 					default:
-						if (teks[0] || teks[1]) sycreply(`*Please Sellect Settings :*\n- Mode : *${prefix + command} mode self/public*\n- Anti Call : *${prefix + command} anticall on/off*\n- Auto Bio : *${prefix + command} autobio on/off*\n- autoAi : ${prefix} *autoai on/off*\n- Auto Read : *${prefix + command} autoread on/off*\n- Auto Typing : *${prefix + command} autotyping on/off*\n- Auto VoiceNote : *${prefix + command} autovn on/off*\n- Read Sw : *${prefix + command} readsw on/off*\n- Multi Prefix : *${prefix + command} multiprefix on/off*`)
+						if (teks[0] || teks[1]) sycreply(`*Please Sellect Settings :*\n- Mode : *${prefix + command} mode self/public*\n- Anti Call : *${prefix + command} anticall on/off*\n- Auto Bio : *${prefix + command} autobio on/off*\n- autoAi : ${prefix} *autoai on/off*\n- autoAi2 : ${prefix} *autoai2 on/off*\n- Auto Read : *${prefix + command} autoread on/off*\n- Auto Typing : *${prefix + command} autotyping on/off*\n- Auto VoiceNote : *${prefix + command} autovn on/off*\n- Read Sw : *${prefix + command} readsw on/off*\n- Multi Prefix : *${prefix + command} multiprefix on/off*`)
 				}
 				if (!teks[0] && !teks[1]) return sych.sendMessage(m.chat, {
 					text: `*Bot Telah Online Selama*\n*${runtime(os.uptime())}*`
@@ -2103,7 +2136,7 @@ for (const emoji of reactEmojis) {
 			case 'readviewonce':
 			case 'readviewone':
 			case 'rvo': {
-				if (!m.quoted) return sycreply(`Reply view once message\nExample: ${prefix + command}`)
+				if (!m.quoted) return sycreply(`Reply view once message\n*< / >* Example: ${prefix + command}`)
 				try {
 					if (m.quoted.msg.viewOnce) {
 						m.quoted.msg.viewOnce = false
@@ -2121,7 +2154,7 @@ for (const emoji of reactEmojis) {
 						}
 						await sych.relayMessage(m.chat, m.quoted.msg.message, {})
 					} else {
-						sycreply(`Reply view once message\nExample: ${prefix + command}`)
+						sycreply(`Reply view once message\n*< / >* Example: ${prefix + command}`)
 					}
 				} catch (e) {
 					sycreply('Media Tidak Valid!')
@@ -2156,7 +2189,7 @@ for (const emoji of reactEmojis) {
 			break
 			case 'addmsg': {
 				if (!m.quoted) return sycreply('Reply Pesan Yang Ingin Disave Di Database')
-				if (!text) return sycreply(`Example : ${prefix + command} file name`)
+				if (!text) return sycreply(`*< / >* Example : ${prefix + command} file name`)
 				let msgs = db.database
 				if (text.toLowerCase() in msgs) return sycreply(`'${text}' telah terdaftar di list pesan`)
 				msgs[text.toLowerCase()] = m.quoted
@@ -2179,7 +2212,7 @@ for (const emoji of reactEmojis) {
 			}
 			break
 			case 'getmsg': {
-				if (!text) return sycreply(`Example : ${prefix + command} file name\n\nLihat list pesan dengan ${prefix}listmsg`)
+				if (!text) return sycreply(`*< / >* Example : ${prefix + command} file name\n\nLihat list pesan dengan ${prefix}listmsg`)
 				let msgs = db.database
 				if (!(text.toLowerCase() in msgs)) return sycreply(`'${text}' tidak terdaftar di list pesan`)
 				await sych.relayMessage(m.chat, msgs[text.toLowerCase()], {})
@@ -2218,7 +2251,7 @@ if (!isCreator) return sycreply(mess.owner)
 // Case untuk addthumb
 case 'addthumb': {
 if (!isCreator) return sycreply(mess.owner)
-    if (!text) return sycreply(`Example: ${prefix + command} thumbnail_name|image_url`);
+    if (!text) return sycreply(`*< / >* Example: ${prefix + command} thumbnail_name|image_url`);
     let [nama, url] = text.split('|');
     if (!nama || !url) return sycreply(`Please provide both name and URL in the correct format.`);
     
@@ -2266,7 +2299,7 @@ if (!isCreator) return sycreply(mess.owner)
 			case 'menfess': {
 				if (m.isGroup) return sycreply(mess.private)
 				if (menfes[m.sender]) return sycreply(`Kamu Sedang Berada Di Sesi ${command}!`)
-				if (!text) return sycreply(`Example : ${prefix + command} 62xxxx|Nama Samaran`)
+				if (!text) return sycreply(`*< / >* Example : ${prefix + command} 62xxxx|Nama Samaran`)
 				let [teks1, teks2] = text.split`|`
 				if (teks1) {
 					const tujuan = teks1.replace(/[^0-9]/g, '') + '@s.whatsapp.net'
@@ -2295,7 +2328,7 @@ if (!isCreator) return sycreply(mess.owner)
 					});
 					sycreply(`_Memulai ${command}..._\n*Silahkan Mulai kirim pesan/media*\n*Durasi ${command} hanya selama 10 menit*\n*Note :* jika ingin mengakhiri ketik _*${prefix}del${command}*_`)
 				} else {
-					sycreply(`Masukkan Nomernya!\nExample : ${prefix + command} 62xxxx|Nama Samaran`)
+					sycreply(`Masukkan Nomernya!\n*< / >* Example : ${prefix + command} 62xxxx|Nama Samaran`)
 				}
 			}
 			break
@@ -2559,7 +2592,7 @@ for (const emoji of reactEmojis) {
 }
 				if (!text) {
 					console.log('Teks URL TikTok tidak ditemukan.');
-					return sycreply(`Example: ${prefix + command} url_tiktok`);
+					return sycreply(`*< / >* Example: ${prefix + command} url_tiktok`);
 				}
 				if (!text.includes('tiktok.com')) {
 					console.log('URL tidak valid, tidak mengandung hasil dari TikTok.');
@@ -2785,7 +2818,7 @@ for (const emoji of reactEmojis) {
 						});
 					}).catch(e => sycreply('Server sedang offline!'));
 				} else {
-					sycreply(`Kirim/Reply Gambar dengan format\nExample: ${prefix + command}`)
+					sycreply(`Kirim/Reply Gambar dengan format\n*< / >* Example: ${prefix + command}`)
 				}
 			}
 			break
@@ -2802,7 +2835,7 @@ for (const emoji of reactEmojis) {
 			}
 			break;
 			case 'ssweb': {
-				if (!text) return sycreply(`Example: ${prefix + command} https://github.com/nazedev/naze-md`)
+				if (!text) return sycreply(`*< / >* Example: ${prefix + command} https://github.com/nazedev/naze-md`)
 				try {
 					let anu = 'https://' + text.replace(/^https?:\/\//, '')
 					await sych.sendMessage(m.chat, {
@@ -2834,7 +2867,7 @@ for (const emoji of reactEmojis) {
 			break
 			case 'cuaca':
 			case 'weather': {
-				if (!text) return sycreply(`Example: ${prefix + command} jakarta`)
+				if (!text) return sycreply(`*< / >* Example: ${prefix + command} jakarta`)
 				try {
 					let data = await fetchJson(`https://api.openweathermap.org/data/2.5/weather?q=${text}&units=metric&appid=060a6bcfa19809c2cd4d97a212b19273&language=en`)
 					sycreply(`*🏙 Cuaca Kota ${data.name}*\n\n*🌤️ Cuaca :* ${data.weather[0].main}\n*📝 Deskripsi :* ${data.weather[0].description}\n*🌡️ Suhu Rata-rata :* ${data.main.temp} °C\n*🤔 Terasa Seperti :* ${data.main.feels_like} °C\n*🌬️ Tekanan :* ${data.main.pressure} hPa\n*💧 Kelembapan :* ${data.main.humidity}%\n*🌪️ Kecepatan Angin :* ${data.wind.speed} Km/h\n*📍Lokasi :*\n- *Bujur :* ${data.coord.lat}\n- *Lintang :* ${data.coord.lon}\n*🌏 Negara :* ${data.sys.country}`)
@@ -2968,12 +3001,12 @@ for (const emoji of reactEmojis) {
 			case 'emojimix': {
 				if (!text) {
 					console.log("Input kosong!");
-					return sycreply(`Example: ${prefix + command} 😅+🤔`);
+					return sycreply(`*< / >* Example: ${prefix + command} 😅+🤔`);
 				}
 				let [emoji1, emoji2] = text.split`+`;
 				if (!emoji1 || !emoji2) {
 					console.log("Emoji tidak valid atau tidak dipisahkan dengan '+'.");
-					return sycreply(`Example: ${prefix + command} 😅+🤔`);
+					return sycreply(`*< / >* Example: ${prefix + command} 😅+🤔`);
 				}
 				console.log(`Emoji1: ${emoji1}, Emoji2: ${emoji2}`);
 				try {
@@ -3195,7 +3228,7 @@ for (const emoji of reactEmojis) {
 			}
 			break
 			case 'drivedl': {
-				if (!text) return sycreply(`Example: ${prefix + command} url_drive`)
+				if (!text) return sycreply(`*< / >* Example: ${prefix + command} url_drive`)
 				if (!text.includes('drive.google.com')) return sycreply('Url Tidak Mengandung Hasil Dari Google Drive!')
 				try {
 					sycreply(mess.wait);
@@ -3610,14 +3643,14 @@ for (const emoji of reactEmojis) {
 			break
 			case 'setexif': {
 				if (!isCreator) return sycreply(mess.owner)
-				if (!text) return sycreply(`Example : ${prefix + command} packname|author`)
+				if (!text) return sycreply(`*< / >* Example : ${prefix + command} packname|author`)
 				global.packname = text.split("|")[0]
 				global.author = text.split("|")[1]
 				sycreply(`Exif has been successfully changed to\n\n${themeemoji} Packname : ${global.packname}\n${themeemoji} Author : ${global.author}`)
 			}
 			break
 			case 'nulis': {
-				sycreply(`*Example*\n${prefix}nuliskiri\n${prefix}nuliskanan\n${prefix}foliokiri\n${prefix}foliokanan`)
+				sycreply(`**< / >* Example*\n${prefix}nuliskiri\n${prefix}nuliskanan\n${prefix}foliokiri\n${prefix}foliokanan`)
 			}
 			break
 			case 'nuliskiri': {
@@ -3716,7 +3749,7 @@ for (const emoji of reactEmojis) {
 			case 'ttprofile': {
 				if (!text) {
 					console.log('TikTok username not provided.');
-					return sycreply('Example: ' + prefix + command + ' username_tiktok');
+					return sycreply('*< / >* Example: ' + prefix + command + ' username_tiktok');
 				}
 				try {
 					sycreply(mess.wait);
@@ -3909,7 +3942,7 @@ for (const emoji of reactEmojis) {
 			case 'tinyurl':
 			case 'shorturl':
 			case 'shortlink': {
-				if (!text || !isUrl(text)) return sycreply(`Example: ${prefix + command} https://github.com/nazedev/hitori`)
+				if (!text || !isUrl(text)) return sycreply(`*< / >* Example: ${prefix + command} https://github.com/nazedev/hitori`)
 				try {
 					let anu = await axios.get('https://tinyurl.com/api-create.php?url=' + text)
 					sycreply('Url : ' + anu.data)
@@ -3920,7 +3953,7 @@ for (const emoji of reactEmojis) {
 			break
 			case 'git':
 			case 'gitclone': {
-				if (!args[0]) return sycreply(`Example: ${prefix + command} https://github.com/nazedev/hitori`)
+				if (!args[0]) return sycreply(`*< / >* Example: ${prefix + command} https://github.com/nazedev/hitori`)
 				if (!isUrl(args[0]) && !args[0].includes('github.com')) return sycreply('Gunakan Url Github!')
 				let [, user, repo] = args[0].match(/(?:https|git)(?::\/\/|@)github\.com[\/:]([^\/:]+)\/(.+)/i) || []
 				try {
@@ -3969,7 +4002,7 @@ for (const emoji of reactEmojis) {
 			}
 			// Case untuk AI utama
 			case 'ai': {
-				if (!text) return sycreply(`Example: ${prefix + command} query`);
+				if (!text) return sycreply(`*< / >* Example: ${prefix + command} query`);
 				try {
 					let promt = `kalo jawab pake bahasa indonesia ga baku aja: ${text}`;
 					let hasil = await yanzGpt(promt);
@@ -3987,7 +4020,7 @@ for (const emoji of reactEmojis) {
 			}
 			// Auto AI: memproses semua pesan secara otomatis jika autoAi aktif
 			case 'simi': {
-				if (!text) return sycreply(`Example: ${prefix + command} query`)
+				if (!text) return sycreply(`*< / >* Example: ${prefix + command} query`)
 				try {
 					const hasil = await simi(text)
 					m.reply(hasil.success)
@@ -4094,7 +4127,7 @@ for (const emoji of reactEmojis) {
 break;
 			// Search Menu
 			case 'google': {
-				if (!text) return sycreply(`Example: ${prefix + command} query`)
+				if (!text) return sycreply(`*< / >* Example: ${prefix + command} query`)
 				try {
 					let anu = await google.search(text);
 					let msg = anu.knowledge_panel.metadata.map(({
@@ -4111,7 +4144,7 @@ break;
 			}
 			break
 			case 'gimage': {
-				if (!text) return sycreply(`Example: ${prefix + command} query`)
+				if (!text) return sycreply(`*< / >* Example: ${prefix + command} query`)
 				gis(text, async (err, result) => {
 					if (err) return sycreply(`Image Untuk Query : _${text}_\nTidak Ditemukan!`)
 					if (result == undefined) {
@@ -4137,7 +4170,7 @@ break;
 			case 'youtubesearch2': {
 				if (!text) {
 					console.log("⛔ Input teks kosong");
-					return sycreply(`Example: ${prefix + command} you = i korea | you = i japan`);
+					return sycreply(`*< / >* Example: ${prefix + command} you = i korea | you = i japan`);
 				}
 				console.log("✅ Perintah diterima:", command, "dengan teks:", text);
 				sycreply(mess.wait);
@@ -4240,7 +4273,7 @@ for (const emoji of reactEmojis) {
 			case 'youtubesearch': {
 				if (!text) {
 					console.log("⛔ Input teks kosong");
-					return sycreply(`Example: ${prefix + command} dj komang`);
+					return sycreply(`*< / >* Example: ${prefix + command} dj komang`);
 				}
 				console.log("✅ Perintah diterima:", command, "dengan teks:", text);
 				sycreply(mess.wait);
@@ -4329,7 +4362,7 @@ for (const emoji of reactEmojis) {
 			}
 			break;
 			case 'pixiv': {
-				if (!text) return sycreply(`Example: ${prefix + command} hu tao`)
+				if (!text) return sycreply(`*< / >* Example: ${prefix + command} hu tao`)
 				try {
 					let {
 						pixivdl
@@ -4367,7 +4400,7 @@ for (const emoji of reactEmojis) {
 			break
 			case 'pinterest':
 			case 'pint': {
-				if (!text) return sycreply(`Example: ${prefix + command} hu tao`);
+				if (!text) return sycreply(`*< / >* Example: ${prefix + command} hu tao`);
 				try {
 					sycreply(mess.wait);
 
@@ -4454,7 +4487,7 @@ for (const emoji of reactEmojis) {
 			}
 			break;
 			case 'wallpaper': {
-				if (!text) return sycreply(`Example: ${prefix + command} hu tao`)
+				if (!text) return sycreply(`*< / >* Example: ${prefix + command} hu tao`)
 				try {
 					let anu = await wallpaper(text)
 					let result = pickRandom(anu)
@@ -4501,7 +4534,7 @@ for (const emoji of reactEmojis) {
 			}
 			break;
 			case 'ringtone': {
-				if (!text) return sycreply(`Example: ${prefix + command} black rover`)
+				if (!text) return sycreply(`*< / >* Example: ${prefix + command} black rover`)
 				let anu = await ringtone(text)
 				let result = pickRandom(anu)
 				await sych.sendMessage(m.chat, {
@@ -4517,7 +4550,7 @@ for (const emoji of reactEmojis) {
 			break
 			case 'npm':
 			case 'npmjs': {
-				if (!text) return sycreply(`Example: ${prefix + command} axios`)
+				if (!text) return sycreply(`*< / >* Example: ${prefix + command} axios`)
 				let res = await fetch(`http://registry.npmjs.com/-/v1/search?text=${text}`)
 				let {
 					objects
@@ -4532,7 +4565,7 @@ for (const emoji of reactEmojis) {
 			}
 			break
 			case 'style': {
-				if (!text) return sycreply(`Example: ${prefix + command} sych`)
+				if (!text) return sycreply(`*< / >* Example: ${prefix + command} sych`)
 				let anu = await styletext(text)
 				let txt = anu.map(a => `*${a.name}*\n${a.result}`).join`\n\n`
 				sycreply(txt)
@@ -4540,7 +4573,7 @@ for (const emoji of reactEmojis) {
 			break
 			case 'spotify':
 			case 'spotifysearch': {
-				if (!text) return sycreply(`Example: ${prefix + command} alan walker alone`)
+				if (!text) return sycreply(`*< / >* Example: ${prefix + command} alan walker alone`)
 				try {
 					let hasil = await fetchJson('https://www.bhandarimilan.info.np/spotisearch?query=' + encodeURIComponent(text));
 					let txt = hasil.map(a => {
@@ -4563,7 +4596,7 @@ for (const emoji of reactEmojis) {
 			case 'ytaudio':
 			case 'ytplayaudio': {
 				if (!isPremium) return sycreply(mess.prem);
-				if (!text) return sycreply(`Example: ${prefix + command} url_youtube`);
+				if (!text) return sycreply(`*< / >* Example: ${prefix + command} url_youtube`);
 				if (!text.includes('youtu')) return sycreply('Url Tidak Mengandung Result Dari Youtube!');
 				sycreply('Memproses permintaan Anda, harap tunggu...');
 
@@ -4650,7 +4683,7 @@ for (const emoji of reactEmojis) {
 			}
 			break;
 			case 'play3': {
-				if (!text) return sycreply(`Example: ${prefix + command} dj komang`);
+				if (!text) return sycreply(`*< / >* Example: ${prefix + command} dj komang`);
 				sycreply(mess.wait);
 
 // Emoji yang akan digunakan
@@ -4746,7 +4779,7 @@ for (const emoji of reactEmojis) {
 			case 'ytvideo':
 			case 'ytplayvideo': {
 				if (!isPremium) return sycreply(mess.prem);
-				if (!text) return sycreply(`Example: ${prefix + command} url_youtube`);
+				if (!text) return sycreply(`*< / >* Example: ${prefix + command} url_youtube`);
 				if (!text.includes('youtu')) return sycreply('Url Tidak Mengandung Result Dari Youtube!');
 
 // Emoji yang akan digunakan
@@ -4847,7 +4880,7 @@ for (const emoji of reactEmojis) {
 			case 'instadl':
 			case 'igdown':
 			case 'igdl': {
-				if (!text) return sycreply(`Example: ${prefix + command} url_instagram`)
+				if (!text) return sycreply(`*< / >* Example: ${prefix + command} url_instagram`)
 				if (!text.includes('instagram.com')) return sycreply('Url Tidak Mengandung Result Dari Instagram!')
 				sycreply(mess.wait);
 
@@ -4905,7 +4938,7 @@ break;
 			case 'instagramstory':
 			case 'instastory':
 			case 'storyig': {
-				if (!text) return sycreply(`Example: ${prefix + command} usernamenya`)
+				if (!text) return sycreply(`*< / >* Example: ${prefix + command} usernamenya`)
 				try {
 					const hasil = await instaStory(text);
 					sycreply(mess.wait);
@@ -4945,7 +4978,7 @@ for (const emoji of reactEmojis) {
 				}
 				if (!text) {
 					console.log('Teks URL TikTok tidak ditemukan.');
-					return sycreply(`Example: ${prefix + command} url_tiktok`);
+					return sycreply(`*< / >* Example: ${prefix + command} url_tiktok`);
 				}
 				if (!text.includes('tiktok.com')) {
 					console.log('URL tidak valid, tidak mengandung hasil dari TikTok.');
@@ -5001,7 +5034,7 @@ for (const emoji of reactEmojis) {
 				}
 				if (!text) {
 					console.log('Teks URL TikTok tidak ditemukan.');
-					return sycreply(`Example: ${prefix + command} url_tiktok`);
+					return sycreply(`*< / >* Example: ${prefix + command} url_tiktok`);
 				}
 				if (!text.includes('tiktok.com')) {
 					console.log('URL tidak valid, tidak mengandung hasil dari TikTok.');
@@ -5067,7 +5100,7 @@ for (const emoji of reactEmojis) {
 			case 'fbdownload':
 			case 'fbmp4':
 			case 'fbvideo': {
-				if (!text) return sycreply(`Example: ${prefix + command} url_facebook`)
+				if (!text) return sycreply(`*< / >* Example: ${prefix + command} url_facebook`)
 				if (!text.includes('facebook.com')) return sycreply('Url Tidak Mengandung Result Dari Facebook!')
 				try {
 					const hasil = await facebookDl(text);
@@ -5097,7 +5130,7 @@ for (const emoji of reactEmojis) {
 			break
 			case 'videymp4': {
 				if (!isPremium) return sycreply(mess.prem);
-				if (!text) return sycreply(`Example: ${prefix + command} url_videy`)
+				if (!text) return sycreply(`*< / >* Example: ${prefix + command} url_videy`)
 				if (!text.includes('videy.co')) return sycreply('Url Tidak Mengandung Hasil Dari Videy!')
 				try {
 					sycreply(mess.wait);
@@ -5136,7 +5169,7 @@ for (const emoji of reactEmojis) {
 			case 'mediafire': {
 				if (!text) {
 					console.log('URL tidak diberikan');
-					return sycreply(`Contoh: ${prefix + command} https://www.mediafire.com/file/xxxxxxxxx/xxxxx.zip/file`);
+					return sycreply(`*< / >* Example: ${prefix + command} https://www.mediafire.com/file/xxxxxxxxx/xxxxx.zip/file`);
 				}
 				if (!isUrl(args[0]) && !args[0].includes('mediafire.com')) {
 					console.log('URL tidak valid: ' + args[0]);
@@ -5166,7 +5199,7 @@ for (const emoji of reactEmojis) {
 				// Cek apakah ada URL yang diberikan
 				if (!text) {
 					console.log("URL tidak diberikan. Mengirimkan contoh penggunaan.");
-					return sycreply(`Example: ${prefix + command} https://open.spotify.com/track/0JiVRyTJcJnmlwCZ854K4p`);
+					return sycreply(`*< / >* Example: ${prefix + command} https://open.spotify.com/track/0JiVRyTJcJnmlwCZ854K4p`);
 				}
 				// Validasi format URL
 				if (!isUrl(args[0]) && !args[0].includes('open.spotify.com/track')) {
@@ -5329,14 +5362,14 @@ for (const emoji of reactEmojis) {
 			}
 			break
 			case 'bisakah': {
-				if (!text) return sycreply(`Example : ${prefix + command} saya menang?`)
+				if (!text) return sycreply(`*< / >* Example : ${prefix + command} saya menang?`)
 				let bisa = ['Bisa', 'Coba Saja', 'Pasti Bisa', 'Mungkin Saja', 'Tidak Bisa', 'Tidak Mungkin', 'Coba Ulangi', 'Ngimpi kah?', 'yakin bisa?']
 				let keh = bisa[Math.floor(Math.random() * bisa.length)]
 				sycreply(`*Bisakah ${text}*\nJawab : ${keh}`)
 			}
 			break
 			case 'apakah': {
-				if (!text) return sycreply(`Example : ${prefix + command} saya bisa menang?`)
+				if (!text) return sycreply(`*< / >* Example : ${prefix + command} saya bisa menang?`)
 				let apa = ['Iya', 'Tidak', 'Bisa Jadi', 'Coba Ulangi', 'Mungkin Saja', 'Mungkin Tidak', 'Mungkin Iya', 'Ntahlah']
 				let kah = apa[Math.floor(Math.random() * apa.length)]
 				sycreply(`*${command} ${text}*\nJawab : ${kah}`)
@@ -5344,7 +5377,7 @@ for (const emoji of reactEmojis) {
 			break
 			case 'kapan':
 			case 'kapankah': {
-				if (!text) return sycreply(`Example : ${prefix + command} saya menang?`)
+				if (!text) return sycreply(`*< / >* Example : ${prefix + command} saya menang?`)
 				let kapan = ['Besok', 'Lusa', 'Nanti', '4 Hari Lagi', '5 Hari Lagi', '6 Hari Lagi', '1 Minggu Lagi', '2 Minggu Lagi', '3 Minggu Lagi', '1 Bulan Lagi', '2 Bulan Lagi', '3 Bulan Lagi', '4 Bulan Lagi', '5 Bulan Lagi', '6 Bulan Lagi', '1 Tahun Lagi', '2 Tahun Lagi', '3 Tahun Lagi', '4 Tahun Lagi', '5 Tahun Lagi', '6 Tahun Lagi', '1 Abad lagi', '3 Hari Lagi', 'Bulan Depan', 'Ntahlah', 'Tidak Akan Pernah']
 				let koh = kapan[Math.floor(Math.random() * kapan.length)]
 				sycreply(`*${command} ${text}*\nJawab : ${koh}`)
@@ -5353,14 +5386,14 @@ for (const emoji of reactEmojis) {
 			case 'tanyakerang':
 			case 'kerangajaib':
 			case 'kerang': {
-				if (!text) return sycreply(`Example : ${prefix + command} boleh pinjam 100?`)
+				if (!text) return sycreply(`*< / >* Example : ${prefix + command} boleh pinjam 100?`)
 				let krng = ['Mungkin suatu hari', 'Tidak juga', 'Tidak keduanya', 'Kurasa tidak', 'Ya', 'Tidak', 'Coba tanya lagi', 'Tidak ada']
 				let jwb = pickRandom(krng)
 				sycreply(`*Pertanyaan : ${text}*\n*Jawab : ${jwb}*`)
 			}
 			break
 			case 'cekmati': {
-				if (!text) return sycreply(`Example : ${prefix + command} nama lu`)
+				if (!text) return sycreply(`*< / >* Example : ${prefix + command} nama lu`)
 				let teksnya = text.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, '').replace(/\d/g, '');
 				let {
 					data
@@ -5376,7 +5409,7 @@ for (const emoji of reactEmojis) {
 			}
 			break
 			case 'cekkhodam': {
-				if (!text) return sycreply(`Example : ${prefix + command} nama lu`);
+				if (!text) return sycreply(`*< / >* Example : ${prefix + command} nama lu`);
 				try {
 					const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/random/cekkhodam.json'));
 					// Validasi apakah hasil memiliki properti yang dibutuhkan
@@ -5408,7 +5441,7 @@ for (const emoji of reactEmojis) {
 			break
 			case 'fitnah': {
 				let [teks1, teks2, teks3] = text.split`|`
-				if (!teks1 || !teks2 || !teks3) return sycreply(`Example : ${prefix + command} pesan target|pesan mu|nomer/tag target`)
+				if (!teks1 || !teks2 || !teks3) return sycreply(`*< / >* Example : ${prefix + command} pesan target|pesan mu|nomer/tag target`)
 				let ftelo = {
 					key: {
 						fromMe: false,
@@ -5579,7 +5612,7 @@ for (const emoji of reactEmojis) {
 					if (!akinator[m.sender]) return sycreply('Kamu tidak Sedang bermain Akinator!')
 					delete akinator[m.sender];
 					sycreply('Sukses Mengakhiri sessi Akinator')
-				} else sycreply(`Example : ${prefix + command} start/end`)
+				} else sycreply(`*< / >* Example : ${prefix + command} start/end`)
 			}
 			break
 			case 'tebakbom': {
@@ -6101,7 +6134,31 @@ case 'llama': {
 }
 break;
 
-case 'setpromtllama': {
+// Fungsi untuk mengatur autoai2
+case 'autoai2': {
+    // Mengecek apakah ada parameter on/off
+    if (!isCreator) return sycreply(mess.owner); // Memeriksa apakah pengirim adalah pembuat bot
+    if (!text) return sycreply(`Gunakan perintah *${prefix + command}* on/off`);
+
+    // Mengubah status berdasarkan input
+    if (text.toLowerCase() === 'on') {
+        if (autoAIStatus) {
+            return sycreply('Auto AI sudah aktif sebelumnya!');
+        }
+        autoAIStatus = true;
+        sycreply('Auto AI berhasil diaktifkan!');
+    } else if (text.toLowerCase() === 'off') {
+        if (!autoAIStatus) {
+            return sycreply('Auto AI sudah nonaktif sebelumnya!');
+        }
+        autoAIStatus = false;
+        sycreply('Auto AI berhasil dinonaktifkan!');
+    } else {
+        sycreply(`Gunakan perintah *${prefix + command}* on/off`);
+    }
+}
+break;
+case 'setpromt2': {
     // Cek apakah pengguna mengirim prompt baru
     if (!text) return sycreply(`Kirim perintah *${prefix + command}* <prompt baru>`);
 
@@ -6252,9 +6309,482 @@ break;
 				}
 			}
 			break
-			// Menu
-			case 'allmenu':
 			case 'menu': {
+			const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
+//nih kalo mau ubah font ASCII nya https://fsymbols.com/generators/carty/
+const inimenu = `
+${ucapanWaktu} @${m.sender.split('@')[0]}
+${f}*Name* : ${m.pushName ? m.pushName : 'Lu Siapa?'}
+${f}*Powered* : @${'0@s.whatsapp.net'.split('@')[0]}
+${f}*Owner* : @${owner[0].split('@')[0]}
+${f}*Mode* : ${sych.public ? 'Public' : 'Self'}
+${f}*Prefix* :${db.set[botNumber].multiprefix ? '「 MULTI-PREFIX 」' : ' *'+prefix+'*' }
+${f}*Tanggal* : ${tanggal}
+${f}*Hari* : ${hari}
+${f}*Jam* : ${jam} WIB
+
+${f}╭━━━┳╮╱╱╭┳━━━┳╮╱╭┳╮╱╱╭╮
+${f}┃╭━╮┃╰╮╭╯┃╭━╮┃┃╱┃┃╰╮╭╯┃
+${f}┃╰━━╋╮╰╯╭┫┃╱╰┫╰━╯┣╮╰╯╭╯
+${f}╰━━╮┃╰╮╭╯┃┃╱╭┫╭━╮┃╰╮╭╯
+${f}┃╰━╯┃╱┃┃╱┃╰━╯┃┃╱┃┃╱┃┃
+${f}╰━━━╯╱╰╯╱╰━━━┻╯╱╰╯╱╰╯
+
+*®Mohon maaf jika script bot ada error dan delay karena bot tempatnya salah dan error, wajar bot bukan manusia boyy <!>*
+
+${n}ᯓ★ BERIKUT ADALAH MENU SYCHY BOTz ★ᯓ${n}
+
+${setv} ${prefix} GROUPMENU
+${setv} ${prefix} OWNERMENU
+${setv} ${prefix} DOWNLOADMENU
+${setv} ${prefix} AIMENU
+${setv} ${prefix} FUNMENU
+${setv} ${prefix} TOOLSMENU
+${setv} ${prefix} GAMEMENU
+
+${f}©${botname}
+`
+await sych.sendMessage(m.chat, {
+        text: inimenu,
+        contextInfo: {
+        mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net'],
+            externalAdReply: {
+                "showAdAttribution": true,
+                "containsAutoReply": true,
+                "title": `${global.botname}`,
+                "body": `< / > Simple Menu`,
+                "previewType": "VIDEO",
+                "thumbnailUrl": 'https://i.ibb.co.com/fnhnL0d/750c4fde4757b61a13d70dadea63d4f3.jpg', // Mengambil thumbnail secara random
+				"mediaType": 1,
+				"previewType": 0,                
+                "renderLargerThumbnail": true,
+                "sourceUrl": 'https://github.com/sychyy'
+            }
+        }
+    }, {
+        quoted: fkontak
+    })
+}
+    break
+    case 'gamemenu':
+    case 'gemmenu': {
+    const gmenu = `
+${ucapanWaktu} @${m.sender.split('@')[0]}
+
+${f}┏━━━┳┓╋╋┏┳━━━┳┓╋┏┳━━━┳━━━┓
+${f}┃┏━┓┃┗┓┏┛┃┏━┓┃┃╋┃┃┏━━┫┏━━┛
+${f}┃┗━━╋┓┗┛┏┫┃╋┗┫┗━┛┃┗━━┫┗━━┓
+${f}┗━━┓┃┗┓┏┛┃┃╋┏┫┏━┓┃┏━━┫┏━━┛
+${f}┃┗━┛┃╋┃┃╋┃┗━┛┃┃╋┃┃┗━━┫┗━━┓
+${f}┗━━━┛╋┗┛╋┗━━━┻┛╋┗┻━━━┻━━━┛
+
+${n}GAME MENU ᯤ${n}
+
+${setv} ${prefix}tictactoe
+${setv} ${prefix}akinator
+${setv} ${prefix}suit
+${setv} ${prefix}slot
+${setv} ${prefix}math (level)
+${setv} ${prefix}begal
+${setv} ${prefix}casino (nominal)
+${setv} ${prefix}rampok (@tag)
+${setv} ${prefix}tekateki
+${setv} ${prefix}tebaklirik
+${setv} ${prefix}tebakkata
+${setv} ${prefix}tebakbom
+${setv} ${prefix}susunkata
+${setv} ${prefix}tebakkimia
+${setv} ${prefix}caklontong
+${setv} ${prefix}tebaknegara
+${setv} ${prefix}tebakgambar
+${setv} ${prefix}tebakepep
+${setv} ${prefix}tebakbendera
+`    
+await sych.sendMessage(m.chat, {
+        text: gmenu,
+        contextInfo: {
+        mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net'],
+            externalAdReply: {
+                "showAdAttribution": true,
+                "containsAutoReply": true,
+                "title": `${global.botname}`,
+                "body": `< / > Game Menu`,
+                "previewType": "VIDEO",
+                "thumbnailUrl": getRandomThumb(), // Mengambil thumbnail secara random
+                "sourceUrl": 'https://github.com/sychyy'
+            }
+        }
+    }, {
+        quoted: repPy
+    })
+}
+break
+case 'funmenu': 
+case 'fmenu': {
+const fmenu = `
+${ucapanWaktu} @${m.sender.split('@')[0]}
+
+${f}┏━━━┳┓╋╋┏┳━━━┳┓╋┏┳━━━┳━━━┓
+${f}┃┏━┓┃┗┓┏┛┃┏━┓┃┃╋┃┃┏━━┫┏━━┛
+${f}┃┗━━╋┓┗┛┏┫┃╋┗┫┗━┛┃┗━━┫┗━━┓
+${f}┗━━┓┃┗┓┏┛┃┃╋┏┫┏━┓┃┏━━┫┏━━┛
+${f}┃┗━┛┃╋┃┃╋┃┗━┛┃┃╋┃┃┗━━┫┗━━┓
+${f}┗━━━┛╋┗┛╋┗━━━┻┛╋┗┻━━━┻━━━┛
+
+${n}FUN MENU ᯤ${n}
+
+${setv} ${prefix}dadu
+${setv} ${prefix}cermin (q)
+${setv} ${prefix}bisakah (text)
+${setv} ${prefix}apakah (text)
+${setv} ${prefix}kapan (text)
+${setv} ${prefix}kerangajaib (text)
+${setv} ${prefix}cekmati (nama lu)
+${setv} ${prefix}ceksifat
+${setv} ${prefix}cekkhodam (nama lu)
+${setv} ${prefix}rate (reply pesan)
+${setv} ${prefix}jodohku
+${setv} ${prefix}jadian
+${setv} ${prefix}fitnah
+${setv} ${prefix}halah (text)
+${setv} ${prefix}hilih (text)
+${setv} ${prefix}huluh (text)
+${setv} ${prefix}heleh (text)
+${setv} ${prefix}holoh (text)
+`
+await sych.sendMessage(m.chat, {
+        text: fmenu,
+        contextInfo: {
+        mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net'],
+            externalAdReply: {
+                "showAdAttribution": true,
+                "containsAutoReply": true,
+                "title": `${global.botname}`,
+                "body": `< / > Fun Menu`,
+                "previewType": "VIDEO",
+                "thumbnailUrl": getRandomThumb(), // Mengambil thumbnail secara random
+                "sourceUrl": 'https://github.com/sychyy'
+            }
+        }
+    }, {
+        quoted: repPy
+    })
+}
+break
+    case 'toolsmenu':
+    case 'toolmenu': {
+    const tlmenu = `
+${ucapanWaktu} @${m.sender.split('@')[0]}
+
+${f}┏━━━┳┓╋╋┏┳━━━┳┓╋┏┳━━━┳━━━┓
+${f}┃┏━┓┃┗┓┏┛┃┏━┓┃┃╋┃┃┏━━┫┏━━┛
+${f}┃┗━━╋┓┗┛┏┫┃╋┗┫┗━┛┃┗━━┫┗━━┓
+${f}┗━━┓┃┗┓┏┛┃┃╋┏┫┏━┓┃┏━━┫┏━━┛
+${f}┃┗━┛┃╋┃┃╋┃┗━┛┃┃╋┃┃┗━━┫┗━━┓
+${f}┗━━━┛╋┗┛╋┗━━━┻┛╋┗┻━━━┻━━━┛
+
+${n}TOOLS MENU ᯤ${n}
+
+${setv} ${prefix}get (url)
+${setv} ${prefix}encode (q)
+${setv} ${prefix}setcmd (reply stc)
+${setv} ${prefix}listcmd
+${setv} ${prefix}delcmd (reply stc)
+${setv} ${prefix}cekcuaca (kota)
+${setv} ${prefix}decode (q encode)
+${setv} ${prefix}hd (reply pesan)
+${setv} ${prefix}brat (txt)
+${setv} ${prefix}toaudio (reply pesan)
+${setv} ${prefix}tomp3 (reply pesan)
+${setv} ${prefix}tovn (reply pesan)
+${setv} ${prefix}toimage (reply pesan)
+${setv} ${prefix}toptv (reply pesan)
+${setv} ${prefix}tourl (reply pesan)
+${setv} ${prefix}getq (reply pesan)
+${setv} ${prefix}tts (textnya)
+${setv} ${prefix}toqr (textnya)
+${setv} ${prefix}ssweb (url)
+${setv} ${prefix}sticker (send/reply img)
+${setv} ${prefix}colong (reply stiker)
+${setv} ${prefix}smeme (send/reply img)
+${setv} ${prefix}emojimix 🙃+💀
+${setv} ${prefix}nulis
+${setv} ${prefix}joko (teksnya)
+${setv} ${prefix}readmore text1|text2
+${setv} ${prefix}qc (pesannya)
+${setv} ${prefix}translate
+${setv} ${prefix}wasted (send/reply img)
+${setv} ${prefix}triggered (send/reply img)
+${setv} ${prefix}shorturl (urlnya)
+${setv} ${prefix}gitclone (urlnya)
+${setv} ${prefix}fat (reply audio)
+${setv} ${prefix}fast (reply audio)
+${setv} ${prefix}bass (reply audio)
+${setv} ${prefix}slow (reply audio)
+${setv} ${prefix}tupai (reply audio)
+${setv} ${prefix}deep (reply audio)
+${setv} ${prefix}robot (reply audio)
+${setv} ${prefix}blown (reply audio)
+${setv} ${prefix}reverse (reply audio)
+${setv} ${prefix}smooth (reply audio)
+${setv} ${prefix}earrape (reply audio)
+${setv} ${prefix}nightcore (reply audio)
+${setv} ${prefix}getexif (reply sticker)
+${setv} ${prefix}sticktele
+
+${f}©${botname}
+`    
+await sych.sendMessage(m.chat, {
+        text: tlmenu,
+        contextInfo: {
+        mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net'],
+            externalAdReply: {
+                "showAdAttribution": true,
+                "containsAutoReply": true,
+                "title": `${global.botname}`,
+                "body": `< / > Tools Menu`,
+                "previewType": "VIDEO",
+                "thumbnailUrl": getRandomThumb(), // Mengambil thumbnail secara random
+                "sourceUrl": 'https://github.com/sychyy'
+            }
+        }
+    }, {
+        quoted: repPy
+    })
+}
+break
+case 'downloadmenu':
+case 'downmenu': {
+const downmenu = `
+${ucapanWaktu} @${m.sender.split('@')[0]}
+
+${f}┏━━━┳┓╋╋┏┳━━━┳┓╋┏┳━━━┳━━━┓
+${f}┃┏━┓┃┗┓┏┛┃┏━┓┃┃╋┃┃┏━━┫┏━━┛
+${f}┃┗━━╋┓┗┛┏┫┃╋┗┫┗━┛┃┗━━┫┗━━┓
+${f}┗━━┓┃┗┓┏┛┃┃╋┏┫┏━┓┃┏━━┫┏━━┛
+${f}┃┗━┛┃╋┃┃╋┃┗━┛┃┃╋┃┃┗━━┫┗━━┓
+${f}┗━━━┛╋┗┛╋┗━━━┻┛╋┗┻━━━┻━━━┛
+
+${n}DOWNLOAD MENU ᯤ${n}
+
+${setv} ${prefix}spotifydl (url)
+${setv} ${prefix}ytmp3 (url)
+${setv} ${prefix}ttslide (url)
+${setv} ${prefix}play3 (q)
+${setv} ${prefix}ytmp4 (url)
+${setv} ${prefix}instagram (url)
+${setv} ${prefix}tiktok (url)
+${setv} ${prefix}facebook (url)
+${setv} ${prefix}mediafire (url)
+${setv} ${prefix}videymp4 (url)
+
+${f}©${botname}
+`
+await sych.sendMessage(m.chat, {
+        text: downmenu,
+        contextInfo: {
+        mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net'],
+            externalAdReply: {
+                "showAdAttribution": true,
+                "containsAutoReply": true,
+                "title": `${global.botname}`,
+                "body": `< / > Download Menu`,
+                "previewType": "VIDEO",
+                "thumbnailUrl": getRandomThumb(), // Mengambil thumbnail secara random
+                "sourceUrl": 'https://github.com/sychyy'
+            }
+        }
+    }, {
+        quoted: repPy
+    })
+}    
+    break
+    case 'aimenu': {
+    const aimenu = `
+${ucapanWaktu} @${m.sender.split('@')[0]}
+
+${f}┏━━━┳┓╋╋┏┳━━━┳┓╋┏┳━━━┳━━━┓
+${f}┃┏━┓┃┗┓┏┛┃┏━┓┃┃╋┃┃┏━━┫┏━━┛
+${f}┃┗━━╋┓┗┛┏┫┃╋┗┫┗━┛┃┗━━┫┗━━┓
+${f}┗━━┓┃┗┓┏┛┃┃╋┏┫┏━┓┃┏━━┫┏━━┛
+${f}┃┗━┛┃╋┃┃╋┃┗━┛┃┃╋┃┃┗━━┫┗━━┓
+${f}┗━━━┛╋┗┛╋┗━━━┻┛╋┗┻━━━┻━━━┛
+
+${n}AI MENU ᯤ${n}
+    
+${setv} ${prefix}ai (query)
+${setv} ${prefix}gemini (query)
+${setv} ${prefix}luminai (query)
+${setv} ${prefix}meta (query)
+${setv} ${prefix}llama (query)
+${setv} ${prefix}setpromt2 (query)
+${setv} ${prefix}simi (query)
+${setv} ${prefix}aitukam
+${setv} ${prefix}esia
+${setv} ${prefix}autoai2 (own)
+${setv} ${prefix}autoai (own)
+${setv} ${prefix}txt2img (query)
+${setv} ${prefix}img2text (reply img/stc)
+${setv} ${prefix}aimg (query)
+`
+await sych.sendMessage(m.chat, {
+        text: aimenu,
+        contextInfo: {
+        mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net'],
+            externalAdReply: {
+                "showAdAttribution": true,
+                "containsAutoReply": true,
+                "title": `${global.botname}`,
+                "body": `< / > AI Menu`,
+                "previewType": "VIDEO",
+                "thumbnailUrl": getRandomThumb(), // Mengambil thumbnail secara random
+                "sourceUrl": 'https://github.com/sychyy'
+            }
+        }
+    }, {
+        quoted: repPy
+    })
+}
+    break    
+    case 'ownermenu':
+    case 'ownmenu': {
+    const ownmenu = `
+${ucapanWaktu} @${m.sender.split('@')[0]}
+
+${f}┏━━━┳┓╋╋┏┳━━━┳┓╋┏┳━━━┳━━━┓
+${f}┃┏━┓┃┗┓┏┛┃┏━┓┃┃╋┃┃┏━━┫┏━━┛
+${f}┃┗━━╋┓┗┛┏┫┃╋┗┫┗━┛┃┗━━┫┗━━┓
+${f}┗━━┓┃┗┓┏┛┃┃╋┏┫┏━┓┃┏━━┫┏━━┛
+${f}┃┗━┛┃╋┃┃╋┃┗━┛┃┃╋┃┃┗━━┫┗━━┓
+${f}┗━━━┛╋┗┛╋┗━━━┻┛╋┗┻━━━┻━━━┛
+
+${n}OWNER MENU ᯤ${n}
+
+${setv} ${prefix}bot [set]
+${setv} ${prefix}addthumb <nme|lnk>
+${setv} ${prefix}delthumb <nme>
+${setv} ${prefix}listthumb
+${setv} ${prefix}setexif
+${setv} ${prefix}setbio
+${setv} ${prefix}setppbot
+${setv} ${prefix}join
+${setv} ${prefix}leave
+${setv} ${prefix}block
+${setv} ${prefix}listblock
+${setv} ${prefix}openblock
+${setv} ${prefix}listpc
+${setv} ${prefix}addcase
+${setv} ${prefix}getcase
+${setv} ${prefix}delcase
+${setv} ${prefix}listgc
+${setv} ${prefix}checklocation
+${setv} ${prefix}creategc
+${setv} ${prefix}addprem
+${setv} ${prefix}delprem
+${setv} ${prefix}listprem
+${setv} ${prefix}addlimit
+${setv} ${prefix}adduang
+${setv} ${prefix}bot --settings
+${setv} ${prefix}bot settings
+${setv} ${prefix}getsession
+${setv} ${prefix}delsession
+${setv} ${prefix}delsampah
+${setv} ${prefix}upsw
+${setv} ${prefix}shutdown
+${setv} ${prefix}restart
+${setv} $
+${setv} >
+${setv} <
+
+${f}©${botname}
+`
+await sych.sendMessage(m.chat, {
+        text: ownmenu,
+        contextInfo: {
+        mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net'],
+            externalAdReply: {
+                "showAdAttribution": true,
+                "containsAutoReply": true,
+                "title": `${global.botname}`,
+                "body": `< / > Owner Menu`,
+                "previewType": "VIDEO",
+                "thumbnailUrl": getRandomThumb(), // Mengambil thumbnail secara random
+                "sourceUrl": 'https://github.com/sychyy'
+            }
+        }
+    }, {
+        quoted: repPy
+    })
+}
+    break    
+    case 'groupmenu': 
+    case 'grupmenu': {
+    const gcmenu = `
+${ucapanWaktu} @${m.sender.split('@')[0]}
+
+${f}┏━━━┳┓╋╋┏┳━━━┳┓╋┏┳━━━┳━━━┓
+${f}┃┏━┓┃┗┓┏┛┃┏━┓┃┃╋┃┃┏━━┫┏━━┛
+${f}┃┗━━╋┓┗┛┏┫┃╋┗┫┗━┛┃┗━━┫┗━━┓
+${f}┗━━┓┃┗┓┏┛┃┃╋┏┫┏━┓┃┏━━┫┏━━┛
+${f}┃┗━┛┃╋┃┃╋┃┗━┛┃┃╋┃┃┗━━┫┗━━┓
+${f}┗━━━┛╋┗┛╋┗━━━┻┛╋┗┻━━━┻━━━┛
+
+${n}GROUP MENU ᯤ${n}
+
+${setv} ${prefix}add (62xxx)
+${setv} ${prefix}kick (@tag/62xxx)
+${setv} ${prefix}promote (@tag/62xxx)
+${setv} ${prefix}demote (@tag/62xxx)
+${setv} ${prefix}setname (nama baru gc)
+${setv} ${prefix}setdesc (desk)
+${setv} ${prefix}setppgc (reply imgnya)
+${setv} ${prefix}delete (reply pesan)
+${setv} ${prefix}linkgrup
+${setv} ${prefix}revoke
+${setv} ${prefix}startsecret (@tag)
+${setv} ${prefix}secretmsg (q)
+${setv} ${prefix}endsecret
+${setv} ${prefix}tagall
+${setv} ${prefix}hidetag
+${setv} ${prefix}totag (reply pesan)
+${setv} ${prefix}listonline
+${setv} ${prefix}grup set
+
+${f}©${botname}
+`
+await sych.sendMessage(m.chat, {
+        text: gcmenu,
+        contextInfo: {
+        mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net'],
+            externalAdReply: {
+                "showAdAttribution": true,
+                "containsAutoReply": true,
+                "title": `${global.botname}`,
+                "body": `< / > Group Menu`,
+                "previewType": "VIDEO",
+                "thumbnailUrl": getRandomThumb(), // Mengambil thumbnail secara random
+                "sourceUrl": 'https://github.com/sychyy'
+            }
+        }
+    }, {
+        quoted: repPy
+    })
+}
+    break
+    
+    
+			// Menu
+			case 'allmenu': {
 
 // Emoji yang akan digunakan
 const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
@@ -6268,7 +6798,7 @@ for (const emoji of reactEmojis) {
         }
     });
 }
-				sycreply('Menampilkan Menu...')
+				sycreply('Menampilkan All Menu...')
 				let profile;
 				try {
 					profile = await sych.profilePictureUrl(m.sender, 'image');
@@ -6276,26 +6806,26 @@ for (const emoji of reactEmojis) {
 					profile = fake.anonim;
 				}
 				const menunya = `
-╭──❍「 *USER INFO* 」❍
-├ *Nama* : ${m.pushName ? m.pushName : 'Tanpa Nama'}
-├ *Id* : @${m.sender.split('@')[0]}
-├ *User* : ${isVip ? 'VIP' : isPremium ? 'PREMIUM' : 'FREE'}
-├ *Limit* : ${isVip ? 'VIP' : db.users[m.sender].limit }
-├ *Uang* : ${db.users[m.sender] ? db.users[m.sender].uang.toLocaleString('id-ID') : '0'}
-╰─┬────❍
-╭─┴─❍「 *BOT INFO* 」❍
-├ *Nama Bot* : ${botname}
-├ *Powered* : @${'0@s.whatsapp.net'.split('@')[0]}
-├ *Owner* : @${owner[0].split('@')[0]}
-├ *Mode* : ${sych.public ? 'Public' : 'Self'}
-├ *Prefix* :${db.set[botNumber].multiprefix ? '「 MULTI-PREFIX 」' : ' *'+prefix+'*' }
-╰─┬────❍
-╭─┴─❍「 *ABOUT* 」❍
-├ *Tanggal* : ${tanggal}
-├ *Hari* : ${hari}
-├ *Jam* : ${jam} WIB
-╰──────❍
-╭──❍「 *BOT* 」❍
+■ 「 *${n}USER INFO${n}* 」
+${f}*Nama* : ${m.pushName ? m.pushName : 'Tanpa Nama'}
+${f}*Id* : @${m.sender.split('@')[0]}
+${f}*User* : ${isVip ? 'VIP' : isPremium ? 'PREMIUM' : 'FREE'}
+${f}*Limit* : ${isVip ? 'VIP' : db.users[m.sender].limit }
+${f}*Uang* : ${db.users[m.sender] ? db.users[m.sender].uang.toLocaleString('id-ID') : '0'}
+
+■ 「 *${n}BOT INFO${n}* 」
+${f}*Nama Bot* : ${botname}
+${f}*Powered* : @${'0@s.whatsapp.net'.split('@')[0]}
+${f}*Owner* : @${owner[0].split('@')[0]}
+${f}*Mode* : ${sych.public ? 'Public' : 'Self'}
+${f}*Prefix* :${db.set[botNumber].multiprefix ? '「 MULTI-PREFIX 」' : ' *'+prefix+'*' }
+
+■ 「 *${n}ABOUT${n}* 」
+${f}*Tanggal* : ${tanggal}
+${f}*Hari* : ${hari}
+${f}*Jam* : ${jam} WIB
+‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎
+╭──❍「 *${n}BOT${n}* 」❍
 │${setv} ${prefix}profile
 │${setv} ${prefix}claim
 │${setv} ${prefix}buy [item] (nominal)
@@ -6318,7 +6848,7 @@ for (const emoji of reactEmojis) {
 │${setv} ${prefix}menfes (62xxx|fake name)
 │${setv} ${prefix}donasi
 ╰─┬────❍
-╭─┴❍「 *GROUP* 」❍
+╭─┴❍「 *${n}GROUP${n}* 」❍
 │${setv} ${prefix}add (62xxx)
 │${setv} ${prefix}kick (@tag/62xxx)
 │${setv} ${prefix}promote (@tag/62xxx)
@@ -6338,7 +6868,7 @@ for (const emoji of reactEmojis) {
 │${setv} ${prefix}listonline
 │${setv} ${prefix}grup set
 ╰─┬────❍
-╭─┴❍「 *SEARCH* 」❍
+╭─┴❍「 *${n}SEARCH${n}* 」❍
 │${setv} ${prefix}spotify (query)
 │${setv} ${prefix}ttstalk (query)
 │${setv} ${prefix}ytsearch (query)
@@ -6356,10 +6886,11 @@ for (const emoji of reactEmojis) {
 │${setv} ${prefix}cuaca (kota)
 │${setv} ${prefix}dukun (nama)
 ╰─┬────❍
-╭─┴❍「 *DOWNLOAD* 」❍
+╭─┴❍「 *${n}DOWNLOAD${n}* 」❍
 │${setv} ${prefix}spotifydl (url)
 │${setv} ${prefix}ytmp3 (url)
 │${setv} ${prefix}ttslide (url)
+│${setv} ${prefix}play3 (q)
 │${setv} ${prefix}ytmp4 (url)
 │${setv} ${prefix}instagram (url)
 │${setv} ${prefix}tiktok (url)
@@ -6367,21 +6898,21 @@ for (const emoji of reactEmojis) {
 │${setv} ${prefix}mediafire (url)
 │${setv} ${prefix}videymp4 (url)
 ╰─┬────❍
-╭─┴❍「 *QUOTES* 」❍
+╭─┴❍「 *${n}QUOTES${n}* 」❍
 │${setv} ${prefix}motivasi
 │${setv} ${prefix}quotes
 │${setv} ${prefix}dare
 │${setv} ${prefix}truth
 │${setv} ${prefix}renungan
 ╰─┬────❍
-╭─┴❍「 *ISLAMMIC* 」❍
+╭─┴❍「 *${n}ISLAMMIC${n}* 」❍
 │${setv} ${prefix}quran <1-144>
 │${setv} ${prefix}listsurah
 │${setv} ${prefix}listdoa
 │${setv} ${prefix}doa <1-37>
 │${setv} ${prefix}bacaansholat
 ╰─┬────❍
-╭─┴❍「 *TOOLS* 」❍
+╭─┴❍「 *${n}TOOLS${n}* 」❍
 │${setv} ${prefix}get (url)
 │${setv} ${prefix}encode (q)
 │${setv} ${prefix}setcmd (reply stc)
@@ -6429,22 +6960,23 @@ for (const emoji of reactEmojis) {
 │${setv} ${prefix}getexif (reply sticker)
 │${setv} ${prefix}sticktele
 ╰─┬────❍
-╭─┴❍「 *AI* 」❍
+╭─┴❍「 *${n}AI${n}* 」❍
 │${setv} ${prefix}ai (query)
 │${setv} ${prefix}gemini (query)
 │${setv} ${prefix}luminai (query)
 │${setv} ${prefix}meta (query)
 │${setv} ${prefix}llama (query)
-│${setv} ${prefix}setpromtllama (query)
+│${setv} ${prefix}setpromt2 (query)
 │${setv} ${prefix}simi (query)
 │${setv} ${prefix}aitukam
 │${setv} ${prefix}esia
+│${setv} ${prefix}autoai2 (own)
 │${setv} ${prefix}autoai (own)
 │${setv} ${prefix}txt2img (query)
 │${setv} ${prefix}img2text (reply img/stc)
 │${setv} ${prefix}aimg (query)
 ╰─┬────❍
-╭─┴❍「 *CEWE* 」❍
+╭─┴❍「 *${n}CEWE${n}* 」❍
 │${setv} ${prefix}cjpn 
 │${setv} ${prefix}ckorea
 │${setv} ${prefix}cthai
@@ -6452,12 +6984,12 @@ for (const emoji of reactEmojis) {
 │${setv} ${prefix}cviet
 │${setv} ${prefix}cchina
 ╰─┬────❍
-╭─┴❍「 *ANIME* 」❍
+╭─┴❍「 *${n}ANIME${n}* 」❍
 │${setv} ${prefix}waifu
 │${setv} ${prefix}neko
 │${setv} ${prefix}bluearchive
 ╰─┬────❍
-╭─┴❍「 *GAME* 」❍
+╭─┴❍「 *${n}GAME${n}* 」❍
 │${setv} ${prefix}tictactoe
 │${setv} ${prefix}akinator
 │${setv} ${prefix}suit
@@ -6478,7 +7010,7 @@ for (const emoji of reactEmojis) {
 │${setv} ${prefix}tebakepep
 │${setv} ${prefix}tebakbendera
 ╰─┬────❍
-╭─┴❍「 *FUN* 」❍
+╭─┴❍「 *${n}FUN${n}* 」❍
 │${setv} ${prefix}dadu
 │${setv} ${prefix}cermin (q)
 │${setv} ${prefix}bisakah (text)
@@ -6498,11 +7030,11 @@ for (const emoji of reactEmojis) {
 │${setv} ${prefix}heleh (text)
 │${setv} ${prefix}holoh (text)
 ╰─┬────❍
-╭─┴❍「 *RANDOM* 」❍
+╭─┴❍「 *${n}RANDOM${n}* 」❍
 │${setv} ${prefix}coffe
 │${setv} ${prefix}kucing
 ╰─┬────❍
-╭─┴❍「 *OWNER* 」❍
+╭─┴❍「 *${n}OWNER${n}* 」❍
 │${setv} ${prefix}bot [set]
 │${setv} ${prefix}addthumb <nme|lnk>
 │${setv} ${prefix}delthumb <nme>
@@ -6588,6 +7120,19 @@ for (const emoji of reactEmojis) {
 			}
 			break;
 			default: {
+    if (autoAIStatus) {
+        try {
+            const hasil = await fetchJson(`https://api.siputzx.my.id/api/ai/llama?prompt=${encodeURIComponent(llamaPrompt)}&message=${encodeURIComponent(text)}`);
+            if (hasil.status === true && hasil.data) {
+                m.reply(hasil.data);
+            } else {
+                m.reply('Terjadi kesalahan saat mengambil data dari API!');
+            }
+        } catch (error) {
+            m.reply('Terjadi kesalahan saat mengambil data dari API!');
+            console.error('Error saat mengambil data dari API:', error);
+        }
+    }
 				if (budy.startsWith('>')) {
 					if (!isCreator) return
 					try {
@@ -6619,12 +7164,12 @@ for (const emoji of reactEmojis) {
 			}
 			if (autoAi && text) { // Cek apakah autoAi aktif dan ada input teks
 				try {
-					let promt = `kalo jawab pake bahasa indonesia ga baku aja: ${text}`;
+					let promt = `kalo jawab pake bahasa indonesia ga baku aja dan kamu adalah SychyyBotz: ${text}`;
 					let hasil = await yanzGpt(promt);
 					m.reply(hasil.choices[0].message.content);
 				} catch (e) {
 					try {
-						let promt = `kalo jawab pake bahasa indonesia ga baku aja: ${text}`;
+						let promt = `kalo jawab pake bahasa indonesia ga baku aja dan kamu adalah SychyyBotz: ${text}`;
 						let hasil = await bk9Ai(promt);
 						m.reply(hasil.BK9);
 					} catch (e) {
