@@ -328,7 +328,7 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 		}
 		const floc = {
       key: { participant: "0@s.whatsapp.net" },
-      message: { locationMessage: { name: fake.texz, jpegThumbnail: fake.thumbnail } },
+      message: { locationMessage: { name: `${prefix + command}`, jpegThumbnail: fake.thumbnail } },
     };
 		const repPy = {
 	key: {
@@ -2877,46 +2877,101 @@ for (const emoji of reactEmojis) {
 			}
 			break
 			case 'sticker':
-			case 'colong':
-			case 's': {
-				try {
-					console.log('Memulai proses konversi ke stiker...');
-					if (!/image|webp/.test(mime)) {
-						console.log('Mime tipe tidak valid, harus image atau webp.');
-						return sycreply(`Kirim/reply image/sticker untuk mengonversi ke stiker.`);
-					}
-					let media = await quoted.download(); // Unduh gambar/sticker yang direply
-					console.log('Gambar/sticker berhasil diunduh.');
-					// Memberikan reaksi pada pesan pengguna
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: '💟', // Emoji yang diinginkan
-							key: m.key // Memberikan reaksi pada pesan perintah
-						}
-					});
-					console.log('Reaksi berhasil diberikan pada pesan.');
-					// Menggunakan sharp untuk memproses gambar
-					sharp(media).resize(512, 512) // Menyesuaikan ukuran gambar (stiker WhatsApp harus berukuran 512x512 px)
-						.webp() // Mengonversi gambar ke format WebP, format yang diterima WhatsApp
-						.toBuffer() // Menghasilkan buffer dari gambar
-						.then(async (buffer) => {
-							console.log('Gambar berhasil diproses menjadi format WebP.');
-							// Kirim buffer gambar sebagai stiker
-							await sych.sendAsSticker(m.chat, buffer, m, {
-								packname: 'ydz',
-								author: 'SychyBOTz'
-							});
-							console.log('Stiker berhasil dikirim.');
-						}).catch((err) => {
-							console.error('Terjadi kesalahan saat memproses gambar:', err);
-							sycreply('Terjadi kesalahan saat mengonversi gambar ke stiker!');
-						});
-				} catch (e) {
-					console.error('Terjadi kesalahan saat memproses gambar:', e);
-					sycreply('Terjadi kesalahan saat memproses gambar!');
-				}
-			}
-			break;
+case 'colong':
+case 's': {
+    try {
+        console.log('Memulai proses konversi ke stiker...');
+
+        // Cek tipe mime yang didukung
+        if (!/image|video|webp|gif/.test(mime)) {
+            console.log('Mime tipe tidak valid, harus image, video, gif, atau webp.');
+            return sycreply(`Kirim/reply image/video/gif/sticker untuk mengonversi ke stiker.`);
+        }
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+
+// Mengirimkan reaksi secara berurutan
+for (const emoji of reactEmojis) {
+    await sych.sendMessage(m.chat, {
+        react: {
+            text: emoji,
+            key: m.key
+        }
+    });
+}
+        // Unduh media yang direply
+        let media = await quoted.download();
+        console.log('Media berhasil diunduh.');
+
+        
+        console.log('Reaksi berhasil diberikan pada pesan.');
+
+        const { exec } = require('child_process');
+        const fs = require('fs');
+
+        // Jika media berupa video/gif
+        if (/video|gif/.test(mime)) {
+            console.log('Memproses media video atau gif...');
+            
+            // Simpan sementara file video
+            const inputPath = './temp/input.mp4';
+            const outputPath = './temp/output.webp';
+            fs.writeFileSync(inputPath, media);
+
+            // Konversi video ke WebP dengan FFmpeg (potong durasi ke 6 detik)
+            exec(`ffmpeg -i ${inputPath} -t 6 -vf "scale=512:512" -loop 0 -preset default -an -vsync 0 ${outputPath}`, async (err) => {
+                if (err) {
+                    console.error('Terjadi kesalahan saat mengonversi video/gif ke stiker:', err);
+                    return sycreply('Gagal mengonversi video/gif ke stiker!');
+                }
+
+                console.log('Video berhasil dikonversi ke WebP.');
+
+                // Kirim sebagai stiker animasi
+                let buffer = fs.readFileSync(outputPath);
+                await sych.sendAsSticker(m.chat, buffer, m, {
+                    packname: global.packname,
+                    author: global.author
+                });
+                console.log('Stiker animasi berhasil dikirim.');
+
+                // Hapus file sementara
+                fs.unlinkSync(inputPath);
+                fs.unlinkSync(outputPath);
+            });
+
+        } else { // Jika media berupa gambar
+            console.log('Memproses media gambar...');
+            const sharp = require('sharp');
+            sharp(media).resize(512, 512) // Menyesuaikan ukuran gambar (512x512 px)
+                .webp() // Konversi ke format WebP
+                .toBuffer() // Menghasilkan buffer dari gambar
+                .then(async (buffer) => {
+                    console.log('Gambar berhasil diproses menjadi format WebP.');
+                    // Kirim buffer gambar sebagai stiker
+                    await sych.sendAsSticker(m.chat, buffer, m, {
+                        packname: global.packname,
+                        author: global.author
+                    });
+                    // Memberikan reaksi pada pesan pengguna
+        await sych.sendMessage(m.chat, {
+            react: {
+                text: '💟', // Emoji reaksi
+                key: m.key // Memberikan reaksi pada pesan perintah
+            }
+        });
+                    console.log('Stiker berhasil dikirim.');
+                }).catch((err) => {
+                    console.error('Terjadi kesalahan saat memproses gambar:', err);
+                    sycreply('Terjadi kesalahan saat mengonversi gambar ke stiker!');
+                });
+        }
+
+    } catch (e) {
+        console.error('Terjadi kesalahan saat memproses media:', e);
+        sycreply('Terjadi kesalahan saat memproses media!');
+    }
+}
+break;
 			case 'smeme':
 			case 'stickmeme':
 			case 'stikmeme':
@@ -7109,7 +7164,7 @@ ${f}*Jam* : ${jam} WIB
 					}, // Path file stiker
 					mimetype: 'image/webp',
 				}, {
-					quoted: m
+					quoted: floc
 				});
 				sych.sendMessage(m.chat, {
 					react: {

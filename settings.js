@@ -21,7 +21,7 @@ global.emot = ['🌱', '🌻', '🌞', '❄️', '🌿', '💫', '⭐', '🍃', 
 global.tempatDB = 'database.json'
 global.pairing_code = true
 global.fake = {
-	texz: `Owner: ${owname}\nBot: ${botname}`,
+	texz: `${botname}`,
 	anonim: 'https://telegra.ph/file/95670d63378f7f4210f03.png',
 	thumbnailUrl: 'https://i.ibb.co.com/3rqCPX6/fk.jpg',
 	thumbnail: fs.readFileSync('./src/media/sych.png'),
