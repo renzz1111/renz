@@ -4319,13 +4319,13 @@ for (const emoji of reactEmojis) {
 										"name": "quick_reply",
 										"buttonParamsJson": JSON.stringify({
 											"display_text": "Copy Mp3",
-											"id": `.ytmp3 ${video.url}`
+											"id": `ytmp3 ${video.url}`
 										})
 									}, {
-										"name": "quick_reply",
-										"buttonParamsJson": JSON.stringify({
-											"display_text": "Copy Mp4",
-											"id": `.ytmp4 ${video.url}`
+										name: "quick_reply",
+										buttonParamsJson: JSON.stringify({
+											display_text: "Copy Mp4",
+											id: `ytmp4 ${video.url}`
 										})
 									}]
 								})
@@ -4388,7 +4388,7 @@ for (const emoji of reactEmojis) {
 					const res = await yts.search(text);
 					console.log("✅ Pencarian selesai:", res);
 					const hasil = res.all.slice(0, 2); // Ambil 5 hasil pertama
-					console.log("🎯 5 Video terpilih:", hasil);
+					console.log("🎯 2 Video terpilih:", hasil);
 					let cards = [];
 					for (let video of hasil) {
 						cards.push({
@@ -4414,16 +4414,16 @@ for (const emoji of reactEmojis) {
 									name: "cta_url",
 									buttonParamsJson: `{"display_text":"Lihat Video","url":"${video.url}"}`
 								}, {
-									"name": "quick_reply",
-									"buttonParamsJson": JSON.stringify({
-										"display_text": "Download Mp3",
-										"id": `.ytmp3 ${video.url}`
+									name: "quick_reply",
+									buttonParamsJson: JSON.stringify({
+										display_text: "Download Mp3",
+										id: `ytmp3 ${video.url}`
 									})
 								}, {
-									"name": "quick_reply",
-									"buttonParamsJson": JSON.stringify({
-										"display_text": "Download Mp4",
-										"id": `.ytmp4 ${video.url}`
+									name: "quick_reply",
+									buttonParamsJson: JSON.stringify({
+										display_text: "Download Mp4",
+										id: `${prefix}ytmp4 ${video.url}`
 									})
 								}]
 							})
