@@ -10,8 +10,7 @@ const chalk = require('chalk');
 global.packname = 'SychBotz'
 global.author = 'ydaa'
 global.owname = 'mzyda'
-global.botname = 'Sychy Bot'
-global.listprefix = ['+', '!', '.']
+global.botname = 'SYCHY BOTz'
 global.themeemoji = '🪀'
 global.f = '> '
 global.n = '`'
@@ -20,6 +19,7 @@ global.emot = ['🌱', '🌻', '🌞', '❄️', '🌿', '💫', '⭐', '🍃', 
 global.tempatDB = 'database.json'
 global.pairing_code = true
 global.fake = {
+    tmenu: 'https://i.ibb.co.com/7bVhfhb/3ed349054e5c77cfbebf58293d1e0df0.jpg',
 	texz: `${botname}`,
 	anonim: 'https://telegra.ph/file/95670d63378f7f4210f03.png',
 	thumbnailUrl: 'https://i.ibb.co.com/3rqCPX6/fk.jpg',

@@ -268,11 +268,11 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 		const content = JSON.stringify(m.message);
 		const type = m.message ? Object.keys(m.message)[0] : null;
 		let _chats = type === "conversation" && m.message.conversation ? m.message.conversation : type == "imageMessage" && m.message.imageMessage.caption ? m.message.imageMessage.caption : type == "videoMessage" && m.message.videoMessage.caption ? m.message.videoMessage.caption : type == "extendedTextMessage" && m.message.extendedTextMessage.text ? m.message.extendedTextMessage.text : type == "buttonsResponseMessage" && m.message[type].selectedButtonId ? m.message[type].selectedButtonId : type == "stickerMessage" && getCmd(m.message[type].fileSha256.toString("base64")) !== null && getCmd(m.message[type].fileSha256.toString("base64")) !== undefined ? getCmd(m.message[type].fileSha256.toString("base64")) : "";
-		const cmd = (type === 'conversation' && m.message.conversation) ? m.message.conversation : (type == 'imageMessage') && m.message.imageMessage.caption ? m.message.imageMessage.caption : (type == 'videoMessage') && m.message.videoMessage.caption ? m.message.videoMessage.caption : (type == 'extendedTextMessage') && m.message.extendedTextMessage.text ? m.message.extendedTextMessage.text : (type == 'stickerMessage') && (getCmd(m.message.stickerMessage.fileSha256.toString('hex')) !== null && getCmd(m.message.stickerMessage.fileSha256.toString('base64')) !== undefined) ? getCmd(m.message.stickerMessage.fileSha256.toString('base64')) : "".slice(1).trim().split(/ +/).shift().toLowerCase()
+		const cmd = (type === 'conversation') ? m.message.conversation : (type == 'imageMessage') ? m.message.imageMessage.caption : (type == 'videoMessage') ? m.message.videoMessage.caption : (type == 'extendedTextMessage') ? m.message.extendedTextMessage.text : (type == 'buttonsResponseMessage') ? m.message.buttonsResponseMessage.selectedButtonId : (type == 'listResponseMessage') ? m.message.listResponseMessage.singleSelectReply.selectedRowId : (type === 'interactiveResponseMessage') ? JSON.parse(m.message.interactiveResponseMessage.nativeFlowResponseMessage.paramsJson).id : (type == 'templateButtonReplyMessage') ? m.message.templateButtonReplyMessage.selectedId : (type === 'messageContextInfo') ? (m.message.buttonsResponseMessage?.selectedButtonId || m.message.listResponseMessage?.singleSelectReply.selectedRowId || m.text) : (type == 'stickerMessage') && (getCmd(m.message.stickerMessage.fileSha256.toString('hex')) !== null && getCmd(m.message.stickerMessage.fileSha256.toString('base64')) !== undefined) ? getCmd(m.message.stickerMessage.fileSha256.toString('base64')) : "".slice(1).trim().split(/ +/).shift().toLowerCase()
 		const botNumber = await sych.decodeJid(sych.user.id)
 		const from = m.key.remoteJid;
 		const isCreator = isOwner = [botNumber, ...owner].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
-		const prefix = isCreator ? (/^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@()#,'"*+÷/\%^&.©^]/gi.test(cmd) ? cmd.match(/^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@()#,'"*+÷/\%^&.©^]/gi)[0] : /[\uD800-\uDBFF][\uDC00-\uDFFF]/gi.test(cmd) ? cmd.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/gi)[0] : listprefix.find(a => cmd.startsWith(a)) || '') : db.set[botNumber].multiprefix ? (/^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@()#,'"*+÷/\%^&.©^]/gi.test(cmd) ? cmd.match(/^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@()#,'"*+÷/\%^&.©^]/gi)[0] : /[\uD800-\uDBFF][\uDC00-\uDFFF]/gi.test(cmd) ? cmd.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/gi)[0] : listprefix.find(a => cmd.startsWith(a)) || '¿') : listprefix.find(a => cmd.startsWith(a)) || '¿'
+		const prefix = /^[°zZ#$@+,.?=''():√%!¢£¥€π¤ΠΦ&><`™©®Δ^βα¦|/\\©^]/.test(cmd) ? cmd.match(/^[°zZ#$@+,.?=''():√%¢£¥€π¤ΠΦ&><!™©®Δ^βα¦|/\\©^]/gi) : ''
 		const body = (type === 'conversation') ? m.message.conversation : (type == 'imageMessage') ? m.message.imageMessage.caption : (type == 'videoMessage') ? m.message.videoMessage.caption : (type == 'extendedTextMessage') ? m.message.extendedTextMessage.text : (type == 'buttonsResponseMessage') ? m.message.buttonsResponseMessage.selectedButtonId : (type == 'listResponseMessage') ? m.message.listResponseMessage.singleSelectReply.selectedRowId : (type === 'interactiveResponseMessage') ? JSON.parse(m.message.interactiveResponseMessage.nativeFlowResponseMessage.paramsJson).id : (type == 'templateButtonReplyMessage') ? m.message.templateButtonReplyMessage.selectedId : (type === 'messageContextInfo') ? (m.message.buttonsResponseMessage?.selectedButtonId || m.message.listResponseMessage?.singleSelectReply.selectedRowId || m.text) : (type == 'stickerMessage') && (getCmd(m.message.stickerMessage.fileSha256.toString('base64')) !== null && getCmd(m.message.stickerMessage.fileSha256.toString('base64')) !== undefined) ? getCmd(m.message.stickerMessage.fileSha256.toString('base64')) : ""
 		const budy = (typeof m.text == 'string' ? m.text : '')
 		const isCmd = body.startsWith(prefix)
@@ -2043,7 +2043,6 @@ for (const emoji of reactEmojis) {
 					case 'autotyping':
 					case 'autovn':
 					case 'readsw':
-					case 'multiprefix':
 						if (teks[1] == 'on') {
 							if (set[teks[0]]) return sycreply('*Sudah Aktif Sebelumnya*')
 							set[teks[0]] = true
@@ -2068,7 +2067,7 @@ for (const emoji of reactEmojis) {
 						sycreply(`Settings Bot @${botNumber.split('@')[0]}\n${settingsBot}`);
 						break
 					default:
-						if (teks[0] || teks[1]) sycreply(`*Please Sellect Settings :*\n- Mode : *${prefix + command} mode self/public*\n- Anti Call : *${prefix + command} anticall on/off*\n- Auto Bio : *${prefix + command} autobio on/off*\n- autoAi : ${prefix} *autoai on/off*\n- autoAi2 : ${prefix} *autoai2 on/off*\n- Auto Read : *${prefix + command} autoread on/off*\n- Auto Typing : *${prefix + command} autotyping on/off*\n- Auto VoiceNote : *${prefix + command} autovn on/off*\n- Read Sw : *${prefix + command} readsw on/off*\n- Multi Prefix : *${prefix + command} multiprefix on/off*`)
+						if (teks[0] || teks[1]) sycreply(`*Please Sellect Settings :*\n- Mode : *${prefix + command} mode self/public*\n- Anti Call : *${prefix + command} anticall on/off*\n- Auto Bio : *${prefix + command} autobio on/off*\n- autoAi : ${prefix} *autoai on/off*\n- autoAi2 : ${prefix} *autoai2 on/off*\n- Auto Read : *${prefix + command} autoread on/off*\n- Auto Typing : *${prefix + command} autotyping on/off*\n- Auto VoiceNote : *${prefix + command} autovn on/off*\n- Read Sw : *${prefix + command} readsw on/off*`)
 				}
 				if (!teks[0] && !teks[1]) return sych.sendMessage(m.chat, {
 					text: `*Bot Telah Online Selama*\n*${runtime(os.uptime())}*`
@@ -4099,13 +4098,13 @@ for (const emoji of reactEmojis) {
 			case 'ai': {
 				if (!text) return sycreply(`*< / >* Example: ${prefix + command} query`);
 				try {
-					let promt = `kalo jawab pake bahasa indonesia ga baku aja: ${text}`;
-					let hasil = await yanzGpt(promt);
+					let prompt = `${userPrompt}: ${text}`;
+					let hasil = await yanzGpt(prompt);
 					m.reply(hasil.choices[0].message.content);
 				} catch (e) {
 					try {
-						let promt = `kalo jawab pake bahasa indonesia ga baku aja: ${text}`;
-						let hasil = await bk9Ai(promt);
+						let prompt = `${userPrompt}: ${text}`;
+						let hasil = await bk9Ai(prompt);
 						m.reply(hasil.BK9);
 					} catch (e) {
 						m.reply(pickRandom(['Fitur Ai sedang bermasalah!', 'Tidak dapat terhubung ke ai!', 'Sistem Ai sedang sibuk sekarang!', 'Fitur sedang tidak dapat digunakan!']));
@@ -4318,10 +4317,10 @@ for (const emoji of reactEmojis) {
 										name: "cta_url",
 										buttonParamsJson: `{"display_text":"Lihat Video","url":"${video.url}"}`
 									}, {
-										"name": "quick_reply",
-										"buttonParamsJson": JSON.stringify({
-											"display_text": "Download Mp3",
-											"id": `ytmp3 ${video.url}`
+										name: "quick_reply",
+										buttonParamsJson: JSON.stringify({
+											display_text: "Download Mp3",
+											id: `ytmp3 ${video.url}`
 										})
 									}, {
 										name: "quick_reply",
@@ -4425,7 +4424,7 @@ for (const emoji of reactEmojis) {
 									name: "quick_reply",
 									buttonParamsJson: JSON.stringify({
 										display_text: "Download Mp4",
-										id: `${prefix}ytmp4 ${video.url}`
+										id: `ytmp4 ${video.url}`
 									})
 								}]
 							})
@@ -4700,7 +4699,6 @@ for (const emoji of reactEmojis) {
 			case 'ytmp3':
 			case 'ytaudio':
 			case 'ytplayaudio': {
-				if (!isPremium) return sycreply(mess.prem);
 				if (!text) return sycreply(`*< / >* Example: ${prefix + command} url_youtube`);
 				if (!text.includes('youtu')) return sycreply('Url Tidak Mengandung Result Dari Youtube!');
 				sycreply('Memproses permintaan Anda, harap tunggu...');
@@ -4883,7 +4881,6 @@ for (const emoji of reactEmojis) {
 			case 'ytmp4':
 			case 'ytvideo':
 			case 'ytplayvideo': {
-				if (!isPremium) return sycreply(mess.prem);
 				if (!text) return sycreply(`*< / >* Example: ${prefix + command} url_youtube`);
 				if (!text.includes('youtu')) return sycreply('Url Tidak Mengandung Result Dari Youtube!');
 
@@ -6434,7 +6431,9 @@ break;
 			}
 			break
 			case 'menu': {
-			const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+    try {
+    // Emoji yang akan digunakan
+const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
 
 // Mengirimkan reaksi secara berurutan
 for (const emoji of reactEmojis) {
@@ -6445,14 +6444,11 @@ for (const emoji of reactEmojis) {
         }
     });
 }
-//nih kalo mau ubah font ASCII nya https://fsymbols.com/generators/carty/
-const inimenu = `
-${ucapanWaktu} @${m.sender.split('@')[0]}
+    const inimenu = `
+    
 ${f}*Name* : ${m.pushName ? m.pushName : 'Lu Siapa?'}
-${f}*Powered* : @${'0@s.whatsapp.net'.split('@')[0]}
-${f}*Owner* : @${owner[0].split('@')[0]}
+${f}*Owner* : ${owname}
 ${f}*Mode* : ${sych.public ? 'Public' : 'Self'}
-${f}*Prefix* :${db.set[botNumber].multiprefix ? '「 MULTI-PREFIX 」' : ' *'+prefix+'*' }
 ${f}*Tanggal* : ${tanggal}
 ${f}*Hari* : ${hari}
 ${f}*Jam* : ${jam} WIB
@@ -6464,50 +6460,127 @@ ${f}╰━━╮┃╰╮╭╯┃┃╱╭┫╭━╮┃╰╮╭╯
 ${f}┃╰━╯┃╱┃┃╱┃╰━╯┃┃╱┃┃╱┃┃
 ${f}╰━━━╯╱╰╯╱╰━━━┻╯╱╰╯╱╰╯
 
-*®Mohon maaf jika script bot ada error dan delay karena bot tempatnya salah dan error, wajar bot bukan manusia boyy <!>*
-
-${n}ᯓ★ BERIKUT ADALAH MENU SYCHY BOTz ★ᯓ${n}
-
-${setv} ${prefix} ALLMENU
-${setv} ${prefix} GROUPMENU
-${setv} ${prefix} OWNERMENU
-${setv} ${prefix} DOWNLOADMENU
-${setv} ${prefix} AIMENU
-${setv} ${prefix} FUNMENU
-${setv} ${prefix} TOOLSMENU
-${setv} ${prefix} GAMEMENU
-
-${f}©${botname}
+${n}ᯓ★ BUTTON MENU ${botname} ★ᯓ${n}
 `
-await sych.sendMessage(m.chat, {
-        text: inimenu,
-        contextInfo: {
-        mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net'],
-						forwardingScore: 1000,
-						isForwarded: true,
-						forwardedNewsletterMessageInfo: {
-							newsletterJid: my.ch,
-							serverMessageId: null,
-							newsletterName: `SYCHEE${randomEmoji}`
-						},
-            externalAdReply: {
-                "showAdAttribution": true,
-                "containsAutoReply": true,
-                "title": `${global.botname}`,
-                "body": `< / > Simple Menu`,
-                "previewType": "VIDEO",
-                "thumbnailUrl": 'https://i.ibb.co.com/fnhnL0d/750c4fde4757b61a13d70dadea63d4f3.jpg', // Mengambil thumbnail secara random
-				"mediaType": 1,
-				"previewType": 0,                
-                "renderLargerThumbnail": true,
-                "sourceUrl": 'https://github.com/sychyy'
+        // URL thumbnail yang diberikan
+        const thumbnailUrl = fake.tmenu;
+sycreply('Menampilkan Simple Menu...')
+        // Buat 1 carousel card
+        const carouselCard = {
+            header: {
+                title: `${ucapanWaktu}  ${m.pushName ? m.pushName : 'Alien'}`,
+                hasMediaAttachment: true,
+                imageMessage: (await generateWAMessageContent({
+                    image: { url: thumbnailUrl } // Thumbnail
+                }, {
+                    upload: sych.waUploadToServer
+                })).imageMessage
+            },
+            body: {
+                text: inimenu
+            },
+            footer: {
+                text: `Powered By ${botname}`
+            },
+            nativeFlowMessage: {
+                buttons: [{
+                    "name": "cta_url",
+                    "buttonParamsJson": JSON.stringify({
+                        display_text: "OWNER",
+                        url: "https://wa.me/6287862997267" // URL yang dituju
+                    })
+                }, {
+                name: "quick_reply",
+                    buttonParamsJson: JSON.stringify({
+                        display_text: "ALLMENU",
+                        id: `allmenu` // URL yang dituju
+                    })
+                }, {
+                name: "quick_reply",
+                    buttonParamsJson: JSON.stringify({
+                        display_text: "GROUPMENU",
+                        id: `groupmenu` // URL yang dituju
+                    })
+                }, {
+                name: "quick_reply",
+                    buttonParamsJson: JSON.stringify({
+                        display_text: "FUNMENU",
+                        id: `funmenu` // URL yang dituju
+                    })
+                }, {
+                name: "quick_reply",
+                    buttonParamsJson: JSON.stringify({
+                        display_text: "AIMENU",
+                        id: `aimenu` // URL yang dituju
+                    })
+                }, {
+                name: "quick_reply",
+                    buttonParamsJson: JSON.stringify({
+                        display_text: "OWNERMENU",
+                        id: `ownermenu` // URL yang dituju
+                    })
+                }, {
+                name: "quick_reply",
+                    buttonParamsJson: JSON.stringify({
+                        display_text: "DOWNLOADMENU",
+                        id: `downloadmenu` // URL yang dituju
+                    })
+                }, {
+                name: "quick_reply",
+                    buttonParamsJson: JSON.stringify({
+                        display_text: "TOOLSMENU",
+                        id: `toolsmenu` // URL yang dituju
+                    })
+                }, {
+                name: "quick_reply",
+                    buttonParamsJson: JSON.stringify({
+                        display_text: "GAMEMENU",
+                        id: `gamemenu` // URL yang dituju
+                    })
+                }]
             }
-        }
-    }, {
-        quoted: qchanel
-    })
+        };
+
+        // Buat pesan carousel dengan 1 kartu saja
+        const carouselMessage = generateWAMessageFromContent(m.chat, {
+            viewOnceMessage: {
+                message: {
+                    messageContextInfo: {
+                        deviceListMetadata: {},
+                        deviceListMetadataVersion: 2
+                    },
+                    interactiveMessage: proto.Message.InteractiveMessage.fromObject({
+                        body: {
+                            text: `Hi, ${m.pushName ? m.pushName : 'Alien'} Ini Adalah Simple Menu ${botname}`
+                        },
+                        footer: {
+                            text: `WhatsApp Bot by ${botname}`
+                        },
+                        header: {
+                            hasMediaAttachment: false
+                        },
+                        carouselMessage: proto.Message.InteractiveMessage.CarouselMessage.fromObject({
+                            cards: [carouselCard] // Hanya 1 kartu
+                        })
+                    })
+                }
+            }
+        }, {});
+
+        // Kirim pesan carousel
+        await sych.relayMessage(m.chat, carouselMessage.message, {
+            messageId: carouselMessage.key.id
+        });
+    } catch (e) {
+        console.error("Kesalahan saat mengirim carousel:", e);
+        await sych.sendMessage(m.chat, {
+            text: "Terjadi kesalahan saat memproses permintaan. Silakan coba lagi atau hubungi admin."
+        }, {
+            quoted: qchanel
+        });
+    }
+    break;
 }
-    break
     case 'gamemenu':
     case 'gemmenu': {
     const gmenu = `
@@ -6954,7 +7027,6 @@ ${f}*Nama Bot* : ${botname}
 ${f}*Powered* : @${'0@s.whatsapp.net'.split('@')[0]}
 ${f}*Owner* : @${owner[0].split('@')[0]}
 ${f}*Mode* : ${sych.public ? 'Public' : 'Self'}
-${f}*Prefix* :${db.set[botNumber].multiprefix ? '「 MULTI-PREFIX 」' : ' *'+prefix+'*' }
 
 ■ 「 *${n}ABOUT${n}* 」
 ${f}*Tanggal* : ${tanggal}
