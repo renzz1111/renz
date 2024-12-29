@@ -335,7 +335,8 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
     };
 		const repPy = {
 	key: {
-		remoteJid: '0@s.whatsapp.net',
+		remoteJid: 'status@broadcast',
+		participant: '0@s.whatsapp.net',
 		fromMe: false,
 		id: `${owname}`,
 		participant: '0@s.whatsapp.net'
@@ -379,7 +380,7 @@ inviteExpiration: Date.now() + 1814400000
 				remoteJid: 'status@broadcast',
 				participant: '0@s.whatsapp.net',
 				fromMe: false,
-				id: 'sych'
+				id: `${botname}`
 			},
 			message: {
 				contactMessage: {
@@ -6490,54 +6491,16 @@ sycreply('Menampilkan Simple Menu...')
                         url: "https://wa.me/6287862997267" // URL yang dituju
                     })
                 }, {
-                name: "quick_reply",
-                    buttonParamsJson: JSON.stringify({
-                        display_text: "ALLMENU",
-                        id: `allmenu` // URL yang dituju
-                    })
-                }, {
-                name: "quick_reply",
-                    buttonParamsJson: JSON.stringify({
-                        display_text: "GROUPMENU",
-                        id: `groupmenu` // URL yang dituju
-                    })
-                }, {
-                name: "quick_reply",
-                    buttonParamsJson: JSON.stringify({
-                        display_text: "FUNMENU",
-                        id: `funmenu` // URL yang dituju
-                    })
-                }, {
-                name: "quick_reply",
-                    buttonParamsJson: JSON.stringify({
-                        display_text: "AIMENU",
-                        id: `aimenu` // URL yang dituju
-                    })
-                }, {
-                name: "quick_reply",
-                    buttonParamsJson: JSON.stringify({
-                        display_text: "OWNERMENU",
-                        id: `ownermenu` // URL yang dituju
-                    })
-                }, {
-                name: "quick_reply",
-                    buttonParamsJson: JSON.stringify({
-                        display_text: "DOWNLOADMENU",
-                        id: `downloadmenu` // URL yang dituju
-                    })
-                }, {
-                name: "quick_reply",
-                    buttonParamsJson: JSON.stringify({
-                        display_text: "TOOLSMENU",
-                        id: `toolsmenu` // URL yang dituju
-                    })
-                }, {
-                name: "quick_reply",
-                    buttonParamsJson: JSON.stringify({
-                        display_text: "GAMEMENU",
-                        id: `gamemenu` // URL yang dituju
-                    })
-                }]
+"name": "single_select",
+"buttonParamsJson": `{ "title": "𝗟𝗶𝘀𝘁 𝗠𝗲𝗻𝘂", "sections": [{ "title": "Choose one of the menu options below", "highlight_label": \"𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 ${botname}\", "rows": [{ "header": "All Menu", "title": "List All Fitur Bot", "id": ".allmenu" }, 
+{ "header": "Owner Menu", "title": "Owner menu", "id": ".ownermenu" }, 
+{ "header": "Group Menu", "title": "Command Untuk Group", "id": ".groupmenu" }, 
+{ "header": "Download Menu", "title": "Membantu Anda dalam mengunduh", "id": ".downloadmenu" }, 
+{ "header": "Tools Menu", "title": "Melakukan Tools", "id": ".toolsmenu" }, 
+{ "header": "AI Menu", "title": "Kecerdasan Buatan", "id": ".aimenu" },
+{ "header": "Fun Menu", "title": "Fun Menu", "id": ".funmenu" }, 
+{ "header": "Game Menu", "title": "game zone", "id": ".gamemenu" }]}]}`
+}]
             }
         };
 
@@ -6550,8 +6513,11 @@ sycreply('Menampilkan Simple Menu...')
                         deviceListMetadataVersion: 2
                     },
                     interactiveMessage: proto.Message.InteractiveMessage.fromObject({
+                    contextInfo: {
+        mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net']
+        },
                         body: {
-                            text: `Hi, ${m.pushName ? m.pushName : 'Alien'} Ini Adalah Simple Menu ${botname}`
+                            text: `Hi, @${m.sender.split('@')[0]} Ini Adalah Simple Menu ${botname}`
                         },
                         footer: {
                             text: `WhatsApp Bot by ${botname}`
