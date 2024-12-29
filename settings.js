@@ -19,7 +19,7 @@ global.emot = ['🌱', '🌻', '🌞', '❄️', '🌿', '💫', '⭐', '🍃', 
 global.tempatDB = 'database.json'
 global.pairing_code = true
 global.fake = {
-    tmenu: 'https://i.ibb.co.com/7bVhfhb/3ed349054e5c77cfbebf58293d1e0df0.jpg',
+    tmenu: 'https://i.ibb.co.com/7bVhfhb/3ed349054e5c77cfbebf58293d1e0df0.jpg', //format gambar harus 16:9 kalo upload di imgbb jangan langsung disalin tapi diclick gambarnya terus copy yang namanya Url Gambar
 	texz: `${botname}`,
 	anonim: 'https://telegra.ph/file/95670d63378f7f4210f03.png',
 	thumbnailUrl: 'https://i.ibb.co.com/3rqCPX6/fk.jpg',
