@@ -187,7 +187,9 @@ let secretChat = {};
 let autoAIStatus = false;
 let _scommand = JSON.parse(fs.readFileSync("./database/scommand.json"));
 // Variabel global untuk menyimpan prompt default
-let llamaPrompt = "kamu adalah SychyyBotz";
+let llamaPrompt = "ngobrol singkat dengan bahasa indonesia tidak baku dan kamu adalah SychyyBotz";
+let userPrompt = "kalo jawab pake bahasa indonesia ga baku aja dan kamu adalah SychyyBotz"; // Default prompt
+    
 // Fungsi Menambahkan Command
 const addCmd = (id, command) => {
 	// Konversi hash ke Base64
@@ -6273,6 +6275,13 @@ case 'autoai2': {
     }
 }
 break;
+case 'setpromt': {
+        if (!text) return m.reply("Harap masukkan prompt baru!");
+        userPrompt = text; // Simpan prompt baru dari input pengguna
+        m.reply(`Prompt berhasil diatur menjadi: "${userPrompt}"`);
+        break;
+    }
+    
 case 'setpromt2': {
     // Cek apakah pengguna mengirim prompt baru
     if (!text) return sycreply(`Kirim perintah *${prefix + command}* <prompt baru>`);
@@ -6751,6 +6760,7 @@ ${setv} ${prefix}luminai (query)
 ${setv} ${prefix}meta (query)
 ${setv} ${prefix}llama (query)
 ${setv} ${prefix}setpromt2 (query)
+${setv} ${prefix}setpromt (query)
 ${setv} ${prefix}simi (query)
 ${setv} ${prefix}aitukam
 ${setv} ${prefix}esia
@@ -7093,6 +7103,7 @@ ${f}*Jam* : ${jam} WIB
 │${setv} ${prefix}meta (query)
 │${setv} ${prefix}llama (query)
 │${setv} ${prefix}setpromt2 (query)
+│${setv} ${prefix}setpromt (query)
 │${setv} ${prefix}simi (query)
 │${setv} ${prefix}aitukam
 │${setv} ${prefix}esia
@@ -7289,22 +7300,27 @@ ${f}*Jam* : ${jam} WIB
 				}
 			}
 			if (autoAi && text) { // Cek apakah autoAi aktif dan ada input teks
-				try {
-					let promt = `kalo jawab pake bahasa indonesia ga baku aja dan kamu adalah SychyyBotz: ${text}`;
-					let hasil = await yanzGpt(promt);
-					m.reply(hasil.choices[0].message.content);
-				} catch (e) {
-					try {
-						let promt = `kalo jawab pake bahasa indonesia ga baku aja dan kamu adalah SychyyBotz: ${text}`;
-						let hasil = await bk9Ai(promt);
-						m.reply(hasil.BK9);
-					} catch (e) {
-						m.reply(pickRandom(['Fitur Ai sedang bermasalah!', 'Tidak dapat terhubung ke ai!', 'Sistem Ai sedang sibuk sekarang!', 'Fitur sedang tidak dapat digunakan!']));
-					}
-				}
-			}
-			break;
-		}
+            try {
+                let prompt = `${userPrompt}: ${text}`; // Gunakan prompt yang sudah disetel
+                let hasil = await yanzGpt(prompt);
+                m.reply(hasil.choices[0].message.content);
+            } catch (e) {
+                try {
+                    let prompt = `${userPrompt}: ${text}`;
+                    let hasil = await bk9Ai(prompt);
+                    m.reply(hasil.BK9);
+                } catch (e) {
+                    m.reply(pickRandom([
+                        'Fitur Ai sedang bermasalah!',
+                        'Tidak dapat terhubung ke ai!',
+                        'Sistem Ai sedang sibuk sekarang!',
+                        'Fitur sedang tidak dapat digunakan!'
+                    ]));
+                }
+            }
+        }
+        break;
+    }
 	} catch (err) {
 		console.log(util.format(err));
 		//sycreply('*❗ Internal server error️*');
