@@ -275,6 +275,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
     const botNumber = await naze.decodeJid(naze.user.id)
     const from = m.key.remoteJid;
     const isCreator = isOwner = [botNumber, ...owner].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
+    //const prefix = isCreator ? (/^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@()#,'"*+÷/\%^&.©^]/gi.test(cmd) ? cmd.match(/^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@()#,'"*+÷/\%^&.©^]/gi)[0] : /[\uD800-\uDBFF][\uDC00-\uDFFF]/gi.test(cmd) ? cmd.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/gi)[0] : listprefix.find(a => cmd.startsWith(a)) || '') : db.set[botNumber].multiprefix ? (/^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@()#,'"*+÷/\%^&.©^]/gi.test(cmd) ? cmd.match(/^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@()#,'"*+÷/\%^&.©^]/gi)[0] : /[\uD800-\uDBFF][\uDC00-\uDFFF]/gi.test(cmd) ? cmd.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/gi)[0] : listprefix.find(a => cmd.startsWith(a)) || '¿') : listprefix.find(a => cmd.startsWith(a)) || '¿'
     const prefix = /^[°zZ#$@+,.?=''():√%!¢£¥€π¤ΠΦ&><`™©®Δ^βα¦|/\\©^]/.test(cmd) ? cmd.match(/^[°zZ#$@+,.?=''():√%¢£¥€π¤ΠΦ&><!™©®Δ^βα¦|/\\©^]/gi) : ''
     const body = (type === 'conversation') ? m.message.conversation : (type == 'imageMessage') ? m.message.imageMessage.caption : (type == 'videoMessage') ? m.message.videoMessage.caption : (type == 'extendedTextMessage') ? m.message.extendedTextMessage.text : (type == 'buttonsResponseMessage') ? m.message.buttonsResponseMessage.selectedButtonId : (type == 'listResponseMessage') ? m.message.listResponseMessage.singleSelectReply.selectedRowId : (type === 'interactiveResponseMessage') ? JSON.parse(m.message.interactiveResponseMessage.nativeFlowResponseMessage.paramsJson).id : (type == 'templateButtonReplyMessage') ? m.message.templateButtonReplyMessage.selectedId : (type === 'messageContextInfo') ? (m.message.buttonsResponseMessage?.selectedButtonId || m.message.listResponseMessage?.singleSelectReply.selectedRowId || m.text) : (type == 'stickerMessage') && (getCmd(m.message.stickerMessage.fileSha256.toString('base64')) !== null && getCmd(m.message.stickerMessage.fileSha256.toString('base64')) !== undefined) ? getCmd(m.message.stickerMessage.fileSha256.toString('base64')) : ""
     const budy = (typeof m.text == 'string' ? m.text : '')
@@ -4951,10 +4952,157 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
         }
       }
       break
+      case 'autoai': {
+  try {
+    if (!users[m.sender.split('@')[0]] || !users[m.sender.split('@')[0]].loggedIn) {
+      return sycreply(`Hi, @${m.sender.split('@')[0]} anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|syach`);
+    }
+
+    if (!isCreator) {
+      return sycreply(mess.owner); // Memastikan hanya pemilik yang bisa mengaktifkan fitur ini
+    }
+
+    const thumbnailUrl = fake.tmenu;
+    sycreply('Menampilkan List AutoAI...');
+
+    // Buat 1 carousel card untuk kontrol AutoAI
+    const carouselCard1 = {
+      header: {
+        title: `${ucapanWaktu}  ${m.pushName ? m.pushName : 'Alien'}`,
+        hasMediaAttachment: true,
+        imageMessage: (await generateWAMessageContent({
+          image: {
+            url: thumbnailUrl
+          } // Thumbnail
+        }, {
+          upload: naze.waUploadToServer
+        })).imageMessage
+      },
+      body: {
+        text: 'Aktifkan atau Matikan fitur AutoAI menggunakan tombol di bawah ini.'
+      },
+      footer: {
+        text: `Powered By ${botname}`
+      },
+      nativeFlowMessage: {
+        buttons: [{
+          "name": "single_select",
+          "buttonParamsJson": JSON.stringify({
+            title: "AutoAI Control",
+            sections: [{
+              title: "Pilih salah satu opsi di bawah:",
+              rows: [
+                {
+                  header: "Aktifkan AutoAI",
+                  title: "AutoAI ON",
+                  id: "autoaii on"
+                },
+                {
+                  header: "Matikan AutoAI",
+                  title: "AutoAI OFF",
+                  id: "autoaii off"
+                }
+              ]
+            }]
+          })
+        }]
+      }
+    };
+
+    // Buat carousel kedua untuk kontrol AutoAI 2
+    const carouselCard2 = {
+      header: {
+        title: `${ucapanWaktu}  ${m.pushName ? m.pushName : 'Alien'}`,
+        hasMediaAttachment: true,
+        imageMessage: (await generateWAMessageContent({
+          image: {
+            url: thumbnailUrl
+          } // Thumbnail
+        }, {
+          upload: naze.waUploadToServer
+        })).imageMessage
+      },
+      body: {
+        text: 'Aktifkan atau Matikan fitur AutoAI 2 menggunakan tombol di bawah ini.'
+      },
+      footer: {
+        text: `Powered By ${botname}`
+      },
+      nativeFlowMessage: {
+        buttons: [{
+          "name": "single_select",
+          "buttonParamsJson": JSON.stringify({
+            title: "AutoAI 2 Control",
+            sections: [{
+              title: "Pilih salah satu opsi di bawah:",
+              rows: [
+                {
+                  header: "Aktifkan AutoAI 2",
+                  title: "AutoAI 2 ON",
+                  id: "autoai2 on"
+                },
+                {
+                  header: "Matikan AutoAI 2",
+                  title: "AutoAI 2 OFF",
+                  id: "autoai2 off"
+                }
+              ]
+            }]
+          })
+        }]
+      }
+    };
+
+    // Buat pesan carousel dengan 2 kartu
+    const carouselMessage = generateWAMessageFromContent(m.chat, {
+      viewOnceMessage: {
+        message: {
+          messageContextInfo: {
+            deviceListMetadata: {},
+            deviceListMetadataVersion: 2
+          },
+          interactiveMessage: proto.Message.InteractiveMessage.fromObject({
+            contextInfo: {
+              mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net']
+            },
+            body: {
+              text: `Hi, @${m.sender.split('@')[0]} berikut adalah menu kontrol AutoAI dan AutoAI 2.`
+            },
+            footer: {
+              text: `WhatsApp Bot by ${botname}`
+            },
+            header: {
+              hasMediaAttachment: false
+            },
+            carouselMessage: proto.Message.InteractiveMessage.CarouselMessage.fromObject({
+              cards: [carouselCard1, carouselCard2] // Dua kartu
+            })
+          })
+        }
+      }
+    }, {
+      quoted: qchanel
+    });
+
+    // Kirim pesan carousel
+    await naze.relayMessage(m.chat, carouselMessage.message, {
+      messageId: carouselMessage.key.id
+    });
+
+  } catch (e) {
+    console.error("Kesalahan saat mengirim carousel:", e);
+    await naze.sendMessage(m.chat, {
+      text: "Terjadi kesalahan saat memproses permintaan. Silakan coba lagi atau hubungi admin."
+    }, {
+      quoted: qchanel
+    });
+  }
+  break;
+}
       // Ai Menu
       // Variabel global untuk menyimpan status auto AI
       // Case untuk mengatur autoai
-      case 'autoai': {
+      case 'autoaii': {
         if (!users[m.sender.split('@')[0]] || !users[m.sender.split('@')[0]].loggedIn) {
           return sycreply(`Hi, @${m.sender.split('@')[0]} anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|syach`);
         }
@@ -4965,12 +5113,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
             sycreply('Auto AI sudah aktif sebelumnya!');
           } else {
             // Mengaktifkan autoAi jika belum aktif
-            // Use the energyCost here
-            if (!useEnergy(userId, energyCost)) {
-              return m.reply('Energi anda habis/tidak mencukupi! Ketik charger watt.');
-            }
-            m.reply(`-${energyCost} Energy⚡\nEnergi berhasil digunakan. Sisa energi: ${users[userId].energy}.`);
-            if (!isCreator) return sycreply(mess.owner); // Memeriksa apakah pengirim adalah pembuat bot
+            // Memeriksa apakah pengirim adalah pembuat bot
             autoAi = true;
             sycreply('Auto AI telah diaktifkan!');
           }
@@ -4993,11 +5136,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
         if (!users[m.sender.split('@')[0]] || !users[m.sender.split('@')[0]].loggedIn) {
           return sycreply(`Hi, @${m.sender.split('@')[0]} anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|syach`);
         }
-        // Use the energyCost here
-        if (!useEnergy(userId, energyCost)) {
-          return m.reply('Energi anda habis/tidak mencukupi! Ketik charger watt.');
-        }
-        m.reply(`-${energyCost} Energy⚡\nEnergi berhasil digunakan. Sisa energi: ${users[userId].energy}.`);
+        
         if (!text) return sycreply(`*< / >* Example: ${prefix + command} query`);
         try {
           let prompt = `${userPrompt}: ${text}`;
@@ -5019,11 +5158,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
         if (!users[m.sender.split('@')[0]] || !users[m.sender.split('@')[0]].loggedIn) {
           return sycreply(`Hi, @${m.sender.split('@')[0]} anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|syach`);
         }
-        // Use the energyCost here
-        if (!useEnergy(userId, energyCost)) {
-          return m.reply('Energi anda habis/tidak mencukupi! Ketik charger watt.');
-        }
-        m.reply(`-${energyCost} Energy⚡\nEnergi berhasil digunakan. Sisa energi: ${users[userId].energy}.`);
+        
         if (!text) return sycreply(`*< / >* Example: ${prefix + command} query`)
         try {
           const hasil = await simi(text)
@@ -7622,11 +7757,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
           if (autoAIStatus) {
             return sycreply('Auto AI sudah aktif sebelumnya!');
           }
-          // Use the energyCost here
-          if (!useEnergy(userId, energyCost)) {
-            return m.reply('Energi anda habis/tidak mencukupi! Ketik charger watt.');
-          }
-          m.reply(`-${energyCost} Energy⚡\nEnergi berhasil digunakan. Sisa energi: ${users[userId].energy}.`);
+          
           if (!isCreator) return sycreply(mess.owner); // Memeriksa apakah pengirim adalah pembuat bot
           autoAIStatus = true;
           sycreply('Auto AI berhasil diaktifkan!');
@@ -7898,6 +8029,8 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 ${f}*Name* : ${m.pushName ? m.pushName : 'Lu Siapa?'}
 ${f}*Owner* : ${owname}
 ${f}*Mode* : ${naze.public ? 'Public' : 'Self'}
+${f}*Energy* : ${users[m.sender]?.energy || 0}/${users[m.sender]?.maxEnergy || 0}
+${f}*Watt* : ${users[m.sender]?.watt || 'Unknown'}
 ${f}*Tanggal* : ${tanggal}
 ${f}*Hari* : ${hari}
 ${f}*Jam* : ${jam} WIB
@@ -8270,7 +8403,6 @@ ${setv} ${prefix}setpromt (query)
 ${setv} ${prefix}simi (query)
 ${setv} ${prefix}aitukam
 ${setv} ${prefix}esia
-${setv} ${prefix}autoai2 (own)
 ${setv} ${prefix}autoai (own)
 ${setv} ${prefix}txt2img (query)
 ${setv} ${prefix}img2text (reply img/stc)
@@ -8459,6 +8591,8 @@ ${f}©${botname}
 ■ 「 *${n}USER INFO${n}* 」
 ${f}*Nama* : ${m.pushName ? m.pushName : 'Tanpa Nama'}
 ${f}*Id* : @${m.sender.split('@')[0]}
+${f}*Energy* : ${users[m.sender]?.energy || 0}/${users[m.sender]?.maxEnergy || 0}
+${f}*Watt* : ${users[m.sender]?.watt || 'Unknown'}
 ${f}*User* : ${isVip ? 'VIP' : isPremium ? 'PREMIUM' : 'FREE'}
 ${f}*Limit* : ${isVip ? 'VIP' : db.users[m.sender].limit }
 ${f}*Uang* : ${db.users[m.sender] ? db.users[m.sender].uang.toLocaleString('id-ID') : '0'}
@@ -8629,7 +8763,6 @@ ${f}*Jam* : ${jam} WIB
 │${setv} ${prefix}simi (query)
 │${setv} ${prefix}aitukam
 │${setv} ${prefix}esia
-│${setv} ${prefix}autoai2 (own)
 │${setv} ${prefix}autoai (own)
 │${setv} ${prefix}txt2img (query)
 │${setv} ${prefix}img2text (reply img/stc)
@@ -8788,10 +8921,10 @@ ${f}*Jam* : ${jam} WIB
             if (hasil.status === true && hasil.data) {
               m.reply(hasil.data);
             } else {
-              m.reply('Terjadi kesalahan saat mengambil data dari API!');
+              console.log('Terjadi kesalahan saat mengambil data dari API!');
             }
           } catch (error) {
-            m.reply('Terjadi kesalahan saat mengambil data dari API!');
+            console.log('Terjadi kesalahan saat mengambil data dari API!');
             console.error('Error saat mengambil data dari API:', error);
           }
         }
