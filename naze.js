@@ -6482,7 +6482,6 @@ break;
 			}
 			break
 			case 'menu': {
-    try {
     // Emoji yang akan digunakan
 const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
 
@@ -6496,9 +6495,10 @@ for (const emoji of reactEmojis) {
     });
 }
     const inimenu = `
+${ucapanWaktu} @${m.sender.split('@')[0]}
     
 ${f}*Name* : ${m.pushName ? m.pushName : 'Lu Siapa?'}
-${f}*Owner* : ${owname}
+${f}*Owner* : @${owner[0].split('@')[0]}
 ${f}*Mode* : ${sych.public ? 'Public' : 'Self'}
 ${f}*Tanggal* : ${tanggal}
 ${f}*Hari* : ${hari}
@@ -6511,92 +6511,38 @@ ${f}╰━━╮┃╰╮╭╯┃┃╱╭┫╭━╮┃╰╮╭╯
 ${f}┃╰━╯┃╱┃┃╱┃╰━╯┃┃╱┃┃╱┃┃
 ${f}╰━━━╯╱╰╯╱╰━━━┻╯╱╰╯╱╰╯
 
-${n}ᯓ★ BUTTON MENU ${botname} ★ᯓ${n}
+${n}ᯓ★ SIMPEL MENU ${botname} ★ᯓ${n}
+
+${setv} ${prefix}DOWNLOADMENU
+${setv} ${prefix}OWNERMENU
+${setv} ${prefix}GROUPMENU
+${setv} ${prefix}FUNMENU
+${setv} ${prefix}GAMEMENU
+${setv} ${prefix}AIMENU
+${setv} ${prefix}TOOLSMENU
 `
-        // URL thumbnail yang diberikan
-        const thumbnailUrl = fake.tmenu;
-sycreply('Menampilkan Simple Menu...')
-        // Buat 1 carousel card
-        const carouselCard = {
-            header: {
-                title: `${ucapanWaktu}  ${m.pushName ? m.pushName : 'Alien'}`,
-                hasMediaAttachment: true,
-                imageMessage: (await generateWAMessageContent({
-                    image: { url: thumbnailUrl } // Thumbnail
-                }, {
-                    upload: sych.waUploadToServer
-                })).imageMessage
-            },
-            body: {
-                text: inimenu
-            },
-            footer: {
-                text: `Powered By ${botname}`
-            },
-            nativeFlowMessage: {
-                buttons: [{
-                    "name": "cta_url",
-                    "buttonParamsJson": JSON.stringify({
-                        display_text: "OWNER",
-                        url: "https://wa.me/6287862997267" // URL yang dituju
-                    })
-                }, {
-"name": "single_select",
-"buttonParamsJson": `{ "title": "𝗟𝗶𝘀𝘁 𝗠𝗲𝗻𝘂", "sections": [{ "title": "Choose one of the menu options below", "highlight_label": \"𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 ${botname}\", "rows": [{ "header": "All Menu", "title": "List All Fitur Bot", "id": ".allmenu" }, 
-{ "header": "Owner Menu", "title": "Owner menu", "id": ".ownermenu" }, 
-{ "header": "Group Menu", "title": "Command For Group", "id": ".groupmenu" }, 
-{ "header": "Download Menu", "title": "Help You in Downloading", "id": ".downloadmenu" }, 
-{ "header": "Tools Menu", "title": "Tools Menu", "id": ".toolsmenu" }, 
-{ "header": "AI Menu", "title": "Artificial Intelligence", "id": ".aimenu" },
-{ "header": "Fun Menu", "title": "Fun Menu", "id": ".funmenu" }, 
-{ "header": "Game Menu", "title": "game zone", "id": ".gamemenu" }]}]}`
-}]
+sycreply('Menampilkan Simpel Menu..')
+await sych.sendMessage(m.chat, {
+    video: fs.readFileSync('src/media/gif.mp4'), // Path ke file lokal
+    caption: inimenu, // Caption untuk pesan
+    gifPlayback: true, // Mengatur agar video diputar sebagai GIF
+    contextInfo: {
+        mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net'],
+        externalAdReply: {
+                "showAdAttribution": true,
+                "containsAutoReply": true,
+                "title": `${global.botname}`,
+                "body": `${ucapanWaktu} ${m.pushName ? m.pushName : 'Tanpa Nama'} 👋🏻`,
+                "previewType": "VIDEO",
+                "thumbnailUrl": getRandomThumb(), // Mengambil thumbnail secara random
+                "sourceUrl": 'https://github.com/sychyy'
             }
-        };
-
-        // Buat pesan carousel dengan 1 kartu saja
-        const carouselMessage = generateWAMessageFromContent(m.chat, {
-            viewOnceMessage: {
-                message: {
-                    messageContextInfo: {
-                        deviceListMetadata: {},
-                        deviceListMetadataVersion: 2
-                    },
-                    interactiveMessage: proto.Message.InteractiveMessage.fromObject({
-                    contextInfo: {
-        mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net']
-        },
-                        body: {
-                            text: `Hi, @${m.sender.split('@')[0]} Ini Adalah Simple Menu ${botname}`
-                        },
-                        footer: {
-                            text: `WhatsApp Bot by ${botname}`
-                        },
-                        header: {
-                            hasMediaAttachment: false
-                        },
-                        carouselMessage: proto.Message.InteractiveMessage.CarouselMessage.fromObject({
-                            cards: [carouselCard] // Hanya 1 kartu
-                        })
-                    })
-                }
-            }
-        }, {quoted: qchanel});
-
-        // Kirim pesan carousel
-        await sych.relayMessage(m.chat, carouselMessage.message, {
-            messageId: carouselMessage.key.id
-        });
-    } catch (e) {
-        console.error("Kesalahan saat mengirim carousel:", e);
-        await sych.sendMessage(m.chat, {
-            text: "Terjadi kesalahan saat memproses permintaan. Silakan coba lagi atau hubungi admin."
-        }, {
-            quoted: qchanel
-        });
     }
-    break;
+}, {
+    quoted: qchanel // Mengutip pesan sebelumnya jika diperlukan
+});
 }
+break
     case 'gamemenu':
     case 'gemmenu': {
     const gmenu = `
