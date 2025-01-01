@@ -31,7 +31,7 @@ global.fake = {
 global.my = {
 	yt: 'https://www.youtube.com/@sychyy00',
 	gh: 'https://github.com/sychyy',
-	gc: 'https://chat.whatsapp.com/Hx9vcBVhbc04KLVGPFtH2R',
+	gc: 'https://chat.whatsapp.com/GQ5Gp0eSeDS6dPBYeHE6kf',
 	ch: '120363383347233294@newsletter',
 }
 global.limit = {
