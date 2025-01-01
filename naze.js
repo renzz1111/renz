@@ -1236,11 +1236,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       // Owner Menu
       case 'setbio': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isCreator) return sycreply(mess.owner)
         if (!text) return sycreply('Mana text nya?')
@@ -1251,11 +1251,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case "addcmd":
       case "setcmd":
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (isQuotedSticker) {
           if (!q) return sycreply(`Penggunaan : ${command} cmdnya dan tag stickernya`);
@@ -1274,11 +1274,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
         break;
       case "delcmd":
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isQuotedSticker) return sycreply(`Penggunaan : ${command} tagsticker`);
         var kodenya = m.message.extendedTextMessage.contextInfo.quotedMessage.stickerMessage.fileSha256.toString("base64");
@@ -1294,11 +1294,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
         break;
       case "listcmd":
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         teksnyee = `\`\`\`「 LIST STICKER CMD 」\`\`\``;
         cemde = [];
@@ -1310,11 +1310,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
         break;
       case 'setppbot': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isCreator) return sycreply(mess.owner)
         if (!/image/.test(mime)) return sycreply(`Reply Image Dengan Caption ${prefix + command}`)
@@ -1351,11 +1351,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'delppbot': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isCreator) return sycreply(mess.owner)
         await naze.removeProfilePicture(naze.user.id)
@@ -1364,11 +1364,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'join': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isCreator) return sycreply(mess.owner)
         if (!text) return sycreply('Masukkan Link Group!')
@@ -1397,11 +1397,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'leave': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isCreator) return sycreply(mess.owner)
         await naze.groupLeave(m.chat).then(() => naze.sendFromOwner(owner, 'Sukses Keluar Dari Grup', m, {
@@ -1414,11 +1414,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'blokir':
       case 'block': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isCreator) return sycreply(mess.owner)
         if (!text && !m.quoted) {
@@ -1431,11 +1431,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'listblock': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         let anu = await naze.fetchBlocklist()
         sycreply(`Total Block : ${anu.length}\n` + anu.map(v => '• ' + v.replace(/@.+/, '')).join`\n`)
@@ -1446,11 +1446,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'openblock':
       case 'unblock': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isCreator) return sycreply(mess.owner)
         if (!text && !m.quoted) {
@@ -1463,11 +1463,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'adduang': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isCreator) return sycreply(mess.owner)
         if (!args[0] || !args[1] || isNaN(args[1])) return sycreply(`Kirim/tag Nomernya!\n*< / >* Example:\n${prefix + command} 62xxx 1000`)
@@ -1484,11 +1484,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'addlimit': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isCreator) return sycreply(mess.owner)
         if (!args[0] || !args[1] || isNaN(args[1])) return sycreply(`Kirim/tag Nomernya!\n*< / >* Example:\n${prefix + command} 62xxx 10`)
@@ -1505,11 +1505,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'listpc': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isCreator) return sycreply(mess.owner)
         let anu = await store.chats.all().filter(v => v.id.endsWith('.net')).map(v => v.id)
@@ -1526,11 +1526,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'listgc': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isCreator) return sycreply(mess.owner)
         let anu = await store.chats.all().filter(v => v.id.endsWith('@g.us')).map(v => v.id)
@@ -1546,11 +1546,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'creategc':
       case 'buatgc': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isCreator) return sycreply(mess.owner)
         if (!text) return sycreply(`*< / >* Example:\n${prefix + command} *Nama Gc*`)
@@ -1572,11 +1572,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'addprem':
       case 'addpremium': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isCreator) return sycreply(mess.owner)
         if (!text) return sycreply(`*< / >* Example:\n${prefix + command} @tag|waktu\n${prefix + command} @${m.sender.split('@')[0]}|30 hari`)
@@ -1600,11 +1600,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'delprem':
       case 'delpremium': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isCreator) return sycreply(mess.owner)
         if (!text) return sycreply(`*< / >* Example:\n${prefix + command} @tag`)
@@ -1626,11 +1626,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'listprem':
       case 'listpremium': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isCreator) return sycreply(mess.owner)
         let txt = `*------「 LIST PREMIUM 」------*\n\n`
@@ -1642,11 +1642,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'upsw': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isCreator) return sycreply(mess.owner)
         const statusJidList = Object.keys(db.users)
@@ -1701,11 +1701,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'addcase': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isCreator) return sycreply(mess.owner)
         if (!text && !text.startsWith('case')) return sycreply('Masukkan Casenya!')
@@ -1732,11 +1732,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'getcase': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isCreator) return sycreply(mess.owner)
         if (!text) return sycreply('Masukkan Nama Casenya!')
@@ -1752,11 +1752,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'delcase': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isCreator) return sycreply(mess.owner)
         if (!text) return sycreply('Masukkan Nama Casenya!')
@@ -1779,11 +1779,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'getsession': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isCreator) return sycreply(mess.owner)
         await naze.sendMessage(m.chat, {
@@ -1798,11 +1798,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'deletesession':
       case 'delsession': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isCreator) return sycreply(mess.owner)
         fs.readdir('./nazedev', async function(err, files) {
@@ -1834,11 +1834,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'deletesampah':
       case 'delsampah': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isCreator) return sycreply(mess.owner)
         fs.readdir('./database/sampah', async function(err, files) {
@@ -1871,11 +1871,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'script':
       case 'esce': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         await naze.sendMessage(m.chat, {
           text: `https://github.com/sychyy/sychee\n⬆️ Itu Sc nya cuy`,
@@ -1910,11 +1910,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'donasi':
       case 'donate': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         sycreply('Donasi Dapat Melalui Url Dibawah Ini :\nhttps://saweria.co/naze')
       }
@@ -1922,11 +1922,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       // Group Menu
       case 'add': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!m.isGroup) return sycreply(mess.group)
         if (!m.isAdmin) return sycreply(mess.admin)
@@ -1970,11 +1970,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'kick': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!m.isGroup) return sycreply(mess.group)
         if (!m.isAdmin) return sycreply(mess.admin)
@@ -1989,11 +1989,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'promote': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!m.isGroup) return sycreply(mess.group)
         if (!m.isAdmin) return sycreply(mess.admin)
@@ -2008,11 +2008,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'demote': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!m.isGroup) return sycreply(mess.group)
         if (!m.isAdmin) return sycreply(mess.admin)
@@ -2030,11 +2030,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'setsubject':
       case 'setsubjectgc': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!m.isGroup) return sycreply(mess.group)
         if (!m.isAdmin) return sycreply(mess.admin)
@@ -2052,11 +2052,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'setdesk':
       case 'setdeskgc': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!m.isGroup) return sycreply(mess.group)
         if (!m.isAdmin) return sycreply(mess.admin)
@@ -2073,11 +2073,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'setppgrup':
       case 'setppgc': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!m.isGroup) return sycreply(mess.group)
         if (!m.isAdmin) return sycreply(mess.admin)
@@ -2119,11 +2119,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'del':
       case 'd': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!m.quoted) return sycreply('Reply pesan yang mau di delete')
         await naze.sendMessage(m.chat, {
@@ -2143,11 +2143,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'urlgrup':
       case 'urlgc': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!m.isGroup) return sycreply(mess.group)
         if (!m.isAdmin) return sycreply(mess.admin)
@@ -2165,11 +2165,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'newlink':
       case 'newurl': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!m.isGroup) return sycreply(mess.group)
         if (!m.isAdmin) return sycreply(mess.admin)
@@ -2182,11 +2182,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'gc':
       case 'grup': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!m.isGroup) return sycreply(mess.group)
         if (!m.isAdmin) return sycreply(mess.admin)
@@ -2224,11 +2224,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'tagall': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!m.isGroup) return sycreply(mess.group)
         if (!m.isAdmin) return sycreply(mess.admin)
@@ -2249,11 +2249,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'hidetag':
       case 'h': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!m.isGroup) return sycreply(mess.group)
         if (!m.isAdmin) return sycreply(mess.admin)
@@ -2268,11 +2268,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'totag': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!m.isGroup) return sycreply(mess.group)
         if (!m.isAdmin) return sycreply(mess.admin)
@@ -2288,11 +2288,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'listonline':
       case 'liston': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!m.isGroup) return sycreply(mess.group)
         let id = args && /\d+\-\d+@g.us/.test(args[0]) ? args[0] : m.chat
@@ -2309,11 +2309,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       // Bot Menu
       case 'owner': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         try {
           const carouselCards = [{
@@ -2413,11 +2413,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'profile':
       case 'cek': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         const user = Object.keys(db.users)
         const infoUser = db.users[m.sender]
@@ -2426,11 +2426,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'leaderboard': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         const entries = Object.entries(db.users).sort((a, b) => b[1].uang - a[1].uang).slice(0, 10).map(entry => entry[0]);
         let teksnya = '╭──❍「 *LEADERBOARD* 」❍\n'
@@ -2443,11 +2443,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'req':
       case 'request': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text) return sycreply('Mau Request apa ke Owner?')
         // Use the energyCost here
@@ -2470,11 +2470,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'totalfitur': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         const total = ((fs.readFileSync('./naze.js').toString()).match(/case '/g) || []).length
         sycreply(`Total Fitur : ${total}`);
@@ -2483,11 +2483,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'daily':
       case 'claim': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         daily(m, db)
         await naze.sendMessage(m.chat, {
@@ -2501,11 +2501,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'transfer':
       case 'tf': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -2517,22 +2517,22 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'buy': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         buy(m, args, db)
       }
       break
       case 'react': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         naze.sendMessage(m.chat, {
           react: {
@@ -2544,11 +2544,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'tagme': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         naze.sendMessage(m.chat, {
           text: `@${m.sender.split('@')[0]}`,
@@ -2562,11 +2562,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'tes':
       case 'bot': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         let teks = text.split(' ')
         let set = db.set[botNumber]
@@ -2636,11 +2636,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'botstatus':
       case 'statusbot': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         const used = process.memoryUsage()
         const cpus = os.cpus().map(cpu => {
@@ -2686,11 +2686,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'speedtest':
       case 'speed': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         sycreply('Testing Speed...')
         let cp = require('child_process')
@@ -2715,11 +2715,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'afk': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         let user = db.users[m.sender]
         user.afkTime = +new Date
@@ -2731,11 +2731,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'readviewone':
       case 'rvo': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -2769,11 +2769,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'inspect': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text) return sycreply('Masukkan Link Group!')
         // Use the energyCost here
@@ -2807,11 +2807,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'addmsg': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!m.quoted) return sycreply('Reply Pesan Yang Ingin Disave Di Database')
         if (!text) return sycreply(`*< / >* Example : ${prefix + command} file name`)
@@ -2825,11 +2825,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'delmsg':
       case 'deletemsg': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text) return sycreply('Nama msg yg mau di delete?')
         let msgs = db.database
@@ -2845,11 +2845,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'getmsg': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text) return sycreply(`*< / >* Example : ${prefix + command} file name\n\nLihat list pesan dengan ${prefix}listmsg`)
         let msgs = db.database
@@ -2859,11 +2859,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'listmsg': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         let seplit = Object.entries(db.database).map(([nama, isi]) => {
           return {
@@ -2881,11 +2881,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       // Case untuk listthumb
       case 'listthumb': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isCreator) return sycreply(mess.owner)
         const thumbList = readThumbList();
@@ -2902,11 +2902,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       // Case untuk addthumb
       case 'addthumb': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isCreator) return sycreply(mess.owner)
         if (!text) return sycreply(`*< / >* Example: ${prefix + command} thumbnail_name|image_url`);
@@ -2928,11 +2928,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'delthumb':
       case 'deletethumb': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isCreator) return sycreply(mess.owner)
         if (!text) return sycreply('Nama thumbnail yang ingin dihapus?');
@@ -2947,11 +2947,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'q':
       case 'quoted': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!m.quoted) return sycreply('Reply Pesannya!')
         const anu = await m.getQuotedObj()
@@ -2967,11 +2967,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'menfes':
       case 'menfess': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text) return sycreply(`*< / >* Example : ${prefix + command} 62xxxx|Nama Samaran`)
         // Use the energyCost here
@@ -3018,11 +3018,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'delmenfes':
       case 'delmenfess': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!menfes[m.sender]) return sycreply(`Kamu Tidak Sedang Berada Di Sesi ${command.split('del')[1]}!`)
         let anu = menfes[m.sender]
@@ -3038,11 +3038,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'fetch':
       case 'get': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -3065,11 +3065,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'toaud':
       case 'toaudio': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -3101,11 +3101,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'tomp3': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -3147,11 +3147,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'toptt':
       case 'tovoice': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -3184,11 +3184,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'togif': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -3227,11 +3227,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'toimage':
       case 'toimg': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -3268,11 +3268,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'toptv': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -3297,11 +3297,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'tourl': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -3345,11 +3345,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'tiktokslide':
       case 'ttslide': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isPremium) {
           console.log('Pengguna bukan premium.');
@@ -3466,11 +3466,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break;
       case 'img2text': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -3535,11 +3535,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'tts':
       case 'tospech': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text) return sycreply('Mana text yg mau diubah menjadi audio?')
         let {
@@ -3558,11 +3558,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'translate':
       case 'tr': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (text && text == 'list') {
           let list_tr = `╭──❍「 *Kode Bahasa* 」❍\n│• af : Afrikaans\n│• ar : Arab\n│• zh : Chinese\n│• en : English\n│• en-us : English (United States)\n│• fr : French\n│• de : German\n│• hi : Hindi\n│• hu : Hungarian\n│• is : Icelandic\n│• id : Indonesian\n│• it : Italian\n│• ja : Japanese\n│• ko : Korean\n│• la : Latin\n│• no : Norwegian\n│• pt : Portuguese\n│• pt : Portuguese\n│• pt-br : Portuguese (Brazil)\n│• ro : Romanian\n│• ru : Russian\n│• sr : Serbian\n│• es : Spanish\n│• sv : Swedish\n│• ta : Tamil\n│• th : Thai\n│• tr : Turkish\n│• vi : Vietnamese\n╰──────❍`;
@@ -3586,11 +3586,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'toqr':
       case 'qr': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text) return sycreply(`Ubah Text ke Qr dengan *${prefix + command}* textnya`)
         // Use the energyCost here
@@ -3624,11 +3624,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'remini':
       case 'hd': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -3652,11 +3652,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'shutdown': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isCreator) {
           return sycreply('Hanya pemilik bot yang dapat mengeksekusi perintah ini.');
@@ -3671,11 +3671,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break;
       case 'ssweb': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text) return sycreply(`*< / >* Example: ${prefix + command} https://github.com/nazedev/naze-md`)
         // Use the energyCost here
@@ -3700,11 +3700,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'readmore': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         let teks1 = text.split`|` [0] ? text.split`|` [0] : ''
         let teks2 = text.split`|` [1] ? text.split`|` [1] : ''
@@ -3713,11 +3713,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'getexif': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!m.quoted) return sycreply(`Reply sticker\nDengan caption ${prefix + command}`)
         if (!/sticker|webp/.test(quoted.type)) return sycreply(`Reply sticker\nDengan caption ${prefix + command}`)
@@ -3729,11 +3729,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'cuaca':
       case 'weather': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text) return sycreply(`*< / >* Example: ${prefix + command} jakarta`)
         try {
@@ -3748,11 +3748,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'colong':
       case 's': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         try {
           console.log('Memulai proses konversi ke stiker...');
@@ -3842,11 +3842,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'stickermeme':
       case 'stikermeme': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isPremium) {
           console.log('Pengguna bukan premium.');
@@ -3929,11 +3929,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break;
       case 'emojimix': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -4001,11 +4001,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break;
       case 'reminder': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text || !args[0] || !args[1]) return sycreply('Gunakan: !reminder [waktu(detik)] [pesan]');
         const time = parseInt(args[0]) * 1000;
@@ -4020,11 +4020,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'quote':
       case 'fakechat': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text && !m.quoted) return sycreply(`Kirim/reply pesan *${prefix + command}* Teksnya`);
         // Use the energyCost here
@@ -4074,11 +4074,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break;
       case 'brat': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text && (!m.quoted || !m.quoted.text)) return sycreply(`*${prefix + command}* Teksnya`);
         // Use the energyCost here
@@ -4156,11 +4156,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       }
       case 'sticktele': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text) return sycreply(`*${prefix + command}* membutuhkan query teks`);
         // Use the energyCost here
@@ -4195,11 +4195,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break;
       case 'wasted': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -4233,11 +4233,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'drivedl': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text) return sycreply(`*< / >* Example: ${prefix + command} url_drive`)
         if (!text.includes('drive.google.com')) return sycreply('Url Tidak Mengandung Hasil Dari Google Drive!')
@@ -4280,11 +4280,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break;
       case 'kucing': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -4319,11 +4319,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break;
       case 'encode': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text) return sycreply('Harap masukkan teks yang ingin dienkripsi!');
         try {
@@ -4337,11 +4337,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break;
       case 'decode': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text) return sycreply('Harap masukkan teks terenkripsi untuk didekode!');
         try {
@@ -4355,11 +4355,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break;
       case 'cekcuaca': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text) return sycreply('Masukkan lokasi! Contoh: cekcuaca Jakarta');
         try {
@@ -4380,11 +4380,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break;
       case 'bluearchive': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -4429,11 +4429,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
         break;
       case 'cjpn': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -4494,11 +4494,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       }
       case 'ckorea': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -4540,11 +4540,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       // CASE untuk memulai chat rahasia
       case 'startsecret': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -4571,11 +4571,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       // CASE untuk mengirim pesan rahasia
       case 'secretmsg': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!secretChat[m.sender]) return sycreply('Kamu tidak berada dalam sesi rahasia!');
         let partner = secretChat[m.sender].partner;
@@ -4594,11 +4594,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       // CASE untuk mengakhiri sesi chat rahasia
       case 'endsecret': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!secretChat[m.sender]) return sycreply('Kamu tidak berada dalam sesi rahasia!');
         let partner = secretChat[m.sender].partner;
@@ -4613,11 +4613,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break;
       case 'cindo': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -4658,11 +4658,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break;
       case 'cthai': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -4703,11 +4703,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break;
       case 'cviet': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -4748,11 +4748,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break;
       case 'cchina': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -4794,11 +4794,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'trigger':
       case 'triggered': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -4840,11 +4840,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'setexif': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isCreator) return sycreply(mess.owner)
         if (!text) return sycreply(`*< / >* Example : ${prefix + command} packname|author`)
@@ -4855,11 +4855,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'nulis': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -4871,11 +4871,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'nuliskiri': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -4911,11 +4911,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'nuliskanan': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -4951,11 +4951,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break
       case 'foliokiri': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -4994,11 +4994,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       case 'tiktokprofile':
       case 'ttprofile': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -5043,11 +5043,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       }
       case 'foliokanan': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -5105,9 +5105,13 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
       break;
       case 'setnama': {
         const userId = m.sender.split('@')[0]; // Mendapatkan ID pengguna
-        if (!users[userId] || !users[userId].loggedIn) {
-          return sycreply(`Hi, @${userId}, Anda harus login terlebih dahulu untuk menggunakan fitur ini.`);
-        }
+        if (!users[m.sender.split('@')[0]]) {
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+} else if (!users[m.sender.split('@')[0]].verified) {
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+} else if (!users[m.sender.split('@')[0]].loggedIn) {
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+}
         if (!text || text.trim() === "") {
           return sycreply('Silakan masukkan nama baru Anda.\nContoh: setnama NamaBaru');
         }
@@ -5233,27 +5237,41 @@ break;
   break;
 }
       case 'setpw': {
-        // Pastikan hanya digunakan di private chat
-        if (m.isGroup) return sycreply('Perintah ini hanya dapat digunakan di private chat.');
-        // Validasi input
-        if (!text.includes('|')) return sycreply('Format salah! Gunakan: setpw password_baru|nama');
-        const [newPassword, name] = text.split('|');
-        if (!newPassword || !name) return sycreply('Format salah! Gunakan: setpw password_baru|nama');
-        // Periksa apakah pengguna terdaftar
-        const userId = m.sender.split('@')[0];
-        if (!users[userId] || users[userId].name !== name) {
-          return sycreply('Nama atau akun Anda tidak ditemukan di database.');
-        }
-        // Atur ulang password
-        const result = setPassword(userId, newPassword);
-        sycreply(result);
-        break;
-      }
+    // Pastikan hanya digunakan di private chat
+    if (m.isGroup) return sycreply('Perintah ini hanya dapat digunakan di private chat.');
+    if (!users[m.sender.split('@')[0]]) {
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+} else if (!users[m.sender.split('@')[0]].verified) {
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+} else if (!users[m.sender.split('@')[0]].loggedIn) {
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+}
+    // Validasi input
+    if (!text.includes('|')) return sycreply('Format salah! Gunakan: setpw password_baru|nama');
+    const [newPassword, name] = text.split('|');
+    if (!newPassword || !name) return sycreply('Format salah! Gunakan: setpw password_baru|nama');
+    
+    // Periksa apakah pengguna terdaftar
+    const userId = m.sender.split('@')[0];
+    
+    if (users[userId].name !== name) {
+        return sycreply('Nama atau akun Anda tidak ditemukan di database.');
+    }
+    
+    // Atur ulang password
+    const result = setPassword(userId, newPassword);
+    sycreply(result);
+    break;
+}
       case 'encrypt': { // Format: encrypt teks|password
         const userId = m.sender.split('@')[0];
-        if (!users[userId] || !users[userId].loggedIn) {
-          return sycreply('Anda harus login terlebih dahulu untuk menggunakan fitur ini.');
-        }
+        if (!users[m.sender.split('@')[0]]) {
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+} else if (!users[m.sender.split('@')[0]].verified) {
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+} else if (!users[m.sender.split('@')[0]].loggedIn) {
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+}
         const [text, password] = q.split('|');
         if (!text || !password) return sycreply('Format salah! Contoh: encrypt teks|password');
         const encryptedText = encryptText(text, password);
@@ -5262,9 +5280,13 @@ break;
       break;
       case 'decrypt': { // Format: decrypt teks|password
         const userId = m.sender.split('@')[0];
-        if (!users[userId] || !users[userId].loggedIn) {
-          return sycreply('Anda harus login terlebih dahulu untuk menggunakan fitur ini.');
-        }
+        if (!users[m.sender.split('@')[0]]) {
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+} else if (!users[m.sender.split('@')[0]].verified) {
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+} else if (!users[m.sender.split('@')[0]].loggedIn) {
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+}
         const [encryptedText, password] = q.split('|');
         if (!encryptedText || !password) return sycreply('Format salah! Contoh: decrypt teks|password');
         const decryptedText = decryptText(encryptedText, password);
@@ -5275,11 +5297,11 @@ break;
       case 'liriksearch':
       case 'liriks': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -5355,11 +5377,11 @@ break;
       case 'smooth':
       case 'tupai': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         try {
           let set;
@@ -5414,11 +5436,11 @@ break;
       case 'shorturl':
       case 'shortlink': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -5437,11 +5459,11 @@ break;
       case 'git':
       case 'gitclone': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -5618,11 +5640,11 @@ break;
       // Case untuk mengatur autoai
       case 'autoaii': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text) return sycreply(`Gunakan: ${prefix + command} on/off`); // Memastikan ada teks untuk mengaktifkan/mematikan
         if (text.toLowerCase() === 'on') {
@@ -5652,11 +5674,11 @@ break;
       // Case untuk AI utama
       case 'ai': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         
         if (!text) return sycreply(`*< / >* Example: ${prefix + command} query`);
@@ -5678,11 +5700,11 @@ break;
       // Auto AI: memproses semua pesan secara otomatis jika autoAi aktif
       case 'simi': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         
         if (!text) return sycreply(`*< / >* Example: ${prefix + command} query`)
@@ -5696,11 +5718,11 @@ break;
       break
       case 'txt2img': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isPremium) return sycreply(mess.prem);
         // Use the energyCost here
@@ -5736,11 +5758,11 @@ break;
       break
       case 'aimg': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isPremium) return sycreply(mess.prem);
         // Use the energyCost here
@@ -5776,11 +5798,11 @@ break;
       break
       case 'dukun': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -5825,11 +5847,11 @@ break;
       // Search Menu
       case 'google': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -5854,11 +5876,11 @@ break;
       break
       case 'gimage': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -5890,11 +5912,11 @@ break;
       case 'ytsearch2':
       case 'youtubesearch2': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -6003,11 +6025,11 @@ break;
       case 'ytsearch':
       case 'youtubesearch': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -6104,11 +6126,11 @@ break;
       break;
       case 'pixiv': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -6152,11 +6174,11 @@ break;
       case 'pinterest':
       case 'pint': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -6249,11 +6271,11 @@ break;
       break;
       case 'wallpaper': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -6283,11 +6305,11 @@ break;
       break
       case 'checklocation': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isCreator) return sycreply('Fitur ini hanya dapat digunakan oleh owner bot.');
         let ipUrl = 'https://ipinfo.io/json';
@@ -6309,11 +6331,11 @@ break;
       break;
       case 'cermin': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text) return sycreply('Harap masukkan teks yang ingin dibalik!');
         const reversedText = text.split('').reverse().join('');
@@ -6322,11 +6344,11 @@ break;
       break;
       case 'ringtone': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -6349,11 +6371,11 @@ break;
       break
       case 'analyzechats': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!m.isGroup) return sycreply('Fitur ini hanya bisa digunakan di grup!');
         const chatData = store.messages[m.chat]?.array || [];
@@ -6370,11 +6392,11 @@ break;
       case 'npm':
       case 'npmjs': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -6397,11 +6419,11 @@ break;
       break
       case 'style': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -6417,11 +6439,11 @@ break;
       case 'spotify':
       case 'spotifysearch': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -6457,216 +6479,230 @@ break;
       break
       // Downloader Menu
       case 'ytmp3':
-      case 'ytaudio':
-      case 'ytplayaudio': {
-        if (!users[m.sender.split('@')[0]]) {
+case 'ytaudio':
+case 'ytplayaudio': {
+  if (!users[m.sender.split('@')[0]]) {
     return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
-} else if (!users[m.sender.split('@')[0]].verified) {
+  } else if (!users[m.sender.split('@')[0]].verified) {
     return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
-} else if (!users[m.sender.split('@')[0]].loggedIn) {
+  } else if (!users[m.sender.split('@')[0]].loggedIn) {
     return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
-}
-        // Use the energyCost here
-        if (!useEnergy(userId, energyCost)) {
-          return m.reply('Energi anda habis/tidak mencukupi! Ketik charger watt.');
-        }
-        m.reply(`-${energyCost} Energy⚡\nEnergi berhasil digunakan. Sisa energi: ${users[userId].energy}.`);
-        if (!text) return sycreply(`*< / >* Example: ${prefix + command} url_youtube`);
-        if (!text.includes('youtu')) return sycreply('Url Tidak Mengandung Result Dari Youtube!');
-        sycreply('Memproses permintaan Anda, harap tunggu...');
-        // Emoji yang akan digunakan
-        const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
-        // Mengirimkan reaksi secara berurutan
-        for (const emoji of reactEmojis) {
-          await naze.sendMessage(m.chat, {
-            react: {
-              text: emoji,
-              key: m.key
-            }
-          });
-        }
-        try {
-          console.log('Mengambil informasi video...');
-          const info = await ytdl.getInfo(text);
-          if (info.videoDetails.lengthSeconds > 360) {
-            return sycreply('Video terlalu panjang. Silakan coba video dengan durasi lebih pendek.');
-          }
-          const title = info.videoDetails.title.replace(/[<>:"/\\|?*]/g, '');
-          const outputPath = path.join('./downloads', `${title}.mp3`);
-          const compressedPath = path.join('./downloads', `${title}_compressed.mp3`);
-          if (!fs.existsSync('./downloads')) {
-            fs.mkdirSync('./downloads', {
-              recursive: true
-            });
-          }
-          console.log('Memulai unduhan audio...');
-          console.time('Mengunduh Audio');
-          const audioStream = ytdl(text, {
-            filter: 'audioonly',
-            quality: 'lowestaudio'
-          });
-          const tempFile = fs.createWriteStream(outputPath);
-          audioStream.pipe(tempFile);
-          tempFile.on('finish', () => {
-            console.timeEnd('Unduhan Audio');
-            console.log('Unduhan selesai, memulai kompresi...');
-            console.time('Kompresi Audio');
-            ffmpeg(outputPath).audioBitrate(128).outputOptions('-preset ultrafast') // Preset cepat
-              .on('end', async () => {
-                console.timeEnd('Kompresi Audio');
-                console.log('Kompresi selesai, mengirim file...');
-                await naze.sendMessage(m.chat, {
-                  audio: {
-                    url: compressedPath
-                  },
-                  mimetype: 'audio/mpeg',
-                  contextInfo: {
-                    externalAdReply: {
-                      title: title,
-                      body: 'Klik untuk melihat sumber',
-                      thumbnailUrl: getRandomThumb(),
-                      sourceUrl: text
-                    }
-                  }
-                }, {
-                  quoted: m
-                });
-                await naze.sendMessage(m.chat, {
-                  react: {
-                    text: '▶️', // Emoji yang diinginkan
-                    key: m.key // Memberikan reaksi pada pesan perintah
-                  }
-                });
-                fs.unlinkSync(outputPath);
-                fs.unlinkSync(compressedPath);
-                console.log('Proses selesai, file dikirim!');
-              }).on('error', (err) => {
-                console.error('Error saat mengompresi audio:', err);
-                sycreply('Terjadi kesalahan saat mengompresi audio.');
-              }).save(compressedPath);
-          });
-          tempFile.on('error', (err) => {
-            console.error('Error saat menulis file:', err);
-            sycreply('Terjadi kesalahan saat menyimpan audio.');
-          });
-        } catch (e) {
-          console.error('Error:', e);
-          sycreply('Gagal memproses audio! Error: ' + e.message);
-        }
-      }
-      break;
-      case 'play3': {
-        if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
-} else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
-} else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
-}
-        // Use the energyCost here
-        if (!useEnergy(userId, energyCost)) {
-          return m.reply('Energi anda habis/tidak mencukupi! Ketik charger watt.');
-        }
-        m.reply(`-${energyCost} Energy⚡\nEnergi berhasil digunakan. Sisa energi: ${users[userId].energy}.`);
-        if (!text) return sycreply(`*< / >* Example: ${prefix + command} dj komang`);
-        sycreply(mess.wait);
-        // Emoji yang akan digunakan
-        const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
-        // Mengirimkan reaksi secara berurutan
-        for (const emoji of reactEmojis) {
-          await naze.sendMessage(m.chat, {
-            react: {
-              text: emoji,
-              key: m.key
-            }
-          });
-        }
-        try {
-          const res = await yts.search(text);
-          const hasil = res.all[0]; // Mengambil hasil pertama dari pencarian
-          if (!hasil || !hasil.url) return sycreply('Tidak ada hasil yang ditemukan!');
-          // Mengirim informasi video
-          const teksnya = `*📍Title:* ${hasil.title || 'Tidak tersedia'}\n*✏Description:* ${hasil.description || 'Tidak tersedia'}\n*🌟Channel:* ${hasil.author?.name || 'Tidak tersedia'}\n*⏳Duration:* ${hasil.seconds || 'Tidak tersedia'} second (${hasil.timestamp || 'Tidak tersedia'})\n*🔎Source:* ${hasil.url || 'Tidak tersedia'}`;
-          await naze.sendMessage(m.chat, {
-            image: {
-              url: hasil.thumbnail
-            },
-            caption: teksnya
-          }, {
-            quoted: m
-          });
-          // Proses download audio secara otomatis
-          const url = hasil.url;
-          await naze.sendMessage(m.chat, {
-            react: {
-              text: "⏳",
-              key: m.key
-            }
-          });
-          sycreply('Bentar mengunduh lagu..')
-          const info = await ytdl.getInfo(url);
-          if (info.videoDetails.lengthSeconds > 360) {
-            return sycreply('Video terlalu panjang. Silakan coba video dengan durasi lebih pendek.');
-          }
-          const title = info.videoDetails.title.replace(/[<>:"/\\|?*]/g, '');
-          const outputPath = path.join('./downloads', `${title}.mp3`);
-          const compressedPath = path.join('./downloads', `${title}_compressed.mp3`);
-          if (!fs.existsSync('./downloads')) {
-            fs.mkdirSync('./downloads', {
-              recursive: true
-            });
-          }
-          console.log('Mengunduh audio...');
-          const audioStream = ytdl(url, {
-            filter: 'audioonly',
-            quality: 'lowestaudio'
-          });
-          const tempFile = fs.createWriteStream(outputPath);
-          audioStream.pipe(tempFile);
-          tempFile.on('finish', () => {
-            ffmpeg(outputPath).audioBitrate(128).outputOptions('-preset ultrafast').on('end', async () => {
-              await naze.sendMessage(m.chat, {
-                audio: {
-                  url: compressedPath
+  }
+
+  const userId = m.sender.split('@')[0];
+  if (!useEnergy(userId, energyCost)) {
+    return m.reply('Energi anda habis/tidak mencukupi! Ketik charger watt.');
+  }
+  m.reply(`-${energyCost} Energy⚡\nEnergi berhasil digunakan. Sisa energi: ${users[userId].energy}.`);
+
+  if (!text) return sycreply(`*< / >* Example: ${prefix + command} url_youtube`);
+  if (!text.includes('youtu')) return sycreply('Url Tidak Mengandung Result Dari Youtube!');
+  sycreply('Memproses permintaan Anda, harap tunggu...');
+
+  const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+  for (const emoji of reactEmojis) {
+    await naze.sendMessage(m.chat, { react: { text: emoji, key: m.key } });
+  }
+
+  try {
+    console.log('Mengambil informasi video...');
+    const info = await ytdl.getInfo(text);
+    if (info.videoDetails.lengthSeconds > 360) {
+      return sycreply('Video terlalu panjang. Silakan coba video dengan durasi lebih pendek.');
+    }
+
+    const title = info.videoDetails.title.replace(/[<>:"/\\|?*]/g, '');
+    const outputPath = path.join('./downloads', `${title}.mp3`);
+    const compressedPath = path.join('./downloads', `${title}_compressed.mp3`);
+    if (!fs.existsSync('./downloads')) fs.mkdirSync('./downloads', { recursive: true });
+
+    let attempts = 0;
+    const maxRetries = 3;
+
+    const downloadAudio = () => {
+      attempts++;
+      const audioStream = ytdl(text, { filter: 'audioonly', quality: 'lowestaudio' });
+      const tempFile = fs.createWriteStream(outputPath);
+
+      audioStream.pipe(tempFile);
+
+      tempFile.on('finish', () => {
+        console.log('Audio berhasil diunduh.');
+        ffmpeg(outputPath)
+          .audioBitrate(128)
+          .outputOptions('-preset ultrafast')
+          .on('end', async () => {
+            console.log('Audio berhasil dikompresi.');
+            await naze.sendMessage(m.chat, {
+              audio: { url: compressedPath },
+              mimetype: 'audio/mpeg',
+              contextInfo: {
+                externalAdReply: {
+                  title: title,
+                  body: 'Klik untuk melihat sumber',
+                  thumbnailUrl: getRandomThumb(),
+                  sourceUrl: text,
                 },
-                mimetype: 'audio/mpeg',
-                contextInfo: {
-                  externalAdReply: {
-                    title: title,
-                    body: 'Klik untuk melihat sumber',
-                    thumbnailUrl: getRandomThumb(),
-                    sourceUrl: text
-                  }
-                }
-              }, {
-                quoted: m
-              });
-              fs.unlinkSync(outputPath);
-              fs.unlinkSync(compressedPath);
-            }).on('error', (err) => {
-              console.error('Error saat mengompresi audio:', err);
-              sycreply('Terjadi kesalahan saat mengompresi audio.');
-            }).save(compressedPath);
-          });
-          tempFile.on('error', (err) => {
-            console.error('Error saat menulis file:', err);
-            sycreply('Terjadi kesalahan saat menyimpan audio.');
-          });
-        } catch (e) {
-          console.error('Error:', e);
-          sycreply('Gagal memproses permintaan!');
+              },
+            }, { quoted: m });
+            fs.unlinkSync(outputPath);
+            fs.unlinkSync(compressedPath);
+          })
+          .on('error', (err) => {
+            console.error('Error saat mengompresi audio:', err);
+            sycreply('Terjadi kesalahan saat mengompresi audio.');
+          })
+          .save(compressedPath);
+      });
+
+      tempFile.on('error', (err) => {
+        console.error('Error saat menulis file:', err);
+        if (attempts < maxRetries) {
+          console.log('Coba lagi... (Percobaan ke-', attempts, ')');
+          downloadAudio();
+        } else {
+          sycreply('Gagal mengunduh audio setelah beberapa percobaan.');
         }
+      });
+    };
+
+    downloadAudio();
+  } catch (e) {
+    console.error('Error:', e);
+    sycreply('Gagal memproses audio! Error: ' + e.message);
+  }
+}
+break;
+      case 'play3': {
+  if (!users[m.sender.split('@')[0]]) {
+    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+  } else if (!users[m.sender.split('@')[0]].verified) {
+    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+  } else if (!users[m.sender.split('@')[0]].loggedIn) {
+    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirim melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+  }
+
+  const userId = m.sender.split('@')[0];
+  if (!useEnergy(userId, energyCost)) {
+    return m.reply('Energi anda habis/tidak mencukupi! Ketik charger watt.');
+  }
+  m.reply(`-${energyCost} Energy⚡\nEnergi berhasil digunakan. Sisa energi: ${users[userId].energy}.`);
+
+  if (!text) return sycreply(`*< / >* Example: ${prefix + command} dj komang`);
+  sycreply(mess.wait);
+
+  // Emoji reaksi berurutan
+  const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+  for (const emoji of reactEmojis) {
+    await naze.sendMessage(m.chat, {
+      react: {
+        text: emoji,
+        key: m.key
       }
-      break;
+    });
+  }
+
+  try {
+    const res = await yts.search(text);
+    const hasil = res.all[0];
+    if (!hasil || !hasil.url) return sycreply('Tidak ada hasil yang ditemukan!');
+
+    const teksnya = `*📍Title:* ${hasil.title || 'Tidak tersedia'}\n*✏Description:* ${hasil.description || 'Tidak tersedia'}\n*🌟Channel:* ${hasil.author?.name || 'Tidak tersedia'}\n*⏳Duration:* ${hasil.seconds || 'Tidak tersedia'} second (${hasil.timestamp || 'Tidak tersedia'})\n*🔎Source:* ${hasil.url || 'Tidak tersedia'}`;
+    await naze.sendMessage(m.chat, {
+      image: { url: hasil.thumbnail },
+      caption: teksnya
+    }, { quoted: m });
+
+    const url = hasil.url;
+    if (!ytdl.validateURL(url)) {
+      return sycreply('URL video tidak valid. Silakan coba dengan video lain.');
+    }
+
+    sycreply('Bentar mengunduh lagu...');
+    const info = await ytdl.getInfo(url);
+    if (info.videoDetails.lengthSeconds > 360) {
+      return sycreply('Video terlalu panjang. Silakan coba video dengan durasi lebih pendek.');
+    }
+
+    const title = info.videoDetails.title.replace(/[<>:"/\\|?*]/g, '');
+    const outputPath = path.join('./downloads', `${title}.mp3`);
+    const compressedPath = path.join('./downloads', `${title}_compressed.mp3`);
+    if (!fs.existsSync('./downloads')) fs.mkdirSync('./downloads', { recursive: true });
+
+    console.log('Mengunduh audio...');
+    let attempts = 0;
+    const maxRetries = 3;
+
+    const downloadAudio = () => {
+      attempts++;
+      const audioStream = ytdl(url, { filter: 'audioonly', quality: 'lowestaudio' });
+      const tempFile = fs.createWriteStream(outputPath);
+
+      audioStream.pipe(tempFile);
+
+      tempFile.on('finish', () => {
+        console.log('Audio berhasil diunduh.');
+        clearTimeout(timeout);
+        ffmpeg(outputPath)
+          .audioBitrate(128)
+          .outputOptions('-preset ultrafast')
+          .on('end', async () => {
+            console.log('Audio berhasil dikompresi.');
+            await naze.sendMessage(m.chat, {
+              audio: { url: compressedPath },
+              mimetype: 'audio/mpeg',
+              contextInfo: {
+                externalAdReply: {
+                  title: title,
+                  body: 'Klik untuk melihat sumber',
+                  thumbnailUrl: getRandomThumb(),
+                  sourceUrl: url
+                }
+              }
+            }, { quoted: m });
+            fs.unlinkSync(outputPath);
+            fs.unlinkSync(compressedPath);
+          })
+          .on('error', (err) => {
+            console.error('Error saat mengompresi audio:', err);
+            sycreply('Terjadi kesalahan saat mengompresi audio.');
+          })
+          .save(compressedPath);
+      });
+
+      tempFile.on('error', (err) => {
+        console.error('Error saat menulis file:', err);
+        if (attempts < maxRetries) {
+          console.log('Coba lagi... (Percobaan ke-', attempts, ')');
+          downloadAudio();
+        } else {
+          sycreply('Gagal mengunduh audio setelah beberapa percobaan.');
+        }
+      });
+
+      const timeout = setTimeout(() => {
+        sycreply('Proses mengunduh terlalu lama. Silakan coba lagi nanti.');
+        tempFile.close();
+      }, 60000); // Timeout setelah 1 menit
+    };
+
+    downloadAudio();
+
+  } catch (e) {
+    console.error('Error:', e);
+    sycreply('Gagal memproses permintaan!');
+  }
+}
+break;
       case 'ytmp4':
       case 'ytvideo':
       case 'ytplayvideo': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -6773,11 +6809,11 @@ break;
       case 'igdown':
       case 'igdl': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -6821,11 +6857,11 @@ break;
       break
       case 'getq': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -6853,11 +6889,11 @@ break;
       case 'instastory':
       case 'storyig': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -6897,11 +6933,11 @@ break;
       case 'tiktokmp4':
       case 'tiktokvideo': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isPremium) {
           console.log('Pengguna bukan premium.');
@@ -6963,11 +6999,11 @@ break;
       case 'ttaudio':
       case 'tiktokaudio': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isPremium) {
           console.log('Pengguna bukan premium.');
@@ -7045,11 +7081,11 @@ break;
       case 'fbmp4':
       case 'fbvideo': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text) return sycreply(`*< / >* Example: ${prefix + command} url_facebook`)
         if (!text.includes('facebook.com')) return sycreply('Url Tidak Mengandung Result Dari Facebook!')
@@ -7084,11 +7120,11 @@ break;
       break
       case 'videymp4': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isPremium) return sycreply(mess.prem);
         if (!text) return sycreply(`*< / >* Example: ${prefix + command} url_videy`)
@@ -7132,11 +7168,11 @@ break;
       break;
       case 'mediafire': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text) {
           console.log('URL tidak diberikan');
@@ -7172,11 +7208,11 @@ break;
       break
       case 'spotifydl': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text) {
           console.log("URL tidak diberikan. Mengirimkan contoh penggunaan.");
@@ -7224,11 +7260,11 @@ break;
       // Quotes Menu
       case 'motivasi': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -7241,11 +7277,11 @@ break;
       break
       case 'bijak': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -7258,11 +7294,11 @@ break;
       break
       case 'dare': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -7275,11 +7311,11 @@ break;
       break
       case 'quotes': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -7292,11 +7328,11 @@ break;
       break
       case 'truth': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -7309,11 +7345,11 @@ break;
       break
       case 'renungan': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -7338,11 +7374,11 @@ break;
       break
       case 'bucin': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -7357,11 +7393,11 @@ break;
       case 'coffe':
       case 'kopi': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -7374,11 +7410,11 @@ break;
       // Anime Menu
       case 'waifu': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -7400,11 +7436,11 @@ break;
       break
       case 'neko': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -7427,11 +7463,11 @@ break;
       // Fun Menu
       case 'dadu': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         let ddsa = [{
           url: 'https://telegra.ph/file/9f60e4cdbeb79fc6aff7a.png',
@@ -7480,11 +7516,11 @@ break;
       case 'heleh':
       case 'holoh': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!m.quoted && !text) return sycreply(`Kirim/reply text dengan caption ${prefix + command}`)
         ter = command[1].toLowerCase()
@@ -7494,11 +7530,11 @@ break;
       break
       case 'bisakah': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text) return sycreply(`*< / >* Example : ${prefix + command} saya menang?`)
         let bisa = ['Bisa', 'Coba Saja', 'Pasti Bisa', 'Mungkin Saja', 'Tidak Bisa', 'Tidak Mungkin', 'Coba Ulangi', 'Ngimpi kah?', 'yakin bisa?']
@@ -7508,11 +7544,11 @@ break;
       break
       case 'apakah': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text) return sycreply(`*< / >* Example : ${prefix + command} saya bisa menang?`)
         let apa = ['Iya', 'Tidak', 'Bisa Jadi', 'Coba Ulangi', 'Mungkin Saja', 'Mungkin Tidak', 'Mungkin Iya', 'Ntahlah']
@@ -7523,11 +7559,11 @@ break;
       case 'kapan':
       case 'kapankah': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text) return sycreply(`*< / >* Example : ${prefix + command} saya menang?`)
         let kapan = ['Besok', 'Lusa', 'Nanti', '4 Hari Lagi', '5 Hari Lagi', '6 Hari Lagi', '1 Minggu Lagi', '2 Minggu Lagi', '3 Minggu Lagi', '1 Bulan Lagi', '2 Bulan Lagi', '3 Bulan Lagi', '4 Bulan Lagi', '5 Bulan Lagi', '6 Bulan Lagi', '1 Tahun Lagi', '2 Tahun Lagi', '3 Tahun Lagi', '4 Tahun Lagi', '5 Tahun Lagi', '6 Tahun Lagi', '1 Abad lagi', '3 Hari Lagi', 'Bulan Depan', 'Ntahlah', 'Tidak Akan Pernah']
@@ -7539,11 +7575,11 @@ break;
       case 'kerangajaib':
       case 'kerang': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text) return sycreply(`*< / >* Example : ${prefix + command} boleh pinjam 100?`)
         let krng = ['Mungkin suatu hari', 'Tidak juga', 'Tidak keduanya', 'Kurasa tidak', 'Ya', 'Tidak', 'Coba tanya lagi', 'Tidak ada']
@@ -7553,11 +7589,11 @@ break;
       break
       case 'cekmati': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text) return sycreply(`*< / >* Example : ${prefix + command} nama lu`)
         let teksnya = text.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, '').replace(/\d/g, '');
@@ -7569,11 +7605,11 @@ break;
       break
       case 'ceksifat': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         let sifat_a = ['Bijak', 'Sabar', 'Kreatif', 'Humoris', 'Mudah bergaul', 'Mandiri', 'Setia', 'Jujur', 'Dermawan', 'Idealis', 'Adil', 'Sopan', 'Tekun', 'Rajin', 'Pemaaf', 'Murah hati', 'Ceria', 'Percaya diri', 'Penyayang', 'Disiplin', 'Optimis', 'Berani', 'Bersyukur', 'Bertanggung jawab', 'Bisa diandalkan', 'Tenang', 'Kalem', 'Logis']
         let sifat_b = ['Sombong', 'Minder', 'Pendendam', 'Sensitif', 'Perfeksionis', 'Caper', 'Pelit', 'Egois', 'Pesimis', 'Penyendiri', 'Manipulatif', 'Labil', 'Penakut', 'Vulgar', 'Tidak setia', 'Pemalas', 'Kasar', 'Rumit', 'Boros', 'Keras kepala', 'Tidak bijak', 'Pembelot', 'Serakah', 'Tamak', 'Penggosip', 'Rasis', 'Ceroboh', 'Intoleran']
@@ -7583,11 +7619,11 @@ break;
       break
       case 'cekkhodam': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text) return sycreply(`*< / >* Example : ${prefix + command} nama lu`);
         try {
@@ -7606,11 +7642,11 @@ break;
       break;
       case 'jodohku': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!m.isGroup) return sycreply(mess.group)
         let member = (store.groupMetadata[m.chat] ? store.groupMetadata[m.chat].participants : m.metadata.participants).map(a => a.id)
@@ -7620,11 +7656,11 @@ break;
       break
       case 'jadian': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!m.isGroup) return sycreply(mess.group)
         let member = (store.groupMetadata[m.chat] ? store.groupMetadata[m.chat].participants : m.metadata.participants).map(a => a.id)
@@ -7635,11 +7671,11 @@ break;
       break
       case 'fitnah': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         let [teks1, teks2, teks3] = text.split`|`
         if (!teks1 || !teks2 || !teks3) return sycreply(`*< / >* Example : ${prefix + command} pesan target|pesan mu|nomer/tag target`)
@@ -7667,11 +7703,11 @@ break;
       // Game Menu
       case 'slot': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -7683,11 +7719,11 @@ break;
       break
       case 'casino': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -7700,11 +7736,11 @@ break;
       case 'rampok':
       case 'merampok': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -7716,11 +7752,11 @@ break;
       break
       case 'begal': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -7733,11 +7769,11 @@ break;
       case 'suitpvp':
       case 'suit': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -7774,11 +7810,11 @@ break;
       //[ *CASE AI JOKO SIJAWA* ]
       case "joko": {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text) return sycreply("mau nanya apa sama joko\nExampel: .joko nama kamu siapa?")
         await naze.sendMessage(m.chat, {
@@ -7795,11 +7831,11 @@ break;
       case 'ttt':
       case 'tictactoe': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -7867,11 +7903,11 @@ break;
       break
       case 'akinator': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!isPremium) return sycreply(mess.prem);
         // Use the energyCost here
@@ -7909,11 +7945,11 @@ break;
       break
       case 'tebakbom': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -7944,11 +7980,11 @@ break;
       break
       case 'tekateki': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -7979,11 +8015,11 @@ break;
       break
       case 'tebaklirik': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -8014,11 +8050,11 @@ break;
       break
       case 'listsurah': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         try {
           const surahList = ["1. Al-Fatihah", "2. Al-Baqarah", "3. Ali Imran", "4. An-Nisa", "5. Al-Ma'idah", "6. Al-An'am", "7. Al-A'raf", "8. Al-Anfal", "9. At-Tawbah", "10. Yunus", "11. Hud", "12. Yusuf", "13. Ar-Ra'd", "14. Ibrahim", "15. Al-Hijr", "16. An-Nahl", "17. Al-Isra", "18. Al-Kahf", "19. Maryam", "20. Ta-Ha", "21. Al-Anbiya", "22. Al-Hajj", "23. Al-Mu'minun", "24. An-Nur", "25. Al-Furqan", "26. Ash-Shu'ara", "27. An-Naml", "28. Al-Qasas", "29. Al-Ankabut", "30. Ar-Rum", "31. Luqman", "32. As-Sajdah", "33. Al-Ahzab", "34. Saba'", "35. Fatir", "36. Ya-Sin", "37. As-Saffat", "38. Sad", "39. Az-Zumar", "40. Ghafir", "41. Fussilat", "42. Ash-Shura", "43. Az-Zukhruf", "44. Ad-Dukhan", "45. Al-Jathiyah", "46. Al-Ahqaf", "47. Muhammad", "48. Al-Fath", "49. Al-Hujurat", "50. Qaf", "51. Az-Zariyat", "52. At-Tur", "53. An-Najm", "54. Al-Qamar", "55. Ar-Rahman", "56. Al-Waqi'ah", "57. Al-Hadid", "58. Al-Mujadilah", "59. Al-Hashr", "60. Al-Mumtahanah", "61. As-Saff", "62. Al-Jumu'ah", "63. Al-Munafiqun", "64. At-Taghabun", "65. At-Talaq", "66. At-Tahrim", "67. Al-Mulk", "68. Al-Qalam", "69. Al-Haqqah", "70. Al-Ma'arij", "71. Nuh", "72. Al-Jinn", "73. Al-Muzzammil", "74. Al-Muddathir", "75. Al-Qiyamah", "76. Al-Insan", "77. Al-Mursalat", "78. An-Naba'", "79. An-Nazi'at", "80. Abasa", "81. At-Takwir", "82. Al-Infitar", "83. Al-Mutaffifin", "84. Al-Inshiqaq", "85. Al-Buruj", "86. At-Tariq", "87. Al-A'la", "88. Al-Ghashiyah", "89. Al-Fajr", "90. Al-Balad", "91. Ash-Shams", "92. Al-Lail", "93. Ad-Duhaa", "94. Al-Inshirah", "95. At-Tin", "96. Al-'Alaq", "97. Al-Qadr", "98. Al-Bayyinah", "99. Az-Zalzalah", "100. Al-Adiyat", "101. Al-Qari'ah", "102. At-Takathur", "103. Al-Asr", "104. Al-Humazah", "105. Al-Fil", "106. Quraysh", "107. Al-Ma'un", "108. Al-Kawthar", "109. Al-Kafirun", "110. An-Nasr", "111. Al-Masad", "112. Al-Ikhlas", "113. Al-Falaq", "114. An-Nas"];
@@ -8038,11 +8074,11 @@ break;
       break;
       case 'bacaansholat': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         const bacaanshalat = {
           "result": [{
@@ -8104,11 +8140,11 @@ break;
       break
       case 'listdoa': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         try {
           // Ambil data dari API
@@ -8133,11 +8169,11 @@ break;
       }
       case 'doa': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         try {
           // Ambil ID doa dari argumen
@@ -8192,11 +8228,11 @@ break;
       }
       case 'quran': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text) return sycreply(`*${prefix + command}* Masukkan nomor surah!`);
         const surahNumber = parseInt(text);
@@ -8258,11 +8294,11 @@ break;
       break;
       case 'tebakkata': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -8287,11 +8323,11 @@ break;
       break
       case 'family100': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -8324,11 +8360,11 @@ break;
       break
       case 'susunkata': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -8359,11 +8395,11 @@ break;
       break
       case 'tebakkimia': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -8388,11 +8424,11 @@ break;
       break
       case 'caklontong': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -8424,11 +8460,11 @@ break;
       break
       case 'aitukam': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text && (!m.quoted || !m.quoted.text)) return sycreply(`Kirim/reply pesan *${prefix + command}* Teksnya`);
         try {
@@ -8450,11 +8486,11 @@ break;
       break;
       case 'meta': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text && (!m.quoted || !m.quoted.text)) return sycreply(`Kirim/reply pesan *${prefix + command}* Teksnya`);
         try {
@@ -8476,11 +8512,11 @@ break;
       break;
       case 'luminai': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Cek apakah ada teks yang dikirim atau teks dari pesan yang dikutip
         if (!text && (!m.quoted || !m.quoted.text)) return sycreply(`Kirim/reply pesan *${prefix + command}* Teksnya`);
@@ -8503,11 +8539,11 @@ break;
       break;
       case 'esia': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Cek apakah ada teks yang dikirim atau teks dari pesan yang dikutip
         if (!text && (!m.quoted || !m.quoted.text)) return sycreply(`Kirim/reply pesan *${prefix + command}* Teksnya`);
@@ -8530,11 +8566,11 @@ break;
       break;
       case 'gemini': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Cek apakah ada teks yang dikirim atau teks dari pesan yang dikutip
         if (!text && (!m.quoted || !m.quoted.text)) return sycreply(`Kirim/reply pesan *${prefix + command}* Teksnya`);
@@ -8557,11 +8593,11 @@ break;
       break;
       case 'llama': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Cek apakah ada teks yang dikirim atau teks dari pesan yang dikutip
         if (!text && (!m.quoted || !m.quoted.text)) return sycreply(`Kirim/reply pesan *${prefix + command}* Teksnya`);
@@ -8585,11 +8621,11 @@ break;
       // Fungsi untuk mengatur autoai2
       case 'autoai2': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Mengecek apakah ada parameter on/off
         if (!isCreator) return sycreply(mess.owner); // Memeriksa apakah pengirim adalah pembuat bot
@@ -8616,11 +8652,11 @@ break;
       break;
       case 'setpromt': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         if (!text) return m.reply("Harap masukkan prompt baru!");
         userPrompt = text; // Simpan prompt baru dari input pengguna
@@ -8629,11 +8665,11 @@ break;
       }
       case 'setpromt2': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Cek apakah pengguna mengirim prompt baru
         if (!text) return sycreply(`Kirim perintah *${prefix + command}* <prompt baru>`);
@@ -8644,11 +8680,11 @@ break;
       break;
       case 'tebaknegara': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -8679,11 +8715,11 @@ break;
       break
       case 'link2img': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -8717,11 +8753,11 @@ break;
       break;
       case 'tebakepep': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -8770,11 +8806,11 @@ break;
       break;
       case 'tebakgambar': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -8805,11 +8841,11 @@ break;
       break
       case 'tebakbendera': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -8841,11 +8877,11 @@ break;
       case 'kuismath':
       case 'math': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Use the energyCost here
         if (!useEnergy(userId, energyCost)) {
@@ -8884,11 +8920,11 @@ break;
       break
       case 'menu': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         try {
           // Emoji yang akan digunakan
@@ -8969,15 +9005,53 @@ ${n}ᯓ★ BUTTON MENU ${botname} ★ᯓ${n}
                   url: "https://wa.me/6287862997267" // URL yang dituju
                 })
               }, {
-                "name": "single_select",
-                "buttonParamsJson": `{ "title": "𝗟𝗶𝘀𝘁 𝗠𝗲𝗻𝘂", "sections": [{ "title": "Choose one of the menu options below", "highlight_label": \"𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 ${botname}\", "rows": [{ "header": "All Menu", "title": "List All Fitur Bot", "id": ".allmenu" }, 
-{ "header": "Owner Menu", "title": "Owner menu", "id": ".ownermenu" }, 
-{ "header": "Group Menu", "title": "Command For Group", "id": ".groupmenu" }, 
-{ "header": "Download Menu", "title": "Help You in Downloading", "id": ".downloadmenu" }, 
-{ "header": "Tools Menu", "title": "Tools Menu", "id": ".toolsmenu" }, 
-{ "header": "AI Menu", "title": "Artificial Intelligence", "id": ".aimenu" },
-{ "header": "Fun Menu", "title": "Fun Menu", "id": ".funmenu" }, 
-{ "header": "Game Menu", "title": "game zone", "id": ".gamemenu" }]}]}`
+              "name": "quick_reply",
+                "buttonParamsJson": JSON.stringify({
+                  display_text: "ALL MENU💡",
+                  id: ".allmenu" // URL yang dituju
+                })
+              }, {
+              "name": "quick_reply",
+                "buttonParamsJson": JSON.stringify({
+                  display_text: "OWNER MENU🪵",
+                  id: ".ownermenu" // URL yang dituju
+                })
+              }, {
+              "name": "quick_reply",
+                "buttonParamsJson": JSON.stringify({
+                  display_text: "TOOLS MENU🔑",
+                  url: ".toolsmenu" // URL yang dituju
+                })
+              }, {
+              "name": "quick_reply",
+                "buttonParamsJson": JSON.stringify({
+                  display_text: "FUN MENU⚡",
+                  id: ".funmenu" // URL yang dituju
+                })
+              }, {
+              "name": "quick_reply",
+                "buttonParamsJson": JSON.stringify({
+                  display_text: "AI MENU🪀",
+                  id: ".aimenu" // URL yang dituju
+                })
+              }, {
+              "name": "quick_reply",
+                "buttonParamsJson": JSON.stringify({
+                  display_text: "GAME MENU🎮",
+                  id: ".gamemenu" // URL yang dituju
+                })
+              }, {
+              "name": "quick_reply",
+                "buttonParamsJson": JSON.stringify({
+                  display_text: "DOWNLOAD MENU🔽",
+                  url: ".downloadmenu" // URL yang dituju
+                })
+              }, {
+              "name": "quick_reply",
+                "buttonParamsJson": JSON.stringify({
+                  display_text: "GROUP MENU🌐",
+                  url: ".groupmenu" // URL yang dituju
+                })  
               }]
             }
           };
@@ -9028,11 +9102,11 @@ ${n}ᯓ★ BUTTON MENU ${botname} ★ᯓ${n}
       case 'gamemenu':
       case 'gemmenu': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         const gmenu = `
 ${ucapanWaktu} @${m.sender.split('@')[0]}
@@ -9088,11 +9162,11 @@ ${setv} ${prefix}tebakbendera
       case 'funmenu':
       case 'fmenu': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         const fmenu = `
 ${ucapanWaktu} @${m.sender.split('@')[0]}
@@ -9148,11 +9222,11 @@ ${setv} ${prefix}holoh (text)
       case 'toolsmenu':
       case 'toolmenu': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         const tlmenu = `
 ${ucapanWaktu} @${m.sender.split('@')[0]}
@@ -9238,11 +9312,11 @@ ${f}©${botname}
       case 'downloadmenu':
       case 'downmenu': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         const downmenu = `
 ${ucapanWaktu} @${m.sender.split('@')[0]}
@@ -9290,11 +9364,11 @@ ${f}©${botname}
       break
       case 'aimenu': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         const aimenu = `
 ${ucapanWaktu} @${m.sender.split('@')[0]}
@@ -9345,11 +9419,11 @@ ${setv} ${prefix}aimg (query)
       case 'ownermenu':
       case 'ownmenu': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         const ownmenu = `
 ${ucapanWaktu} @${m.sender.split('@')[0]}
@@ -9428,11 +9502,11 @@ ${f}©${botname}
       case 'groupmenu':
       case 'grupmenu': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         const gcmenu = `
 ${ucapanWaktu} @${m.sender.split('@')[0]}
@@ -9490,11 +9564,11 @@ ${f}©${botname}
       // Menu
       case 'allmenu': {
         if (!users[m.sender.split('@')[0]]) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus daftar terlebih dahulu untuk menggunakan fitur ini.\n\nFormat Daftar: daftar 62xxxxx|nama`);
 } else if (!users[m.sender.split('@')[0]].verified) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus memverifikasi akun yang sudah dikirim oleh bot.\n\nKetik: verifikasi code|name`);
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
-    return sycreply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
+    return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
         // Emoji yang akan digunakan
         const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
