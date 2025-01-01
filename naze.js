@@ -6535,17 +6535,26 @@ await sych.sendMessage(m.chat, {
     contextInfo: {
         mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net'],
         externalAdReply: {
-                "showAdAttribution": true,
-                "containsAutoReply": true,
-                "title": `${global.botname}`,
-                "body": `${ucapanWaktu} ${m.pushName ? m.pushName : 'Tanpa Nama'} 👋🏻`,
-                "previewType": "VIDEO",
-                "thumbnailUrl": getRandomThumb(), // Mengambil thumbnail secara random
-                "sourceUrl": 'https://github.com/sychyy'
-            }
+            "showAdAttribution": true,
+            "containsAutoReply": true,
+            "title": `${global.botname}`,
+            "body": `${ucapanWaktu} ${m.pushName ? m.pushName : 'Tanpa Nama'} 👋🏻`,
+            "previewType": "VIDEO",
+            "thumbnailUrl": getRandomThumb(), // Mengambil thumbnail secara random
+            "sourceUrl": 'https://github.com/sychyy'
+        }
     }
 }, {
     quoted: qchanel // Mengutip pesan sebelumnya jika diperlukan
+});
+
+// Kirim audio
+await sych.sendMessage(m.chat, {
+    audio: fs.readFileSync('src/media/audio.mp3'), // Path ke file audio
+    mimetype: 'audio/mp4', // Format file audio
+    ptt: false // Ubah menjadi true jika ingin mengirim sebagai voice note
+}, {
+    quoted: floc // Menambahkan referensi pesan sebelumnya jika diperlukan
 });
 }
 break
