@@ -6513,6 +6513,7 @@ ${f}╰━━━╯╱╰╯╱╰━━━┻╯╱╰╯╱╰╯
 
 ${n}ᯓ★ SIMPEL MENU ${botname} ★ᯓ${n}
 
+${setv} ${prefix}ALLMENU
 ${setv} ${prefix}DOWNLOADMENU
 ${setv} ${prefix}OWNERMENU
 ${setv} ${prefix}GROUPMENU
