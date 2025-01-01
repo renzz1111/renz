@@ -8604,12 +8604,29 @@ ${f}©${botname}
         } catch (e) {
           profile = fake.anonim;
         }
+        // Pastikan userId ada
+const userId = m.sender.split('@')[0];
+
+// Pastikan data pengguna ada di database
+if (!users[userId]) {
+  users[userId] = {
+    energy: 0,
+    maxEnergy: 0,
+    watt: "Unknown"
+  };
+}
+
+// Ambil data pengguna dengan nilai default jika tidak ada
+const energy = users[userId]?.energy || 0;
+const maxEnergy = users[userId]?.maxEnergy || 0;
+const watt = users[userId]?.watt || "Unknown";
+
         const menunya = `
 ■ 「 *${n}USER INFO${n}* 」
 ${f}*Nama* : ${m.pushName ? m.pushName : 'Tanpa Nama'}
 ${f}*Id* : @${m.sender.split('@')[0]}
-${f}*Energy* : ${users[m.sender]?.energy || 0}/${users[m.sender]?.maxEnergy || 0}
-${f}*Watt* : ${users[m.sender]?.watt || 'Unknown'}
+${f}*Energy* : ${energy}/${maxEnergy}
+${f}*Watt* : ${watt} Watt
 ${f}*User* : ${isVip ? 'VIP' : isPremium ? 'PREMIUM' : 'FREE'}
 ${f}*Limit* : ${isVip ? 'VIP' : db.users[m.sender].limit }
 ${f}*Uang* : ${db.users[m.sender] ? db.users[m.sender].uang.toLocaleString('id-ID') : '0'}
