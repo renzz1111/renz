@@ -4814,98 +4814,102 @@ for (const emoji of reactEmojis) {
 			}
 			break;
 			case 'play3': {
-				if (!text) return sycreply(`*< / >* Example: ${prefix + command} dj komang`);
-				sycreply(mess.wait);
+    if (!text) return sycreply(`*< / >* Example: ${prefix + command} dj komang`);
+    sycreply(mess.wait);
 
-// Emoji yang akan digunakan
-const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+    const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+    for (const emoji of reactEmojis) {
+        await sych.sendMessage(m.chat, {
+            react: {
+                text: emoji,
+                key: m.key
+            }
+        });
+    }
 
-// Mengirimkan reaksi secara berurutan
-for (const emoji of reactEmojis) {
-    await sych.sendMessage(m.chat, {
-        react: {
-            text: emoji,
-            key: m.key
+    try {
+        const res = await yts.search(text);
+        const hasil = res.all[0];
+        if (!hasil || !hasil.url) return sycreply('Tidak ada hasil yang ditemukan!');
+
+        const teksnya = `*📍Title:* ${hasil.title || 'Tidak tersedia'}\n*✏Description:* ${hasil.description || 'Tidak tersedia'}\n*🌟Channel:* ${hasil.author?.name || 'Tidak tersedia'}\n*⏳Duration:* ${hasil.seconds || 'Tidak tersedia'} second (${hasil.timestamp || 'Tidak tersedia'})\n*🔎Source:* ${hasil.url || 'Tidak tersedia'}`;
+        await sych.sendMessage(m.chat, {
+            image: { url: hasil.thumbnail },
+            caption: teksnya
+        }, { quoted: m });
+
+        const url = hasil.url;
+        sycreply('Bentar mengunduh lagu..');
+
+        // Cek durasi video
+        const info = await ytdl.getInfo(url);
+        if (info.videoDetails.lengthSeconds > 360) {
+            return sycreply('Video terlalu panjang. Silakan coba video dengan durasi lebih pendek.');
         }
-    });
+
+        const title = info.videoDetails.title.replace(/[<>:"/\\|?*]/g, '');
+        const outputPath = path.join('./downloads', `${title}.mp3`);
+        const compressedPath = path.join('./downloads', `${title}_compressed.mp3`);
+        if (!fs.existsSync('./downloads')) {
+            fs.mkdirSync('./downloads', { recursive: true });
+        }
+
+        console.log('Mulai mengunduh audio...');
+        const timeoutPromise = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('Timeout: Proses unduhan terlalu lama!')), 60000)
+        );
+
+        await Promise.race([
+            new Promise((resolve, reject) => {
+                const audioStream = ytdl(url, { filter: 'audioonly', quality: 'lowestaudio' });
+                const tempFile = fs.createWriteStream(outputPath);
+                audioStream.pipe(tempFile);
+
+                audioStream.on('progress', (chunkLength, downloaded, total) => {
+                    console.log(`Mengunduh: ${((downloaded / total) * 100).toFixed(2)}%`);
+                });
+
+                audioStream.on('end', resolve);
+                tempFile.on('finish', resolve);
+                tempFile.on('error', (err) => reject(err));
+            }),
+            timeoutPromise
+        ]);
+
+        console.log('Mengunduh selesai, mulai mengompresi...');
+        ffmpeg(outputPath)
+            .audioBitrate(128)
+            .outputOptions('-preset ultrafast')
+            .on('end', async () => {
+                await sych.sendMessage(m.chat, {
+                    audio: { url: compressedPath },
+                    mimetype: 'audio/mpeg',
+                    contextInfo: {
+                        externalAdReply: {
+                            title: title,
+                            body: 'Klik untuk melihat sumber',
+                            thumbnailUrl: hasil.thumbnail,
+                            sourceUrl: url
+                        }
+                    }
+                }, { quoted: m });
+
+                fs.unlinkSync(outputPath);
+                fs.unlinkSync(compressedPath);
+                console.log('Selesai mengirim audio.');
+            })
+            .on('error', (err) => {
+                console.error('Error saat mengompresi audio:', err);
+                sycreply('Terjadi kesalahan saat mengompresi audio.');
+            })
+            .save(compressedPath);
+
+    } catch (e) {
+        console.error('Error:', e);
+        sycreply('Gagal memproses permintaan!');
+    }
 }
-				try {
-					const res = await yts.search(text);
-					const hasil = res.all[0]; // Mengambil hasil pertama dari pencarian
-					if (!hasil || !hasil.url) return sycreply('Tidak ada hasil yang ditemukan!');
-					// Mengirim informasi video
-					const teksnya = `*📍Title:* ${hasil.title || 'Tidak tersedia'}\n*✏Description:* ${hasil.description || 'Tidak tersedia'}\n*🌟Channel:* ${hasil.author?.name || 'Tidak tersedia'}\n*⏳Duration:* ${hasil.seconds || 'Tidak tersedia'} second (${hasil.timestamp || 'Tidak tersedia'})\n*🔎Source:* ${hasil.url || 'Tidak tersedia'}`;
-					await sych.sendMessage(m.chat, {
-						image: {
-							url: hasil.thumbnail
-						},
-						caption: teksnya
-					}, {
-						quoted: m
-					});
-					// Proses download audio secara otomatis
-					const url = hasil.url;
-					await sych.sendMessage(m.chat, {
-						react: {
-							text: "⏳",
-							key: m.key
-						}
-					});
-					sycreply('Bentar mengunduh lagu..')
-					const info = await ytdl.getInfo(url);
-					if (info.videoDetails.lengthSeconds > 360) {
-						return sycreply('Video terlalu panjang. Silakan coba video dengan durasi lebih pendek.');
-					}
-					const title = info.videoDetails.title.replace(/[<>:"/\\|?*]/g, '');
-					const outputPath = path.join('./downloads', `${title}.mp3`);
-					const compressedPath = path.join('./downloads', `${title}_compressed.mp3`);
-					if (!fs.existsSync('./downloads')) {
-						fs.mkdirSync('./downloads', {
-							recursive: true
-						});
-					}
-					console.log('Mengunduh audio...');
-					const audioStream = ytdl(url, {
-						filter: 'audioonly',
-						quality: 'lowestaudio'
-					});
-					const tempFile = fs.createWriteStream(outputPath);
-					audioStream.pipe(tempFile);
-					tempFile.on('finish', () => {
-						ffmpeg(outputPath).audioBitrate(128).outputOptions('-preset ultrafast').on('end', async () => {
-							await sych.sendMessage(m.chat, {
-								audio: {
-									url: compressedPath
-								},
-								mimetype: 'audio/mpeg',
-								contextInfo: {
-									externalAdReply: {
-										title: title,
-										body: 'Klik untuk melihat sumber',
-										thumbnailUrl: getRandomThumb(),
-										sourceUrl: text
-									}
-								}
-							}, {
-								quoted: m
-							});
-							fs.unlinkSync(outputPath);
-							fs.unlinkSync(compressedPath);
-						}).on('error', (err) => {
-							console.error('Error saat mengompresi audio:', err);
-							sycreply('Terjadi kesalahan saat mengompresi audio.');
-						}).save(compressedPath);
-					});
-					tempFile.on('error', (err) => {
-						console.error('Error saat menulis file:', err);
-						sycreply('Terjadi kesalahan saat menyimpan audio.');
-					});
-				} catch (e) {
-					console.error('Error:', e);
-					sycreply('Gagal memproses permintaan!');
-				}
-			}
-			break;
+break;
 			case 'ytmp4':
 			case 'ytvideo':
 			case 'ytplayvideo': {
