@@ -8024,13 +8024,30 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
               }
             });
           }
+// Pastikan userId ada
+const userId = m.sender.split('@')[0];
+
+// Pastikan data pengguna ada di database
+if (!users[userId]) {
+  users[userId] = {
+    energy: 0,
+    maxEnergy: 0,
+    watt: "Unknown"
+  };
+}
+
+// Ambil data pengguna dengan nilai default jika tidak ada
+const energy = users[userId]?.energy || 0;
+const maxEnergy = users[userId]?.maxEnergy || 0;
+const watt = users[userId]?.watt || "Unknown";
+
           const inimenu = `
     
 ${f}*Name* : ${m.pushName ? m.pushName : 'Lu Siapa?'}
 ${f}*Owner* : ${owname}
 ${f}*Mode* : ${naze.public ? 'Public' : 'Self'}
-${f}*Energy* : ${users[m.sender]?.energy || 0}/${users[m.sender]?.maxEnergy || 0}
-${f}*Watt* : ${users[m.sender]?.watt || 'Unknown'}
+${f}*Energy* : ${energy}/${maxEnergy}
+${f}*Watt* : ${watt} Watt
 ${f}*Tanggal* : ${tanggal}
 ${f}*Hari* : ${hari}
 ${f}*Jam* : ${jam} WIB
