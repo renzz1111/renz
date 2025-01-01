@@ -6939,15 +6939,7 @@ break;
 } else if (!users[m.sender.split('@')[0]].loggedIn) {
     return m.reply(`Hi, @${m.sender.split('@')[0]} Anda harus login terlebih dahulu password dikirm melalui private chat, jika password tidak dikirim oleh bot\nKetik: cekpw\n\nKetik: login password|name`);
 }
-        if (!isPremium) {
-          console.log('Pengguna bukan premium.');
-          return sycreply(mess.prem);
-        }
-        // Use the energyCost here
-        if (!useEnergy(userId, energyCost)) {
-          return m.reply('Energi anda habis/tidak mencukupi! Ketik charger watt.');
-        }
-        m.reply(`-${energyCost} Energy⚡\nEnergi berhasil digunakan. Sisa energi: ${users[userId].energy}.`);
+        
         if (!text) {
           console.log('Teks URL TikTok tidak ditemukan.');
           return sycreply(`*< / >* Example: ${prefix + command} url_tiktok`);
@@ -6956,6 +6948,11 @@ break;
           console.log('URL tidak valid, tidak mengandung hasil dari TikTok.');
           return sycreply('Url Tidak Mengandung Result Dari Tiktok!');
         }
+        // Use the energyCost here
+        if (!useEnergy(userId, energyCost)) {
+          return m.reply('Energi anda habis/tidak mencukupi! Ketik charger watt.');
+        }
+        m.reply(`-${energyCost} Energy⚡\nEnergi berhasil digunakan. Sisa energi: ${users[userId].energy}.`);
         try {
           console.log('Memulai proses pengunduhan dari URL TikTok:', text);
           const hasil = await tiktokDl(text);
