@@ -180,7 +180,7 @@ let tebaknegara = db.game.tebaknegara = []
 let tebakgambar = db.game.tebakgambar = []
 let tebakepep = db.game.tebakepep = []
 let tebakbendera = db.game.tebakbendera = []
-let typoDetect = true; // Default aktif
+let typoDetectionEnabled = true; // Status default: aktif
 let autoAi = false; // Default mati
 // Variabel penyimpanan sesi chat rahasia
 let secretChat = {};
@@ -510,9 +510,8 @@ const sycreply = (teks) => {
     })
 }
 // 3. Modifikasi pengolahan command
-// 3. Modifikasi pengolahan command
 if (isCmd && m.sender !== botNumber && !m.isGroup) {
-    if (typoDetect) { // Periksa apakah typo detect aktif
+    if (typoDetectionEnabled) { // Periksa apakah fitur aktif
         let typoCorrection = detectTypoCommand(command);
         if (typoCorrection && typoCorrection !== command) {
             return sycreply(`Mungkin yang Anda maksud adalah: *${prefix}${typoCorrection}*`);
@@ -2775,15 +2774,6 @@ for (const emoji of reactEmojis) {
 				})
 			}
 			break
-			case 'typodetect': {
-    if (!isCreator) return sycreply('Fitur ini hanya dapat digunakan oleh owner!');
-    if (!args[0] || !['on', 'off'].includes(args[0].toLowerCase())) {
-        return sycreply('Gunakan perintah:\n*typodetect on* untuk mengaktifkan\n*typodetect off* untuk menonaktifkan');
-    }
-    typoDetect = args[0].toLowerCase() === 'on'; // Ubah status berdasarkan argumen
-    sycreply(`Fitur Typo Detect ${typoDetect ? 'diaktifkan' : 'dinonaktifkan'}!`);
-}
-break;
 			case 'translate':
 			case 'tr': {
 				if (text && text == 'list') {
@@ -4376,6 +4366,20 @@ for (const emoji of reactEmojis) {
 				}
 			}
 			break;
+			case 'typodetect': {
+    if (!isCreator) return sycreply("Fitur ini hanya bisa digunakan oleh owner.");
+    if (!args[0]) return sycreply("Penggunaan: *typodetect on* atau *typodetect off*");
+
+    if (args[0].toLowerCase() === 'on') {
+        typoDetectionEnabled = true;
+        return sycreply("Fitur deteksi typo telah diaktifkan.");
+    } else if (args[0].toLowerCase() === 'off') {
+        typoDetectionEnabled = false;
+        return sycreply("Fitur deteksi typo telah dinonaktifkan.");
+    } else {
+        return sycreply("Penggunaan yang benar: *typodetect on* atau *typodetect off*");
+    }
+}
 			case 'play':
 			case 'ytplay':
 			case 'yts':
@@ -6857,6 +6861,7 @@ ${setv} ${prefix}setexif
 ${setv} ${prefix}setbio
 ${setv} ${prefix}setppbot
 ${setv} ${prefix}join
+${setv} ${prefix}typodetect on/off
 ${setv} ${prefix}leave
 ${setv} ${prefix}block
 ${setv} ${prefix}listblock
@@ -7229,6 +7234,7 @@ ${f}*Jam* : ${jam} WIB
 │${setv} ${prefix}setbio
 │${setv} ${prefix}setppbot
 │${setv} ${prefix}join
+│${setv} ${prefix}typodetect on/off
 │${setv} ${prefix}leave
 │${setv} ${prefix}block
 │${setv} ${prefix}listblock
