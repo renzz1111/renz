@@ -509,11 +509,12 @@ const sycreply = (teks) => {
     })
 }
 // 3. Modifikasi pengolahan command
-if (isCmd && m.sender !== botNumber) {
+if (isCmd && m.sender !== botNumber && !m.isGroup) {
     let typoCorrection = detectTypoCommand(command);
     if (typoCorrection && typoCorrection !== command) {
         return sycreply(`Mungkin yang Anda maksud adalah: *${prefix}${typoCorrection}*`);
-    }}
+    }
+}
 		// Reset Limit
 		cron.schedule('00 00 * * *', () => {
 			let user = Object.keys(db.users)
