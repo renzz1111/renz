@@ -180,6 +180,7 @@ let tebaknegara = db.game.tebaknegara = []
 let tebakgambar = db.game.tebakgambar = []
 let tebakepep = db.game.tebakepep = []
 let tebakbendera = db.game.tebakbendera = []
+let typoDetect = true; // Default aktif
 let autoAi = false; // Default mati
 // Variabel penyimpanan sesi chat rahasia
 let secretChat = {};
@@ -509,10 +510,13 @@ const sycreply = (teks) => {
     })
 }
 // 3. Modifikasi pengolahan command
+// 3. Modifikasi pengolahan command
 if (isCmd && m.sender !== botNumber && !m.isGroup) {
-    let typoCorrection = detectTypoCommand(command);
-    if (typoCorrection && typoCorrection !== command) {
-        return sycreply(`Mungkin yang Anda maksud adalah: *${prefix}${typoCorrection}*`);
+    if (typoDetect) { // Periksa apakah typo detect aktif
+        let typoCorrection = detectTypoCommand(command);
+        if (typoCorrection && typoCorrection !== command) {
+            return sycreply(`Mungkin yang Anda maksud adalah: *${prefix}${typoCorrection}*`);
+        }
     }
 }
 		// Reset Limit
@@ -2591,10 +2595,6 @@ for (const emoji of reactEmojis) {
 			break;
 			case 'tiktokslide':
 			case 'ttslide': {
-				if (!isPremium) {
-					console.log('Pengguna bukan premium.');
-					return sycreply(mess.prem);
-				}
 				sycreply(mess.wait);
 
 // Emoji yang akan digunakan
@@ -2775,6 +2775,15 @@ for (const emoji of reactEmojis) {
 				})
 			}
 			break
+			case 'typodetect': {
+    if (!isCreator) return sycreply('Fitur ini hanya dapat digunakan oleh owner!');
+    if (!args[0] || !['on', 'off'].includes(args[0].toLowerCase())) {
+        return sycreply('Gunakan perintah:\n*typodetect on* untuk mengaktifkan\n*typodetect off* untuk menonaktifkan');
+    }
+    typoDetect = args[0].toLowerCase() === 'on'; // Ubah status berdasarkan argumen
+    sycreply(`Fitur Typo Detect ${typoDetect ? 'diaktifkan' : 'dinonaktifkan'}!`);
+}
+break;
 			case 'translate':
 			case 'tr': {
 				if (text && text == 'list') {
@@ -2998,10 +3007,6 @@ break;
 			case 'stikermeme': {
 				try {
 					console.log('Memulai proses pembuatan stiker meme...');
-					if (!isPremium) {
-						console.log('Pengguna bukan premium.');
-						return sycreply(mess.prem);
-					}
 					let mime = (quoted.msg || m.msg).mimetype || '';
 					if (!/image|webp/.test(mime)) {
 						console.log('Mime tipe tidak valid, harus image atau webp.');
@@ -4137,7 +4142,6 @@ for (const emoji of reactEmojis) {
 			}
 			break
 			case 'txt2img': {
-				if (!isPremium) return sycreply(mess.prem);
 				if (!text && (!m.quoted || !m.quoted.text)) return sycreply(`Kirim/reply pesan *${prefix + command}* Teksnya`)
 				try {
 					sycreply(mess.wait);
@@ -4167,7 +4171,6 @@ for (const emoji of reactEmojis) {
 			}
 			break
 			case 'aimg': {
-				if (!isPremium) return sycreply(mess.prem);
 				if (!text && (!m.quoted || !m.quoted.text)) return sycreply(`Kirim/reply pesan *${prefix + command}* Teksnya`)
 				try {
 					sycreply(mess.wait);
@@ -5106,10 +5109,6 @@ for (const emoji of reactEmojis) {
 			case 'ttvideo':
 			case 'tiktokmp4':
 			case 'tiktokvideo': {
-				if (!isPremium) {
-					console.log('Pengguna bukan premium.');
-					return sycreply(mess.prem);
-				}
 				if (!text) {
 					console.log('Teks URL TikTok tidak ditemukan.');
 					return sycreply(`*< / >* Example: ${prefix + command} url_tiktok`);
@@ -5162,10 +5161,6 @@ for (const emoji of reactEmojis) {
 			case 'tiktokmp3':
 			case 'ttaudio':
 			case 'tiktokaudio': {
-				if (!isPremium) {
-					console.log('Pengguna bukan premium.');
-					return sycreply(mess.prem);
-				}
 				if (!text) {
 					console.log('Teks URL TikTok tidak ditemukan.');
 					return sycreply(`*< / >* Example: ${prefix + command} url_tiktok`);
@@ -5732,7 +5727,6 @@ for (const emoji of reactEmojis) {
 			}
 			break
 			case 'akinator': {
-				if (!isPremium) return sycreply(mess.prem);
 				if (text == 'start') {
 					if (akinator[m.sender]) return sycreply('Masih Ada Sesi Yang Belum Diselesaikan!')
 					akinator[m.sender] = new Akinator({
