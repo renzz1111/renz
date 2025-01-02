@@ -18,6 +18,7 @@ const path = require('path');
 const https = require('https');
 const axios = require('axios');
 const chalk = require('chalk');
+const { youtube } = require("btch-downloader")
 const yts = require('yt-search');
 const ytdl = require('ytdl-core');
 const cron = require('node-cron');
@@ -113,7 +114,6 @@ const {
 	facebookDl,
 	instaStory,
 	bk9Ai,
-	ytMp4,
 	ytMp3,
 	mediafireDl,
 	quotedLyo,
@@ -4263,109 +4263,29 @@ break;
 				});
 			}
 			break
-			case 'play2':
-			case 'ytplay2':
-			case 'yts2':
-			case 'ytsearch2':
-			case 'youtubesearch2': {
-				if (!text) {
-					console.log("⛔ Input teks kosong");
-					return sycreply(`*< / >* Example: ${prefix + command} you = i korea | you = i japan`);
-				}
-				console.log("✅ Perintah diterima:", command, "dengan teks:", text);
-				sycreply(mess.wait);
+			case 'play2': case 'ytplay2': case 'yts2': case 'ytsearch2': case 'youtubesearch2': {
+    if (!text) return m.reply(`Example: ${prefix + command} dj komang`);
+    m.reply(mess.wait);
 
-// Emoji yang akan digunakan
-const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+    try {
+        const res = await yts.search(text); // Pencarian berdasarkan kata kunci
+        const hasil = res.all.slice(0, 15); // Ambil maksimal 15 hasil
 
-// Mengirimkan reaksi secara berurutan
-for (const emoji of reactEmojis) {
-    await sych.sendMessage(m.chat, {
-        react: {
-            text: emoji,
-            key: m.key
-        }
-    });
+        if (hasil.length === 0) return m.reply('Tidak ada hasil yang ditemukan!');
+
+        let finalText = `*Search Results for:* _${text}_\n\n`;
+        hasil.forEach((video, index) => {
+            finalText += `${index + 1}. *${video.title || 'Tidak tersedia'}*\n`;
+            finalText += `   🔗 *Link:* ${video.url || 'Tidak tersedia'}\n`;
+            finalText += `   ⏳ *Durasi:* ${video.timestamp || 'Tidak tersedia'}\n\n`;
+        });
+
+        await sych.sendMessage(m.chat, { text: finalText }, { quoted: m }); // Kirim hasil pencarian
+    } catch (e) {
+        m.reply('Terjadi kesalahan saat mencari video!');
+    }
 }
-				try {
-					console.log("🔄 Memproses teks input...");
-					// Pisahkan query dengan simbol "|"
-					const queries = text.split('|').map(q => q.trim());
-					let allCards = [];
-					for (let query of queries) {
-						console.log(`🔍 Mencari video untuk: "${query}"`);
-						const res = await yts.search(query);
-						console.log(`✅ Pencarian selesai untuk "${query}":`, res);
-						const hasil = res.all.slice(0, 1); // Ambil 1 hasil pertama per query
-						console.log(`🎯 Video terpilih untuk "${query}":`, hasil);
-						let cards = [];
-						for (let video of hasil) {
-							cards.push({
-								body: proto.Message.InteractiveMessage.Body.fromObject({
-									text: `*🌟Channel:* ${video.author?.name || 'Tidak tersedia'}\n*⏳Duration:* ${video.timestamp || 'Tidak tersedia'}\n*🔎Source:* ${video.url || 'Tidak tersedia'}`,
-								}),
-								footer: proto.Message.InteractiveMessage.Footer.fromObject({
-									text: `Pilih untuk detail lebih lanjut\nCommand ${prefix}ytmp3 url download audio dan ${prefix}ytmp4 url mendownload video`
-								}),
-								header: proto.Message.InteractiveMessage.Header.fromObject({
-									title: video.title,
-									hasMediaAttachment: true,
-									imageMessage: (await generateWAMessageContent({
-										image: {
-											url: video.thumbnail
-										}
-									}, {
-										upload: sych.waUploadToServer
-									})).imageMessage
-								}),
-								nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.fromObject({
-									buttons: [{
-										name: "cta_url",
-										buttonParamsJson: `{"display_text":"Lihat Video","url":"${video.url}"}`
-									}, {
-										name: "quick_reply",
-										buttonParamsJson: JSON.stringify({
-											display_text: "Download Mp3",
-											id: `ytmp3 ${video.url}`
-										})
-									}, {
-										name: "quick_reply",
-										buttonParamsJson: JSON.stringify({
-											display_text: "Download Mp4",
-											id: `ytmp4 ${video.url}`
-										})
-									}]
-								})
-							});
-						}
-						console.log(`📄 Membuat carousel untuk "${query}"...`);
-						allCards.push(...cards);
-					}
-					// Gabungkan semua carousel cards
-					const carouselMessage = {
-						interactiveMessage: proto.Message.InteractiveMessage.fromObject({
-							carouselMessage: proto.Message.InteractiveMessage.CarouselMessage.fromObject({
-								cards: allCards
-							}),
-							body: proto.Message.InteractiveMessage.Body.fromObject({
-								text: "Pilih video dari hasil pencarian:"
-							}),
-							footer: proto.Message.InteractiveMessage.Footer.fromObject({
-								text: global.botname
-							})
-						})
-					};
-					const bot = await generateWAMessageFromContent(m.chat, carouselMessage, {});
-					await sych.relayMessage(m.chat, bot.message, {
-						messageId: bot.key.id
-					});
-					console.log("✅ Carousel berhasil dikirim.");
-				} catch (e) {
-					console.error("❌ Terjadi kesalahan:", e);
-					sycreply('Post not available!');
-				}
-			}
-			break;
+break;
 			case 'typodetect': {
     if (!isCreator) return sycreply("Fitur ini hanya bisa digunakan oleh owner.");
     if (!args[0]) return sycreply("Penggunaan: *typodetect on* atau *typodetect off*");
@@ -4380,138 +4300,29 @@ for (const emoji of reactEmojis) {
         return sycreply("Penggunaan yang benar: *typodetect on* atau *typodetect off*");
     }
 }
-			case 'play':
-			case 'ytplay':
-			case 'yts':
-			case 'ytsearch':
-			case 'youtubesearch': {
-				if (!text) {
-					console.log("⛔ Input teks kosong");
-					return sycreply(`*< / >* Example: ${prefix + command} dj komang`);
-				}
-				console.log("✅ Perintah diterima:", command, "dengan teks:", text);
-				sycreply(mess.wait);
+			case 'play': case 'ytplay': case 'yts': case 'ytsearch': case 'youtubesearch': {
+    if (!text) return m.reply(`Example: ${prefix + command} dj komang`);
+    m.reply(mess.wait);
 
-// Emoji yang akan digunakan
-const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+    try {
+        const res = await yts.search(text); // Pencarian berdasarkan kata kunci
+        const hasil = res.all.slice(0, 15); // Ambil maksimal 15 hasil
 
-// Mengirimkan reaksi secara berurutan
-for (const emoji of reactEmojis) {
-    await sych.sendMessage(m.chat, {
-        react: {
-            text: emoji,
-            key: m.key
-        }
-    });
+        if (hasil.length === 0) return m.reply('Tidak ada hasil yang ditemukan!');
+
+        let finalText = `*Search Results for:* _${text}_\n\n`;
+        hasil.forEach((video, index) => {
+            finalText += `${index + 1}. *${video.title || 'Tidak tersedia'}*\n`;
+            finalText += `   🔗 *Link:* ${video.url || 'Tidak tersedia'}\n`;
+            finalText += `   ⏳ *Durasi:* ${video.timestamp || 'Tidak tersedia'}\n\n`;
+        });
+
+        await sych.sendMessage(m.chat, { text: finalText }, { quoted: m }); // Kirim hasil pencarian
+    } catch (e) {
+        m.reply('Terjadi kesalahan saat mencari video!');
+    }
 }
-				try {
-					console.log("🔄 Mencari video di YouTube...");
-					const res = await yts.search(text);
-					console.log("✅ Pencarian selesai:", res);
-					const hasil = res.all.slice(0, 2); // Ambil 5 hasil pertama
-					console.log("🎯 2 Video terpilih:", hasil);
-					let cards = [];
-					for (let video of hasil) {
-						cards.push({
-							body: proto.Message.InteractiveMessage.Body.fromObject({
-								text: `*🌟Channel:* ${video.author?.name || 'Tidak tersedia'}\n*⏳Duration:* ${video.timestamp || 'Tidak tersedia'}\n*🔎Source:* ${video.url || 'Tidak tersedia'}`,
-							}),
-							footer: proto.Message.InteractiveMessage.Footer.fromObject({
-								text: `Pilih untuk detail lebih lanjut\nCommand ${prefix}ytmp3 url download audio dan ${prefix}ytmp4 url mendownload video`
-							}),
-							header: proto.Message.InteractiveMessage.Header.fromObject({
-								title: video.title,
-								hasMediaAttachment: true,
-								imageMessage: (await generateWAMessageContent({
-									image: {
-										url: video.thumbnail
-									}
-								}, {
-									upload: sych.waUploadToServer
-								})).imageMessage
-							}),
-							nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.fromObject({
-								buttons: [{
-									name: "cta_url",
-									buttonParamsJson: `{"display_text":"Lihat Video","url":"${video.url}"}`
-								}, {
-									name: "quick_reply",
-									buttonParamsJson: JSON.stringify({
-										display_text: "Download Mp3",
-										id: `ytmp3 ${video.url}`
-									})
-								}, {
-									name: "quick_reply",
-									buttonParamsJson: JSON.stringify({
-										display_text: "Download Mp4",
-										id: `ytmp4 ${video.url}`
-									})
-								}]
-							})
-						});
-					}
-					console.log("📄 Membuat carousel...");
-					const carouselMessage = {
-						interactiveMessage: proto.Message.InteractiveMessage.fromObject({
-							carouselMessage: proto.Message.InteractiveMessage.CarouselMessage.fromObject({
-								cards: cards
-							}),
-							body: proto.Message.InteractiveMessage.Body.fromObject({
-								text: "Pilih video dari hasil pencarian:"
-							}),
-							footer: proto.Message.InteractiveMessage.Footer.fromObject({
-								text: global.namabot
-							})
-						})
-					};
-					const bot = await generateWAMessageFromContent(m.chat, carouselMessage, {});
-					await sych.relayMessage(m.chat, bot.message, {
-						messageId: bot.key.id
-					});
-					console.log("✅ Carousel berhasil dikirim.");
-				} catch (e) {
-					console.error("❌ Terjadi kesalahan:", e);
-					sycreply('Post not available!');
-				}
-			}
-			break;
-			case 'pixiv': {
-				if (!text) return sycreply(`*< / >* Example: ${prefix + command} hu tao`)
-				try {
-					let {
-						pixivdl
-					} = require('./lib/pixiv')
-					let res = await pixivdl(text)
-					sycreply(mess.wait);
-
-// Emoji yang akan digunakan
-const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
-
-// Mengirimkan reaksi secara berurutan
-for (const emoji of reactEmojis) {
-    await sych.sendMessage(m.chat, {
-        react: {
-            text: emoji,
-            key: m.key
-        }
-    });
-}
-					for (let i = 0; i < res.media.length; i++) {
-						let caption = i == 0 ? `${res.caption}\n\n*By:* ${res.artist}\n*Tags:* ${res.tags.join(', ')}` : ''
-						let mime = (await FileType.fromBuffer(res.media[i])).mime
-						await sych.sendMessage(m.chat, {
-							[mime.split('/')[0]]: res.media[i],
-							caption,
-							mimetype: mime
-						}, {
-							quoted: m
-						})
-					}
-				} catch (e) {
-					sycreply('Post not available!')
-				}
-			}
-			break
+break;
 			case 'pinterest':
 			case 'pint': {
 				if (!text) return sycreply(`*< / >* Example: ${prefix + command} hu tao`);
@@ -4731,95 +4542,86 @@ break;
 			}
 			break
 			// Downloader Menu
-			case 'ytmp3':
-			case 'ytaudio':
-			case 'ytplayaudio': {
-				if (!text) return sycreply(`*< / >* Example: ${prefix + command} url_youtube`);
-				if (!text.includes('youtu')) return sycreply('Url Tidak Mengandung Result Dari Youtube!');
-				sycreply('Memproses permintaan Anda, harap tunggu...');
+			case 'ytmp3': case 'ytaudio': case 'ytplayaudio': {
+if (!isPremium) return m.reply(mess.prem);
+    if (!text) return m.reply(`Example: ${prefix + command} url_youtube`);
+    if (!text.includes('youtu')) return m.reply('Url Tidak Mengandung Result Dari Youtube!');
+    m.reply('Memproses permintaan Anda, harap tunggu...');
 
-// Emoji yang akan digunakan
-const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
+    try {
+        console.log('Mengambil informasi video...');
+        const info = await ytdl.getInfo(text);
 
-// Mengirimkan reaksi secara berurutan
-for (const emoji of reactEmojis) {
-    await sych.sendMessage(m.chat, {
-        react: {
-            text: emoji,
-            key: m.key
+        if (info.videoDetails.lengthSeconds > 300) {
+            return m.reply('Video terlalu panjang. Silakan coba video dengan durasi lebih pendek.');
         }
-    });
+
+        const title = info.videoDetails.title.replace(/[<>:"/\\|?*]/g, '');
+        const outputPath = path.join('./downloads', `${title}.mp3`);
+        const compressedPath = path.join('./downloads', `${title}_compressed.mp3`);
+
+        if (!fs.existsSync('./downloads')) {
+            fs.mkdirSync('./downloads', { recursive: true });
+        }
+
+        console.log('Memulai unduhan audio...');
+        console.time('Unduhan Audio');
+        const audioStream = ytdl(text, { filter: 'audioonly', quality: 'lowestaudio' });
+        const tempFile = fs.createWriteStream(outputPath);
+
+        audioStream.pipe(tempFile);
+
+        tempFile.on('finish', () => {
+            console.timeEnd('Unduhan Audio');
+            console.log('Unduhan selesai, memulai kompresi...');
+            console.time('Kompresi Audio');
+
+            ffmpeg(outputPath)
+                .audioBitrate(128)
+                .outputOptions('-preset ultrafast') // Preset cepat
+                .on('end', async () => {
+                    console.timeEnd('Kompresi Audio');
+                    console.log('Kompresi selesai, mengirim file...');
+                    await sych.sendMessage(m.chat, {
+                        audio: { url: compressedPath },
+                        mimetype: 'audio/mpeg',
+                        contextInfo: {
+                            externalAdReply: {
+                "showAdAttribution": true,
+                "containsAutoReply": true,
+                "title": title,
+                "body": info.videoDetails.author.name,
+                "previewType": "VIDEO",
+                "thumbnailUrl": getRandomThumb(), // Mengambil thumbnail secara random
+                "sourceUrl": text
+            }
+        }
+    }, {
+        quoted: fkontak
+    })
+
+                    fs.unlinkSync(outputPath);
+                    fs.unlinkSync(compressedPath);
+                    console.log('Proses selesai, file dikirim!');
+                })
+                .on('error', (err) => {
+                    console.error('Error saat mengompresi audio:', err);
+                    m.reply('Terjadi kesalahan saat mengompresi audio.');
+                })
+                .save(compressedPath);
+        });
+
+        tempFile.on('error', (err) => {
+            console.error('Error saat menulis file:', err);
+            m.reply('Terjadi kesalahan saat menyimpan audio.');
+        });
+
+    } catch (e) {
+        console.error('Error:', e);
+        m.reply('Gagal memproses audio! Error: ' + e.message);
+    }
 }
-				try {
-					console.log('Mengambil informasi video...');
-					const info = await ytdl.getInfo(text);
-					if (info.videoDetails.lengthSeconds > 360) {
-						return sycreply('Video terlalu panjang. Silakan coba video dengan durasi lebih pendek.');
-					}
-					const title = info.videoDetails.title.replace(/[<>:"/\\|?*]/g, '');
-					const outputPath = path.join('./downloads', `${title}.mp3`);
-					const compressedPath = path.join('./downloads', `${title}_compressed.mp3`);
-					if (!fs.existsSync('./downloads')) {
-						fs.mkdirSync('./downloads', {
-							recursive: true
-						});
-					}
-					console.log('Memulai unduhan audio...');
-					console.time('Mengunduh Audio');
-					const audioStream = ytdl(text, {
-						filter: 'audioonly',
-						quality: 'lowestaudio'
-					});
-					const tempFile = fs.createWriteStream(outputPath);
-					audioStream.pipe(tempFile);
-					tempFile.on('finish', () => {
-						console.timeEnd('Unduhan Audio');
-						console.log('Unduhan selesai, memulai kompresi...');
-						console.time('Kompresi Audio');
-						ffmpeg(outputPath).audioBitrate(128).outputOptions('-preset ultrafast') // Preset cepat
-							.on('end', async () => {
-								console.timeEnd('Kompresi Audio');
-								console.log('Kompresi selesai, mengirim file...');
-								await sych.sendMessage(m.chat, {
-									audio: {
-										url: compressedPath
-									},
-									mimetype: 'audio/mpeg',
-									contextInfo: {
-										externalAdReply: {
-											title: title,
-											body: 'Klik untuk melihat sumber',
-											thumbnailUrl: getRandomThumb(),
-											sourceUrl: text
-										}
-									}
-								}, {
-									quoted: m
-								});
-								await sych.sendMessage(m.chat, {
-									react: {
-										text: '▶️', // Emoji yang diinginkan
-										key: m.key // Memberikan reaksi pada pesan perintah
-									}
-								});
-								fs.unlinkSync(outputPath);
-								fs.unlinkSync(compressedPath);
-								console.log('Proses selesai, file dikirim!');
-							}).on('error', (err) => {
-								console.error('Error saat mengompresi audio:', err);
-								sycreply('Terjadi kesalahan saat mengompresi audio.');
-							}).save(compressedPath);
-					});
-					tempFile.on('error', (err) => {
-						console.error('Error saat menulis file:', err);
-						sycreply('Terjadi kesalahan saat menyimpan audio.');
-					});
-				} catch (e) {
-					console.error('Error:', e);
-					sycreply('Gagal memproses audio! Error: ' + e.message);
-				}
-			}
-			break;
+break;
 			case 'play3': {
     if (!text) return sycreply(`*< / >* Example: ${prefix + command} dj komang`);
     sycreply(mess.wait);
@@ -4917,105 +4719,32 @@ for (const emoji of reactEmojis) {
     }
 }
 break;
-			case 'ytmp4':
-			case 'ytvideo':
-			case 'ytplayvideo': {
-				if (!text) return sycreply(`*< / >* Example: ${prefix + command} url_youtube`);
-				if (!text.includes('youtu')) return sycreply('Url Tidak Mengandung Result Dari Youtube!');
-
-// Emoji yang akan digunakan
-const reactEmojis = ["⏳", "🕛", "🕒", "🕕", "🕘", "🕛", "✅"];
-
-// Mengirimkan reaksi secara berurutan
-for (const emoji of reactEmojis) {
-    await sych.sendMessage(m.chat, {
-        react: {
-            text: emoji,
-            key: m.key
+case 'song': {
+if (!text) return m.reply(`Example : ${prefix + command} anime whatsapp status`)
+await m.reply(mess.wait);
+let yts = require("youtube-yts")
+        let look = await yts(text);
+        let convert = look.videos[0];       
+const pl = await youtube(convert.url)
+await sych.sendMessage(m.chat,{
+    audio: { url: pl.mp3  },
+    fileName: convert.title + '.mp3',
+    mimetype: 'audio/mpeg',
+    contextInfo:{
+        externalAdReply:{
+            title:convert.title,
+            body: botname,
+            thumbnailUrl: convert.image,
+            sourceUrl: pl.mp3,
+            mediaType:1,
+            mediaUrl:convert.url,
         }
-    });
+
+    },
+},{quoted:m})
+m.reply('SORYY BRE KLO MB LAGUNYA GEDE SOALNYA BIAR JERNIH MUSIKNYA')
 }
-				sycreply('Memproses permintaan Anda, harap tunggu...');
-				try {
-					console.log('Mengambil informasi video...');
-					const info = await ytdl.getInfo(text);
-					if (info.videoDetails.lengthSeconds > 300) {
-						return sycreply('Video terlalu panjang. Silakan coba video dengan durasi lebih pendek.');
-					}
-					const title = info.videoDetails.title.replace(/[<>:"/\\|?*]/g, '');
-					const videoPath = path.join('./downloads', `${title}_video.mp4`);
-					const audioPath = path.join('./downloads', `${title}_audio.mp4`);
-					const outputPath = path.join('./downloads', `${title}_final.mp4`);
-					if (!fs.existsSync('./downloads')) {
-						fs.mkdirSync('./downloads', {
-							recursive: true
-						});
-					}
-					console.log('Memulai unduhan video...');
-					const videoStream = ytdl(text, {
-						filter: 'videoonly',
-						quality: 'highestvideo'
-					});
-					const tempVideoFile = fs.createWriteStream(videoPath);
-					videoStream.pipe(tempVideoFile);
-					tempVideoFile.on('finish', async () => {
-						console.log('Video selesai diunduh. Memulai unduhan audio...');
-						const audioStream = ytdl(text, {
-							filter: 'audioonly',
-							quality: 'highestaudio'
-						});
-						const tempAudioFile = fs.createWriteStream(audioPath);
-						audioStream.pipe(tempAudioFile);
-						tempAudioFile.on('finish', async () => {
-							console.log('Audio selesai diunduh. Memulai penggabungan...');
-							ffmpeg().input(videoPath).input(audioPath).videoCodec('libx264').audioCodec('aac').outputOptions('-preset ultrafast') // Preset cepat
-								.on('end', async () => {
-									console.log('Penggabungan selesai, mengirim file...');
-									await sych.sendMessage(m.chat, {
-										video: {
-											url: outputPath
-										},
-										caption: `*📍Title:* ${title}\n*🚀Channel:* ${info.videoDetails.author.name}\n*🗓Upload at:* ${info.videoDetails.publishDate}`,
-										contextInfo: {
-											externalAdReply: {
-												title: title,
-												body: 'Klik untuk melihat sumber',
-												sourceUrl: text
-											}
-										}
-									}, {
-										quoted: m
-									});
-									await sych.sendMessage(m.chat, {
-										react: {
-											text: '⏹️', // Emoji yang diinginkan
-											key: m.key // Memberikan reaksi pada pesan perintah
-										}
-									});
-									fs.unlinkSync(videoPath);
-									fs.unlinkSync(audioPath);
-									fs.unlinkSync(outputPath);
-									console.log('Proses selesai, file dikirim!');
-								}).on('error', (err) => {
-									console.error('Error saat menggabungkan video:', err);
-									sycreply('Terjadi kesalahan saat menggabungkan video.');
-								}).save(outputPath);
-						});
-						tempAudioFile.on('error', (err) => {
-							console.error('Error saat menulis audio:', err);
-							sycreply('Terjadi kesalahan saat menyimpan audio.');
-						});
-					});
-					tempVideoFile.on('error', (err) => {
-						console.error('Error saat menulis video:', err);
-						sycreply('Terjadi kesalahan saat menyimpan video.');
-					});
-				} catch (e) {
-					console.error('Error:', e);
-					sycreply('Gagal memproses video! Error: ' + e.message);
-				}
-			}
-			break;
+break
 			case 'ig':
 			case 'instagram':
 			case 'instadl':
@@ -6762,8 +6491,8 @@ ${n}DOWNLOAD MENU ᯤ${n}
 ${setv} ${prefix}spotifydl (url)
 ${setv} ${prefix}ytmp3 (url)
 ${setv} ${prefix}ttslide (url)
-${setv} ${prefix}play3 (q)
-${setv} ${prefix}ytmp4 (url)
+${setv} ${prefix}play3 (query)
+${setv} ${prefix}song (query)
 ${setv} ${prefix}instagram (url)
 ${setv} ${prefix}tiktok (url)
 ${setv} ${prefix}facebook (url)
@@ -7070,6 +6799,7 @@ ${f}*Jam* : ${jam} WIB
 │${setv} ${prefix}gimage (query)
 │${setv} ${prefix}npm (query)
 │${setv} ${prefix}play3 (query)
+│${setv} ${prefix}song (query)
 │${setv} ${prefix}style (query)
 │${setv} ${prefix}cuaca (kota)
 │${setv} ${prefix}dukun (nama)
@@ -7079,7 +6809,6 @@ ${f}*Jam* : ${jam} WIB
 │${setv} ${prefix}ytmp3 (url)
 │${setv} ${prefix}ttslide (url)
 │${setv} ${prefix}play3 (q)
-│${setv} ${prefix}ytmp4 (url)
 │${setv} ${prefix}instagram (url)
 │${setv} ${prefix}tiktok (url)
 │${setv} ${prefix}facebook (url)
