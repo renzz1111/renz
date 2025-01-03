@@ -9,12 +9,14 @@ const chalk = require('chalk');
 //settings owner di ./setown.js
 global.packname = 'SychBotz'
 global.owner = ["62882008702155"]
+global.botnum = ["6287862997267"]
 global.author = 'ydaa'
 global.owname = 'mzyda'
 global.botname = 'SYCHY BOTz'
 global.themeemoji = '🪀'
 global.f = '> '
 global.n = '`'
+global.videoMenu = fs.readFileSync('./sychMedia/menu/sych.mp4');
 global.listv = ['⛏', '●', '■', '✿', '▲', 'ଳ', 'ϟ', '✶', '➤', '✦', '✧', '△', '❀', '⋆𖦹', '□', '𖤓', 'ᨒ', '◇', '𖣂', '々', '〆', 'ᯓ★', '꩜', '✮']
 global.emot = ['🌱', '🌻', '🌞', '❄️', '🌿', '💫', '⭐', '🍃', '🔥', '⚡', '🫧', '🌵', '🪺', '🪨', '🪵', '🌪️', '🍄']
 global.tempatDB = 'database.json'
