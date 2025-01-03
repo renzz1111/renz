@@ -1,4 +1,0 @@
-[{
-  botNamee: "SychyyBotzz",
-    ownerNamee: "yudaYdoyy"
-}]
