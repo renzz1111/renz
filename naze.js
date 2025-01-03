@@ -180,6 +180,7 @@ let tebaknegara = db.game.tebaknegara = []
 let tebakgambar = db.game.tebakgambar = []
 let tebakepep = db.game.tebakepep = []
 let tebakbendera = db.game.tebakbendera = []
+let typemenu = "s4";
 let typoDetectionEnabled = true; // Status default: aktif
 let autoAi = false; // Default mati
 // Variabel penyimpanan sesi chat rahasia
@@ -1275,6 +1276,17 @@ for (const emoji of reactEmojis) {
 				await sych.sendTextMentions(m.chat, teks, m)
 			}
 			break
+			case 'setmenu':{
+               if (!isCreator) return sycreply(mess.owner)
+               if (!text) return sycreply(`There are 8 menu(s1,s2,s3,s4,s5,s6,s7,s8,s9)\nPlease select one\nExample ${prefix + command} s1`)
+               if (text.startsWith('s')) {
+                  typemenu = text
+                  m.reply(mess.done)
+               } else {
+                  m.reply(`There are 8 menu(s1,s2,s3,s4,s5,s6,s7,s8,s9)\nPlease select one\nExample ${prefix + command} s1`)
+               }
+            }
+            break
 			case 'creategc':
 			case 'buatgc': {
 				if (!isCreator) return sycreply(mess.owner)
@@ -1525,28 +1537,24 @@ for (const emoji of reactEmojis) {
 			case 'sc':
 			case 'script':
 			case 'esce': {
-				await sych.sendMessage(m.chat, {
-					text: `https://github.com/sychyy/sychee\n⬆️ Itu Sc nya cuy`,
-					contextInfo: {
-						forwardingScore: 10,
-						isForwarded: true,
-						forwardedNewsletterMessageInfo: {
-							newsletterJid: my.ch,
-							serverMessageId: null,
-							newsletterName: `SYCHEE${randomEmoji}`
-						},
-						externalAdReply: {
-							title: author,
-							body: 'Subscribe My YouTube',
-							thumbnail: fake.thumbnail,
-							mediaType: 2,
-							mediaUrl: my.yt,
-							sourceUrl: my.yt,
-						}
-					}
-				}, {
-					quoted: m
-				})
+				const iniesce = `https://github.com/sychyy/sychee\n⬆️ Itu Sc nya cuy`
+					sych.relayMessage(m.chat,  {
+                       requestPaymentMessage: {
+                          currencyCodeIso4217: 'IDR',
+                          amount1000: '5000000000',
+                          requestFrom: m.sender,
+                          noteMessage: {
+                             extendedTextMessage: {
+                                text: iniesce,
+                                contextInfo: {
+                                   externalAdReply: {
+                                       showAdAttribution: true
+                                   }
+                                }
+                             }
+                          }
+                       }
+                    }, {})
 				await sych.sendMessage(m.chat, {
 					react: {
 						text: '🔗', // Emoji yang diinginkan
@@ -6226,6 +6234,12 @@ for (const emoji of reactEmojis) {
         }
     });
 }
+let profile;
+				try {
+					profile = await sych.profilePictureUrl(m.sender, 'image');
+				} catch (e) {
+					profile = fake.anonim;
+				}
     const inimenu = `
 ${ucapanWaktu} @${m.sender.split('@')[0]}
     
@@ -6254,35 +6268,189 @@ ${setv} ${prefix}GAMEMENU
 ${setv} ${prefix}AIMENU
 ${setv} ${prefix}TOOLSMENU
 `
-sycreply('Menampilkan Simpel Menu..')
-await sych.sendMessage(m.chat, {
-    video: fs.readFileSync('src/media/gif.mp4'), // Path ke file lokal
-    caption: inimenu, // Caption untuk pesan
-    gifPlayback: true, // Mengatur agar video diputar sebagai GIF
+if (typemenu === 's1') {
+                    sych.sendMessage(m.chat, {
+    image: fs.readFileSync('./sychMedia/menu/sychy.jpg'),
+    caption: inimenu,
     contextInfo: {
-        mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net'],
-        externalAdReply: {
-            "showAdAttribution": true,
-            "containsAutoReply": true,
-            "title": `${global.botname}`,
-            "body": `${ucapanWaktu} ${m.pushName ? m.pushName : 'Tanpa Nama'} 👋🏻`,
-            "previewType": "VIDEO",
-            "thumbnailUrl": getRandomThumb(), // Mengambil thumbnail secara random
-            "sourceUrl": 'https://github.com/sychyy'
-        }
+        mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net']
     }
 }, {
-    quoted: qchanel // Mengutip pesan sebelumnya jika diperlukan
+    quoted: m
 });
-
-// Kirim audio
-await sych.sendMessage(m.chat, {
-    audio: fs.readFileSync('src/media/audio.mp3'), // Path ke file audio
-    mimetype: 'audio/mp4', // Format file audio
-    ptt: false // Ubah menjadi true jika ingin mengirim sebagai voice note
+                } else if (typemenu === 's2') {
+                    sych.sendMessage(m.chat, {
+                        text: inimenu,
+                        contextInfo: {
+                        mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net'],
+                            externalAdReply: {
+                                showAdAttribution: true,
+                                title: botname,
+                                body: owname,
+                                thumbnail: fs.readFileSync('./sychMedia/menu/sychy.jpg'),
+                                sourceUrl: my.gc,
+                                mediaType: 1,
+                                renderLargerThumbnail: true
+                            }
+                        }
+                    }, {
+                        quoted: m
+                    })
+                }   if (typemenu === 'v3') { //SARAN: JANGAN DIGUNAIN SOALNYA DELAY BANGET
+                    sych.sendMessage(m.chat, {
+    video: fs.readFileSync('./sychMedia/menu/sych.mp4'),
+    caption: inimenu,
+    contextInfo: {
+        mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net']
+    }
 }, {
-    quoted: floc // Menambahkan referensi pesan sebelumnya jika diperlukan
+    quoted: qchanel
 });
+                } else if (typemenu === 's4') {
+    await sych.sendMessage(m.chat, {
+        video: fs.readFileSync('sychMedia/menu/gif.mp4'),
+        caption: inimenu,
+        gifPlayback: true,
+        contextInfo: {
+            mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net'],
+            externalAdReply: {
+                showAdAttribution: true,
+                containsAutoReply: true,
+                title: `${global.botname}`,
+                body: `${ucapanWaktu} ${m.pushName ? m.pushName : 'Tanpa Nama'} 👋🏻`,
+                previewType: "VIDEO",
+                thumbnailUrl: getRandomThumb(),
+                sourceUrl: 'https://github.com/sychyy'
+            }
+        }
+    }, { quoted: m });
+
+    await sych.sendMessage(m.chat, {
+        audio: fs.readFileSync('sychMedia/menu/audio.mp3'),
+        mimetype: 'audio/mp4',
+        ptt: false
+    }, { quoted: qchanel });
+                } else if (typemenu === 's5') {
+                    await sych.sendMessage(m.chat, {
+					document: fake.docs,
+					fileName: ucapanWaktu,
+					mimetype: pickRandom(fake.listfakedocs),
+					fileLength: '100000000000000',
+					pageCount: '999',
+					caption: inimenu,
+					contextInfo: {
+						mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net'],
+						forwardingScore: 10,
+						isForwarded: true,
+						forwardedNewsletterMessageInfo: {
+							newsletterJid: my.ch,
+							serverMessageId: null,
+							newsletterName: `SYCHEE${randomEmoji}`
+						},
+						externalAdReply: {
+							title: author,
+							body: packname,
+							showAdAttribution: true,
+							thumbnailUrl: profile,
+							mediaType: 1,
+							previewType: 0,
+							renderLargerThumbnail: true,
+							mediaUrl: my.gh,
+							sourceUrl: my.gh,
+						}
+					}
+				}, {
+					quoted: m
+				});
+                } else if (typemenu === 's6') {
+                    sych.relayMessage(m.chat,  {
+                       requestPaymentMessage: {
+                          currencyCodeIso4217: 'INR',
+                          amount1000: '9999999900',
+                          requestFrom: m.sender,
+                          noteMessage: {
+                             extendedTextMessage: {
+                                text: inimenu,
+                                contextInfo: {
+                                mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net'],
+                                   externalAdReply: {
+                                       showAdAttribution: true
+                                   }
+                                }
+                             }
+                          }
+                       }
+                    }, {quoted: fkontak})
+                } else if (typemenu === 's7') {
+                    sych.sendMessage(m.chat, {
+                        document: {
+                           url: 'https://i.ibb.co/2W0H9Jq/avatar-contact.png'
+                        },
+                        caption: inimenu,
+                        mimetype: 'application/zip',
+                        fileName: owname,
+                        fileLength: "99999999999",
+                        contextInfo: {
+                        mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net'],
+                            externalAdReply: {
+                                showAdAttribution: true,
+                                title: botname,
+                                body: owname,
+                                thumbnail: fs.readFileSync('./sychMedia/menu/sychy.jpg'),
+                                sourceUrl: my.gc,
+                                mediaType: 1,
+                                renderLargerThumbnail: true
+                            }
+                        }
+                    }, {
+                        quoted: m 
+                    })
+                } else if (typemenu === 's8') {
+                	sych.sendMessage(m.chat, {
+      video: fs.readFileSync('./sychMedia/menu/sych.mp4'),
+      gifPlayback: true,
+      caption: inimenu,
+      contextInfo: {
+      mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net'],
+      externalAdReply: {
+      title: botname,
+      body: owname,
+      thumbnailUrl: "https://i.ibb.co.com/zRtB6RG/37e35bef9ed65ac1b6bfee6dd26c880b.jpg",
+      sourceUrl: `https://github.com/sychyy`,
+      mediaType: 1,
+      renderLargerThumbnail: true
+      }
+      }}, {
+                        quoted: m
+                    })
+      } else if (typemenu === 's9') {
+                	sych.sendMessage(m.chat, {
+video: fs.readFileSync('./sychMedia/menu/sych.mp4'),
+caption: inimenu,
+gifPlayback: true,
+contextInfo: {
+mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net'],
+forwardingScore: 999,
+isForwarded: true,
+mentionedJid: [sender],
+forwardedNewsletterMessageInfo: {
+newsletterName: owname,
+newsletterJid: "120363383347233294@newsletter",
+},
+externalAdReply: {
+showAdAttribution: true,
+title: owname,
+body: botname,
+thumbnailUrl: "https://i.ibb.co.com/zRtB6RG/37e35bef9ed65ac1b6bfee6dd26c880b.jpg",
+sourceUrl: my.gh,
+mediaType: 1,
+renderLargerThumbnail: true
+}
+}
+}, {
+quoted: m
+})
+}
 }
 break
     case 'gamemenu':
@@ -6589,6 +6757,7 @@ ${setv} ${prefix}listthumb
 ${setv} ${prefix}setexif
 ${setv} ${prefix}setbio
 ${setv} ${prefix}setppbot
+${setv} ${prefix}setmenu s<1-9>
 ${setv} ${prefix}join
 ${setv} ${prefix}typodetect on/off
 ${setv} ${prefix}leave
@@ -6966,6 +7135,7 @@ ${f}*Jam* : ${jam} WIB
 │${setv} ${prefix}typodetect on/off
 │${setv} ${prefix}leave
 │${setv} ${prefix}block
+│${setv} ${prefix}setmenu s<1-9>
 │${setv} ${prefix}listblock
 │${setv} ${prefix}openblock
 │${setv} ${prefix}listpc
