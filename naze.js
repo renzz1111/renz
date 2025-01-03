@@ -181,7 +181,7 @@ let tebakgambar = db.game.tebakgambar = []
 let tebakepep = db.game.tebakepep = []
 let tebakbendera = db.game.tebakbendera = []
 let typemenu = "s4";
-let typoDetectionEnabled = true; // Status default: aktif
+let typoDetectionEnabled = false; // Status default: aktif
 let autoAi = false; // Default mati
 // Variabel penyimpanan sesi chat rahasia
 let secretChat = {};
@@ -519,6 +519,32 @@ if (isCmd && m.sender !== botNumber && !m.isGroup) {
         }
     }
 }
+// Fungsi untuk mengubah gambar menjadi Base64
+function imgToBase64(filePath) {
+    try {
+        const fileData = fs.readFileSync(filePath); // Membaca file gambar
+        return fileData.toString('base64'); // Mengonversi ke format Base64
+    } catch (err) {
+        console.error("Error membaca file:", err);
+    }
+}
+// Fungsi untuk mengubah Base64 menjadi gambar
+function base64ToImg(base64String, outputPath) {
+    try {
+        const buffer = Buffer.from(base64String, 'base64'); // Mengubah Base64 ke buffer
+        // Pastikan direktori output ada
+        const dirPath = path.dirname(outputPath);
+        if (!fs.existsSync(dirPath)) {
+            fs.mkdirSync(dirPath, { recursive: true });
+        }
+        fs.writeFileSync(outputPath, buffer); // Menyimpan buffer sebagai file gambar
+        console.log("File berhasil disimpan:", outputPath);
+    } catch (err) {
+        console.error("Error menulis file:", err);
+    }
+}
+
+
 		// Reset Limit
 		cron.schedule('00 00 * * *', () => {
 			let user = Object.keys(db.users)
@@ -2600,6 +2626,73 @@ for (const emoji of reactEmojis) {
 				}
 			}
 			break;
+			case 'img2ibb': {
+    try {
+        if (/webp|video|sticker|audio|jpg|jpeg|png/.test(mime)) {
+            // Menambahkan pesan loading
+            await sych.sendMessage(m.chat, {
+                react: {
+                    text: '⏳',
+                    key: m.key
+                }
+            });
+
+            // Unduh media
+            let media = await quoted.download();
+            let base64Media = media.toString('base64');
+
+            // Kirim ke imgbb
+            let response = await axios.post(
+                'https://api.imgbb.com/1/upload',
+                qs.stringify({
+                    expiration: 31536000000, // 1000 tahun
+                    key: ibbKey,
+                    image: base64Media
+                }),
+                { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
+            );
+
+            // Ambil URL hasil
+            let url = response.data.data.url;
+
+            // Kirim URL ke pengguna
+            m.reply(`Berhasil diunggah!\nURL: ${url}`);
+        } else {
+            sycreply('Harap kirim file media yang valid (jpg, png, dll.)!');
+        }
+    } catch (e) {
+        console.error(e);
+        m.reply('Terjadi kesalahan saat mengunggah file!');
+    }
+}
+break;
+case 'img2base64':
+    if (!quoted || !quoted.message.imageMessage) {
+        return m.reply("Silakan balas sebuah gambar untuk dikonversi ke Base64.");
+    }
+    const media = await sych.downloadMediaMessage(quoted);
+    const base64Image = media.toString('base64');
+    m.reply(`base642img ${base64Image}`);
+    break;
+
+case 'base642img':
+    if (!text) {
+        return m.reply("Silakan kirimkan Base64 untuk dikonversi menjadi gambar.");
+    }
+
+    const outputPath = './output_images/output_image.jpg';
+    base64ToImg(text, outputPath);
+    
+    // Cek apakah file berhasil disimpan sebelum mengirimkan
+    if (fs.existsSync(outputPath)) {
+        await sych.sendMessage(m.chat, {
+            image: fs.readFileSync(outputPath),
+            caption: 'Berikut adalah gambar hasil konversi.'
+        });
+    } else {
+        m.reply("Terjadi kesalahan dalam menyimpan gambar.");
+    }
+    break;
 			case 'tiktokslide':
 			case 'ttslide': {
 				sycreply(mess.wait);
@@ -6433,7 +6526,6 @@ contextInfo: {
 mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net'],
 forwardingScore: 999,
 isForwarded: true,
-mentionedJid: [sender],
 forwardedNewsletterMessageInfo: {
 newsletterName: owname,
 newsletterJid: "120363383347233294@newsletter",
