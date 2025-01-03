@@ -331,6 +331,27 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 				}
 			}
 		}
+const downloadMp3 = async (url) => {
+let look = await yts(text);
+let convert = look.videos[0];       
+const pl = await youtube(convert.url)
+await sych.sendMessage(m.chat,{
+    audio: { url: pl.mp3  },
+    fileName: convert.title + '.mp3',
+    mimetype: 'audio/mpeg',
+    contextInfo:{
+        externalAdReply:{
+            title:convert.title,
+            body: botname,
+            thumbnailUrl: convert.image,
+            sourceUrl: pl.mp3,
+            mediaType:1,
+            mediaUrl:convert.url,
+        }
+
+    },
+},{quoted:m})
+}
 		const floc = {
       key: { participant: "0@s.whatsapp.net" },
       message: { locationMessage: { name: `${prefix + command}`, jpegThumbnail: fake.thumbnail } },
@@ -4643,86 +4664,12 @@ break;
 			}
 			break
 			// Downloader Menu
-			case 'ytmp3': case 'ytaudio': case 'ytplayaudio': {
-if (!isPremium) return m.reply(mess.prem);
-    if (!text) return m.reply(`Example: ${prefix + command} url_youtube`);
-    if (!text.includes('youtu')) return m.reply('Url Tidak Mengandung Result Dari Youtube!');
-    m.reply('Memproses permintaan Anda, harap tunggu...');
-
-    try {
-        console.log('Mengambil informasi video...');
-        const info = await ytdl.getInfo(text);
-
-        if (info.videoDetails.lengthSeconds > 300) {
-            return m.reply('Video terlalu panjang. Silakan coba video dengan durasi lebih pendek.');
-        }
-
-        const title = info.videoDetails.title.replace(/[<>:"/\\|?*]/g, '');
-        const outputPath = path.join('./downloads', `${title}.mp3`);
-        const compressedPath = path.join('./downloads', `${title}_compressed.mp3`);
-
-        if (!fs.existsSync('./downloads')) {
-            fs.mkdirSync('./downloads', { recursive: true });
-        }
-
-        console.log('Memulai unduhan audio...');
-        console.time('Unduhan Audio');
-        const audioStream = ytdl(text, { filter: 'audioonly', quality: 'lowestaudio' });
-        const tempFile = fs.createWriteStream(outputPath);
-
-        audioStream.pipe(tempFile);
-
-        tempFile.on('finish', () => {
-            console.timeEnd('Unduhan Audio');
-            console.log('Unduhan selesai, memulai kompresi...');
-            console.time('Kompresi Audio');
-
-            ffmpeg(outputPath)
-                .audioBitrate(128)
-                .outputOptions('-preset ultrafast') // Preset cepat
-                .on('end', async () => {
-                    console.timeEnd('Kompresi Audio');
-                    console.log('Kompresi selesai, mengirim file...');
-                    await sych.sendMessage(m.chat, {
-                        audio: { url: compressedPath },
-                        mimetype: 'audio/mpeg',
-                        contextInfo: {
-                            externalAdReply: {
-                "showAdAttribution": true,
-                "containsAutoReply": true,
-                "title": title,
-                "body": info.videoDetails.author.name,
-                "previewType": "VIDEO",
-                "thumbnailUrl": getRandomThumb(), // Mengambil thumbnail secara random
-                "sourceUrl": text
-            }
-        }
-    }, {
-        quoted: fkontak
-    })
-
-                    fs.unlinkSync(outputPath);
-                    fs.unlinkSync(compressedPath);
-                    console.log('Proses selesai, file dikirim!');
-                })
-                .on('error', (err) => {
-                    console.error('Error saat mengompresi audio:', err);
-                    m.reply('Terjadi kesalahan saat mengompresi audio.');
-                })
-                .save(compressedPath);
-        });
-
-        tempFile.on('error', (err) => {
-            console.error('Error saat menulis file:', err);
-            m.reply('Terjadi kesalahan saat menyimpan audio.');
-        });
-
-    } catch (e) {
-        console.error('Error:', e);
-        m.reply('Gagal memproses audio! Error: ' + e.message);
-    }
+			case 'ytmp3': case 'youtubemp3': {
+if (!text) throw `Example : ${prefix + command} https://youtube.com/watch?v=PtFMh6Tccag%27 128kbps`
+m.reply('bentar yah')
+downloadMp3(text)
 }
-break;
+break
 			case 'play3': {
     if (!text) return sycreply(`*< / >* Example: ${prefix + command} dj komang`);
     sycreply(mess.wait);
