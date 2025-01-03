@@ -112,7 +112,6 @@ async function LoadDataBase(naze, m) {
 			if (!('autobio' in setBot)) setBot.autobio = false
 			if (!('autoread' in setBot)) setBot.autoread = true
 			if (!('autotyping' in setBot)) setBot.autotyping = true
-			if (!('multiprefix' in setBot)) setBot.multiprefix = false
 			if (!('template' in setBot)) setBot.template = 'textMessage'
 		} else {
 			global.db.set[botNumber] = {
@@ -127,7 +126,6 @@ async function LoadDataBase(naze, m) {
 				autobio: false,
 				autoread: true,
 				autotyping: true,
-				multiprefix: false,
 				template: 'textMessage',
 			}
 		}
