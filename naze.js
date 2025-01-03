@@ -503,7 +503,7 @@ const sycreply = (teks) => {
                 "body": `${ucapanWaktu} ${m.pushName ? m.pushName : 'Tanpa Nama'} 👋🏻`,
                 "previewType": "VIDEO",
                 "thumbnailUrl": getRandomThumb(), // Mengambil thumbnail secara random
-                "sourceUrl": 'https://github.com/sychyy'
+                "sourceUrl":  my.gh
             }
         }
     }, {
@@ -1866,7 +1866,7 @@ for (const emoji of reactEmojis) {
 							})).imageMessage
 						},
 						body: {
-							text: "━━━━━━ ✨ *Sychee Botz* ✨ ━━━━━━\n🔰 *OWNER RULES* 🔰\n🚫 Jangan spam\n🤝 Gunakan sopan\n📵 Hindari panggilan\n━━━━━━ 🌟 *Terima Kasih* 🌟 ━━━━━━"
+							text: `━━━━━━ ✨ *${botname}* ✨ ━━━━━━\n🔰 *OWNER RULES* 🔰\n🚫 Jangan spam\n🤝 Gunakan sopan\n📵 Hindari panggilan\n━━━━━━ 🌟 *Terima Kasih* 🌟 ━━━━━━`
 						},
 						footer: {
 							text: ""
@@ -1875,8 +1875,8 @@ for (const emoji of reactEmojis) {
 							buttons: [{
 								"name": "cta_url",
 								"buttonParamsJson": JSON.stringify({
-									display_text: "Owner (yDa🔱)",
-									url: "https://wa.me/+62882008702155"
+									display_text: `Owner (yDa🔱)`, //ganti jadi (${owname})
+									url: `https://wa.me/+${owner}`
 								})
 							}]
 						}
@@ -1893,7 +1893,7 @@ for (const emoji of reactEmojis) {
 							})).imageMessage
 						},
 						body: {
-							text: "━━━━━━ ✨ *Sychee Botz* ✨ ━━━━━━\n🔰 *BOT RULES* 🔰\n🚷 Tidak boleh spam\n💬 Tidak boleh berkata kasar\n📴 Tidak boleh call\n━━━━━━ 🔥 *Terima Kasih* 🔥 ━━━━━━"
+							text: `━━━━━━ ✨ *${botname}* ✨ ━━━━━━\n🔰 *BOT RULES* 🔰\n🚷 Tidak boleh spam\n💬 Tidak boleh berkata kasar\n📴 Tidak boleh call\n━━━━━━ 🔥 *Terima Kasih* 🔥 ━━━━━━`
 						},
 						footer: {
 							text: ""
@@ -1902,8 +1902,8 @@ for (const emoji of reactEmojis) {
 							buttons: [{
 								"name": "cta_url",
 								"buttonParamsJson": JSON.stringify({
-									display_text: "Botz (SyChee)🔑",
-									url: "https://wa.me/+6287862997267"
+									display_text: `Botz (${botname})🔑`,
+									url: `https://wa.me/+${botnum}`
 								})
 							}]
 						}
@@ -3969,7 +3969,7 @@ for (const emoji of reactEmojis) {
                         "body": `Album: ${album}`,
                         "previewType": "PHOTO",
                         "thumbnailUrl": thumb, // Mengambil thumbnail dari API
-                        "sourceUrl": 'https://github.com/sychyy'
+                        "sourceUrl": my.gh
                     }
                 }
             }, {
@@ -5132,7 +5132,7 @@ for (const emoji of reactEmojis) {
 			break
 			case 'renungan': {
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/kata-kata/renungan.json'));
-				sycreply('', {
+				m.reply('', {
 					contextInfo: {
 						forwardingScore: 10,
 						isForwarded: true,
@@ -5142,6 +5142,7 @@ for (const emoji of reactEmojis) {
 							mediaType: 1,
 							previewType: 'PHOTO',
 							renderLargerThumbnail: true,
+							sourceUrl:  hasil
 						}
 					}
 				});
@@ -6320,7 +6321,7 @@ if (typemenu === 's1') {
                 body: `${ucapanWaktu} ${m.pushName ? m.pushName : 'Tanpa Nama'} 👋🏻`,
                 previewType: "VIDEO",
                 thumbnailUrl: getRandomThumb(),
-                sourceUrl: 'https://github.com/sychyy'
+                sourceUrl: my.gh
             }
         }
     }, { quoted: m });
@@ -6345,7 +6346,7 @@ if (typemenu === 's1') {
 						forwardedNewsletterMessageInfo: {
 							newsletterJid: my.ch,
 							serverMessageId: null,
-							newsletterName: `SYCHEE${randomEmoji}`
+							newsletterName: `${botname}${randomEmoji}`
 						},
 						externalAdReply: {
 							title: author,
@@ -6416,7 +6417,7 @@ if (typemenu === 's1') {
       title: botname,
       body: owname,
       thumbnailUrl: "https://i.ibb.co.com/zRtB6RG/37e35bef9ed65ac1b6bfee6dd26c880b.jpg",
-      sourceUrl: `https://github.com/sychyy`,
+      sourceUrl: my.gh,
       mediaType: 1,
       renderLargerThumbnail: true
       }
@@ -6498,7 +6499,7 @@ await sych.sendMessage(m.chat, {
                 "body": `< / > Game Menu`,
                 "previewType": "VIDEO",
                 "thumbnailUrl": getRandomThumb(), // Mengambil thumbnail secara random
-                "sourceUrl": 'https://github.com/sychyy'
+                "sourceUrl": my.gh
             }
         }
     }, {
@@ -6551,7 +6552,7 @@ await sych.sendMessage(m.chat, {
                 "body": `< / > Fun Menu`,
                 "previewType": "VIDEO",
                 "thumbnailUrl": getRandomThumb(), // Mengambil thumbnail secara random
-                "sourceUrl": 'https://github.com/sychyy'
+                "sourceUrl": my.gh
             }
         }
     }, {
@@ -6634,7 +6635,7 @@ await sych.sendMessage(m.chat, {
                 "body": `< / > Tools Menu`,
                 "previewType": "VIDEO",
                 "thumbnailUrl": getRandomThumb(), // Mengambil thumbnail secara random
-                "sourceUrl": 'https://github.com/sychyy'
+                "sourceUrl": my.gh
             }
         }
     }, {
@@ -6680,7 +6681,7 @@ await sych.sendMessage(m.chat, {
                 "body": `< / > Download Menu`,
                 "previewType": "VIDEO",
                 "thumbnailUrl": getRandomThumb(), // Mengambil thumbnail secara random
-                "sourceUrl": 'https://github.com/sychyy'
+                "sourceUrl": my.gh
             }
         }
     }, {
@@ -6728,7 +6729,7 @@ await sych.sendMessage(m.chat, {
                 "body": `< / > AI Menu`,
                 "previewType": "VIDEO",
                 "thumbnailUrl": getRandomThumb(), // Mengambil thumbnail secara random
-                "sourceUrl": 'https://github.com/sychyy'
+                "sourceUrl": my.gh
             }
         }
     }, {
@@ -6804,7 +6805,7 @@ await sych.sendMessage(m.chat, {
                 "body": `< / > Owner Menu`,
                 "previewType": "VIDEO",
                 "thumbnailUrl": getRandomThumb(), // Mengambil thumbnail secara random
-                "sourceUrl": 'https://github.com/sychyy'
+                "sourceUrl": my.gh
             }
         }
     }, {
@@ -6859,7 +6860,7 @@ await sych.sendMessage(m.chat, {
                 "body": `< / > Group Menu`,
                 "previewType": "VIDEO",
                 "thumbnailUrl": getRandomThumb(), // Mengambil thumbnail secara random
-                "sourceUrl": 'https://github.com/sychyy'
+                "sourceUrl": my.gh
             }
         }
     }, {
@@ -7176,7 +7177,7 @@ ${f}*Jam* : ${jam} WIB
 						forwardedNewsletterMessageInfo: {
 							newsletterJid: my.ch,
 							serverMessageId: null,
-							newsletterName: `SYCHEE${randomEmoji}`
+							newsletterName: `${botname}${randomEmoji}`
 						},
 						externalAdReply: {
 							title: author,
