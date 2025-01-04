@@ -332,26 +332,44 @@ module.exports = sych = async (sych, m, chatUpdate, store) => {
 			}
 		}
 const downloadMp3 = async (url) => {
-let look = await yts(text);
-let convert = look.videos[0];       
-const pl = await youtube(convert.url)
-await sych.sendMessage(m.chat,{
-    audio: { url: pl.mp3  },
-    fileName: convert.title + '.mp3',
-    mimetype: 'audio/mpeg',
-    contextInfo:{
-        externalAdReply:{
-            title:convert.title,
-            body: botname,
-            thumbnailUrl: convert.image,
-            sourceUrl: pl.mp3,
-            mediaType:1,
-            mediaUrl:convert.url,
-        }
+    try {
+        let look = await yts(url);
+        let convert = look.videos[0];
+        const pl = await youtube(convert.url);
 
-    },
-},{quoted:m})
+        // Simulasi proses download 1% - 100%
+        for (let i = 1; i <= 100; i++) {
+            console.log(`Downloading: ${i}%`);
+            await new Promise(resolve => setTimeout(resolve, 50)); // Delay untuk simulasi proses
+        }
+        console.log('Download complete.');
+
+        // Log sebelum pengiriman
+        console.log('Preparing to send audio...');
+
+        await sych.sendMessage(m.chat, {
+            audio: { url: pl.mp3 },
+            fileName: convert.title + '.mp3',
+            mimetype: 'audio/mpeg',
+            contextInfo: {
+                externalAdReply: {
+                    title: convert.title,
+                    body: botname,
+                    thumbnailUrl: convert.image,
+                    sourceUrl: pl.mp3,
+                    mediaType: 1,
+                    mediaUrl: convert.url,
+                }
+            },
+        }, { quoted: m });
+
+        // Log setelah pengiriman
+        console.log('Audio sent successfully.');
+    } catch (error) {
+        console.error('Error during download or sending:', error);
+    }
 }
+
 		const floc = {
       key: { participant: "0@s.whatsapp.net" },
       message: { locationMessage: { name: `${prefix + command}`, jpegThumbnail: fake.thumbnail } },
