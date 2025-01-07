@@ -7,12 +7,12 @@ const chalk = require('chalk');
  */
 //~~~~~~~~~~~~< GLOBAL SETTINGS >~~~~~~~~~~~~\\
 //settings owner di ./setown.js
-global.packname = 'SychBotz'
-global.owner = ["62882008702155"]
-global.botnum = ["6287862997267"]
-global.author = 'ydaa'
-global.owname = 'mzyda'
-global.botname = 'SYCHY BOTz'
+global.packname = 'RenzzBotz'
+global.owner = ["6289531048225"]
+global.botnum = ["6283832755894"]
+global.author = 'renzz'
+global.owname = 'renzz'
+global.botname = 'RENZZ BOTz'
 global.themeemoji = '🪀'
 global.f = '> '
 global.n = '`'
@@ -31,10 +31,10 @@ global.fake = {
 	listfakedocs: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/pdf'],
 }
 global.my = {
-	yt: 'https://www.youtube.com/@sychyy00',
-	gh: 'https://github.com/sychyy',
-	gc: 'https://chat.whatsapp.com/GQ5Gp0eSeDS6dPBYeHE6kf',
-	ch: '120363383347233294@newsletter',
+	yt: 'SOON',
+	gh: 'https://github.com/rendy117',
+	gc: 'SOON',
+	ch: 'SOON',
 }
 global.limit = {
 	free: 999,
