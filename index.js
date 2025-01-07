@@ -71,7 +71,7 @@ async function startSychBot() {
 			return msg?.message || ''
 		}
 		return {
-			conversation: 'Halo Saya sychy Bot'
+			conversation: 'Halo Saya Renzz Bot'
 		}
 	}
 	
