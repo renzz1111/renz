@@ -48,15 +48,15 @@ global.uang = {
 }
 global.mess = {
 	key0: 'Apikey mu telah habis silahkan kunjungi\nhttps://my.hitori.pw',
-	owner: 'lu bkn owner',
-	admin: 'lu bkn atmin',
-	botAdmin: 'gw bkn atmin bro',
-	group: 'cma buat grup aj',
-	private: 'cm di prvt cht',
-	prem: 'lu bkn user premium',
-	wait: 'bentar duluu',
-	error: 'eror bro!',
-	done: 'udh lunas yh'
+	owner: 'anda bukan owner',
+	admin: 'khusus admin grup!',
+	botAdmin: 'bot harus menjadi admin terlebih dahulu',
+	group: 'fitur hanya untuk di grup!',
+	private: 'hanya bisa di private chat!',
+	prem: 'khusus user premium',
+	wait: 'tunggu sebentar',
+	error: 'error!',
+	done: 'done'
 }
 global.APIs = {
 	hitori: 'https://my.hitori.pw/api',
