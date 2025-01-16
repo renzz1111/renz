@@ -1602,7 +1602,7 @@ for (const emoji of reactEmojis) {
 			case 'sc':
 			case 'script':
 			case 'esce': {
-				const iniesce = `https://github.com/sychyy/sychee\n⬆️ Itu Sc nya cuy`
+				const iniesce = `JANGAN YA DEK YA`
 					sych.relayMessage(m.chat,  {
                        requestPaymentMessage: {
                           currencyCodeIso4217: 'IDR',
@@ -1630,7 +1630,7 @@ for (const emoji of reactEmojis) {
 			break
 			case 'donasi':
 			case 'donate': {
-				sycreply('Donasi Dapat Melalui Url Dibawah Ini :\nhttps://saweria.co/sych')
+				sycreply('Donasi Dapat Melalui Url Dibawah Ini :\nCOMING SOON')
 			}
 			break
 			// Group Menu
@@ -1940,7 +1940,7 @@ for (const emoji of reactEmojis) {
 							buttons: [{
 								"name": "cta_url",
 								"buttonParamsJson": JSON.stringify({
-									display_text: `Owner (yDa🔱)`, //ganti jadi (${owname})
+									display_text: `Owner (RENZZ)`, //ganti jadi (${owname})
 									url: `https://wa.me/+${owner}`
 								})
 							}]
@@ -1958,7 +1958,7 @@ for (const emoji of reactEmojis) {
 							})).imageMessage
 						},
 						body: {
-							text: `━━━━━━ ✨ *${botname}* ✨ ━━━━━━\n🔰 *BOT RULES* 🔰\n🚷 Tidak boleh spam\n💬 Tidak boleh berkata kasar\n📴 Tidak boleh call\n━━━━━━ 🔥 *Terima Kasih* 🔥 ━━━━━━`
+							text: `━━━━━━ ✨ *${botname}* ✨ ━━━━━━\n🔰 *BOT RULES* 🔰\n🚷 Tidak boleh spam\n💬 Tidak boleh DM/PC bot\n📴 Tidak boleh call\n━━━━━━ 🔥 *Terima Kasih* 🔥 ━━━━━━`
 						},
 						footer: {
 							text: ""
@@ -1986,7 +1986,7 @@ for (const emoji of reactEmojis) {
 										text: "Berikut ada kontak owner dan bot, silakan hubungi jika diperlukan! ✨📱"
 									},
 									footer: {
-										text: "Sych Bot"
+										text: "Renzz Bot"
 									},
 									header: {
 										hasMediaAttachment: false
@@ -5677,20 +5677,20 @@ for (const emoji of reactEmojis) {
 						"id": 6,
 						"name": "Duduk Tasyahud Awal",
 						"arabic": "اَلتَّحِيَّاتُ الْمُبَارَكَاتُ الصَّلَوَاتُ الطَّيِّبَاتُ ِللهِ، السَّلاَمُ عَلَيْكَ اَيُّهَا النَّبِيُّ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ، السَّلاَمُ عَلَيْنَا وَعَلَى عِبَادِاللهِ الصَّالِحِيْنَ، أَشْهَدُ اَنْ لآ إِلَهَ إِلاَّاللهُ وَاَشْهَدُ أَنَّ مُحَمَّدًا رَسُوْلُ اللهُ، اَللهُمَّ صَلِّ عَلَى سَيِّدِنَا مُحَمَّدٍ",
-						"latin": "Attahiyyaatul mubaarokaatush sholawaatuth thoyyibaatu lillaah. Assalaamualaika ayyuhan nabiyyu wa rohmatulloohi wa barokaatuh. Assalaaamualainaa wa alaa ibaadillaahish shoolihiin. Asyhadu allaa ilaaha illallooh wa asyhadu anna Muhammadar rosuulullooh. Allahummasholli ala Sayyidina Muhammad",
+						"latin": "Attahiyyaatul mubaarokaatush sholawaatuth thoyyibaatu lillaah. Assalaamualaika ayyuhan nabiyyu wa rahmatullaahi wa barakaatuh. Assalaaamualainaa wa alaa ibaadillaahish shaalihiin. Asyhadu allaa ilaaha illallaah wa asyhadu anna Muhammadar rasuulullaah. Allahummashalli ala Sayyidina Muhammad",
 						"terjemahan": "Segala penghormatan, keberkahan, shalawat dan kebaikan hanya bagi Allah. Semoga salam sejahtera selalu tercurahkan kepadamu wahai Nabi, demikian pula rahmat Allah dan berkahNya dan semoga salam sejahtera selalu tercurah kepada kami dan hamba-hamba Allah yang shalih. Aku bersaksi bahwa tiada ilah kecuali Allah dan aku bersaksi bahwa Muhammad adalah utusan Allah. Ya Tuhan kami, selawatkanlah ke atas Nabi Muhammad"
 					}, {
 						"id": 7,
 						"name": "Duduk Tasyahud Akhir",
 						"arabic": "اَلتَّحِيَّاتُ الْمُبَارَكَاتُ الصَّلَوَاتُ الطَّيِّبَاتُ ِللهِ، السَّلاَمُ عَلَيْكَ اَيُّهَا النَّبِيُّ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ، السَّلاَمُ عَلَيْنَا وَعَلَى عِبَادِاللهِ الصَّالِحِيْنَ، أَشْهَدُ اَنْ لآ إِلَهَ إِلاَّاللهُ وَاَشْهَدُ أَنَّ مُحَمَّدًا رَسُوْلُ اللهُ، اَللهُمَّ صَلِّ عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِ سَيِّدِنَا مُحَمَّدٍ، كَمَا صَلَّيْتَ عَلَى سَيِّدِنَا اِبْرَاهِيْمَ وَعَلَى آلِ سَيِّدِنَا اِبْرَاهِيْمَ وَبَارِكْ عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِ سَيِّدِنَا مُحَمَّدٍ كَمَا بَرَكْتَ عَلَى سَيِّدِنَا اِبْرَاهِيْمَ وَعَلَى آلِ سَيِّدِنَا اِبْرَاهِيْمَ فِى الْعَالَمِيْنَ إِنَّكَ حَمِيْدٌ مَجِيْدٌ",
-						"latin": "Attahiyyaatul mubaarokaatush sholawaatuth thoyyibaatu lillaah. Assalaamualaika ayyuhan nabiyyu wa rohmatulloohi wa barokaatuh. Assalaaamualainaa wa alaa ibaadillaahish shoolihiin. Asyhadu allaa ilaaha illallooh wa asyhadu anna Muhammadar rosuulullooh. Allahumma Shalli Ala Sayyidina Muhammad Wa Ala Ali Sayyidina Muhammad. Kama Shollaita Ala Sayyidina Ibrahim wa alaa aali sayyidina Ibrahim, wabaarik ala Sayyidina Muhammad Wa Alaa Ali Sayyidina Muhammad, Kama barokta alaa Sayyidina Ibrahim wa alaa ali Sayyidina Ibrahim, Fil aalamiina innaka hamiidummajid",
+						"latin": "Attahiyyaatul mubaarakaatush sholawaatuth thoyyibaatu lillaah. Assalaamualaika ayyuhan nabiyyu wa rohmatullaahi wa barakaatuh. Assalaaamualainaa wa alaa ibaadillaahish shaalihiin. Asyhadu allaa ilaaha illallaah wa asyhadu anna Muhammadar rasuulullaah. Allahumma Shalli Ala Sayyidina Muhammad Wa Ala Ali Sayyidina Muhammad. Kama Shallaita Ala Sayyidina Ibrahim wa alaa aali sayyidina Ibrahim, wabaarik ala Sayyidina Muhammad Wa Alaa Ali Sayyidina Muhammad, Kama barokta alaa Sayyidina Ibrahim wa alaa ali Sayyidina Ibrahim, Fil aalamiina innaka hamiidummajid",
 						"terjemahan": "Segala penghormatan yang berkat solat yang baik adalah untuk Allah. Sejahtera atas engkau wahai Nabi dan rahmat Allah serta keberkatannya. Sejahtera ke atas kami dan atas hamba-hamba Allah yang soleh. Aku bersaksi bahwa tiada Tuhan melainkan Allah dan aku bersaksi bahwasanya Muhammad itu adalah pesuruh Allah. Ya Tuhan kami, selawatkanlah ke atas Nabi Muhammad dan ke atas keluarganya. Sebagaimana Engkau selawatkan ke atas Ibrahim dan atas keluarga Ibrahim. Berkatilah ke atas Muhammad dan atas keluarganya sebagaimana Engkau berkati ke atas Ibrahim dan atas keluarga Ibrahim di dalam alam ini. Sesungguhnya Engkau Maha Terpuji lagi Maha Agung"
 					}, {
 						"id": 8,
 						"name": "Salam",
 						"arabic": "اَلسَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ",
-						"latin": "Assalamualaikum Warohmatullahi Wabarokatuh",
-						"terjemahan": "Semoga keselamatan, rohmat dan berkah ALLAH selalu tercurah untuk kamu sekalian."
+						"latin": "Assalamualaikum Warahmatullahi Wabarakatuh",
+						"terjemahan": "Semoga keselamatan, rahmat dan berkah ALLAH selalu tercurah untuk kamu sekalian."
 					}]
 				}
 				let bacaan = JSON.stringify(bacaanshalat)
@@ -6837,7 +6837,6 @@ ${setv} ${prefix}delprem
 ${setv} ${prefix}listprem
 ${setv} ${prefix}addlimit
 ${setv} ${prefix}adduang
-${setv} ${prefix}bot --settings
 ${setv} ${prefix}bot settings
 ${setv} ${prefix}getsession
 ${setv} ${prefix}delsession
@@ -7208,7 +7207,6 @@ ${f}*Jam* : ${jam} WIB
 │${setv} ${prefix}listprem
 │${setv} ${prefix}addlimit
 │${setv} ${prefix}adduang
-│${setv} ${prefix}bot --settings
 │${setv} ${prefix}bot settings
 │${setv} ${prefix}getsession
 │${setv} ${prefix}delsession
@@ -7336,7 +7334,7 @@ ${f}*Jam* : ${jam} WIB
 	} catch (err) {
 		console.log(util.format(err));
 		//sycreply('*❗ Internal server error️*');
-		sych.sendFromOwner(owner, 'Halo sayang, sepertinya ada yang error nih, jangan lupa diperbaiki ya\n\n*Log error:*\n\n' + util.format(err), m, {
+		sych.sendFromOwner(owner, 'Halo, sepertinya ada yang error nih, jangan lupa diperbaiki ya\n\n*Log error:*\n\n' + util.format(err), m, {
 			contextInfo: {
 				isForwarded: true
 			}
