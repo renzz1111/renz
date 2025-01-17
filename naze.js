@@ -671,7 +671,7 @@ function base64ToImg(base64String, outputPath) {
 					})
 					await sych.relayMessage(m.chat, {
 						extendedTextMessage: {
-							text: `Terdeteksi @${m.sender.split('@')[0]} Mengirim Link Group\nMaaf Link Harus Di Hapus..`,
+							text: `Terdeteksi @${m.sender.split('@')[0]} Mengirim Link Group\nLink Harus Di Hapus..`,
 							contextInfo: {
 								mentionedJid: [m.key.participant],
 								isForwarded: true,
@@ -1602,7 +1602,7 @@ for (const emoji of reactEmojis) {
 			case 'sc':
 			case 'script':
 			case 'esce': {
-				const iniesce = `https://github.com/sychyy/sychee\n⬆️ Itu Sc nya cuy`
+				const iniesce = `gaada`
 					sych.relayMessage(m.chat,  {
                        requestPaymentMessage: {
                           currencyCodeIso4217: 'IDR',
@@ -1940,7 +1940,7 @@ for (const emoji of reactEmojis) {
 							buttons: [{
 								"name": "cta_url",
 								"buttonParamsJson": JSON.stringify({
-									display_text: `Owner (yDa🔱)`, //ganti jadi (${owname})
+									display_text: `Owner (Renzz)`, //ganti jadi (${owname})
 									url: `https://wa.me/+${owner}`
 								})
 							}]
@@ -1958,7 +1958,7 @@ for (const emoji of reactEmojis) {
 							})).imageMessage
 						},
 						body: {
-							text: `━━━━━━ ✨ *${botname}* ✨ ━━━━━━\n🔰 *BOT RULES* 🔰\n🚷 Tidak boleh spam\n💬 Tidak boleh berkata kasar\n📴 Tidak boleh call\n━━━━━━ 🔥 *Terima Kasih* 🔥 ━━━━━━`
+							text: `━━━━━━ ✨ *${botname}* ✨ ━━━━━━\n🔰 *BOT RULES* 🔰\n🚷 Tidak boleh spam\n💬 Tidak boleh chat pribadi\n📴 Tidak boleh call\n━━━━━━ 🔥 *Terima Kasih* 🔥 ━━━━━━`
 						},
 						footer: {
 							text: ""
@@ -6837,7 +6837,6 @@ ${setv} ${prefix}delprem
 ${setv} ${prefix}listprem
 ${setv} ${prefix}addlimit
 ${setv} ${prefix}adduang
-${setv} ${prefix}bot --settings
 ${setv} ${prefix}bot settings
 ${setv} ${prefix}getsession
 ${setv} ${prefix}delsession
@@ -7208,7 +7207,6 @@ ${f}*Jam* : ${jam} WIB
 │${setv} ${prefix}listprem
 │${setv} ${prefix}addlimit
 │${setv} ${prefix}adduang
-│${setv} ${prefix}bot --settings
 │${setv} ${prefix}bot settings
 │${setv} ${prefix}getsession
 │${setv} ${prefix}delsession
@@ -7336,7 +7334,7 @@ ${f}*Jam* : ${jam} WIB
 	} catch (err) {
 		console.log(util.format(err));
 		//sycreply('*❗ Internal server error️*');
-		sych.sendFromOwner(owner, 'Halo sayang, sepertinya ada yang error nih, jangan lupa diperbaiki ya\n\n*Log error:*\n\n' + util.format(err), m, {
+		sych.sendFromOwner(owner, 'Halo, sepertinya ada yang error nih, jangan lupa diperbaiki ya\n\n*Log error:*\n\n' + util.format(err), m, {
 			contextInfo: {
 				isForwarded: true
 			}
